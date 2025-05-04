@@ -20,11 +20,11 @@ export default function Home() {
       <section className="w-1/3 flex flex-row mt-20 justify-between items-center">
         <button
           onClick={() => speak("Hi this is a simple tts example to check if this works")}
-          className="mt-4 px-4 py-2 bg-purple-600 text-white rounded"
+          className="mt-4 cursor-pointer px-4 py-2 bg-purple-600 text-white rounded"
         >
           🔊 Speak
         </button>
-        <button onClick={() => shuo("你好现在我正在说中文因为我可以")} className="mt-4 px-4 py-2 bg-purple-600 text-white rounded">
+        <button onClick={() => shuo("你好现在我正在说中文因为我可以")} className="mt-4 cursor-pointer px-4 py-2 bg-purple-600 text-white rounded">
           🔊 讲话
         </button>
       </section>
