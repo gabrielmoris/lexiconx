@@ -11,13 +11,13 @@ export default function Login() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      signIn("google").then((data) => {
-        //redirect
-      });
+      await signIn("google", { callbackUrl: "/" });
     } catch {
       setLoading(false);
       alert("Sign in failed. Please try again.");
     }
+    setLoading(false);
+    window.location.href = "/";
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Login() {
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded shadow transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="flex cursor-pointer items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded shadow transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           aria-busy={loading}
         >
           <Image src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width={24} height={24} className="rounded" />
