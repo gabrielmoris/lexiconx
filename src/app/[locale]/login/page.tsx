@@ -8,16 +8,15 @@ import { Link } from "@/src/i18n/navigation";
 export default function Login() {
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     setLoading(true);
     try {
-      await signIn("google", { callbackUrl: "/" });
+      signIn("google", { callbackUrl: "/" });
     } catch {
       setLoading(false);
       alert("Sign in failed. Please try again.");
     }
     setLoading(false);
-    window.location.href = "/";
   };
 
   return (

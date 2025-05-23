@@ -18,28 +18,36 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        {/*
-          This script needs to run as early as possible to prevent theme flickering.
-          It's provided by next-themes.
-        */}
+        {/* This script runs before React hydration and prevents theme flashing */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function() {
-            try {
-              var theme = localStorage.getItem('theme');
-              if (theme === 'dark' || (theme === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-              } else {
-                document.documentElement.classList.remove('dark');
-              }
-            } catch (e) {}
-          })();`,
+            __html: `
+              (function() {
+                try {
+                  let storedTheme = localStorage.getItem('theme');
+                  let theme = storedTheme;
+
+                  if (!storedTheme) {
+                    let systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    theme = systemTheme;
+                  }
+
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {e
+                  console.error('Error accessing localStorage:', e);
+                }
+              })();
+            `,
           }}
         />
       </head>
       <body>
         <NextIntlClientProvider>
-          <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem>
+          <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
             <AuthProvider session={session}>
               <Header />
               {children}

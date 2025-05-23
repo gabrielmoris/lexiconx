@@ -1,7 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
 import React from "react";
-import UserDisplay from "./userDisplay";
 
 const Example = () => {
   const t = useTranslations("example");
@@ -19,8 +18,6 @@ const Example = () => {
 
   return (
     <>
-      <UserDisplay />
-
       <h1 className="text-3xl font-bold text-blue-600">{t("title")}</h1>
       <section className="w-1/3 flex flex-row mt-20 justify-between items-center">
         <button
