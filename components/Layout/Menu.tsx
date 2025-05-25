@@ -14,12 +14,25 @@ const Menu: React.FC = () => {
 
   return (
     <div className="relative">
-      {openMenu && (
-        <nav className="absolute top-10 md:bottom-10 right-5" onClick={() => setOpenMenu(!openMenu)}>
-          <Link href="/">Home</Link>
-          <Link href="/cards">Home</Link>
-        </nav>
-      )}
+      <nav
+        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10  right-5
+                     bg-theme-fg-light dark:bg-theme-fg-dark rounded-md shadow-lg z-50
+                     text-theme-text-dark dark:text-theme-text-light
+                     transition-all duration-300 ease-in-out
+                     ${openMenu ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"}
+                     `}
+        onClick={() => setOpenMenu(!openMenu)}
+      >
+        <Link className="hover:bg-theme-fg-dark dark:hover:bg-theme-fg-light hover:text-theme-text-dark dark:text-theme-text-light px-5" href="/">
+          Home
+        </Link>
+        <Link
+          className="hover:bg-theme-fg-dark dark:hover:bg-theme-fg-light hover:text-theme-text-dark dark:text-theme-text-light px-5"
+          href="/cards"
+        >
+          Cards
+        </Link>
+      </nav>
 
       <Image
         width={50}
