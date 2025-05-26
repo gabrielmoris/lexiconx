@@ -15,13 +15,11 @@ export function ThemeSwitcher() {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  useEffect(() => {}, []);
-
   return (
     <button
       aria-label="Toggle Dark Mode"
       type="button"
-      className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
+      className="p-2 rounded-md hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light transition-all duration-300 relative cursor-pointer"
       onClick={toggleTheme}
     >
       {/* Sun icon - visible in Light mode */}

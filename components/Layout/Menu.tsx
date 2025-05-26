@@ -15,32 +15,33 @@ const Menu: React.FC = () => {
   return (
     <div className="relative">
       <nav
-        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10  right-5
-                     bg-theme-fg-light dark:bg-theme-fg-dark rounded-md shadow-lg z-50
-                     text-theme-text-dark dark:text-theme-text-light
-                     transition-all duration-300 ease-in-out
-                     ${openMenu ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"}
-                     `}
+        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10 
+                   border border-gray-300 dark:border-gray-600 right-5
+                   bg-white dark:bg-theme-fg-dark rounded-md 
+                   shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
+                   text-theme-text-light dark:text-theme-text-dark
+                   transition-all duration-300 ease-in-out
+                   ${openMenu ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"}
+                   `}
         onClick={() => setOpenMenu(!openMenu)}
       >
-        <Link className="hover:bg-theme-fg-dark dark:hover:bg-theme-fg-light hover:text-theme-text-dark dark:text-theme-text-light px-5" href="/">
+        <Link className="hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark px-10 py-2" href="/">
           Home
         </Link>
         <Link
-          className="hover:bg-theme-fg-dark dark:hover:bg-theme-fg-light hover:text-theme-text-dark dark:text-theme-text-light px-5"
+          className="hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark px-10 py-2"
           href="/cards"
         >
           Cards
         </Link>
       </nav>
-
       <Image
         width={50}
         height={50}
         onClick={() => setOpenMenu(!openMenu)}
         src={session?.user?.image || "/icons/anon-icn.svg"}
         alt={session?.user?.name || "User Avatar"}
-        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+        className="w-[50px] h-[50px] rounded-full cursor-pointer"
       />
     </div>
   );

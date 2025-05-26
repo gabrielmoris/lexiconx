@@ -1,64 +1,31 @@
 @import "tailwindcss";
 
 @theme {
+  --color-theme-bg-light: #f8f8f8;
+  --color-theme-bg-dark: #1e272e;
+  --color-theme-fg-light: #ffffff;
+  --color-theme-fg-dark: #2d3748;
+  --color-theme-text-light: #2c3e50;
+  --color-theme-text-dark: #e0f2f7;
+
   --color-secondary: #4dd0e1;
   --color-warning: #ffc107;
   --color-error: #ef5350;
   --color-info: #29b6f6;
-
-  --color-theme-bg-light: #f8f8f8;
-  --color-theme-fg-light: #5b6c7d;
-  --color-theme-text-light: #2c3e50;
-
-  --color-theme-bg-dark: #1e272e;
-  --color-theme-fg-dark: #b3d4e3;
-  --color-theme-text-dark: #e0f2f7;
 }
 
-/* Root variables for dynamic switching */
-:root {
-  --background-light: #f8f8f8;
-  --foreground-light: #2c3e50;
-  --text-light: #2c3e50;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --background-dark: #1e272e;
-  --foreground-dark: #e0f2f7;
-  --text-dark: #e0f2f7;
-
-  --secondary-color: #4dd0e1;
-  --warning-color: #ffc107;
-  --error-color: #ef5350;
-  --info-color: #29b6f6;
-
-  /* Dynamic theme variables - default to light */
-  --theme-bg: var(--background-light);
-  --theme-fg: var(--foreground-light);
-  --theme-text: var(--text-light);
-}
-
-.dark {
-  --theme-bg: var(--background-dark);
-  --theme-fg: var(--foreground-dark);
-  --theme-text: var(--text-dark);
-}
-
-/* Apply to body */
 body {
-  background-color: var(--theme-bg);
-  color: var(--theme-text);
-  font-family: var(--font-sans);
+  font-family: system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: theme(colors.theme-bg-light);
+  color: theme(colors.theme-text-light);
 }
 
-/* Custom utilities using @utility directive */
-@utility theme-bg {
-  background-color: var(--theme-bg);
-}
-
-@utility theme-fg {
-  background-color: var(--theme-fg);
-}
-
-@utility theme-text {
-  color: var(--theme-text);
+.dark body,
+html.dark body,
+:root.dark body {
+  background-color: theme(colors.theme-bg-dark);
+  color: theme(colors.theme-text-dark);
 }
