@@ -6,6 +6,7 @@ import "../globals.css";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { NextThemesProvider } from "../providers";
 import Header from "@/components/Layout/Header";
+import { ToastProvider } from "@/context/toastContext";
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -49,8 +50,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
             <AuthProvider session={session}>
-              <Header />
-              {children}
+              <ToastProvider>
+                <Header />
+                {children}
+              </ToastProvider>
             </AuthProvider>
           </NextThemesProvider>
         </NextIntlClientProvider>

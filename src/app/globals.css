@@ -8,10 +8,10 @@
   --color-theme-text-light: #2c3e50;
   --color-theme-text-dark: #e0f2f7;
 
-  --color-secondary: #4dd0e1;
-  --color-warning: #ffc107;
+  --color-secondary: #059aad;
+  --color-warning: #dba802;
   --color-error: #ef5350;
-  --color-info: #29b6f6;
+  --color-info: #016999;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

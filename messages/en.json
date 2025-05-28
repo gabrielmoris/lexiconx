@@ -1,5 +1,9 @@
 {
   "example": {
     "title": "Vocabulary App Starter"
+  },
+  "cards": {
+    "cards-form": "Save a new Word",
+    "error-form-empty": "Please, fill at least the word and the definition."
   }
 }
