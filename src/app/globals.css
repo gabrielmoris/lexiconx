@@ -1,50 +1,31 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-:root {
-  --theme-bg: #ffffff;
-  --theme-text: #171717;
-
-  --background-light: #ffffff;
-  --foreground-light: #171717;
-
-  --background-dark: #0a0a0a;
-  --foreground-dark: #ededed;
-}
-
-.dark:root {
-  --theme-bg: var(--background-dark);
-  --theme-text: var(--foreground-dark);
-}
-
 @theme {
-  /* 'inline' is optional if it's the only @theme block */
-  --color-background: var(--theme-bg);
-  --color-foreground: var(--theme-text);
+  --color-theme-bg-light: #f8f8f8;
+  --color-theme-bg-dark: #1e272e;
+  --color-theme-fg-light: #ffffff;
+  --color-theme-fg-dark: #2d3748;
+  --color-theme-text-light: #2c3e50;
+  --color-theme-text-dark: #e0f2f7;
 
-  /* Make sure --font-geist-sans and --font-geist-mono are defined
-     or remove these lines if you are not using them directly in @theme */
-  /* --font-sans: var(--font-geist-sans); */
-  /* --font-mono: var(--font-geist-mono); */
+  --color-secondary: #059aad;
+  --color-warning: #dba802;
+  --color-error: #ef5350;
+  --color-info: #016999;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 body {
-  background-color: var(--theme-bg); /* Uses the reactive variable */
-  color: var(--theme-text); /* Uses the reactive variable */
-  /* font-family: var(--font-sans); */
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: theme(colors.theme-bg-light);
+  color: theme(colors.theme-text-light);
+}
+
+.dark body,
+html.dark body,
+:root.dark body {
+  background-color: theme(colors.theme-bg-dark);
+  color: theme(colors.theme-text-dark);
 }

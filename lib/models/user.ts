@@ -1,19 +1,42 @@
-// very probably I wont need this
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  email: string;
+  googleID?: string;
+  name?: string;
+  image?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema: Schema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    googleID: {
+      type: String,
+      unique: true,
+      trim: true,
+    },
+    name: {
+      type: String,
+      trim: true,
+    },
+    image: {
+      type: String,
+      trim: true,
+    },
   },
-  { _id: false }
+  {
+    timestamps: true,
+  }
 );
 
-const SessionSchema = new mongoose.Schema({
-  user: { type: UserSchema, required: true },
-  expires: { type: Date, required: true },
-});
+const User = (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>("User", userSchema);
 
-const Session = mongoose.models.Session || mongoose.model("Session", SessionSchema);
-
-export default Session;
+export default User;
