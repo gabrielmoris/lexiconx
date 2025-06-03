@@ -3,9 +3,13 @@ import { useToastContext } from "@/context/toastContext";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-export default function CardsPAge() {
+export default function CardsPage() {
   const [loading, setLoading] = useState(false);
-  const [formData, setDormData] = useState({});
+  const [formData, setDormData] = useState({
+    word: "",
+    definition: "",
+    pinyin: "",
+  });
 
   const { showToast } = useToastContext();
 
@@ -24,6 +28,11 @@ export default function CardsPAge() {
       return;
     }
     console.log(formData);
+    setDormData({
+      word: "",
+      definition: "",
+      pinyin: "",
+    });
     setLoading(false);
   };
 
@@ -36,6 +45,7 @@ export default function CardsPAge() {
           name="word"
           placeholder="Word"
           className="w-full p-2 border rounded mb-4"
+          value={formData.word}
           onChange={(e) => setDormData({ ...formData, word: e.target.value })}
         />
         <input
@@ -43,6 +53,7 @@ export default function CardsPAge() {
           name="definition"
           placeholder="Definition"
           className="w-full p-2 border rounded mb-4"
+          value={formData.definition}
           onChange={(e) => setDormData({ ...formData, definition: e.target.value })}
         />
         <input
@@ -50,6 +61,7 @@ export default function CardsPAge() {
           name="pinyin"
           placeholder="Pinyin"
           className="w-full p-2 border rounded mb-4"
+          value={formData.pinyin}
           onChange={(e) => setDormData({ ...formData, pinyin: e.target.value })}
         />
         <button
