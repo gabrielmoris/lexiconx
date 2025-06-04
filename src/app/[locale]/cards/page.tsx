@@ -1,11 +1,12 @@
 "use client";
+import LanguageToLearn from "@/components/LanguageToLearn";
 import { useToastContext } from "@/context/toastContext";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function CardsPage() {
   const [loading, setLoading] = useState(false);
-  const [formData, setDormData] = useState({
+  const [formData, setFormData] = useState({
     word: "",
     definition: "",
     pinyin: "",
@@ -15,7 +16,7 @@ export default function CardsPage() {
 
   const t = useTranslations("cards");
 
-  const handlesubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     if (Object.keys(formData).length === 0) {
@@ -27,17 +28,52 @@ export default function CardsPage() {
       });
       return;
     }
-    console.log(formData);
-    setDormData({
-      word: "",
-      definition: "",
-      pinyin: "",
-    });
-    setLoading(false);
+
+    try {
+      const response = await fetch("/api/words", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          language: "Chinese",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Something went wrong");
+      }
+
+      showToast({
+        message: t("success-word-added"), // Add this to your translation files
+        variant: "success",
+        duration: 3000,
+      });
+
+      // Clear the form
+      setFormData({
+        word: "",
+        definition: "",
+        pinyin: "",
+      });
+    } catch (error: unknown) {
+      console.error("Failed to add word:", error);
+      showToast({
+        message: error instanceof Error ? error.message : t("error-adding-word"),
+        variant: "error",
+        duration: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start py-20">
+      <LanguageToLearn />
       <form onSubmit={handlesubmit} className="w-full max-w-sm md:border rounded-sm p-5">
         <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
         <input
@@ -46,7 +82,7 @@ export default function CardsPage() {
           placeholder="Word"
           className="w-full p-2 border rounded mb-4"
           value={formData.word}
-          onChange={(e) => setDormData({ ...formData, word: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, word: e.target.value })}
         />
         <input
           type="text"
@@ -54,7 +90,7 @@ export default function CardsPage() {
           placeholder="Definition"
           className="w-full p-2 border rounded mb-4"
           value={formData.definition}
-          onChange={(e) => setDormData({ ...formData, definition: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, definition: e.target.value })}
         />
         <input
           type="text"
@@ -62,7 +98,7 @@ export default function CardsPage() {
           placeholder="Pinyin"
           className="w-full p-2 border rounded mb-4"
           value={formData.pinyin}
-          onChange={(e) => setDormData({ ...formData, pinyin: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, pinyin: e.target.value })}
         />
         <button
           type="submit"
