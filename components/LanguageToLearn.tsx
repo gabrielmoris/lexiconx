@@ -1,25 +1,11 @@
+import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
 import { useTranslations } from "next-intl";
-import ChinaFlag from "./Icons/ChinaFlag";
-import EnglishFlag from "./Icons/EnglishFlag";
-import GermanFlag from "./Icons/GermanFlag";
 import React, { useState, useRef, useEffect } from "react";
 
-const LanguageToLearn = () => {
+const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
+  const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
 
-  interface LanguageOption {
-    language: "german" | "chinese" | "english";
-    icon: React.ComponentType<{ className?: string }>;
-    name: string;
-  }
-
-  const languages: LanguageOption[] = [
-    { language: "chinese", icon: ChinaFlag, name: t("chinese") },
-    { language: "german", icon: GermanFlag, name: t("german") },
-    { language: "english", icon: EnglishFlag, name: t("english") },
-  ];
-
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageOption | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,21 +21,6 @@ const LanguageToLearn = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (selectedLanguage) {
-      console.log(selectedLanguage?.language);
-      localStorage.setItem("language", selectedLanguage?.language);
-    }
-  }, [selectedLanguage]);
-
-  useEffect(() => {
-    const language = localStorage.getItem("language");
-
-    const selected = languages.find((lang) => lang.language === language);
-    setSelectedLanguage(selected || languages[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleSelect = (language: LanguageOption) => {
     setSelectedLanguage(language);
     setIsOpen(false);
@@ -58,7 +29,7 @@ const LanguageToLearn = () => {
   const SelectedLanguageIcon = selectedLanguage?.icon;
 
   return (
-    <div className="w-full max-w-sm md:border rounded-sm p-5 relative" ref={dropdownRef}>
+    <div className={`w-full max-w-sm md:border rounded-sm p-5 relative ${className || ""}`} ref={dropdownRef}>
       <h1 className="text-xl font-bold">{t("title")}</h1>
 
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}
@@ -69,6 +40,13 @@ const LanguageToLearn = () => {
         role="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        onKeyDown={(e) => {
+          // Keyboard navigation for accessibility
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
       >
         <div className="flex items-center gap-2">
           {SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}
@@ -82,6 +60,7 @@ const LanguageToLearn = () => {
           className="absolute z-10 w-full mt-1 border bg-theme-fg-light dark:bg-theme-fg-dark rounded shadow-lg overflow-hidden"
           role="listbox" // Indicate it's a listbox
           tabIndex={-1} // Make it programmatically focusable
+          aria-labelledby="selected-language-button"
         >
           {languages.map((lang) => (
             <li
@@ -94,6 +73,14 @@ const LanguageToLearn = () => {
               onClick={() => handleSelect(lang)}
               role="option"
               aria-selected={selectedLanguage?.language === lang.language}
+              tabIndex={0} // Make each option focusable
+              onKeyDown={(e) => {
+                // Keyboard navigation for options
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSelect(lang);
+                }
+              }}
             >
               <lang.icon className="w-6 h-6" />
               <span>{lang.name}</span>

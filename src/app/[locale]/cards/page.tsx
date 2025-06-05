@@ -48,7 +48,7 @@ export default function CardsPage() {
       }
 
       showToast({
-        message: t("success-word-added"), // Add this to your translation files
+        message: t("success-word-added"),
         variant: "success",
         duration: 3000,
       });
@@ -73,7 +73,8 @@ export default function CardsPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start py-20">
-      <LanguageToLearn />
+      <LanguageToLearn className="mb-5" />
+
       <form onSubmit={handlesubmit} className="w-full max-w-sm md:border rounded-sm p-5">
         <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
         <input

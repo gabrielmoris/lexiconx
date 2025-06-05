@@ -4,12 +4,15 @@
   },
   "cards": {
     "cards-form": "Save a new Word",
-    "error-form-empty": "Please, fill at least the word and the definition."
+    "error-form-empty": "Please, fill at least the word and the definition.",
+    "error-adding-word": "Error adding a word",
+    "success-word-added": "Word added!"
   },
   "languageToLearn": {
     "title": "Choose a language to learn",
     "german": "Deutsch",
     "english": "English",
-    "chinese": "中文"
+    "chinese": "中文",
+    "spanish": "Español"
   }
 }
