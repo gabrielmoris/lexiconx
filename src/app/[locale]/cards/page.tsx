@@ -1,18 +1,21 @@
 "use client";
 import LanguageToLearn from "@/components/LanguageToLearn";
+import { useLanguage } from "@/context/LanguageToLearnContext";
 import { useToastContext } from "@/context/toastContext";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function CardsPage() {
+  const { showToast } = useToastContext();
+  const { selectedLanguage } = useLanguage();
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     word: "",
     definition: "",
-    pinyin: "",
+    phoneticNotation: "",
+    language: selectedLanguage,
   });
-
-  const { showToast } = useToastContext();
 
   const t = useTranslations("cards");
 
@@ -57,7 +60,8 @@ export default function CardsPage() {
       setFormData({
         word: "",
         definition: "",
-        pinyin: "",
+        phoneticNotation: "",
+        language: selectedLanguage,
       });
     } catch (error: unknown) {
       console.error("Failed to add word:", error);
@@ -95,11 +99,11 @@ export default function CardsPage() {
         />
         <input
           type="text"
-          name="pinyin"
-          placeholder="Pinyin"
+          name="phoneticNotation"
+          placeholder="Phonetic Notation / Pinyin"
           className="w-full p-2 border rounded mb-4"
-          value={formData.pinyin}
-          onChange={(e) => setFormData({ ...formData, pinyin: e.target.value })}
+          value={formData.phoneticNotation}
+          onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value })}
         />
         <button
           type="submit"
