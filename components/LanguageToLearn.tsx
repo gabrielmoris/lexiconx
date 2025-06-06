@@ -1,10 +1,13 @@
 import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect } from "react";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
   const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
+
+  const { data: session, status } = useSession();
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -21,12 +24,31 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
     };
   }, []);
 
-  const handleSelect = (language: LanguageOption) => {
+  const handleSelect = async (language: LanguageOption) => {
     setSelectedLanguage(language);
+    const apiCall = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        activeLanguage: language.language,
+        session,
+      }),
+    });
+
+    const response = await apiCall.json();
+
+    console.log("mirrorResponse", response);
+
     setIsOpen(false);
   };
 
   const SelectedLanguageIcon = selectedLanguage?.icon;
+
+  if (status === "loading") {
+    return null; // LoadingComponent
+  }
 
   return (
     <div className={`w-full max-w-sm md:border rounded-sm p-5 relative ${className || ""}`} ref={dropdownRef}>

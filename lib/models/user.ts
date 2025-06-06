@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-const languageProgressSchema = new Schema({
+export const languageProgressSchema = new Schema({
   language: { type: String, required: true },
   // The user's overall proficiency level in this language (0-100)
   level: { type: Number, default: 0 },
