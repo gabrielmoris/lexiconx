@@ -36,7 +36,7 @@ export async function POST(req: Request) {
   }
 
   user.activeLanguage = activeLanguage;
-  await user.save();
+  const saved = await user.save();
 
-  return NextResponse.json({ activeLanguage, session });
+  return NextResponse.json({ error: null, success: true, information: saved.activeLanguage });
 }
