@@ -95,30 +95,36 @@ const WordForm = () => {
   return (
     <form onSubmit={handlesubmit} className="w-full max-w-sm md:border rounded-sm p-5">
       <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
+
       <input
         type="text"
         name="word"
-        placeholder="Word"
+        required
+        placeholder="Word *"
         className="w-full p-2 border rounded mb-4"
         value={formData.word}
-        onChange={(e) => setFormData({ ...formData, word: e.target.value })}
+        onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
       />
-      <input
-        type="text"
-        name="definition"
-        placeholder="Definition"
-        className="w-full p-2 border rounded mb-4"
-        value={formData.definition}
-        onChange={(e) => setFormData({ ...formData, definition: e.target.value })}
-      />
+
       <input
         type="text"
         name="phoneticNotation"
         placeholder="Phonetic Notation / Pinyin"
         className="w-full p-2 border rounded mb-4"
         value={formData.phoneticNotation}
-        onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value })}
+        onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
       />
+
+      <input
+        type="text"
+        name="definition"
+        placeholder="Definition *"
+        required
+        className="w-full p-2 border rounded mb-4"
+        value={formData.definition}
+        onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
+      />
+
       <button
         type="submit"
         disabled={loading}
