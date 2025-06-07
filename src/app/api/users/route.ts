@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   }
 
   if (user.activeLanguage === activeLanguage) {
-    return NextResponse.json({ message: "Language already set" });
+    return NextResponse.json({ data: null, error: "Language already set" });
   }
 
   const languageProgress = user.learningProgress.find((lp: any) => lp?.language === activeLanguage);
@@ -38,5 +38,5 @@ export async function POST(req: Request) {
   user.activeLanguage = activeLanguage;
   const saved = await user.save();
 
-  return NextResponse.json({ error: null, success: true, information: saved.activeLanguage });
+  return NextResponse.json({ error: null, data: saved.activeLanguage });
 }

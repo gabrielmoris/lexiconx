@@ -13,6 +13,7 @@
     "german": "Deutsch",
     "english": "English",
     "chinese": "中文",
-    "spanish": "Español"
+    "spanish": "Español",
+    "error-changing-language": "Failed to set active language"
   }
 }

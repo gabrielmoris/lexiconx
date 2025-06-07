@@ -52,12 +52,6 @@ export const authOptions: NextAuthOptions = {
             image: user.image,
           });
           console.log("New user created:", existingUser.email);
-        } else {
-          // Optional: Update existing user's data if needed (e.g., name, image might change)
-          // existingUser.name = user.name;
-          // existingUser.image = user.image;
-          // await existingUser.save();
-          console.log("Existing user found:", existingUser.email);
         }
 
         user.dbId = existingUser?._id?.toString();

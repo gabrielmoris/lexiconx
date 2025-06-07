@@ -1,10 +1,14 @@
+"use client";
+
 import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
+import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect } from "react";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
+  const { showToast } = useToastContext();
   const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
 
   const { data: session, status } = useSession();
@@ -37,9 +41,13 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
       }),
     });
 
-    const response = await apiCall.json();
-
-    console.log("mirrorResponse", response);
+    if (!apiCall.ok) {
+      showToast({
+        message: t("error-changing-language"),
+        variant: "error",
+        duration: 3000,
+      });
+    }
 
     setIsOpen(false);
   };
