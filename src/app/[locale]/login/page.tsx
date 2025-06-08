@@ -21,7 +21,7 @@ export default function Login() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md flex flex-col items-center w-full max-w-sm">
+      <div className="bg-white p-8 rounded shadow-md flex flex-col items-center w-full max-w-md">
         <h1 className="text-2xl font-semibold text-black mb-6">Sign in to Your Account</h1>
         <button
           onClick={handleLogin}

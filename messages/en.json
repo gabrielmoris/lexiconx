@@ -6,7 +6,11 @@
     "cards-form": "Save a new Word",
     "error-form-empty": "Please, fill at least the word and the definition.",
     "error-adding-word": "Error adding a word",
-    "success-word-added": "Word added!"
+    "success-word-added": "Word added!",
+    "close-btn": "Close",
+    "adding": "Adding...",
+    "add": "Add",
+    "add-word": "Add a word"
   },
   "languageToLearn": {
     "title": "Choose a language to learn",

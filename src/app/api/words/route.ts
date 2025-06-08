@@ -25,3 +25,21 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ error: null, data: saved });
 }
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const language = searchParams.get("language");
+  const email = searchParams.get("email");
+  await connectDB();
+
+  console.log(language, email);
+
+  // const email = session?.user?.email;
+  // const userId = await User.findOne({ email })._id;
+  // const words = await Word.find({ userId, language });
+  // console.log("words", words);
+
+  // const words = await Word.find();
+
+  return NextResponse.json({ error: null, data: "data" });
+}

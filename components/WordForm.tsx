@@ -4,6 +4,7 @@ import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import Button from "./UI/Button";
 
 const WordForm = () => {
   const { showToast } = useToastContext();
@@ -12,6 +13,7 @@ const WordForm = () => {
   const t = useTranslations("cards");
 
   const [loading, setLoading] = useState(false);
+  const [addWord, setAddWord] = useState(false);
   const [formData, setFormData] = useState({
     word: "",
     definition: "",
@@ -89,51 +91,60 @@ const WordForm = () => {
   };
 
   if (status === "loading") {
-    return null; // LoadingComponent
+    return null;
+  }
+
+  if (addWord) {
+    return (
+      <form onSubmit={handlesubmit} className="w-full max-w-md md:border rounded-sm p-5">
+        <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
+
+        <input
+          type="text"
+          name="word"
+          required
+          placeholder="Word *"
+          className="w-full p-2 border rounded mb-4"
+          value={formData.word}
+          onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
+        />
+
+        <input
+          type="text"
+          name="phoneticNotation"
+          placeholder="Phonetic Notation / Pinyin"
+          className="w-full p-2 border rounded mb-4"
+          value={formData.phoneticNotation}
+          onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
+        />
+
+        <input
+          type="text"
+          name="definition"
+          placeholder="Definition *"
+          required
+          className="w-full p-2 border rounded mb-4"
+          value={formData.definition}
+          onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
+        />
+
+        <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
+          {t("close-btn")}
+        </Button>
+
+        <Button type="submit" disabled={loading} variant="primary" className="mb-5">
+          {loading ? t("adding") : t("add")}
+        </Button>
+      </form>
+    );
   }
 
   return (
-    <form onSubmit={handlesubmit} className="w-full max-w-sm md:border rounded-sm p-5">
-      <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
-
-      <input
-        type="text"
-        name="word"
-        required
-        placeholder="Word *"
-        className="w-full p-2 border rounded mb-4"
-        value={formData.word}
-        onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
-      />
-
-      <input
-        type="text"
-        name="phoneticNotation"
-        placeholder="Phonetic Notation / Pinyin"
-        className="w-full p-2 border rounded mb-4"
-        value={formData.phoneticNotation}
-        onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
-      />
-
-      <input
-        type="text"
-        name="definition"
-        placeholder="Definition *"
-        required
-        className="w-full p-2 border rounded mb-4"
-        value={formData.definition}
-        onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
-      />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full cursor-pointer p-2 bg-secondary dark:bg-theme-fg-dark text-white rounded disabled:opacity-60 disabled:cursor-not-allowed"
-        aria-busy={loading}
-      >
-        {loading ? "Adding..." : "Add"}
-      </button>
-    </form>
+    <section className="w-full p-5 max-w-md">
+      <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5">
+        {t("add-word")} <span className="text-2xl font-extrabold">+</span>
+      </Button>
+    </section>
   );
 };
 
