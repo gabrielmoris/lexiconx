@@ -9,6 +9,7 @@ export interface LearningProgress {
 }
 
 export interface Word {
+  _id?: string;
   userId: string;
   word: string;
   definition: string;
@@ -20,6 +21,9 @@ export interface Word {
   interval: number;
   repetitions: number;
   easeFactor: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }
 
 export interface User {

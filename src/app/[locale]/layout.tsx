@@ -47,7 +47,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           }}
         />
       </head>
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-hidden flex flex-col items-center justify-start">
         <NextIntlClientProvider>
           <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
             <AuthProvider session={session}>

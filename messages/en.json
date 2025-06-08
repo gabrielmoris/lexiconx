@@ -2,7 +2,7 @@
   "example": {
     "title": "Vocabulary App Starter"
   },
-  "cards": {
+  "word-form": {
     "cards-form": "Save a new Word",
     "error-form-empty": "Please, fill at least the word and the definition.",
     "error-adding-word": "Error adding a word",
@@ -19,5 +19,12 @@
     "chinese": "中文",
     "spanish": "Español",
     "error-changing-language": "Failed to set active language"
+  },
+  "word-card": {
+    "word": "Word",
+    "phonetic-notation": "Phonetic",
+    "definition": "Definition",
+    "last-reviewed": "Last review",
+    "next-review": "Next review"
   }
 }

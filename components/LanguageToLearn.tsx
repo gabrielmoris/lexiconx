@@ -59,7 +59,7 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className={`w-full max-w-md md:border rounded-sm p-5 relative ${className || ""}`} ref={dropdownRef}>
+    <div className={`w-full md:border rounded-sm p-5 relative ${className || ""}`} ref={dropdownRef}>
       <h1 className="text-xl font-bold">{t("title")}</h1>
 
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}

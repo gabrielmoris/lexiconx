@@ -1,4 +1,4 @@
-import Word from "@/lib/models/LanguageCards";
+import Word from "@/lib/models/word";
 import User from "@/lib/models/user";
 import { connectDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
@@ -32,14 +32,24 @@ export async function GET(req: Request) {
   const email = searchParams.get("email");
   await connectDB();
 
-  console.log(language, email);
+  if (!language || !email) {
+    return NextResponse.json({ error: "Language or email not provided" });
+  }
 
-  // const email = session?.user?.email;
-  // const userId = await User.findOne({ email })._id;
-  // const words = await Word.find({ userId, language });
-  // console.log("words", words);
+  const user = await User.findOne({ email });
 
-  // const words = await Word.find();
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
 
-  return NextResponse.json({ error: null, data: "data" });
+  const words = await Word.find({ userId: user._id, language });
+
+  if (!words || words.length === 0) {
+    return new NextResponse(JSON.stringify({ error: "No words found for this language" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  return NextResponse.json({ error: null, data: words });
 }

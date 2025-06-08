@@ -6,11 +6,11 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "./UI/Button";
 
-const WordForm = () => {
+const WordForm = ({ className }: { className?: string }) => {
   const { showToast } = useToastContext();
   const { selectedLanguage } = useLanguage();
   const { data: session, status } = useSession();
-  const t = useTranslations("cards");
+  const t = useTranslations("word-form");
 
   const [loading, setLoading] = useState(false);
   const [addWord, setAddWord] = useState(false);
@@ -51,7 +51,6 @@ const WordForm = () => {
         },
         body: JSON.stringify({
           ...formData,
-          language: "Chinese",
         }),
       });
       const result = await response.json();
@@ -96,7 +95,7 @@ const WordForm = () => {
 
   if (addWord) {
     return (
-      <form onSubmit={handlesubmit} className="w-full max-w-md md:border rounded-sm p-5">
+      <form onSubmit={handlesubmit} className={`w-full md:border rounded-sm p-5 ${className || ""}`}>
         <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
 
         <input
@@ -140,7 +139,7 @@ const WordForm = () => {
   }
 
   return (
-    <section className="w-full p-5 max-w-md">
+    <section className="w-full p-5">
       <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5">
         {t("add-word")} <span className="text-2xl font-extrabold">+</span>
       </Button>
