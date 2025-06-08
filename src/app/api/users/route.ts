@@ -1,0 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import User from "@/lib/models/user";
+import { connectDB } from "@/lib/mongodb";
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+  const { activeLanguage, session } = await req.json();
+
+  await connectDB();
+
+  if (!session.user.email) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  if (user.activeLanguage === activeLanguage) {
+    return NextResponse.json({ data: null, error: "Language already set" });
+  }
+
+  const languageProgress = user.learningProgress.find((lp: any) => lp?.language === activeLanguage);
+
+  if (!languageProgress) {
+    user.learningProgress.push({
+      language: activeLanguage,
+      level: 0,
+      totalWords: 0,
+      wordsMastered: 0,
+      currentStreak: 0,
+      timeSpent: 0,
+    } as any);
+  }
+
+  user.activeLanguage = activeLanguage;
+  const saved = await user.save();
+
+  return NextResponse.json({ error: null, data: saved.activeLanguage });
+}

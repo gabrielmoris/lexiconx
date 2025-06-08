@@ -36,7 +36,7 @@ export const Toast = ({ message, variant, duration }: ToastProps) => {
           : variant === "warning"
           ? "bg-yellow-50 border-warning text-warning "
           : "bg-secondary dark:bg-theme-fg-dark border-theme-text-light dark:border-theme-text-dark text-theme-text-light dark:text-theme-text-dark"
-      } fixed left-1/2 top-5 transform -translate-x-1/2 border-2 p-4 rounded-md `}
+      } fixed left-1/2 top-5 transform -translate-x-1/2 border-2 p-4 rounded-md z-50`}
       role="alert"
       ref={toastRef}
     >

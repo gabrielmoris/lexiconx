@@ -1,4 +1,3 @@
-// models/Word.ts
 import mongoose from "mongoose";
 
 const wordSchema = new mongoose.Schema(
@@ -7,63 +6,28 @@ const wordSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true, // Index for quick lookup of a user's words
     },
-    word: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    definition: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    pinyin: {
-      type: String,
-      trim: true,
-    },
-    language: {
-      type: String,
-      required: true,
-      enum: ["Chinese", "German", "English"],
-    },
-    // Spaced Repetition System (SRS) fields
-    lastReviewed: {
-      type: Date,
-      default: null, // Initially not reviewed
-    },
-    nextReview: {
-      type: Date,
-      default: Date.now, // New words are ready to be reviewed immediately
-    },
-    interval: {
-      // In days
-      type: Number,
-      default: 0,
-    },
-    repetitions: {
-      // How many times correctly recalled in a row
-      type: Number,
-      default: 0,
-    },
-    easeFactor: {
-      // Adjusts the interval growth
-      type: Number,
-      default: 2.5, // Standard starting ease factor for Anki-like algorithms
-    },
-    // Optional: Array to store generated sentences
-    sentences: [
-      {
-        text: { type: String, required: true },
-        generatedAt: { type: Date, default: Date.now },
-        // You could add more fields here, like a rating for the sentence quality
-      },
-    ],
+    word: { type: String, required: true, trim: true },
+    definition: { type: String, required: true, trim: true },
+    phoneticNotation: { type: String, trim: true },
+    language: { type: String, required: true },
+
+    tags: { type: [String], default: [] },
+
+    // --- Spaced Repetition System (SRS) Fields ---
+    lastReviewed: { type: Date, default: null },
+    nextReview: { type: Date, default: Date.now },
+    interval: { type: Number, default: 0 }, // The number of days to wait before showing the word again. This is the core of SRS.
+    repetitions: { type: Number, default: 0 }, // How many times the user has recalled this word correctly in a row
+    easeFactor: { type: Number, default: 2.5 }, // A number that represents how "easy" or "hard" the word is for the user. A higher factor means the interval grows faster.
   },
   {
-    timestamps: true, // Adds `createdAt` and `updatedAt` fields
+    timestamps: true,
   }
 );
+
+wordSchema.index({ userId: 1, language: 1, nextReview: 1 });
 
 const Word = mongoose.models.Word || mongoose.model("Word", wordSchema);
 
