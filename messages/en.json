@@ -26,5 +26,8 @@
     "definition": "Definition",
     "last-reviewed": "Last review",
     "next-review": "Next review"
+  },
+  "word-list": {
+    "no-words": "No words found"
   }
 }

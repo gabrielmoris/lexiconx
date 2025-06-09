@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
+import React, { createContext, useContext, ReactNode, useMemo, useState, useEffect } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import ChinaFlag from "@/components/Icons/ChinaFlag";
 import EnglishFlag from "@/components/Icons/EnglishFlag";
@@ -17,6 +17,7 @@ interface LanguageContextType {
   selectedLanguage: LanguageOption;
   setSelectedLanguage: (language: LanguageOption) => void;
   languages: LanguageOption[];
+  isSelectedLanguageLoading: boolean;
 }
 
 const LanguageToLearnContext = createContext<LanguageContextType | undefined>(undefined);
@@ -41,10 +42,17 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
   );
 
   const [storedLangCode, setStoredLangCode] = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
+  const [isSelectedLanguageLoading, setIsSelectedLanguageLoading] = useState(true);
 
   const selectedLanguage = useMemo(() => {
     return languages.find((lang) => lang.language === storedLangCode) || languages[0];
   }, [storedLangCode, languages]);
+
+  useEffect(() => {
+    if (storedLangCode !== undefined) {
+      setIsSelectedLanguageLoading(false);
+    }
+  }, [storedLangCode]);
 
   const setSelectedLanguage = (language: LanguageOption) => {
     setStoredLangCode(language.language);
@@ -55,9 +63,10 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
       selectedLanguage,
       setSelectedLanguage,
       languages,
+      isSelectedLanguageLoading,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedLanguage, languages]
+    [selectedLanguage, languages, isSelectedLanguageLoading]
   );
 
   return <LanguageToLearnContext.Provider value={contextValue}>{children}</LanguageToLearnContext.Provider>;

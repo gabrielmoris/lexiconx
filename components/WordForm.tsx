@@ -95,7 +95,10 @@ const WordForm = ({ className }: { className?: string }) => {
 
   if (addWord) {
     return (
-      <form onSubmit={handlesubmit} className={`w-full md:border rounded-sm p-5 ${className || ""}`}>
+      <form
+        onSubmit={handlesubmit}
+        className={`w-full md:border rounded-lg md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ""}`}
+      >
         <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
 
         <input
@@ -139,8 +142,8 @@ const WordForm = ({ className }: { className?: string }) => {
   }
 
   return (
-    <section className="w-full p-5">
-      <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5">
+    <section className="w-full flex items-end justify-end pb-5">
+      <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 max-w-38">
         {t("add-word")} <span className="text-2xl font-extrabold">+</span>
       </Button>
     </section>

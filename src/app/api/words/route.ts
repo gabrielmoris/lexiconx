@@ -44,12 +44,5 @@ export async function GET(req: Request) {
 
   const words = await Word.find({ userId: user._id, language });
 
-  if (!words || words.length === 0) {
-    return new NextResponse(JSON.stringify({ error: "No words found for this language" }), {
-      status: 404,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-
   return NextResponse.json({ error: null, data: words });
 }

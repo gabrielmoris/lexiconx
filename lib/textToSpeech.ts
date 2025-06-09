@@ -11,5 +11,6 @@ export const textToSpeech = (text: string, language: "chinese" | "english" | "ge
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = languages[language];
+  window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 };

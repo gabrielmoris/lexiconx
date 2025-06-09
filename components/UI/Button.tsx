@@ -15,8 +15,8 @@ const Button = ({ disabled, className, onClick, type = "submit", variant = "prim
       type={type}
       disabled={disabled}
       className={`w-full cursor-pointer p-2 ${
-        variant === "primary" ? "bg-secondary dark:bg-theme-fg-dark text-white" : "border border-secondary  text-secondary"
-      } rounded disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
+        variant === "primary" ? "bg-secondary dark:bg-gray-800 text-white" : "border border-secondary  text-secondary"
+      } rounded disabled:opacity-60 disabled:cursor-not-allowed hover:shadow-sm hover:opacity-90 ${className}`}
       onClick={onClick}
       aria-busy={disabled}
     >

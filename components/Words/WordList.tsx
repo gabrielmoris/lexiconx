@@ -5,17 +5,19 @@ import { Word } from "@/types/Words";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import WordCard from "./WordCard";
+import { useTranslations } from "next-intl";
 
 const WordList = () => {
   const { data: session } = useSession();
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
-  const { selectedLanguage } = useLanguage();
+  const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
+  const t = useTranslations("word-list");
 
   const { showToast } = useToastContext();
 
   useEffect(() => {
-    if (session) {
+    if (session && !isSelectedLanguageLoading) {
       const fetchCards = async () => {
         try {
           const response = await fetch(`/api/words?language=${selectedLanguage.language}&email=${session.user?.email}`);
@@ -36,19 +38,22 @@ const WordList = () => {
           setLoading(false);
         }
       };
-
+      setLoading(true);
       fetchCards();
-    } else {
+    } else if (!session) {
       setLoading(false);
+      setWords([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, [session, selectedLanguage, isSelectedLanguageLoading]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  console.log(words);
+  if ((!words || words.length === 0) && isSelectedLanguageLoading === false) {
+    return <div className="text-theme-text-light dark:text-theme-text-dark">{t("no-words")}</div>;
+  }
 
   return (
     <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
