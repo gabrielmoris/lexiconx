@@ -29,5 +29,8 @@
   },
   "word-list": {
     "no-words": "No words found"
+  },
+  "ai-quiz-generator": {
+    "generate-quiz": "Generate Quiz"
   }
 }

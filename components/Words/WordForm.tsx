@@ -4,7 +4,7 @@ import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import Button from "./UI/Button";
+import Button from "../UI/Button";
 
 const WordForm = ({ className }: { className?: string }) => {
   const { showToast } = useToastContext();
@@ -89,64 +89,79 @@ const WordForm = ({ className }: { className?: string }) => {
     }
   };
 
+  useEffect(() => {
+    if (addWord) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [addWord]);
+
   if (status === "loading") {
-    return null;
+    return null; // LoadingComponent
   }
 
   if (addWord) {
     return (
-      <form
-        onSubmit={handlesubmit}
-        className={`w-full md:border rounded-lg md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ""}`}
+      <section
+        className="fixed top-0 left-0 w-screen h-screen
+        shadow-sm dark:shadow-theme-fg-dark
+        backdrop-blur-2xl
+        z-29"
       >
-        <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
+        <form
+          onSubmit={handlesubmit}
+          className={`w-5/6 max-w-xl absolute transform top-1/2 left-1/2 -translate-x-1/2 
+            -translate-y-1/2  bg-theme-bg-light dark:bg-theme-bg-dark md:border rounded-lg 
+            md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ""}`}
+        >
+          <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
 
-        <input
-          type="text"
-          name="word"
-          required
-          placeholder="Word *"
-          className="w-full p-2 border rounded mb-4"
-          value={formData.word}
-          onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
-        />
+          <input
+            type="text"
+            name="word"
+            required
+            placeholder="Word *"
+            className="w-full p-2 border rounded mb-4"
+            value={formData.word}
+            onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
+          />
 
-        <input
-          type="text"
-          name="phoneticNotation"
-          placeholder="Phonetic Notation / Pinyin"
-          className="w-full p-2 border rounded mb-4"
-          value={formData.phoneticNotation}
-          onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
-        />
+          <input
+            type="text"
+            name="phoneticNotation"
+            placeholder="Phonetic Notation / Pinyin"
+            className="w-full p-2 border rounded mb-4"
+            value={formData.phoneticNotation}
+            onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
+          />
 
-        <input
-          type="text"
-          name="definition"
-          placeholder="Definition *"
-          required
-          className="w-full p-2 border rounded mb-4"
-          value={formData.definition}
-          onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
-        />
+          <input
+            type="text"
+            name="definition"
+            placeholder="Definition *"
+            required
+            className="w-full p-2 border rounded mb-4"
+            value={formData.definition}
+            onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
+          />
 
-        <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
-          {t("close-btn")}
-        </Button>
+          <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
+            {t("close-btn")}
+          </Button>
 
-        <Button type="submit" disabled={loading} variant="primary" className="mb-5">
-          {loading ? t("adding") : t("add")}
-        </Button>
-      </form>
+          <Button type="submit" disabled={loading} variant="primary" className="mb-5">
+            {loading ? t("adding") : t("add")}
+          </Button>
+        </form>
+      </section>
     );
   }
 
   return (
-    <section className="w-full flex items-end justify-end pb-5">
-      <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 max-w-38">
-        {t("add-word")} <span className="text-2xl font-extrabold">+</span>
-      </Button>
-    </section>
+    <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 max-w-38">
+      {t("add-word")} <span className="text-2xl font-extrabold">+</span>
+    </Button>
   );
 };
 

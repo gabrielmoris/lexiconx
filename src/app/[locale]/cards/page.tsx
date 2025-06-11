@@ -1,12 +1,19 @@
 import LanguageCards from "@/components/Words/WordList";
 import LanguageToLearn from "@/components/LanguageToLearn";
-import WordForm from "@/components/WordForm";
+import WordForm from "@/components/Words/WordForm";
+import AiQuizzGenerator from "@/components/AiQuizzGenerator";
 
 export default function CardsPage() {
   return (
-    <main className="min-h-screen max-w-xl flex flex-col items-center justify-start py-20">
+    <main
+      className="min-h-screen w-screen md:w-xl px-5 md:px-0 flex flex-col items-center justify-start
+     py-20"
+    >
       <LanguageToLearn className="mb-5" />
-      <WordForm className="mb-5" />
+      <div className="flex w-full gap-5 items-center justify-between md:justify-end mb-5">
+        <AiQuizzGenerator />
+        <WordForm />
+      </div>
       <LanguageCards />
     </main>
   );
