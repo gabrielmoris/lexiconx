@@ -2,11 +2,12 @@
 import React from "react";
 import Button from "./UI/Button";
 import { useTranslations } from "next-intl";
+import { Word } from "@/types/Words";
 
-const AiQuizzGenerator = () => {
+const AiQuizzGenerator = ({ words }: { words: Word[] }) => {
   const t = useTranslations("ai-quiz-generator");
   const generateQuiz = () => {
-    console.log("generating quiz...");
+    console.log(words);
   };
 
   return (

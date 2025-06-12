@@ -1,54 +1,17 @@
 "use client";
 import { useLanguage } from "@/context/LanguageToLearnContext";
-import { useToastContext } from "@/context/toastContext";
-import { Word } from "@/types/Words";
-import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import WordCard from "./WordCard";
 import { useTranslations } from "next-intl";
+import { useWords } from "@/context/wordsContext";
 
 const WordList = () => {
-  const { data: session } = useSession();
-  const [words, setWords] = useState<Word[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
+  const { isSelectedLanguageLoading } = useLanguage();
   const t = useTranslations("word-list");
-
-  const { showToast } = useToastContext();
-
-  useEffect(() => {
-    if (session && !isSelectedLanguageLoading) {
-      const fetchCards = async () => {
-        try {
-          const response = await fetch(`/api/words?language=${selectedLanguage.language}&email=${session.user?.email}`);
-
-          if (!response.ok) {
-            throw new Error("Something went wrong and the cards could not be fetched.");
-          }
-
-          const { data } = await response.json();
-          setWords(data);
-        } catch (err) {
-          showToast({
-            message: err instanceof Error ? err.message : "An unknown error occurred.",
-            variant: "error",
-            duration: 3000,
-          });
-        } finally {
-          setLoading(false);
-        }
-      };
-      setLoading(true);
-      fetchCards();
-    } else if (!session) {
-      setLoading(false);
-      setWords([]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, selectedLanguage, isSelectedLanguageLoading]);
+  const { loading, words } = useWords();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return null; //LoadingComponent
   }
 
   if ((!words || words.length === 0) && isSelectedLanguageLoading === false) {

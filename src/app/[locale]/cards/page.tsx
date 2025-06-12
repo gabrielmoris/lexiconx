@@ -1,9 +1,17 @@
-import LanguageCards from "@/components/Words/WordList";
+"use client";
+import WordList from "@/components/Words/WordList";
 import LanguageToLearn from "@/components/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
 import AiQuizzGenerator from "@/components/AiQuizzGenerator";
+import { useWords } from "@/context/wordsContext";
 
 export default function CardsPage() {
+  const { loading, words } = useWords();
+
+  if (loading) {
+    return null; //LoadingComponent
+  }
+
   return (
     <main
       className="min-h-screen w-screen md:w-xl px-5 md:px-0 flex flex-col items-center justify-start
@@ -11,10 +19,10 @@ export default function CardsPage() {
     >
       <LanguageToLearn className="mb-5" />
       <div className="flex w-full gap-5 items-center justify-between md:justify-end mb-5">
-        <AiQuizzGenerator />
+        <AiQuizzGenerator words={words} />
         <WordForm />
       </div>
-      <LanguageCards />
+      <WordList />
     </main>
   );
 }
