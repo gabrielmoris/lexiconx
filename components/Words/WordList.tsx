@@ -4,6 +4,7 @@ import React from "react";
 import WordCard from "./WordCard";
 import { useTranslations } from "next-intl";
 import { useWords } from "@/context/wordsContext";
+import LoadingComponent from "../Layout/LoadingComponen";
 
 const WordList = () => {
   const { isSelectedLanguageLoading } = useLanguage();
@@ -11,7 +12,7 @@ const WordList = () => {
   const { loading, words } = useWords();
 
   if (loading) {
-    return null; //LoadingComponent
+    return <LoadingComponent />;
   }
 
   if ((!words || words.length === 0) && isSelectedLanguageLoading === false) {

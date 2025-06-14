@@ -5,6 +5,7 @@ import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect } from "react";
+import LoadingComponent from "./Layout/LoadingComponen";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
@@ -55,7 +56,7 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
   const SelectedLanguageIcon = selectedLanguage?.icon;
 
   if (status === "loading") {
-    return null; // LoadingComponent
+    return <LoadingComponent />;
   }
 
   return (

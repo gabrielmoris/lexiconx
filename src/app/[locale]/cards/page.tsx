@@ -4,12 +4,13 @@ import LanguageToLearn from "@/components/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
 import AiQuizzGenerator from "@/components/AiQuizzGenerator";
 import { useWords } from "@/context/wordsContext";
+import LoadingComponent from "@/components/Layout/LoadingComponen";
 
 export default function CardsPage() {
   const { loading, words } = useWords();
 
   if (loading) {
-    return null; //LoadingComponent
+    return <LoadingComponent />;
   }
 
   return (

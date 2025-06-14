@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button";
+import LoadingComponent from "../Layout/LoadingComponen";
 
 const WordForm = ({ className }: { className?: string }) => {
   const { showToast } = useToastContext();
@@ -98,7 +99,7 @@ const WordForm = ({ className }: { className?: string }) => {
   }, [addWord]);
 
   if (status === "loading") {
-    return null; // LoadingComponent
+    return <LoadingComponent />;
   }
 
   if (addWord) {
