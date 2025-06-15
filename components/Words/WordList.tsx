@@ -3,7 +3,7 @@ import { useLanguage } from "@/context/LanguageToLearnContext";
 import React from "react";
 import WordCard from "./WordCard";
 import { useTranslations } from "next-intl";
-import { useWords } from "@/context/wordsContext";
+import { useWords } from "@/context/WordsContext";
 import LoadingComponent from "../Layout/LoadingComponen";
 
 const WordList = () => {

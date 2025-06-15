@@ -1,7 +1,7 @@
 import WordList from "@/components/Words/WordList";
 import LanguageToLearn from "@/components/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
-import AiQuizzGenerator from "@/components/AiQuizzGenerator";
+import AiQuizzGenerator from "@/components/AI/AiQuizzGenerator";
 
 export default function CardsPage() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 import { Word } from "@/types/Words";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useToastContext } from "./toastContext";
+import { useToastContext } from "./ToastContext";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "./LanguageToLearnContext";
 

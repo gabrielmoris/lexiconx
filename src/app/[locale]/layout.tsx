@@ -3,12 +3,13 @@ import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import "../globals.css";
-import AuthProvider from "@/components/auth/AuthProvider";
+import AuthProvider from "@/components/Auth/AuthProvider";
 import { NextThemesProvider } from "../providers";
 import Header from "@/components/Layout/Header";
-import { ToastProvider } from "@/context/toastContext";
+import { ToastProvider } from "@/context/ToastContext";
 import { LanguageToLearnProvider } from "@/context/LanguageToLearnContext";
-import { WordsProvider } from "@/context/wordsContext";
+import { WordsProvider } from "@/context/WordsContext";
+import { QuizProvider } from "@/context/QuizContext";
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -55,8 +56,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               <ToastProvider>
                 <LanguageToLearnProvider>
                   <WordsProvider>
-                    <Header />
-                    {children}
+                    <QuizProvider>
+                      <Header />
+                      {children}
+                    </QuizProvider>
                   </WordsProvider>
                 </LanguageToLearnProvider>
               </ToastProvider>
