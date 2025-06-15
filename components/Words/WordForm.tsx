@@ -19,14 +19,14 @@ const WordForm = ({ className }: { className?: string }) => {
     word: "",
     definition: "",
     phoneticNotation: "",
-    language: selectedLanguage,
+    language: selectedLanguage.language,
     session: session,
   });
 
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
-      language: selectedLanguage,
+      language: selectedLanguage.language,
       session: session,
     }));
   }, [selectedLanguage, session]);
@@ -75,9 +75,10 @@ const WordForm = ({ className }: { className?: string }) => {
         word: "",
         definition: "",
         phoneticNotation: "",
-        language: selectedLanguage,
+        language: selectedLanguage.language,
         session: session,
       });
+      setAddWord(false);
     } catch (error: unknown) {
       console.error("Failed to add word:", error);
       showToast({

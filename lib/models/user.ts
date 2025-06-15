@@ -4,7 +4,6 @@ export const languageProgressSchema = new Schema({
   language: { type: String, required: true },
   // The user's overall proficiency level in this language (0-100)
   level: { type: Number, default: 0 },
-  totalWords: { type: Number, default: 0 },
   // Words that have reached a certain SRS interval (e.g., > 21 days)
   wordsMastered: { type: Number, default: 0 },
   currentStreak: { type: Number, default: 0 },

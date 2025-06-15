@@ -4,7 +4,7 @@ import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
 import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import LoadingComponent from "./Layout/LoadingComponen";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
@@ -29,29 +29,33 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
     };
   }, []);
 
-  const handleSelect = async (language: LanguageOption) => {
-    setSelectedLanguage(language);
-    const apiCall = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        activeLanguage: language.language,
-        session,
-      }),
-    });
-
-    if (!apiCall.ok) {
-      showToast({
-        message: t("error-changing-language"),
-        variant: "error",
-        duration: 3000,
+  const handleSelect = useCallback(
+    async (language: LanguageOption) => {
+      setSelectedLanguage(language);
+      const apiCall = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          activeLanguage: language.language,
+          session,
+        }),
       });
-    }
 
-    setIsOpen(false);
-  };
+      if (!apiCall.ok) {
+        showToast({
+          message: t("error-changing-language"),
+          variant: "error",
+          duration: 3000,
+        });
+      }
+
+      setIsOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [session]
+  );
 
   const SelectedLanguageIcon = selectedLanguage?.icon;
 

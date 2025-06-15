@@ -1,42 +1,56 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Button from "./UI/Button";
 import { useTranslations } from "next-intl";
 import LexiconxLogo from "./Icons/LexiconxLogo";
 import { useToastContext } from "@/context/toastContext";
+import { useSession } from "next-auth/react";
+import { useLanguage } from "@/context/LanguageToLearnContext";
 
 const AiQuizzGenerator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("ai-quiz-generator");
+  const { data: session, status } = useSession();
+  const { selectedLanguage } = useLanguage();
 
   const { showToast } = useToastContext();
 
-  const generateQuiz = () => {
-    setIsLoading(true);
-    fetch("/api/ai-gen", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // words, // Send UserID instead and query the words from the DB
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+  const generateQuiz = useCallback(() => {
+    if (status === "authenticated") {
+      setIsLoading(true);
+      fetch("/api/ai-gen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          session,
+          selectedLanguage: selectedLanguage.language,
+        }),
       })
-      .catch(() => {
-        showToast({
-          message: t("error-generating quiz"),
-          variant: "error",
-          duration: 3000,
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("DATA: ", data);
+        })
+        .catch(() => {
+          showToast({
+            message: t("error-generating quiz"),
+            variant: "error",
+            duration: 3000,
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-      })
-      .finally(() => {
-        setIsLoading(false);
+    } else {
+      showToast({
+        message: t("error-generating quiz"),
+        variant: "error",
+        duration: 3000,
       });
-  };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, selectedLanguage]);
 
   return (
     <Button onClick={() => generateQuiz()} className="flex items-center justify-between px-5 max-w-48">
