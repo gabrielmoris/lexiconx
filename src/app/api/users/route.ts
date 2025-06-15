@@ -28,7 +28,6 @@ export async function POST(req: Request) {
     user.learningProgress.push({
       language: activeLanguage,
       level: 0,
-      totalWords: 0,
       wordsMastered: 0,
       currentStreak: 0,
       timeSpent: 0,

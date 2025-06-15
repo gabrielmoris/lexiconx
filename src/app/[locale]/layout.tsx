@@ -8,6 +8,7 @@ import { NextThemesProvider } from "../providers";
 import Header from "@/components/Layout/Header";
 import { ToastProvider } from "@/context/toastContext";
 import { LanguageToLearnProvider } from "@/context/LanguageToLearnContext";
+import { WordsProvider } from "@/context/wordsContext";
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -47,14 +48,16 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           }}
         />
       </head>
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-hidden flex flex-col items-center justify-start">
         <NextIntlClientProvider>
           <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
             <AuthProvider session={session}>
               <ToastProvider>
                 <LanguageToLearnProvider>
-                  <Header />
-                  {children}
+                  <WordsProvider>
+                    <Header />
+                    {children}
+                  </WordsProvider>
                 </LanguageToLearnProvider>
               </ToastProvider>
             </AuthProvider>

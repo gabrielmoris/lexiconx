@@ -4,7 +4,8 @@ import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
 import { useToastContext } from "@/context/toastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import LoadingComponent from "./Layout/LoadingComponen";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
@@ -28,43 +29,50 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
     };
   }, []);
 
-  const handleSelect = async (language: LanguageOption) => {
-    setSelectedLanguage(language);
-    const apiCall = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        activeLanguage: language.language,
-        session,
-      }),
-    });
-
-    if (!apiCall.ok) {
-      showToast({
-        message: t("error-changing-language"),
-        variant: "error",
-        duration: 3000,
+  const handleSelect = useCallback(
+    async (language: LanguageOption) => {
+      setSelectedLanguage(language);
+      const apiCall = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          activeLanguage: language.language,
+          session,
+        }),
       });
-    }
 
-    setIsOpen(false);
-  };
+      if (!apiCall.ok) {
+        showToast({
+          message: t("error-changing-language"),
+          variant: "error",
+          duration: 3000,
+        });
+      }
+
+      setIsOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [session]
+  );
 
   const SelectedLanguageIcon = selectedLanguage?.icon;
 
   if (status === "loading") {
-    return null; // LoadingComponent
+    return <LoadingComponent />;
   }
 
   return (
-    <div className={`w-full max-w-md md:border rounded-sm p-5 relative ${className || ""}`} ref={dropdownRef}>
+    <div
+      className={`w-full rounded-lg md:shadow-sm md:border border-gray-300 dark:border-gray-700 md:p-5 relative ${className || ""}`}
+      ref={dropdownRef}
+    >
       <h1 className="text-xl font-bold">{t("title")}</h1>
 
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}
       <div
-        className="mt-4 cursor-pointer px-4 py-2 border bg-theme-fg-light text-theme-text-light w-full dark:bg-theme-fg-dark dark:text-white rounded flex items-center justify-between"
+        className="mt-4 cursor-pointer px-4 py-2 border border-gray-200 dark:border-gray-700 bg-theme-fg-light text-theme-text-light w-full dark:bg-gray-800 dark:text-white rounded flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0} // Make it focusable
         role="button"
