@@ -51,7 +51,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           return res.json();
         })
         .then((data) => {
-          setQuiz(data);
+          setQuiz(data.quizzes);
         })
         .catch(() => {
           showToast({

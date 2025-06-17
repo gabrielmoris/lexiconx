@@ -1,4 +1,4 @@
-// Updated Gemini function with improved prompting
+// Updated Gemini function with improved prompting - FIXED VERSION
 import { GoogleGenAI } from "@google/genai";
 
 const MODEL_NAME = "gemini-2.0-flash-001";
@@ -43,36 +43,44 @@ export interface QuizGeneratorResponse {
   quizzes: Quiz[];
 }
 
-// Multilingual prompts with level-based complexity
+// Multilingual prompts with level-based complexity - FIXED VERSION
 const QUIZ_PROMPTS = {
   english: {
     systemPrompt: `You are an expert language learning quiz generator. Your task is to create engaging, educational quizzes that help users practice vocabulary in context.
 
 CRITICAL REQUIREMENTS:
-1. Generate exactly 3 quiz items
-2. Each quiz must use 3-4 words from the provided vocabulary list
-3. Sentence complexity and question difficulty must match the user's proficiency level (1-100)
-4. All questions must be answerable from the sentence content
-5. Provide exactly 4 answer choices per question, with only 1 correct answer
-6. Include phonetic notation for the target language
-7. Provide accurate English translation
+1. Generate exactly 4 quiz items (4 sentences with questions)
+2. Each quiz must use 2-4 words from the provided vocabulary list
+3. Each quiz item must have 3-5 questions about that sentence (VARY the number - don't make all quiz items have the same number of questions!)
+4. Sentence complexity, sentence length and question difficulty must match the user's proficiency level (1-100)
+5. All questions must be answerable from the sentence content
+6. Provide between 2 and 5 answer choices per question, with only 1 correct answer
+7. Include phonetic notation for the target language
+8. Provide accurate English translation
+9. IMPORTANT: Mix the number of questions per quiz item for variety (e.g., first quiz might have 3 questions, second might have 5, third might have 4, etc.)
 
 LEVEL-BASED COMPLEXITY GUIDELINES:
-- Levels 1-25 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts
-- Levels 26-50 (Intermediate): Moderate sentences (12-18 words), compound sentences, questions about relationships and implications  
-- Levels 51-75 (Advanced): Complex sentences (18-25 words), multiple clauses, analytical questions
-- Levels 76-100 (Expert): Sophisticated sentences (25+ words), advanced grammar, nuanced comprehension questions
+- Levels 1-10 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts
+- Levels 11-20 (Beginner-Intermediate): Simple sentences (10-14 words), basic grammar, slightly more detailed factual questions
+- Levels 21-30 (Intermediate): Moderate sentences (12-18 words), compound sentences, questions about relationships and implications
+- Levels 31-40 (Intermediate-Advanced): Moderate sentences (15-20 words), more complex compound sentences, basic implications
+- Levels 41-50 (Advanced): Complex sentences (18-25 words), multiple clauses, analytical questions
+- Levels 51-60 (Advanced-Expert): Complex sentences (20-28 words), multiple dependent clauses, deeper inference and nuanced contextual meaning
+- Levels 61-70 (Expert): Sophisticated sentences (25+ words), advanced grammar, nuanced comprehension questions, abstract concepts
+- Levels 71-80 (Expert-Mastery): Highly sophisticated sentences (30+ words), intricate structures, complex abstract concepts, intertextual connections
+- Levels 81-90 (Near-Native): Prose mimicking native speaker complexity, advanced rhetorical analysis, philosophical implications, fine distinctions in meaning
+- Levels 91-100 (Native/Mastery): Complete mastery of all grammatical forms and stylistic variations, deep cultural/historical context, nuanced subtext, highly academic/specialized analysis
 
 QUESTION TYPES BY LEVEL:
-- Beginner: "What/Where/When/Who" factual questions
-- Intermediate: "Why/How" reasoning questions, cause-effect relationships
-- Advanced: Inference, implication, and contextual meaning questions
-- Expert: Abstract concepts, cultural nuances, literary analysis
+- Levels 1-20 (Beginner/Beginner-Intermediate): "What/Where/When/Who" factual questions
+- Levels 21-40 (Intermediate/Intermediate-Advanced): "Why/How" reasoning questions, cause-effect relationships, basic implications
+- Levels 41-60 (Advanced/Advanced-Expert): Inference, implication, and contextual meaning questions, deeper inference and nuanced contextual meaning
+- Levels 61-100 (Expert/Expert-Mastery/Near-Native/Native-Mastery): Abstract concepts, cultural nuances, literary analysis, complex abstract concepts, intertextual connections, advanced rhetorical analysis, philosophical implications, fine distinctions in meaning, deep cultural/historical context, nuanced subtext, highly academic/specialized analysis
 
 FORMAT: Respond with valid JSON only, no additional text.`,
 
     userPrompt: (words: Word[], level: number, targetLanguage: string) => `
-Generate 3 quiz items using these ${targetLanguage} vocabulary words:
+Generate 4 quiz items using these ${targetLanguage} vocabulary words:
 ${words.map((w) => `- ${w.word} (${w.phoneticNotation}): ${w.definition}`).join("\n")}
 
 User Level: ${level}/100
@@ -81,14 +89,14 @@ Instructions Language: English
 
 Requirements:
 - Create sentences at complexity level ${level}/100
-- Use 3-4 different vocabulary words per sentence
-- Generate 2 questions per sentence
+- Use 2-4 different vocabulary words per sentence
+- Generate 3-5 questions per sentence
 - Questions must be in English
 - Answers must be in English
 - Include accurate English translations
 - Match question difficulty to user level
 
-JSON Format:
+JSON Format (IMPORTANT - Follow this structure, but vary the number of questions per quiz from 3-5):
 {
   "quizzes": [
     {
@@ -97,116 +105,142 @@ JSON Format:
       "translation": "English translation",
       "usedWords": [array of word objects used in this sentence],
       "questions": [
+        // Generate 3-5 questions per quiz item - vary the number!
+        // Example showing 4 questions (you can generate 3, 4, or 5):
         {
-          "question": "Question in English?",
+          "question": "Question about the sentence?",
           "answers": [
-            {"sentence": "Answer option in English", "isCorrect": true/false},
-            {"sentence": "Answer option in English", "isCorrect": true/false},
-            {"sentence": "Answer option in English", "isCorrect": true/false},
-            {"sentence": "Answer option in English", "isCorrect": true/false}
+            {"sentence": "Answer option", "isCorrect": true},
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Another question?",
+          "answers": [
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": true},
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Third question?",
+          "answers": [
+            {"sentence": "Answer option", "isCorrect": true},
+            {"sentence": "Answer option", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Fourth question?",
+          "answers": [
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": true},
+            {"sentence": "Answer option", "isCorrect": false},
+            {"sentence": "Answer option", "isCorrect": false}
           ]
         }
       ]
     }
   ]
-}`,
+}
+
+IMPORTANT: Each quiz item should have a DIFFERENT number of questions (between 3-5). Don't make them all the same!`,
   },
 
   spanish: {
     systemPrompt: `Eres un generador experto de cuestionarios para el aprendizaje de idiomas. Tu tarea es crear cuestionarios atractivos y educativos que ayuden a los usuarios a practicar vocabulario en contexto.
 
 REQUISITOS CRÍTICOS:
-1. Genera exactamente 3 elementos de cuestionario
-2. Cada cuestionario debe usar 3-4 palabras de la lista de vocabulario proporcionada
-3. La complejidad de las oraciones y la dificultad de las preguntas deben coincidir con el nivel de competencia del usuario (1-100)
-4. Todas las preguntas deben ser respondibles desde el contenido de la oración
-5. Proporciona exactamente 4 opciones de respuesta por pregunta, con solo 1 respuesta correcta
-6. Incluye notación fonética para el idioma objetivo
-7. Proporciona traducción precisa al español
-
-DIRECTRICES DE COMPLEJIDAD POR NIVEL:
-- Niveles 1-25 (Principiante): Oraciones simples (8-12 palabras), gramática básica, preguntas directas sobre hechos
-- Niveles 26-50 (Intermedio): Oraciones moderadas (12-18 palabras), oraciones compuestas, preguntas sobre relaciones e implicaciones
-- Niveles 51-75 (Avanzado): Oraciones complejas (18-25 palabras), múltiples cláusulas, preguntas analíticas
-- Niveles 76-100 (Experto): Oraciones sofisticadas (25+ palabras), gramática avanzada, preguntas de comprensión matizada
-
-TIPOS DE PREGUNTAS POR NIVEL:
-- Principiante: Preguntas factuales "Qué/Dónde/Cuándo/Quién"
-- Intermedio: Preguntas de razonamiento "Por qué/Cómo", relaciones causa-efecto
-- Avanzado: Inferencia, implicación y preguntas de significado contextual
-- Experto: Conceptos abstractos, matices culturales, análisis literario
+1. Genera exactamente 4 elementos de cuestionario (4 oraciones con preguntas)
+2. Cada cuestionario debe usar 2-4 palabras de la lista de vocabulario proporcionada
+3. Cada elemento del cuestionario debe tener 3-5 preguntas sobre esa oración
+4. La complejidad de la oración, la longitud de la oración y la dificultad de la pregunta deben coincidir con el nivel de dominio del usuario (1-100)
+5. Todas las preguntas deben ser respondibles a partir del contenido de la oración
+6. Proporciona entre 2 y 5 opciones de respuesta por pregunta, con solo 1 respuesta correcta
+7. Incluye la notación fonética para el idioma objetivo
+8. Proporciona una traducción precisa al español
 
 FORMATO: Responde solo con JSON válido, sin texto adicional.`,
 
     userPrompt: (words: Word[], level: number, targetLanguage: string) => `
-Genera 3 elementos de cuestionario usando estas palabras de vocabulario en ${targetLanguage}:
+Genera 4 elementos de cuestionario usando estas palabras de vocabulario en ${targetLanguage}:
 ${words.map((w) => `- ${w.word} (${w.phoneticNotation}): ${w.definition}`).join("\n")}
 
-Nivel del Usuario: ${level}/100
-Idioma Objetivo: ${targetLanguage}
-Idioma de Instrucciones: Español
+Nivel de usuario: ${level}/100
+Idioma objetivo: ${targetLanguage}
+Idioma de las instrucciones: Español
 
 Requisitos:
-- Crear oraciones con nivel de complejidad ${level}/100
-- Usar 2-4 palabras de vocabulario diferentes por oración
-- Generar al menos 2 preguntas por oración
+- Crea oraciones con un nivel de complejidad ${level}/100
+- Usa 2-4 palabras de vocabulario diferentes por oración
+- Genera 3-5 preguntas por oración
 - Las preguntas deben estar en español
 - Las respuestas deben estar en español
-- Incluir traducciones precisas al español
-- Ajustar la dificultad de las preguntas al nivel del usuario
+- Incluye traducciones precisas al español
+- Haz coincidir la dificultad de la pregunta con el nivel del usuario
 
-Formato JSON:
+Formato JSON (IMPORTANTE - Sigue esta estructura, pero varía el número de preguntas por cuestionario de 3-5):
 {
   "quizzes": [
     {
       "sentence": "oración en ${targetLanguage}",
       "phoneticNotation": "notación fonética",
       "translation": "traducción al español",
-      "usedWords": [array de objetos de palabras usadas en esta oración],
+      "usedWords": [array de objetos de palabras usados en esta oración],
       "questions": [
+        // Genera 3-5 preguntas por elemento del cuestionario - ¡varía el número!
+        // Ejemplo mostrando 3 preguntas (puedes generar 3, 4 o 5):
         {
-          "question": "¿Pregunta en español?",
+          "question": "¿Pregunta sobre la oración?",
           "answers": [
-            {"sentence": "Opción de respuesta en español", "isCorrect": true/false},
-            {"sentence": "Opción de respuesta en español", "isCorrect": true/false},
-            {"sentence": "Opción de respuesta en español", "isCorrect": true/false},
-            {"sentence": "Opción de respuesta en español", "isCorrect": true/false}
+            {"sentence": "Opción de respuesta", "isCorrect": true},
+            {"sentence": "Opción de respuesta", "isCorrect": false},
+            {"sentence": "Opción de respuesta", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "¿Otra pregunta?",
+          "answers": [
+            {"sentence": "Opción de respuesta", "isCorrect": false},
+            {"sentence": "Opción de respuesta", "isCorrect": true},
+            {"sentence": "Opción de respuesta", "isCorrect": false},
+            {"sentence": "Opción de respuesta", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "¿Tercera pregunta?",
+          "answers": [
+            {"sentence": "Opción de respuesta", "isCorrect": true},
+            {"sentence": "Opción de respuesta", "isCorrect": false}
           ]
         }
       ]
     }
   ]
-}`,
+}
+
+IMPORTANTE: Cada elemento del cuestionario debe tener un número DIFERENTE de preguntas (entre 3-5). ¡No hagas que todos tengan el mismo número!`,
   },
 
   german: {
-    systemPrompt: `Sie sind ein Experte für die Erstellung von Sprachlern-Quiz. Ihre Aufgabe ist es, ansprechende und lehrreiche Quiz zu erstellen, die Benutzern helfen, Vokabeln im Kontext zu üben.
+    systemPrompt: `Du bist ein Experte für die Erstellung von Sprachlern-Quizfragen. Deine Aufgabe ist es, ansprechende, lehrreiche Quizfragen zu erstellen, die Benutzern helfen, Vokabeln im Kontext zu üben.
 
 KRITISCHE ANFORDERUNGEN:
-1. Erstellen Sie genau 3 Quiz-Elemente
-2. Jedes Quiz muss 3-4 Wörter aus der bereitgestellten Vokabelliste verwenden
-3. Satzkomplexität und Fragenschwierigkeit müssen dem Kompetenzniveau des Benutzers entsprechen (1-100)
-4. Alle Fragen müssen aus dem Satzinhalt beantwortbar sein
-5. Bieten Sie genau 4 Antwortmöglichkeiten pro Frage mit nur 1 richtigen Antwort
-6. Fügen Sie phonetische Notation für die Zielsprache hinzu
-7. Bieten Sie eine genaue deutsche Übersetzung
+1. Erstelle genau 4 Quizfragen (4 Sätze mit Fragen)
+2. Jedes Quiz muss 2-4 Wörter aus der angegebenen Vokabelliste verwenden
+3. Jeder Quizbereich muss 3-5 Fragen zu diesem Satz haben
+4. Die Komplexität des Satzes, die Satzlänge und die Schwierigkeit der Frage müssen dem Sprachniveau des Benutzers (1-100) entsprechen
+5. Alle Fragen müssen anhand des Satzinhalts beantwortbar sein
+6. Gib pro Frage zwischen 2 und 5 Antwortmöglichkeiten an, wobei nur 1 Antwort korrekt ist
+7. Füge die phonetische Notation für die Zielsprache hinzu
+8. Gib eine genaue deutsche Übersetzung an
 
-LEVELBASIERTE KOMPLEXITÄTSRICHTLINIEN:
-- Level 1-25 (Anfänger): Einfache Sätze (8-12 Wörter), Grundgrammatik, einfache Faktenfragen
-- Level 26-50 (Mittelstufe): Mittlere Sätze (12-18 Wörter), zusammengesetzte Sätze, Fragen zu Beziehungen und Implikationen
-- Level 51-75 (Fortgeschritten): Komplexe Sätze (18-25 Wörter), mehrere Nebensätze, analytische Fragen
-- Level 76-100 (Experte): Anspruchsvolle Sätze (25+ Wörter), fortgeschrittene Grammatik, nuancierte Verständnisfragen
-
-FRAGETYPEN NACH LEVEL:
-- Anfänger: "Was/Wo/Wann/Wer" Faktenfragen
-- Mittelstufe: "Warum/Wie" Begründungsfragen, Ursache-Wirkungs-Beziehungen
-- Fortgeschritten: Inferenz-, Implikations- und kontextuelle Bedeutungsfragen
-- Experte: Abstrakte Konzepte, kulturelle Nuancen, literarische Analyse
-
-FORMAT: Antworten Sie nur mit gültigem JSON, kein zusätzlicher Text.`,
+FORMAT: Antworte nur mit gültigem JSON, kein zusätzlicher Text.`,
 
     userPrompt: (words: Word[], level: number, targetLanguage: string) => `
-Erstellen Sie 3 Quiz-Elemente mit diesen ${targetLanguage} Vokabelwörtern:
+Generiere 4 Quizfragen mit diesen ${targetLanguage} Vokabeln:
 ${words.map((w) => `- ${w.word} (${w.phoneticNotation}): ${w.definition}`).join("\n")}
 
 Benutzerlevel: ${level}/100
@@ -214,103 +248,145 @@ Zielsprache: ${targetLanguage}
 Anweisungssprache: Deutsch
 
 Anforderungen:
-- Erstellen Sie Sätze mit Komplexitätslevel ${level}/100
-- Verwenden Sie 3-4 verschiedene Vokabelwörter pro Satz
-- Generieren Sie 2 Fragen pro Satz
+- Erstelle Sätze mit dem Komplexitätsgrad ${level}/100
+- Verwende 2-4 verschiedene Vokabeln pro Satz
+- Erstelle 3-5 Fragen pro Satz
 - Fragen müssen auf Deutsch sein
 - Antworten müssen auf Deutsch sein
-- Genaue deutsche Übersetzungen einschließen
-- Fragenschwierigkeit an Benutzerlevel anpassen
+- Füge genaue deutsche Übersetzungen hinzu
+- Passe die Schwierigkeit der Frage an das Benutzerlevel an
 
-JSON-Format:
+JSON-Format (WICHTIG - Folge dieser Struktur, aber variiere die Anzahl der Fragen pro Quiz von 3-5):
 {
   "quizzes": [
     {
-      "sentence": "Satz in ${targetLanguage}",
+      "sentence": "Satz auf ${targetLanguage}",
       "phoneticNotation": "phonetische Notation",
-      "translation": "deutsche Übersetzung",
-      "usedWords": [Array der in diesem Satz verwendeten Wortobjekte],
+      "translation": "Deutsche Übersetzung",
+      "usedWords": [Array von Wortobjekten, die in diesem Satz verwendet werden],
       "questions": [
+        // Erstelle 3-5 Fragen pro Quizbereich - variiere die Anzahl!
+        // Beispiel mit 5 Fragen (du kannst 3, 4 oder 5 erstellen):
         {
-          "question": "Frage auf Deutsch?",
+          "question": "Frage über den Satz?",
           "answers": [
-            {"sentence": "Antwortmöglichkeit auf Deutsch", "isCorrect": true/false},
-            {"sentence": "Antwortmöglichkeit auf Deutsch", "isCorrect": true/false},
-            {"sentence": "Antwortmöglichkeit auf Deutsch", "isCorrect": true/false},
-            {"sentence": "Antwortmöglichkeit auf Deutsch", "isCorrect": true/false}
+            {"sentence": "Antwortoption", "isCorrect": true},
+            {"sentence": "Antwortoption", "isCorrect": false},
+            {"sentence": "Antwortoption", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Weitere Frage?",
+          "answers": [
+            {"sentence": "Antwortoption", "isCorrect": false},
+            {"sentence": "Antwortoption", "isCorrect": true},
+            {"sentence": "Antwortoption", "isCorrect": false},
+            {"sentence": "Antwortoption", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Dritte Frage?",
+          "answers": [
+            {"sentence": "Antwortoption", "isCorrect": true},
+            {"sentence": "Antwortoption", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "Vierte Frage?",
+          "answers": [
+            {"sentence": "Antwortoption", "isCorrect": false},
+            {"sentence": "Antwortoption", "isCorrect": true}
+          ]
+        },
+        {
+          "question": "Fünfte Frage?",
+          "answers": [
+            {"sentence": "Antwortoption", "isCorrect": true},
+            {"sentence": "Antwortoption", "isCorrect": false},
+            {"sentence": "Antwortoption", "isCorrect": false}
           ]
         }
       ]
     }
   ]
-}`,
+}
+
+WICHTIG: Jeder Quizbereich sollte eine ANDERE Anzahl von Fragen haben (zwischen 3-5). Mache sie nicht alle gleich!`,
   },
 
   chinese: {
-    systemPrompt: `您是语言学习测验生成专家。您的任务是创建引人入胜的教育性测验，帮助用户在语境中练习词汇。
+    systemPrompt: `你是一个专业的语言学习测验生成器。你的任务是创建引人入胜的教育测验，帮助用户在上下文中练习词汇。
 
-关键要求：
-1. 准确生成3个测验项目
-2. 每个测验必须使用提供词汇表中的3-4个单词
-3. 句子复杂性和问题难度必须匹配用户的熟练程度(1-100)
-4. 所有问题都必须能从句子内容中找到答案
-5. 每个问题提供确切的4个答案选择，只有1个正确答案
-6. 为目标语言提供拼音标注
-7. 提供准确的中文翻译
+关键要求:
+1. 严格生成 4 个测验项目 (4 个句子配问题)
+2. 每个测验必须使用所提供词汇列表中的 2-4 个单词
+3. 每个测验项目必须有 3-5 个关于该句子的问题
+4. 句子复杂性、句子长度和问题难度必须与用户的熟练程度 (1-100) 相匹配
+5. 所有问题都必须能从句子内容中找到答案
+6. 每个问题提供 2 到 5 个答案选项，只有 1 个正确答案
+7. 包含目标语言的语音标注
+8. 提供准确的中文翻译
 
-基于级别的复杂性指导：
-- 级别1-25(初级)：简单句子(8-12个词)，基础语法，关于事实的直接问题
-- 级别26-50(中级)：中等句子(12-18个词)，复合句，关于关系和含义的问题
-- 级别51-75(高级)：复杂句子(18-25个词)，多个从句，分析性问题
-- 级别76-100(专家)：复杂句子(25+个词)，高级语法，细致理解问题
-
-按级别分类的问题类型：
-- 初级："什么/哪里/什么时候/谁"事实问题
-- 中级："为什么/如何"推理问题，因果关系
-- 高级：推理、含义和语境意义问题
-- 专家：抽象概念、文化细节、文学分析
-
-格式：仅用有效JSON回复，无额外文本。`,
+格式: 只返回有效的 JSON, 不包含任何额外文本。`,
 
     userPrompt: (words: Word[], level: number, targetLanguage: string) => `
-使用这些${targetLanguage}词汇生成3个测验项目：
+使用这些 ${targetLanguage} 词汇生成 4 个测验项目:
 ${words.map((w) => `- ${w.word} (${w.phoneticNotation}): ${w.definition}`).join("\n")}
 
-用户级别：${level}/100
-目标语言：${targetLanguage}
-指导语言：中文
+用户等级: ${level}/100
+目标语言: ${targetLanguage}
+指令语言: 中文
 
-要求：
-- 创建复杂度为${level}/100级别的句子
-- 每个句子使用3-4个不同的词汇
-- 每个句子生成2个问题
-- 问题必须用中文
-- 答案必须用中文
+要求:
+- 创建复杂性等级为 ${level}/100 的句子
+- 每个句子使用 2-4 个不同的词汇
+- 每个句子生成 3-5 个问题
+- 问题必须是中文
+- 答案必须是中文
 - 包含准确的中文翻译
-- 问题难度匹配用户级别
+- 问题难度与用户等级匹配
 
-JSON格式：
+JSON 格式 (重要 - 遵循此结构，但每个测验的问题数量在3-5之间变化):
 {
   "quizzes": [
     {
-      "sentence": "${targetLanguage}中的句子",
-      "phoneticNotation": "拼音标注",
+      "sentence": "用 ${targetLanguage} 写的句子",
+      "phoneticNotation": "语音标注",
       "translation": "中文翻译",
       "usedWords": [此句子中使用的单词对象数组],
       "questions": [
+        // 每个测验项目生成3-5个问题 - 变化数量！
+        // 示例显示3个问题（你可以生成3、4或5个）:
         {
-          "question": "中文问题？",
+          "question": "关于句子的问题?",
           "answers": [
-            {"sentence": "中文答案选项", "isCorrect": true/false},
-            {"sentence": "中文答案选项", "isCorrect": true/false},
-            {"sentence": "中文答案选项", "isCorrect": true/false},
-            {"sentence": "中文答案选项", "isCorrect": true/false}
+            {"sentence": "答案选项", "isCorrect": true},
+            {"sentence": "答案选项", "isCorrect": false},
+            {"sentence": "答案选项", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "另一个问题?",
+          "answers": [
+            {"sentence": "答案选项", "isCorrect": false},
+            {"sentence": "答案选项", "isCorrect": true},
+            {"sentence": "答案选项", "isCorrect": false},
+            {"sentence": "答案选项", "isCorrect": false}
+          ]
+        },
+        {
+          "question": "第三个问题?",
+          "answers": [
+            {"sentence": "答案选项", "isCorrect": true},
+            {"sentence": "答案选项", "isCorrect": false}
           ]
         }
       ]
     }
   ]
-}`,
+}
+
+重要: 每个测验项目应该有不同数量的问题（3-5个之间）。不要让它们都相同！`,
   },
 };
 
@@ -325,7 +401,6 @@ export async function generateQuizWithWords(
   userLanguage: "english" | "spanish" | "german" | "chinese"
 ): Promise<QuizGeneratorResponse> {
   try {
-    // Input validation
     if (!apiKey) {
       throw new Error("API key is required");
     }
@@ -338,22 +413,20 @@ export async function generateQuizWithWords(
       throw new Error("Level must be between 1 and 100");
     }
 
-    // Initialize the Google Generative AI client
+    // Initialize the Google GENAI client
     const genAI = new GoogleGenAI({ apiKey });
     const model = genAI.models;
 
-    // Get the appropriate prompt for the user's language
     const promptConfig = QUIZ_PROMPTS[userLanguage];
     if (!promptConfig) {
       throw new Error(`Unsupported user language: ${userLanguage}`);
     }
 
-    // Generate the full prompt
     const systemPrompt = promptConfig.systemPrompt;
     const userPrompt = promptConfig.userPrompt(words, level, targetLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
-    // Generate content with optimized parameters for quiz generation
+    // optimized parameters
     const result = await model.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,
@@ -369,27 +442,31 @@ export async function generateQuizWithWords(
     const responseText = result.text || "";
 
     try {
-      // Parse JSON response
       const parsedResponse = JSON.parse(responseText) as QuizGeneratorResponse;
 
-      // Validate response structure
       if (!parsedResponse.quizzes || !Array.isArray(parsedResponse.quizzes)) {
         throw new Error("Response missing quizzes array");
       }
 
-      // Validate each quiz structure
+      // Validate quiz structure
       parsedResponse.quizzes.forEach((quiz, index) => {
-        if (!quiz.sentence || !quiz.translation || !quiz.questions) {
-          throw new Error(`Quiz ${index + 1} missing required fields`);
+        if (!quiz.sentence || !quiz.translation || !quiz.questions || !quiz.phoneticNotation || !quiz.usedWords) {
+          throw new Error(`Quiz ${index + 1} missing required fields (sentence, translation, questions, phoneticNotation, usedWords)`);
         }
 
-        if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) {
-          throw new Error(`Quiz ${index + 1} has no questions`);
+        if (!Array.isArray(quiz.questions) || quiz.questions.length < 3 || quiz.questions.length > 5) {
+          throw new Error(`Quiz ${index + 1} must have between 3 and 5 questions, but has ${quiz.questions.length}`);
+        }
+
+        if (!Array.isArray(quiz.usedWords)) {
+          throw new Error(`Quiz ${index + 1} 'usedWords' must be an array`);
         }
 
         quiz.questions.forEach((question, qIndex) => {
-          if (!question.question || !Array.isArray(question.answers) || question.answers.length !== 4) {
-            throw new Error(`Quiz ${index + 1}, Question ${qIndex + 1} has invalid structure`);
+          if (!question.question || !Array.isArray(question.answers) || question.answers.length < 2 || question.answers.length > 5) {
+            throw new Error(
+              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 2-5) or missing 'question' field`
+            );
           }
 
           const correctAnswers = question.answers.filter((a) => a.isCorrect);
