@@ -1,47 +1,9 @@
 // Updated Gemini function with improved prompting - FIXED VERSION
+import { QuizGeneratorResponse } from "@/types/Quiz";
+import { Word } from "@/types/Words";
 import { GoogleGenAI } from "@google/genai";
 
 const MODEL_NAME = "gemini-2.0-flash-001";
-
-export interface Word {
-  _id: string;
-  userId: string;
-  word: string;
-  definition: string;
-  phoneticNotation: string;
-  language: string;
-  tags: string[];
-  lastReviewed: Date | null;
-  interval: number;
-  repetitions: number;
-  easeFactor: number;
-  nextReview: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-export interface QuizAnswer {
-  sentence: string;
-  isCorrect: boolean;
-}
-
-export interface QuizQuestion {
-  question: string;
-  answers: QuizAnswer[];
-}
-
-export interface Quiz {
-  sentence: string;
-  phoneticNotation: string;
-  translation: string;
-  usedWords: Word[];
-  questions: QuizQuestion[];
-}
-
-export interface QuizGeneratorResponse {
-  quizzes: Quiz[];
-}
 
 // Multilingual prompts with level-based complexity - FIXED VERSION
 const QUIZ_PROMPTS = {

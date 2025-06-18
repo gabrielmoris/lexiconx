@@ -1,15 +1,20 @@
 import { Word } from "./Words";
 
-export interface Answer {
+// export interface Answer {
+//   sentence: string;
+//   isCorrect: boolean;
+//   phoneticNotation?: string;
+//   translation?: string;
+// }
+
+export interface QuizAnswer {
   sentence: string;
   isCorrect: boolean;
-  phoneticNotation?: string;
-  translation?: string;
 }
 
-export interface Question {
+export interface QuizQuestion {
   question: string;
-  answers: Answer[];
+  answers: QuizAnswer[];
 }
 
 export interface Quiz {
@@ -17,5 +22,9 @@ export interface Quiz {
   phoneticNotation: string;
   translation: string;
   usedWords: Word[];
-  questions: Question[];
+  questions: QuizQuestion[];
+}
+
+export interface QuizGeneratorResponse {
+  quizzes: Quiz[];
 }
