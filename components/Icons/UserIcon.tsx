@@ -1,5 +1,3 @@
-import React from "react";
-
 type UserIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

@@ -8,7 +8,7 @@ interface IntlOptions {
   hour12?: boolean;
 }
 
-function formatMongoDate(mongoDate: Date, options: IntlOptions = {}) {
+function formatMongoDate(mongoDate: Date | string, options: IntlOptions = {}) {
   const date = new Date(mongoDate);
 
   const defaultOptions: IntlOptions = {

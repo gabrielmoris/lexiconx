@@ -1,5 +1,3 @@
-import React from "react";
-
 type HomeIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };
