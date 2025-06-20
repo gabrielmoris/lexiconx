@@ -1,14 +1,20 @@
+import useTextToSpeech from "@/hooks/useTextToSpeech";
 import formatMongoDate from "@/lib/dateFormat";
-import { textToSpeech } from "@/lib/textToSpeech";
 import { Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
-import React from "react";
+import SoundIcon from "../Icons/SoundIcon";
 
 const WordCard = ({ word }: { word: Word }) => {
   const t = useTranslations("word-card");
 
+  const { speak } = useTextToSpeech({
+    onError: (error) => console.error("Speech error:", error),
+    rate: 1,
+    pitch: 1,
+  });
+
   const readWord = (text: string, language: string) => {
-    textToSpeech(text, language as "chinese" | "english" | "german" | "spanish");
+    speak(text, language as "chinese" | "english" | "german" | "spanish");
   };
 
   return (
@@ -22,12 +28,7 @@ const WordCard = ({ word }: { word: Word }) => {
           <h3 className="text-xl font-extrabold text-gray-900 dark:text-white">{word.word}</h3>
           {word.phoneticNotation && <p className="text-md text-gray-600 dark:text-gray-400">[{word.phoneticNotation}]</p>}
         </div>
-        <button
-          className="hover:bg-theme-fg-light rounded-md hover:dark:bg-theme-fg-dark cursor-pointer transition-colors duration-200 w-5"
-          onClick={() => readWord(word.word, word.language)}
-        >
-          🎧
-        </button>
+        <SoundIcon className="w-5 h-5 cursor-pointer" onClick={() => readWord(word.word, word.language)} />
       </div>
 
       <p className="text-gray-700 dark:text-gray-300 leading-relaxed">

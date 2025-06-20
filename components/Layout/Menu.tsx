@@ -9,13 +9,14 @@ import HomeIcon from "../Icons/Homeicon";
 import CardsIcon from "../Icons/CardsIcon";
 import UserIcon from "../Icons/UserIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
+import LoadingComponent from "./LoadingComponen";
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return null; //LoadigComponent
+    return <LoadingComponent />;
   }
 
   return (
@@ -75,6 +76,7 @@ const Menu: React.FC = () => {
           src={session?.user?.image}
           alt={session?.user?.name || "user-icn"}
           className="w-[50px] h-[50px] rounded-full cursor-pointer"
+          priority
         />
       ) : (
         <AnonIcon

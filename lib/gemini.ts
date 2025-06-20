@@ -66,6 +66,7 @@ JSON Format (IMPORTANT - Follow this structure, but vary the number of questions
       "phoneticNotation": "phonetic notation",
       "translation": "English translation",
       "usedWords": [array of word objects used in this sentence],
+      "language": "${targetLanguage}",
       "questions": [
         // Generate 3-5 questions per quiz item - vary the number!
         // Example showing 4 questions (you can generate 3, 4, or 5):
@@ -151,6 +152,7 @@ Formato JSON (IMPORTANTE - Sigue esta estructura, pero varía el número de preg
       "phoneticNotation": "notación fonética",
       "translation": "traducción al español",
       "usedWords": [array de objetos de palabras usados en esta oración],
+      "language": "${targetLanguage}",
       "questions": [
         // Genera 3-5 preguntas por elemento del cuestionario - ¡varía el número!
         // Ejemplo mostrando 3 preguntas (puedes generar 3, 4 o 5):
@@ -226,6 +228,7 @@ JSON-Format (WICHTIG - Folge dieser Struktur, aber variiere die Anzahl der Frage
       "phoneticNotation": "phonetische Notation",
       "translation": "Deutsche Übersetzung",
       "usedWords": [Array von Wortobjekten, die in diesem Satz verwendet werden],
+      "language": "${targetLanguage}",
       "questions": [
         // Erstelle 3-5 Fragen pro Quizbereich - variiere die Anzahl!
         // Beispiel mit 5 Fragen (du kannst 3, 4 oder 5 erstellen):
@@ -316,6 +319,7 @@ JSON 格式 (重要 - 遵循此结构，但每个测验的问题数量在3-5之�
       "phoneticNotation": "语音标注",
       "translation": "中文翻译",
       "usedWords": [此句子中使用的单词对象数组],
+      "language": "${targetLanguage}",
       "questions": [
         // 每个测验项目生成3-5个问题 - 变化数量！
         // 示例显示3个问题（你可以生成3、4或5个）:

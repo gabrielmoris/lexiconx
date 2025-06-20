@@ -33,5 +33,9 @@
   "ai-quiz-generator": {
     "generate-quiz": "Generate Quiz",
     "error-generating quiz": "Error Generating Quiz"
+  },
+  "quiz": {
+    "question": "Question {current}/{total}",
+    "quiz": "Quiz {current}/{total}"
   }
 }
