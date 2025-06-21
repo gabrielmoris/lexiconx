@@ -16,6 +16,34 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@keyframes blink-success {
+  0%,
+  100% {
+    background-color: theme(colors.info);
+  }
+  50% {
+    background-color: transparent;
+  }
+}
+
+@keyframes blink-error {
+  0%,
+  100% {
+    background-color: theme(colors.error);
+  }
+  50% {
+    background-color: transparent;
+  }
+}
+
+.blink-success {
+  animation: blink-success 0.5s infinite;
+}
+
+.blink-error {
+  animation: blink-error 0.5s infinite;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;

@@ -190,6 +190,7 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
 
   const getVoicesForLanguage = useCallback(
     (language: Language) => {
+      if (!language) return voices.filter((voice) => voice.lang.startsWith("en-US"));
       const langCode = languages[language].split("-")[0];
       return voices.filter((voice) => voice.lang.startsWith(langCode));
     },

@@ -39,3 +39,21 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ error: null, data: saved.activeLanguage });
 }
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get("email");
+  await connectDB();
+
+  if (!email) {
+    return NextResponse.json({ error: "Email not provided" });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  return NextResponse.json({ error: null, data: user });
+}

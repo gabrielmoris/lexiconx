@@ -36,6 +36,7 @@
   },
   "quiz": {
     "question": "Question {current}/{total}",
-    "quiz": "Quiz {current}/{total}"
+    "quiz": "Quiz {current}/{total}",
+    "error-getting-user": "Error getting user data"
   }
 }
