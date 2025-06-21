@@ -7,8 +7,7 @@ import { useToastContext } from "@/context/ToastContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useTextToSpeech from "@/hooks/useTextToSpeech";
 import { Link, useRouter } from "@/src/i18n/navigation";
-import type { QuizAnswer, Quiz } from "@/types/Quiz"; // Renamed to avoid conflict with component name
-// import { Word } from "@/types/Words";
+import type { QuizAnswer, Quiz } from "@/types/Quiz";
 import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -22,7 +21,6 @@ const QuizPage = () => {
   const [questionStep, setQuestionStep] = useState(0);
   const [isCorrect, setIsCorrect] = useState("");
   const [isWrong, setIsWrong] = useState("");
-  // const [workingWords, setWorkingWords] = useState<Word[]>([]);
 
   const t = useTranslations("quiz");
   const { showToast } = useToastContext();
@@ -83,7 +81,6 @@ const QuizPage = () => {
 
     if (quizToDisplay.length > 0) {
       setDisplayQuiz(quizToDisplay);
-      console.log(quizToDisplay);
       setIsLoadingComponent(false);
     } else {
       console.log("No quiz found in context or localStorage after hydration. Redirecting to /cards.");
@@ -111,7 +108,16 @@ const QuizPage = () => {
     if (quizStep > displayQuiz.length - 1 && questionStep > displayQuiz[quizStep].questions.length - 1) {
       return;
     }
-
+    // TODO:
+    // 1. Check if answer is correct or not and pass the function in /lib/corectionWords.ts
+    // 2. keep the updated words in a state
+    // 3. update the words in the database
+    // 4. update the words in the local storage
+    // 5. move to next question
+    // 6. if last question, move to next quiz
+    // 7. if last quiz, update user data and send to DB
+    // 8. show correct/incorrect animation
+    // 9. update UI
     if (answer.isCorrect) {
       setIsCorrect(answer.sentence);
       // setQuestionStep((prev) => prev + 1);

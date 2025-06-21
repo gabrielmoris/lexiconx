@@ -20,6 +20,9 @@ CRITICAL REQUIREMENTS:
 7. Include phonetic notation for the target language
 8. Provide accurate English translation
 9. IMPORTANT: Mix the number of questions per quiz item for variety (e.g., first quiz might have 3 questions, second might have 5, third might have 4, etc.)
+10. IMPORTANT: In the key "usedWords" of each quiz item, include the entire word object as it came from the database, including all the Mongo fields (like _id, userId, etc.)
+11. IMPORTANT: The "usedWords" array should not contain duplicates, even if the same word is used multiple times in the sentence.
+12. IMPORTANT: Each quiz must have between 3 and 5 questions.
 
 LEVEL-BASED COMPLEXITY GUIDELINES:
 - Levels 1-10 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts
@@ -65,7 +68,26 @@ JSON Format (IMPORTANT - Follow this structure, but vary the number of questions
       "sentence": "sentence in ${targetLanguage}",
       "phoneticNotation": "phonetic notation",
       "translation": "English translation",
-      "usedWords": [array of word objects used in this sentence],
+      "usedWords": [
+      // array exactly as ir came of the words used in this sentence
+        {
+          _id?: "jhskjblkdsd";
+          userId: "oañklsañlkj;
+          word: "word";
+          definition: "definition";
+          phoneticNotation: "wɜːd";
+          language: "english";
+          lastReviewed: Date | null;
+          nextReview: "2024-09-10T10:00:00.000Z";
+          interval: 0;
+          repetitions: 0;
+          easeFactor: 2.5;
+          createdAt?: "2024-09-10T10:00:00.000Z";
+          updatedAt?: "2024-09-10T10:00:00.000Z";
+          __v?: number;
+        },
+        ...
+      ],
       "language": "${targetLanguage}",
       "questions": [
         // Generate 3-5 questions per quiz item - vary the number!
@@ -124,6 +146,10 @@ REQUISITOS CRÍTICOS:
 6. Proporciona entre 2 y 5 opciones de respuesta por pregunta, con solo 1 respuesta correcta
 7. Incluye la notación fonética para el idioma objetivo
 8. Proporciona una traducción precisa al español
+9. IMPORTANTE: Varía el número de preguntas por elemento del cuestionario (entre 3-5). No hagas que todos tengan el mismo número de preguntas!
+10. IMPORTANTE: En la clave "usedWords" de cada elemento del cuestionario, incluye el objeto de palabra completo tal como venía de la base de datos, incluyendo todos los campos de Mongo (como _id, userId, etc.)
+11. IMPORTANTE: El array "usedWords" no debe contener duplicados, incluso si la misma palabra se usa varias veces en la oración.
+12. IMPORTANTE: Cada cuestionario debe tener entre 3 y 5 preguntas.
 
 FORMATO: Responde solo con JSON válido, sin texto adicional.`,
 
@@ -151,7 +177,26 @@ Formato JSON (IMPORTANTE - Sigue esta estructura, pero varía el número de preg
       "sentence": "oración en ${targetLanguage}",
       "phoneticNotation": "notación fonética",
       "translation": "traducción al español",
-      "usedWords": [array de objetos de palabras usados en esta oración],
+      "usedWords": [
+        // Array exactamente como el de las palabras usadas en esta oración
+        {
+          _id?: "jhskjblkdsd";
+          userId: "oañklsañlkj;
+          word: "word";
+          definition: "definition";
+          phoneticNotation: "wɜːd";
+          language: "english";
+          lastReviewed: Date | null;
+          nextReview: "2024-09-10T10:00:00.000Z";
+          interval: 0;
+          repetitions: 0;
+          easeFactor: 2.5;
+          createdAt?: "2024-09-10T10:00:00.000Z";
+          updatedAt?: "2024-09-10T10:00:00.000Z";
+          __v?: number;
+        },
+        ...
+      ],
       "language": "${targetLanguage}",
       "questions": [
         // Genera 3-5 preguntas por elemento del cuestionario - ¡varía el número!
@@ -200,6 +245,10 @@ KRITISCHE ANFORDERUNGEN:
 6. Gib pro Frage zwischen 2 und 5 Antwortmöglichkeiten an, wobei nur 1 Antwort korrekt ist
 7. Füge die phonetische Notation für die Zielsprache hinzu
 8. Gib eine genaue deutsche Übersetzung an
+9. WICHTIG: Variiere die Anzahl der Fragen pro Quizbereich (zwischen 3-5). Mach sie nicht alle gleich!
+10. WICHTIG: In der "usedWords"-Schlüssel von jedem Quizbereich, füge das vollständige Wortobjekt ein, wie es aus der Datenbank kam, einschließlich aller Mongo-Felder (wie _id, userId, etc.)
+11. WICHTIG: Der "usedWords"-Array darf keine Duplikate enthalten, auch wenn das gleiche Wort mehrfach im Satz verwendet wird.
+12. WICHTIG: Jedes Quiz muss zwischen 3 und 5 Fragen enthalten.
 
 FORMAT: Antworte nur mit gültigem JSON, kein zusätzlicher Text.`,
 
@@ -227,7 +276,26 @@ JSON-Format (WICHTIG - Folge dieser Struktur, aber variiere die Anzahl der Frage
       "sentence": "Satz auf ${targetLanguage}",
       "phoneticNotation": "phonetische Notation",
       "translation": "Deutsche Übersetzung",
-      "usedWords": [Array von Wortobjekten, die in diesem Satz verwendet werden],
+      "usedWords": [
+        // Array exakt wie die verwendet wurden in diesem Satz
+        {
+          _id?: "jhskjblkdsd";
+          userId: "oañklsañlkj;
+          word: "word";
+          definition: "definition";
+          phoneticNotation: "wɜːd";
+          language: "english";
+          lastReviewed: Date | null;
+          nextReview: "2024-09-10T10:00:00.000Z";
+          interval: 0;
+          repetitions: 0;
+          easeFactor: 2.5;
+          createdAt?: "2024-09-10T10:00:00.000Z";
+          updatedAt?: "2024-09-10T10:00:00.000Z";
+          __v?: number;
+        },
+        ...
+      ],
       "language": "${targetLanguage}",
       "questions": [
         // Erstelle 3-5 Fragen pro Quizbereich - variiere die Anzahl!
@@ -291,6 +359,10 @@ WICHTIG: Jeder Quizbereich sollte eine ANDERE Anzahl von Fragen haben (zwischen 
 6. 每个问题提供 2 到 5 个答案选项，只有 1 个正确答案
 7. 包含目标语言的语音标注
 8. 提供准确的中文翻译
+9. 重要: 每个测验项目应该有不同数量的问题（3-5个之间）。不要让它们都相同！
+10. 重要: 在每个测验项目的 "usedWords" 键中，包含从数据库中获取的完整单词对象，包括所有 Mongo 字段（如 _id, userId, 等）
+11. 重要: "usedWords" 数组不应该包含重复的单词，即使同一个单词在句子中多次使用也是如此。
+12. 重要: 每个测验项目必须包含 3 到 5 个问题。
 
 格式: 只返回有效的 JSON, 不包含任何额外文本。`,
 
@@ -318,7 +390,26 @@ JSON 格式 (重要 - 遵循此结构，但每个测验的问题数量在3-5之�
       "sentence": "用 ${targetLanguage} 写的句子",
       "phoneticNotation": "语音标注",
       "translation": "中文翻译",
-      "usedWords": [此句子中使用的单词对象数组],
+      "usedWords": [
+        // 与句子中使用的单词完全相同的数组
+        {
+          _id?: "jhskjblkdsd";
+          userId: "oañklsañlkj;
+          word: "word";
+          definition: "definition";
+          phoneticNotation: "wɜːd";
+          language: "english";
+          lastReviewed: Date | null;
+          nextReview: "2024-09-10T10:00:00.000Z";
+          interval: 0;
+          repetitions: 0;
+          easeFactor: 2.5;
+          createdAt?: "2024-09-10T10:00:00.000Z";
+          updatedAt?: "2024-09-10T10:00:00.000Z";
+          __v?: number;
+        },
+        ...
+      ],
       "language": "${targetLanguage}",
       "questions": [
         // 每个测验项目生成3-5个问题 - 变化数量！
