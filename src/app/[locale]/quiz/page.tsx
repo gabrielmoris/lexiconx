@@ -12,6 +12,8 @@ import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { failWords, successWords } from "@/lib/correctionWords";
+import { Word } from "@/types/Words";
 
 const QuizPage = () => {
   const { quiz: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
@@ -21,6 +23,8 @@ const QuizPage = () => {
   const [questionStep, setQuestionStep] = useState(0);
   const [isCorrect, setIsCorrect] = useState("");
   const [isWrong, setIsWrong] = useState("");
+  const [usedWords, setUsedWords] = useState<Word[]>([]);
+  const [successPoints, setSuccessPoints] = useState(0);
 
   const t = useTranslations("quiz");
   const { showToast } = useToastContext();
@@ -90,6 +94,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (displayQuiz.length > 0) {
+      console.log("QUIZ", displayQuiz);
       getVoicesForLanguage(displayQuiz[quizStep]?.language as "chinese" | "english" | "german" | "spanish");
     }
   }, [displayQuiz, quizStep, getVoicesForLanguage]);
@@ -100,29 +105,56 @@ const QuizPage = () => {
     }
   }, [displayQuiz, quizStep, speak]);
 
-  if (isLoadingComponent || isGeneratingQuiz) {
-    return <LoadingComponent />;
-  }
-
-  const handleAnswerClick = (answer: QuizAnswer) => {
+  const handleAnswerClick = (option: QuizAnswer) => {
     if (quizStep > displayQuiz.length - 1 && questionStep > displayQuiz[quizStep].questions.length - 1) {
       return;
     }
     // TODO:
-    // 1. Check if answer is correct or not and pass the function in /lib/corectionWords.ts
-    // 2. keep the updated words in a state
-    // 3. update the words in the database
-    // 4. update the words in the local storage
-    // 5. move to next question
+    // 1. Check if answer is correct or not and pass the function in /lib/corectionWords.ts (DONE)
+    // 2. keep the updated words in a state (DONE)
+    // 5. move to next question (DONE)
     // 6. if last question, move to next quiz
-    // 7. if last quiz, update user data and send to DB
+    // 7. if last quiz, update user data and send words to DB. delete localstorage
     // 8. show correct/incorrect animation
     // 9. update UI
-    if (answer.isCorrect) {
-      setIsCorrect(answer.sentence);
-      // setQuestionStep((prev) => prev + 1);
+    if (option.isCorrect) {
+      setSuccessPoints(successPoints + 1);
+      setIsCorrect(option.answer);
+      setUsedWords((prevUsedWords) => {
+        const newWordsToAdd = successWords(displayQuiz[quizStep].usedWords);
+        const wordDefinitionMap = new Map();
+
+        prevUsedWords.forEach((wordObj) => {
+          const key = `${wordObj.word}|${wordObj.definition}`;
+          wordDefinitionMap.set(key, wordObj);
+        });
+
+        newWordsToAdd.forEach((wordObj) => {
+          const key = `${wordObj.word}|${wordObj.definition}`;
+          wordDefinitionMap.set(key, wordObj); // It overwrites if key exists
+        });
+
+        return Array.from(wordDefinitionMap.values());
+      });
     } else {
-      setIsWrong(answer.sentence);
+      setSuccessPoints(successPoints - 1);
+      setIsWrong(option.answer);
+      setUsedWords((prevUsedWords) => {
+        const newWordsToAdd = failWords(displayQuiz[quizStep].usedWords);
+        const wordDefinitionMap = new Map();
+
+        prevUsedWords.forEach((wordObj) => {
+          const key = `${wordObj.word}|${wordObj.definition}`;
+          wordDefinitionMap.set(key, wordObj);
+        });
+
+        newWordsToAdd.forEach((wordObj) => {
+          const key = `${wordObj.word}|${wordObj.definition}`;
+          wordDefinitionMap.set(key, wordObj); // It overwrites if key exists
+        });
+
+        return Array.from(wordDefinitionMap.values());
+      });
     }
 
     if (questionStep < displayQuiz[quizStep].questions.length - 1) {
@@ -139,6 +171,15 @@ const QuizPage = () => {
     }
   };
 
+  // FOR TEST DELETE LATER
+  useEffect(() => {
+    console.log("usedWords", usedWords);
+  }, [usedWords]);
+
+  if (isLoadingComponent || isGeneratingQuiz) {
+    return <LoadingComponent />;
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-start py-20">
       <div className="flex flex-col gap-5" aria-live="polite">
@@ -154,16 +195,16 @@ const QuizPage = () => {
 
         <p className=" text-xl">{displayQuiz[quizStep]?.questions[questionStep].question}</p>
         <div className="flex w-full flex-col gap-5">
-          {displayQuiz[quizStep]?.questions[questionStep]?.answers.map((answer, index) => (
+          {displayQuiz[quizStep]?.questions[questionStep]?.options.map((option, index) => (
             <li
               key={index}
-              onClick={() => handleAnswerClick(answer)}
+              onClick={() => handleAnswerClick(option)}
               className={`cursor-pointer flex items-center list-none py-1 px-5 rounded-md dark:bg-theme-fg-dark bg-theme-fg-light hover:bg-secondary
-                ${isCorrect === answer.sentence ? "blink-success" : ""}
-                ${isWrong === answer.sentence && !answer.isCorrect ? "blink-error" : ""}
+                ${isCorrect === option.answer ? "blink-success" : ""}
+                ${isWrong === option.answer && !option.isCorrect ? "blink-error" : ""}
               `}
             >
-              {answer.sentence}
+              {option.answer}
             </li>
           ))}
         </div>

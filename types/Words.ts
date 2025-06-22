@@ -35,3 +35,5 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type Language = "chinese" | "english" | "german" | "spanish";

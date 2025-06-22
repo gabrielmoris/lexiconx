@@ -1,15 +1,15 @@
 import { Word } from "./Words";
 
 export interface QuizAnswer {
-  sentence: string;
+  answer: string;
   isCorrect: boolean;
-  //   phoneticNotation?: string;
-  //   translation?: string;
+  phoneticNotation?: string;
+  translation?: string;
 }
 
 export interface QuizQuestion {
   question: string;
-  answers: QuizAnswer[];
+  options: QuizAnswer[];
 }
 
 export interface Quiz {

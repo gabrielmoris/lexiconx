@@ -4,16 +4,17 @@ import User from "@/lib/models/user";
 import { connectDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import Word from "@/lib/models/word";
+import { Language } from "@/types/Words";
 
-const LANGUAGES: Record<string, "english" | "spanish" | "german" | "chinese"> = { en: "english", de: "german", zh: "chinese", es: "spanish" };
+const LANGUAGES: Record<string, Language> = { en: "english", de: "german", zh: "chinese", es: "spanish" };
 
 // Updated Next.js API endpoint
 export async function POST(req: Request) {
   try {
     const { session, languageToLearn, userLanguage, level } = (await req.json()) as {
       session: any;
-      languageToLearn: string;
-      userLanguage: "english" | "spanish" | "german" | "chinese";
+      languageToLearn: Language;
+      userLanguage: Language;
       level?: number;
     };
 
@@ -35,14 +36,41 @@ export async function POST(req: Request) {
     }
 
     // Fetch words for quiz
-    const wordsForQuiz = await Word.find({
+    const now = new Date();
+
+    const overdueWords = await Word.find({
       userId: user._id,
       language: languageToLearn,
-      nextReview: { $lte: new Date() },
+      nextReview: { $lte: now },
     })
       .sort({ nextReview: 1 })
-      .limit(10)
+      .limit(15)
       .exec();
+
+    let newWords = [];
+    const desiredTotalWords = 10;
+    const newWordsToFetch = Math.max(0, desiredTotalWords - overdueWords.length);
+
+    // Fetch some new words if overdue words are scarce
+    if (newWordsToFetch > 0) {
+      newWords = await Word.find({
+        userId: user._id,
+        language: languageToLearn,
+        repetitions: 0,
+        lastReviewed: null,
+      })
+        .sort({ createdAt: 1 })
+        .limit(newWordsToFetch)
+        .exec();
+    }
+
+    let wordsForQuiz = [...overdueWords, ...newWords];
+
+    // Simple shuffle to mix overdue and new words, and randomize within due words
+    wordsForQuiz.sort(() => Math.random() - 0.5);
+
+    // Limit to the desired number of words for the quiz
+    wordsForQuiz = wordsForQuiz.slice(0, desiredTotalWords);
 
     if (wordsForQuiz.length < 3) {
       return NextResponse.json(
