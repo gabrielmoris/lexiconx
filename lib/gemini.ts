@@ -17,11 +17,12 @@ const QUIZ_PROMPTS = {
       1. Generate EXACTLY 4 quiz items (no more, no less)
       2. Each quiz item uses at least 2-4 words from the provided vocabulary list
       3. Each quiz item has EXACTLY 3-5 questions (vary the count: one might have 3, another 4, another 5, etc.)
-      4. Each question has 2-5 answer choices with EXACTLY ONE correct answer
+      4. Each question has 4-5 answer choices with EXACTLY ONE correct answer
       5. Include phonetic notation for ALL ${learningLanguage} content
       6. Provide accurate ${userLanguage} translation for ALL sentences
       7. Sentence complexity, sentence length and question difficulty must match the user's proficiency level (1-100)
       8. All questions must be answerable from the sentence content
+      9. CRITICAL: The position of the correct answer within the 'options' array MUST be randomized. Do NOT consistently place the correct answer first
 
       OBJECT PRESERVATION REQUIREMENTS - ABSOLUTELY CRITICAL:
       - The "usedWords" array MUST contain the complete, unmodified Word objects from the input
@@ -91,9 +92,11 @@ const QUIZ_PROMPTS = {
               {
                 "question": "Question text in ${userLanguage} or ${learningLanguage} depending on the level",
                 "options": [
-                  {"answer": "Answer option", "isCorrect": true, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
-                  {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
-                  {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}",  phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"}
+                 // Generate a VARIABLE number of options per question (between 3 and 5)
+                 // The position of the correct answer MUST be randomized in this array.
+                 {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
+                 {"answer": "Answer option", "isCorrect": true, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
+                 {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}",  phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"}
                    // ... generate 2-5 options (vary count per quiz item)
                 ]
               }
@@ -124,11 +127,12 @@ const QUIZ_PROMPTS = {
       1. Genera EXACTAMENTE 4 elementos de cuestionario (ni más, ni menos)
       2. Cada elemento del cuestionario utiliza al menos 2-4 palabras de la lista de vocabulario proporcionada
       3. Cada elemento del cuestionario tiene EXACTAMENTE 3-5 preguntas (varía el número: uno puede tener 3, otro 4, otro 5, etc.)
-      4. Cada pregunta tiene 2-5 opciones de respuesta con EXACTAMENTE UNA respuesta correcta
+      4. Cada pregunta tiene 4-5 opciones de respuesta con EXACTAMENTE UNA respuesta correcta
       5. Incluye notación fonética para TODO el contenido en ${learningLanguage}
       6. Proporciona una traducción precisa en ${userLanguage} para TODAS las oraciones
       7. La complejidad de la oración, la longitud de la oración y la dificultad de la pregunta deben coincidir con el nivel de dominio del usuario (1-100)
       8. Todas las preguntas deben poder responderse a partir del contenido de la oración
+      9. CRITICAL: La posición de la respuesta correcta dentro del array 'options' DEBE ser aleatoria. NO coloques consistentemente la respuesta correcta en la primera posición
 
       REQUISITOS DE PRESERVACIÓN DE OBJETOS - ABSOLUTAMENTE CRÍTICOS:
       - El array "usedWords" DEBE contener los objetos Word completos y sin modificar de la entrada
@@ -198,6 +202,8 @@ const QUIZ_PROMPTS = {
               {
                 "question": "Texto de la pregunta en ${userLanguage} o ${learningLanguage} dependiendo del nivel",
                 "options": [
+                  // Generar 3-5 opciones de respuesta (variar el recuento por pregunta)
+                  // La posición de la respuesta correcta en el array 'options' DEBE ser aleatoria. NO coloques la respuesta correcta siempre en la misma posición
                   {"answer": "Opción de respuesta", "isCorrect": true, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"},
                   {"answer": "Opción de respuesta", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"},
                   {"answer": "Opción de respuesta", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"}
@@ -231,11 +237,12 @@ const QUIZ_PROMPTS = {
       1. Generiere EXAKT 4 Quiz-Items (nicht mehr, nicht weniger)
       2. Jedes Quiz-Item verwendet mindestens 2-4 Wörter aus der bereitgestellten Vokabelliste
       3. Jedes Quiz-Item hat EXAKT 3-5 Fragen (variiere die Anzahl: eines könnte 3, ein anderes 4, ein anderes 5 haben usw.)
-      4. Jede Frage hat 2-5 Antwortmöglichkeiten mit EXAKT EINER richtigen Antwort
+      4. Jede Frage hat 4-5 Antwortmöglichkeiten mit EXAKT EINER richtigen Antwort
       5. Füge die phonetische Notation für ALLE ${learningLanguage}-Inhalte hinzu
       6. Gib eine genaue ${userLanguage}-Übersetzung für ALLE Sätze an
       7. Satzkomplexität, Satzlänge und Schwierigkeitsgrad der Fragen müssen dem Sprachniveau des Benutzers (1-100) entsprechen
       8. Alle Fragen müssen aus dem Satzinhalt beantwortbar sein
+      9. CRITICAL: Die Position der richtigen Antwort innerhalb des 'options' Arrays MUSS zufällig sein. Platziere die richtige Antwort NICHT immer an erster Stelle
 
       ANFORDERUNGEN ZUR OBJEKTERHALTUNG - ABSOLUT KRITISCH:
       - Das "usedWords"-Array MUSS die vollständigen, unveränderten Word-Objekte aus der Eingabe enthalten
@@ -305,8 +312,10 @@ const QUIZ_PROMPTS = {
               {
                 "question": "Fragetext in ${userLanguage} oder ${learningLanguage} je nach Niveau",
                 "options": [
-                  {"answer": "Antwortoption", "isCorrect": true, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"},
+                  // 3-5 Antwortoptionen generieren (Anzahl pro Frage variieren)
+                  // Die Position der richtigen Antwort in der 'options'-Array muss ZUFÄLLIG sein. Platziere die richtige Antwort NICHT immer an der selben Position
                   {"answer": "Antwortoption", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"},
+                  {"answer": "Antwortoption", "isCorrect": true, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"},
                   {"answer": "Antwortoption", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"}
                   // ... 2-5 Optionen generieren (Anzahl pro Quiz-Item variieren)
                 ]
@@ -338,11 +347,12 @@ const QUIZ_PROMPTS = {
       1. 生成 EXACTLY 4 个测验项目（不多不少）
       2. 每个测验项目使用所提供词汇列表中至少 2-4 个单词
       3. 每个测验项目 EXACTLY 有 3-5 个问题（数量可以变化：一个可能有 3 个，另一个 4 个，另一个 5 个等）
-      4. 每个问题有 2-5 个答案选项，其中 EXACTLY ONE 是正确答案
+      4. 每个问题有 4-5 个答案选项，其中 EXACTLY ONE 是正确答案
       5. 为所有 ${learningLanguage} 内容包含拼音标记
       6. 为所有句子提供准确的 ${userLanguage} 翻译
       7. 句子复杂度、句子长度和问题难度必须与用户的熟练程度 (1-100)相匹配
       8. 所有问题必须可以从句子内容中找到答案
+      9. CRITICAL: 正确答案在 'options' 数组中的位置必须随机化。不要始终将正确答案放在第一个位置
 
       对象保留要求 - 绝对关键：
       - “usedWords”数组必须包含输入中完整、未修改的 Word 对象
@@ -412,9 +422,11 @@ const QUIZ_PROMPTS = {
               {
                 "question": "问题文本用 ${userLanguage} 或 ${learningLanguage} 编写，具体取决于级别",
                 "options": [
-                  {"answer": "答案选项", "isCorrect": true, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"},
+                  // 生成 3-5 个选项 (每个测验项目的问题数量不同)
+                  // 正确答案在 'options' 数组中的位置必须随机化
                   {"answer": "答案选项", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"},
                   {"answer": "答案选项", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"}
+                  {"answer": "答案选项", "isCorrect": true, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"},
                   // ... 生成 2-5 个选项 (每个测验项目的问题数量不同)
                 ]
               }
@@ -478,7 +490,7 @@ export async function generateQuizWithWords(
       contents: fullPrompt,
       config: {
         temperature: 0.7, // Balanced creativity and consistency
-        maxOutputTokens: 4096, // Increased for complex multilingual content
+        maxOutputTokens: 8192, // Increased for complex multilingual content
         topK: 40,
         topP: 0.95,
         responseMimeType: "application/json",
@@ -500,7 +512,7 @@ export async function generateQuizWithWords(
           throw new Error(`Quiz ${index + 1} missing required fields (sentence, translation, questions, phoneticNotation, usedWords)`);
         }
 
-        if (!Array.isArray(quiz.questions) || quiz.questions.length < 3 || quiz.questions.length > 5) {
+        if (!Array.isArray(quiz.questions) || quiz.questions.length < 2 || quiz.questions.length > 5) {
           throw new Error(`Quiz ${index + 1} must have between 3 and 5 questions, but has ${quiz.questions.length}`);
         }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import SoundIcon from "@/components/Icons/SoundIcon";
 import TextIcon from "@/components/Icons/TextIcon";
@@ -17,7 +18,12 @@ import { Word } from "@/types/Words";
 
 const QuizPage = () => {
   const { quiz: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
-  const [storedQuizzesData, , isLocalStorageHydrated] = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
+  const {
+    storedValue: storedQuizzesData,
+    isHydrated: isLocalStorageHydrated,
+    deleteValue,
+  } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
+
   const [showText, setShowText] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
   const [questionStep, setQuestionStep] = useState(0);
@@ -59,8 +65,30 @@ const QuizPage = () => {
 
       return await apiCall.json();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [session]
+  );
+
+  const saveWordsData = useCallback(
+    async (session: Session | null, words: Word[]) => {
+      const apiCall = await fetch(`/api/words`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ session, words }),
+      });
+
+      if (!apiCall.ok) {
+        showToast({
+          message: t("error-getting-user"),
+          variant: "error",
+          duration: 3000,
+        });
+      }
+
+      return await apiCall.json();
+    },
+    [usedWords]
   );
 
   useEffect(() => {
@@ -94,7 +122,6 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (displayQuiz.length > 0) {
-      console.log("QUIZ", displayQuiz);
       getVoicesForLanguage(displayQuiz[quizStep]?.language as "chinese" | "english" | "german" | "spanish");
     }
   }, [displayQuiz, quizStep, getVoicesForLanguage]);
@@ -113,15 +140,15 @@ const QuizPage = () => {
     // 1. Check if answer is correct or not and pass the function in /lib/corectionWords.ts (DONE)
     // 2. keep the updated words in a state (DONE)
     // 5. move to next question (DONE)
-    // 6. if last question, move to next quiz
-    // 7. if last quiz, update user data and send words to DB. delete localstorage
+    // 6. if last question, move to next quiz (DONE)
+    // 7. if last quiz, update user data and send words to DB. delete localstorage (DONE)
     // 8. show correct/incorrect animation
     // 9. update UI
     if (option.isCorrect) {
       setSuccessPoints(successPoints + 1);
       setIsCorrect(option.answer);
+      const newWordsToAdd = successWords(displayQuiz[quizStep].usedWords);
       setUsedWords((prevUsedWords) => {
-        const newWordsToAdd = successWords(displayQuiz[quizStep].usedWords);
         const wordDefinitionMap = new Map();
 
         prevUsedWords.forEach((wordObj) => {
@@ -139,8 +166,8 @@ const QuizPage = () => {
     } else {
       setSuccessPoints(successPoints - 1);
       setIsWrong(option.answer);
+      const newWordsToAdd = failWords(displayQuiz[quizStep].usedWords);
       setUsedWords((prevUsedWords) => {
-        const newWordsToAdd = failWords(displayQuiz[quizStep].usedWords);
         const wordDefinitionMap = new Map();
 
         prevUsedWords.forEach((wordObj) => {
@@ -171,10 +198,12 @@ const QuizPage = () => {
     }
   };
 
-  // FOR TEST DELETE LATER
   useEffect(() => {
-    console.log("usedWords", usedWords);
-  }, [usedWords]);
+    if (displayQuiz.length && quizStep > displayQuiz.length - 1) {
+      saveWordsData(session, usedWords).then((data) => console.log(data));
+      deleteValue();
+    }
+  }, [displayQuiz, quizStep, session, usedWords]);
 
   if (isLoadingComponent || isGeneratingQuiz) {
     return <LoadingComponent />;

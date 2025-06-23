@@ -41,7 +41,7 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
     [t]
   );
 
-  const [storedLangCode, setStoredLangCode] = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
+  const { storedValue: storedLangCode, setValue: setStoredLangCode } = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
   const [isSelectedLanguageLoading, setIsSelectedLanguageLoading] = useState(true);
 
   const selectedLanguage = useMemo(() => {

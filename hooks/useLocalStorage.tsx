@@ -7,10 +7,18 @@ import { useState, useEffect, useCallback } from "react";
  *
  * @param key The key under which to store the value in localStorage.
  * @param initialValue The default value to use if nothing is in localStorage.
- * @returns An object containing the stateful value, a function to update it, and a hydration status boolean.
+ * @returns An array containing the stateful value, a function to update it, a hydration status boolean, and a function to delete the value.
  */
 
-function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void, boolean] {
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): {
+  storedValue: T;
+  setValue: (value: T | ((prev: T) => T)) => void;
+  isHydrated: boolean;
+  deleteValue: () => void;
+} {
   const [storedValue, setStoredValue] = useState<T>(initialValue);
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -42,6 +50,15 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((pre
     [key, storedValue]
   );
 
+  const deleteValue = useCallback(() => {
+    try {
+      window.localStorage.removeItem(key);
+      setStoredValue(initialValue);
+    } catch (error) {
+      console.error(`Error deleting from localStorage key "${key}":`, error);
+    }
+  }, [key, initialValue]);
+
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === key && event.newValue) {
@@ -54,7 +71,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((pre
     };
   }, [key]);
 
-  return [storedValue, setValue, isHydrated];
+  return { storedValue, setValue, isHydrated, deleteValue };
 }
 
 export default useLocalStorage;

@@ -11,18 +11,18 @@ interface QuizContextType {
   quiz: Quiz[];
   setQuiz: (quizes: Quiz[]) => void;
   isLoading: boolean;
-  generateQuiz: () => void;
+  generateQuiz: () => Promise<{ success: boolean } | undefined>;
 }
 
 const QuizContext = createContext<QuizContextType>({
   quiz: [],
   setQuiz: () => {},
   isLoading: false,
-  generateQuiz: () => {},
+  generateQuiz: async () => ({ success: false }),
 });
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
-  const [, setStoredQuizzes] = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
+  const { setValue: setStoredQuizzes } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
 
   const [quiz, setQuiz] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,46 +33,49 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const t = useTranslations("ai-quiz-generator");
   const currentLocale = useLocale();
 
-  const generateQuiz = useCallback(() => {
+  const generateQuiz = useCallback(async () => {
     if (status === "authenticated") {
       setIsLoading(true);
-      fetch("/api/ai-gen", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          session,
-          languageToLearn: selectedLanguage.language,
-          userLanguage: currentLocale,
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Something went wrong and the quiz could not be generated.");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setStoredQuizzes({ quizzes: data.quizzes });
-          setQuiz(data.quizzes);
-        })
-        .catch(() => {
-          showToast({
-            message: t("error-generating quiz"),
-            variant: "error",
-            duration: 3000,
-          });
-        })
-        .finally(() => {
-          setIsLoading(false);
+      try {
+        const res = await fetch("/api/ai-gen", {
+          // Await the fetch
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            session,
+            languageToLearn: selectedLanguage.language,
+            userLanguage: currentLocale,
+          }),
         });
+
+        if (!res.ok) {
+          throw new Error("Something went wrong and the quiz could not be generated.");
+        }
+
+        const data = await res.json();
+        setStoredQuizzes({ quizzes: data.quizzes });
+        setQuiz(data.quizzes);
+        return { success: true };
+      } catch (error) {
+        console.error("Error generating quiz:", error);
+        showToast({
+          message: t("error-generating quiz"),
+          variant: "error",
+          duration: 3000,
+        });
+        return { success: false };
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       showToast({
         message: t("error-generating quiz"),
         variant: "error",
         duration: 3000,
       });
+      return { success: false };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, selectedLanguage]);
