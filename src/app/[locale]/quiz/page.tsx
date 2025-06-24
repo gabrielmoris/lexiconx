@@ -14,14 +14,16 @@ import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { failWords, successWords } from "@/lib/correctionWords";
-import { Word } from "@/types/Words";
+import { Word, User } from "@/types/Words";
+import QuyizFinished from "@/components/Quiz/QuyizFinished";
+import { calculateNextReviewData } from "@/lib/models/calculateNextReview";
 
 const QuizPage = () => {
   const { quiz: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
   const {
     storedValue: storedQuizzesData,
     isHydrated: isLocalStorageHydrated,
-    deleteValue,
+    // deleteValue,
   } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
 
   const [showText, setShowText] = useState(false);
@@ -30,15 +32,16 @@ const QuizPage = () => {
   const [isCorrect, setIsCorrect] = useState("");
   const [isWrong, setIsWrong] = useState("");
   const [usedWords, setUsedWords] = useState<Word[]>([]);
-  const [successPoints, setSuccessPoints] = useState(0);
+  const [successPoints, setSuccessPoints] = useState({ errors: 0, success: 0 });
+  const [isQuizFinished, setIsQuizFinished] = useState(false);
+  const [displayQuiz, setDisplayQuiz] = useState<Quiz[]>([]);
+  const [isLoadingComponent, setIsLoadingComponent] = useState(true);
+  const [userData, setUserData] = useState<User | null>(null);
 
   const t = useTranslations("quiz");
   const { showToast } = useToastContext();
   const router = useRouter();
   const { data: session, status } = useSession();
-
-  const [displayQuiz, setDisplayQuiz] = useState<Quiz[]>([]);
-  const [isLoadingComponent, setIsLoadingComponent] = useState(true);
 
   const { speak, getVoicesForLanguage } = useTextToSpeech({
     onError: (error) => console.error("Speech error:", error),
@@ -93,8 +96,8 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      getUserData(session).then((data) => {
-        console.log("USER DATA =>", data);
+      getUserData(session).then(({ data }: { data: User }) => {
+        setUserData(data);
       });
     }
   }, [getUserData, session, status]);
@@ -145,7 +148,7 @@ const QuizPage = () => {
     // 8. show correct/incorrect animation
     // 9. update UI
     if (option.isCorrect) {
-      setSuccessPoints(successPoints + 1);
+      setSuccessPoints({ ...successPoints, success: successPoints.success + 1 });
       setIsCorrect(option.answer);
       const newWordsToAdd = successWords(displayQuiz[quizStep].usedWords);
       setUsedWords((prevUsedWords) => {
@@ -164,7 +167,7 @@ const QuizPage = () => {
         return Array.from(wordDefinitionMap.values());
       });
     } else {
-      setSuccessPoints(successPoints - 1);
+      setSuccessPoints({ ...successPoints, errors: successPoints.errors + 1 });
       setIsWrong(option.answer);
       const newWordsToAdd = failWords(displayQuiz[quizStep].usedWords);
       setUsedWords((prevUsedWords) => {
@@ -199,14 +202,22 @@ const QuizPage = () => {
   };
 
   useEffect(() => {
-    if (displayQuiz.length && quizStep > displayQuiz.length - 1) {
-      saveWordsData(session, usedWords).then((data) => console.log(data));
-      deleteValue();
+    if (displayQuiz.length && quizStep > displayQuiz.length - 1 && userData) {
+      saveWordsData(session, usedWords).then(({ data: wordsData }: { data: Word[] }) => {
+        const lastUpdatedWords = calculateNextReviewData(wordsData, userData);
+        console.log("lastUpdatedWords => ", lastUpdatedWords);
+        // deleteValue(); // delete localstorage
+        setIsQuizFinished(true); // quiz finished
+      });
     }
-  }, [displayQuiz, quizStep, session, usedWords]);
+  }, [displayQuiz, quizStep, session, usedWords, userData]);
 
   if (isLoadingComponent || isGeneratingQuiz) {
     return <LoadingComponent />;
+  }
+
+  if (isQuizFinished) {
+    return <QuyizFinished isSuccess={successPoints.success / 2 > successPoints.errors} />;
   }
 
   return (

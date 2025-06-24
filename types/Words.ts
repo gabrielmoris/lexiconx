@@ -15,7 +15,7 @@ export interface Word {
   phoneticNotation: string;
   language: string;
   tags: string[];
-  lastReviewed: Date | null;
+  lastReviewed: string | null;
   nextReview: string;
   interval: number;
   repetitions: number;
