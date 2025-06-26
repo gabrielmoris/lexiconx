@@ -139,14 +139,7 @@ const QuizPage = () => {
     if (quizStep > displayQuiz.length - 1 && questionStep > displayQuiz[quizStep].questions.length - 1) {
       return;
     }
-    // TODO:
-    // 1. Check if answer is correct or not and pass the function in /lib/corectionWords.ts (DONE)
-    // 2. keep the updated words in a state (DONE)
-    // 5. move to next question (DONE)
-    // 6. if last question, move to next quiz (DONE)
-    // 7. if last quiz, update user data and send words to DB. delete localstorage (DONE)
-    // 8. show correct/incorrect animation
-    // 9. update UI
+
     if (option.isCorrect) {
       setSuccessPoints({ ...successPoints, success: successPoints.success + 1 });
       setIsCorrect(option.answer);
@@ -203,10 +196,17 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (displayQuiz.length && quizStep > displayQuiz.length - 1 && userData) {
+      // TODO:
+      // 1. save words to DB
+      // 2. calculate next review date
+      // 3. update user data
+      // 4. delete localstorage
+
       saveWordsData(session, usedWords).then(({ data: wordsData }: { data: Word[] }) => {
         const lastUpdatedWords = calculateNextReviewData(wordsData, userData);
         console.log("lastUpdatedWords => ", lastUpdatedWords);
-        // deleteValue(); // delete localstorage
+        console.log("successPoints => ", successPoints);
+        // deleteValue(); // delete localstorage enable for prod
         setIsQuizFinished(true); // quiz finished
       });
     }
@@ -217,7 +217,18 @@ const QuizPage = () => {
   }
 
   if (isQuizFinished) {
-    return <QuyizFinished isSuccess={successPoints.success / 2 > successPoints.errors} />;
+    return (
+      <QuyizFinished
+        isSuccess={successPoints.success / 2 > successPoints.errors}
+        successPoints={successPoints}
+        onRestartQuiz={() => {
+          setQuizStep(0);
+          setQuestionStep(0);
+          setIsQuizFinished(false);
+          setSuccessPoints({ errors: 0, success: 0 });
+        }}
+      />
+    );
   }
 
   return (
