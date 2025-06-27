@@ -19,11 +19,12 @@ import QuyizFinished from "@/components/Quiz/QuyizFinished";
 import { calculateNextReviewData } from "@/lib/models/calculateNextReview";
 
 const QuizPage = () => {
-  const { quiz: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
+  const { clientQuizzes: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
   const {
     storedValue: storedQuizzesData,
     isHydrated: isLocalStorageHydrated,
     // deleteValue,
+    // setValue,
   } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
 
   const [showText, setShowText] = useState(false);
@@ -197,6 +198,7 @@ const QuizPage = () => {
   useEffect(() => {
     if (displayQuiz.length && quizStep > displayQuiz.length - 1 && userData) {
       // TODO:
+      // 0. Now the Gemnini gives the array of _id and not the whole words.  IMPORTANT!!!
       // 1. save words to DB
       // 2. calculate next review date
       // 3. update user data
@@ -206,7 +208,9 @@ const QuizPage = () => {
         const lastUpdatedWords = calculateNextReviewData(wordsData, userData);
         console.log("lastUpdatedWords => ", lastUpdatedWords);
         console.log("successPoints => ", successPoints);
-        // deleteValue(); // delete localstorage enable for prod
+        if (successPoints.success / 2 > successPoints.errors) {
+          // deleteValue(); // Delete in production
+        }
         setIsQuizFinished(true); // quiz finished
       });
     }

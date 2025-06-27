@@ -9,7 +9,7 @@ import { User, Word } from "@/types/Words";
  * @returns {Array<object>} An array of word documents with updated SRS parameters (interval, nextReview, lastReviewed, updatedAt).
  */
 
-export const calculateNextReviewData = (wordsArray: Word[], userObject: User): Array<object> => {
+export const calculateNextReviewData = (wordsArray: Word[], userObject: User): Array<Word> => {
   const CURRENT_TIME = new Date();
   const MIN_EASE_FACTOR = 1.3;
   const DEFAULT_EASE_FACTOR = 2.5;

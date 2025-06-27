@@ -25,9 +25,8 @@ const QUIZ_PROMPTS = {
       9. CRITICAL: The position of the correct answer within the 'options' array MUST be randomized. Do NOT consistently place the correct answer first
 
       OBJECT PRESERVATION REQUIREMENTS - ABSOLUTELY CRITICAL:
-      - The "usedWords" array MUST contain the complete, unmodified Word objects from the input
-      - Preserve ALL original fields: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-      - Do NOT modify, add, or remove any fields from the original Word objects
+      - Preserve EXACTLY the Original ID: _id
+      - Do NOT modify or add any fields from the original Word objects
       - Do NOT create duplicate entries in usedWords - if a word appears multiple times in a sentence, include it only once in the array
 
       LEVEL-BASED COMPLEXITY GUIDELINES:
@@ -72,19 +71,13 @@ const QUIZ_PROMPTS = {
             "phoneticNotation": "complete phonetic notation for the sentence",
             "translation": "accurate ${userLanguage} translation",
             "usedWords": [
-              // CRITICAL: Copy ENTIRE Word objects exactly as provided above
-              // Include ALL fields: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-              // Do NOT modify any values
+              // CRITICAL: Copy EXACTLY The _id of the used words
+              // Do NOT modify any character
               // Example structure (use actual values from input):
-              {
-                "_id": "preserve_original_id",
-                "userId": "preserve_original_userId", 
-                "word": "preserve_original_word",
-                "interval": "preserve_original_interval",
-                "repetitions": "preserve_original_repetitions",
-                "easeFactor": "preserve_original_easeFactor",
-                "__v": "preserve_original___v"
-              }
+              ${words
+                .slice(0, 1)
+                .map((w) => `"${w._id}"`)
+                .join(", ")}
             ],
             "language": "${learningLanguage}",
             "questions": [
@@ -135,9 +128,8 @@ const QUIZ_PROMPTS = {
       9. CRITICAL: La posición de la respuesta correcta dentro del array 'options' DEBE ser aleatoria. NO coloques consistentemente la respuesta correcta en la primera posición
 
       REQUISITOS DE PRESERVACIÓN DE OBJETOS - ABSOLUTAMENTE CRÍTICOS:
-      - El array "usedWords" DEBE contener los objetos Word completos y sin modificar de la entrada
-      - Preserva TODOS los campos originales: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-      - NO modifiques, añadas o elimines ningún campo de los objetos Word originales
+      - Conserva EXACTAMENTE el campo de ID Original: _id
+      - NO modifiques o añadas ningún campo de los objetos Word originales
       - NO crees entradas duplicadas en usedWords; si una palabra aparece varias veces en una oración, inclúyela solo una vez en el array
 
       DIRECTRICES DE COMPLEJIDAD BASADAS EN NIVELES:
@@ -182,19 +174,13 @@ const QUIZ_PROMPTS = {
             "phoneticNotation": "notación fonética completa de la oración",
             "translation": "traducción precisa en ${userLanguage}",
             "usedWords": [
-              // CRÍTICO: Copiar OBJETOS Word COMPLETOS exactamente como se proporcionaron arriba
-              // Incluir TODOS los campos: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-              // NO modificar ningún valor
-              // Estructura de ejemplo (usar valores reales de la entrada):
-              {
-                "_id": "preservar_id_original",
-                "userId": "preservar_userId_original",  
-                "word": "preservar_palabra_original",
-                "interval": "preservar_intervalo_original",
-                "repetitions": "preservar_repeticiones_original",
-                "easeFactor": "preservar_factorFacilidad_original",
-                "__v": "preservar___v_original"
-              }
+              // IMPORTANTE: Copiar EXACTAMENTE el _id de las palabras utilizadas
+              // NO modificar ningún carácter
+              // Ejemplo de estructura (usar los valores reales de la entrada):
+              ${words
+                .slice(0, 1)
+                .map((w) => `"${w._id}"`)
+                .join(", ")}
             ],
             "language": "${learningLanguage}",
             "questions": [
@@ -245,10 +231,9 @@ const QUIZ_PROMPTS = {
       9. CRITICAL: Die Position der richtigen Antwort innerhalb des 'options' Arrays MUSS zufällig sein. Platziere die richtige Antwort NICHT immer an erster Stelle
 
       ANFORDERUNGEN ZUR OBJEKTERHALTUNG - ABSOLUT KRITISCH:
-      - Das "usedWords"-Array MUSS die vollständigen, unveränderten Word-Objekte aus der Eingabe enthalten
-      - Bewahre ALLE Originalfelder: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-      - Ändere, füge hinzu oder entferne KEINE Felder aus den ursprünglichen Word-Objekte
-      - Erstelle KEINE doppelten Einträge in usedWords - wenn ein Wort mehrfach in einem Satz vorkommt, nimm es nur einmal in das Array auf
+      - Behalten Sie die Original-ID EXAKT bei: _id
+      - Ändern oder ergänzen Sie KEINE Felder der ursprünglichen Word-Objekte
+      - Erstellen Sie KEINE Duplikate in usedWords – wenn ein Wort mehrfach in einem Satz vorkommt, fügen Sie es nur einmal in das Array ein
 
       RICHTLINIEN FÜR KOMPLEXITÄT NACH NIVEAU:
       - Niveaus 1-10 (Anfänger): Einfache Sätze (8-12 Wörter), grundlegende Grammatik, unkomplizierte Fragen zu Fakten, Antworten in ${userLanguage}
@@ -292,19 +277,13 @@ const QUIZ_PROMPTS = {
             "phoneticNotation": "vollständige phonetische Notation für den Satz",
             "translation": "genaue ${userLanguage}-Übersetzung",
             "usedWords": [
-              // KRITISCH: GANZE Word-Objekte genau wie oben angegeben kopieren
-              // ALLE Felder einschließen: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-              // KEINE Werte ändern
-              // Beispielstruktur (tatsächliche Werte aus der Eingabe verwenden):
-              {
-                "_id": "original_id_beibehalten",
-                "userId": "original_userId_beibehalten",
-                "word": "original_wort_beibehalten",
-                "interval": "original_intervall_beibehalten",
-                "repetitions": "original_wiederholungen_beibehalten",
-                "easeFactor": "original_schwierigkeitsfaktor_beibehalten",
-                "__v": "original___v_beibehalten"
-              }
+              // KRITISCH: Kopieren Sie die _id der verwendeten Wörter EXAKT
+              // Ändern Sie keinen einzigen Buchstaben
+              // Beispielstruktur (verwenden Sie tatsächliche Werte aus der Eingabe):
+               ${words
+                 .slice(0, 1)
+                 .map((w) => `"${w._id}"`)
+                 .join(", ")}
             ],
             "language": "${learningLanguage}",
             "questions": [
@@ -355,10 +334,9 @@ const QUIZ_PROMPTS = {
       9. CRITICAL: 正确答案在 'options' 数组中的位置必须随机化。不要始终将正确答案放在第一个位置
 
       对象保留要求 - 绝对关键：
-      - “usedWords”数组必须包含输入中完整、未修改的 Word 对象
-      - 保留所有原始字段:_id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-      - 不要修改、添加或删除原始 Word 对象中的任何字段
-      - 不要 在 usedWords 中创建重复条目 - 如果一个单词在句子中出现多次，只需在数组中包含一次
+      - 精确保留原始 ID: _id
+      - 请勿修改或添加原始 Word 对象的任何字段
+      - 请勿在 usedWords 中创建重复条目 - 如果一个单词在句子中出现多次，只需在数组中包含它一次
 
       基于级别的复杂度指南：
       - 级别 1-10 (初学者): 简单句子 (8-12 个字), 基础语法, 直接的事实问题, 答案为 ${userLanguage}
@@ -402,19 +380,13 @@ const QUIZ_PROMPTS = {
             "phoneticNotation": "句子的完整拼音标记",
             "translation": "准确的 ${userLanguage} 翻译",
             "usedWords": [
-              // 关键: 完全复制上面提供的整个 Word 对象
-              // 包含所有字段: _id, userId, word, definition, phoneticNotation, language, lastReviewed, nextReview, interval, repetitions, easeFactor, createdAt, updatedAt, __v
-              // 不要修改任何值
-              // 示例结构 (使用输入中的实际值):
-              {
-                "_id": "保留原始_id",
-                "userId": "保留原始_userId",
-                "word": "保留原始_word",
-                "interval": "保留原始_interval",
-                "repetitions": "保留原始_repetitions",
-                "easeFactor": "保留原始_easeFactor",
-                "__v": "保留原始___v"
-              }
+              // **关键：**精确复制所用单词的 _id
+              // 请勿修改任何字符
+              // 示例结构（使用输入中的实际值）：
+              ${words
+                .slice(0, 1)
+                .map((w) => `"${w._id}"`)
+                .join(", ")}
             ],
             "language": "${learningLanguage}",
             "questions": [

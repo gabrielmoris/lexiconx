@@ -8,23 +8,25 @@ import { useLocale, useTranslations } from "next-intl";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 interface QuizContextType {
-  quiz: Quiz[];
-  setQuiz: (quizes: Quiz[]) => void;
+  clientQuizzes: Quiz[];
+  storedQuizzesData: { quizzes: Quiz[] };
+  setClientQuizzes: (quizes: Quiz[]) => void;
   isLoading: boolean;
   generateQuiz: () => Promise<{ success: boolean } | undefined>;
 }
 
 const QuizContext = createContext<QuizContextType>({
-  quiz: [],
-  setQuiz: () => {},
+  clientQuizzes: [],
+  storedQuizzesData: { quizzes: [] },
+  setClientQuizzes: () => {},
   isLoading: false,
   generateQuiz: async () => ({ success: false }),
 });
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
-  const { setValue: setStoredQuizzes } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
+  const { setValue: setStoredQuizzes, storedValue: storedQuizzesData } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
 
-  const [quiz, setQuiz] = useState<Quiz[]>([]);
+  const [clientQuizzes, setClientQuizzes] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: session, status } = useSession();
@@ -56,7 +58,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
         const data = await res.json();
         setStoredQuizzes({ quizzes: data.quizzes });
-        setQuiz(data.quizzes);
+        setClientQuizzes(data.quizzes);
         return { success: true };
       } catch (error) {
         console.error("Error generating quiz:", error);
@@ -80,7 +82,9 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, selectedLanguage]);
 
-  return <QuizContext.Provider value={{ quiz, setQuiz, isLoading, generateQuiz }}>{children}</QuizContext.Provider>;
+  return (
+    <QuizContext.Provider value={{ clientQuizzes, setClientQuizzes, isLoading, generateQuiz, storedQuizzesData }}>{children}</QuizContext.Provider>
+  );
 };
 
 export const useQuiz = () => {
