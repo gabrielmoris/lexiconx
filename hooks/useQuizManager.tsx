@@ -11,7 +11,7 @@ import { User, Word } from "@/types/Words";
 
 export const useQuizManager = (userData: User) => {
   const { clientQuizzes: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
-  const { storedValue: storedQuizzesData, isHydrated: isLocalStorageHydrated } = useLocalStorage("quizes", { quizzes: [] });
+  const { storedValue: storedQuizzesData, isHydrated: isLocalStorageHydrated, deleteValue } = useLocalStorage("quizes", { quizzes: [] });
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -44,8 +44,14 @@ export const useQuizManager = (userData: User) => {
       if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
         try {
           const { data: wordsData } = await saveWordsData(session, usedWords);
-          calculateNextReviewData(wordsData, userData);
+          const updatedWords = calculateNextReviewData(wordsData, userData);
           setIsQuizFinished(true);
+          // Here I must write and save all the logic tha tI will have to send to the Mongodb
+          console.log("wordsData", wordsData);
+          console.log("updatedWords", updatedWords);
+          console.log("userData", userData);
+          console.log("successPoints => ", score);
+          // deleteValue(); // at the end
         } catch (error) {
           console.error("Error finishing quiz:", error);
           // Optionally show a toast message to the user
