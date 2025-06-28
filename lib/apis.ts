@@ -63,3 +63,35 @@ export const quizGeneration = async (session: Session, languageToLearn: Language
   }
   return response.json();
 };
+
+export const selectUserLearningLanguage = async (session: Session, language: Language) => {
+  const response = await fetch(`/api/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ session, activeLanguage: language }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Failed to select language");
+  }
+  return response.json();
+};
+
+export const fetchUSerWords = async (session: Session, language: Language) => {
+  const response = await fetch(`/api/words?language=${language}&email=${session.user?.email}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch user words");
+  }
+  return response.json();
+};
+
+export const getWordsByIds = async (ids: string[], userEmail: string) => {
+  const response = await fetch(`/api/words?ids=${ids.join(",")}&email=${userEmail}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch words by ID");
+  }
+  return response.json();
+};

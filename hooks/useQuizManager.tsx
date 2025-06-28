@@ -67,10 +67,12 @@ export const useQuizManager = (userData: User) => {
           setScore((prev) => ({ ...prev, success: prev.success + 1 }));
           setFeedback({ correct: option.answer, wrong: "" });
           newWordsToAdd = await successWords(session, currentQuiz.usedWords);
+          console.log("newWordsToAddgood", newWordsToAdd);
         } else {
           setScore((prev) => ({ ...prev, errors: prev.errors + 1 }));
           setFeedback({ correct: "", wrong: option.answer });
           newWordsToAdd = await failWords(session, currentQuiz.usedWords);
+          console.log("newWordsToAddbad", newWordsToAdd);
         }
       } catch (error) {
         console.error("Error processing words:", error);
