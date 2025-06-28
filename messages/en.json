@@ -32,7 +32,8 @@
   },
   "ai-quiz-generator": {
     "generate-quiz": "Generate Quiz",
-    "error-generating quiz": "Error Generating Quiz"
+    "error-generating quiz": "Error Generating Quiz",
+    "error-getting-user": "Error getting user data"
   },
   "quiz": {
     "question": "Question {current}/{total}",

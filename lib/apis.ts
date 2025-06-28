@@ -47,3 +47,19 @@ export const addword = async (formData: {
   }
   return response.json();
 };
+
+export const quizGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number) => {
+  const response = await fetch(`/api/ai-gen`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ session, languageToLearn, userLanguage, level }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Failed to generate quiz");
+  }
+  return response.json();
+};

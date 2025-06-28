@@ -1,11 +1,13 @@
 "use client";
 import { Quiz } from "@/types/Quiz";
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { useToastContext } from "./ToastContext";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "./LanguageToLearnContext";
 import { useLocale, useTranslations } from "next-intl";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { getUserData, quizGeneration } from "@/lib/apis";
+import { Language, User } from "@/types/Words";
 
 interface QuizContextType {
   clientQuizzes: Quiz[];
@@ -34,29 +36,34 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const { showToast } = useToastContext();
   const t = useTranslations("ai-quiz-generator");
   const currentLocale = useLocale();
+  const [userData, setUserData] = useState<User>();
+
+  // Fetch user data
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (status === "authenticated") {
+        try {
+          const { data } = await getUserData(session);
+          setUserData(data);
+        } catch (e) {
+          console.error(e);
+          showToast({ message: t("error-getting-user"), variant: "error", duration: 3000 });
+        }
+      }
+    };
+    fetchUser();
+  }, [session, status, showToast, t]);
 
   const generateQuiz = useCallback(async () => {
     if (status === "authenticated") {
       setIsLoading(true);
+      const learningProgress = userData?.learningProgress.find((lp) => lp.language === selectedLanguage.language);
       try {
-        const res = await fetch("/api/ai-gen", {
-          // Await the fetch
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            session,
-            languageToLearn: selectedLanguage.language,
-            userLanguage: currentLocale,
-          }),
-        });
-
-        if (!res.ok) {
-          throw new Error("Something went wrong and the quiz could not be generated.");
+        if (!learningProgress) {
+          throw new Error("Learning progress not found");
         }
+        const data = await quizGeneration(session, selectedLanguage.language, currentLocale as Language, learningProgress!.level);
 
-        const data = await res.json();
         setStoredQuizzes({ quizzes: data.quizzes });
         setClientQuizzes(data.quizzes);
         return { success: true };
@@ -80,7 +87,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
       return { success: false };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, selectedLanguage]);
+  }, [status, selectedLanguage, userData]);
 
   return (
     <QuizContext.Provider value={{ clientQuizzes, setClientQuizzes, isLoading, generateQuiz, storedQuizzesData }}>{children}</QuizContext.Provider>

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       session: any;
       languageToLearn: Language;
       userLanguage: Language;
-      level?: number;
+      level: number;
     };
 
     const apikey = process.env.GEMINI_API_KEY;
