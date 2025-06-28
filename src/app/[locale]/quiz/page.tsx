@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import { failWords, successWords } from "@/lib/correctionWords";
 import { Word, User } from "@/types/Words";
 import QuyizFinished from "@/components/Quiz/QuyizFinished";
-import { calculateNextReviewData } from "@/lib/models/calculateNextReview";
+import { calculateNextReviewData } from "@/lib/mongodb/models/calculateNextReview";
 
 const QuizPage = () => {
   const { clientQuizzes: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
@@ -136,63 +136,67 @@ const QuizPage = () => {
     }
   }, [displayQuiz, quizStep, speak]);
 
-  const handleAnswerClick = (option: QuizAnswer) => {
+  const handleAnswerClick = async (option: QuizAnswer) => {
     if (quizStep > displayQuiz.length - 1 && questionStep > displayQuiz[quizStep].questions.length - 1) {
       return;
     }
 
+    let newWordsToAdd: Word[] = [];
+
     if (option.isCorrect) {
       setSuccessPoints({ ...successPoints, success: successPoints.success + 1 });
       setIsCorrect(option.answer);
-      const newWordsToAdd = successWords(displayQuiz[quizStep].usedWords);
-      setUsedWords((prevUsedWords) => {
-        const wordDefinitionMap = new Map();
-
-        prevUsedWords.forEach((wordObj) => {
-          const key = `${wordObj.word}|${wordObj.definition}`;
-          wordDefinitionMap.set(key, wordObj);
+      try {
+        newWordsToAdd = await successWords(session as Session, displayQuiz[quizStep].usedWords);
+      } catch (error) {
+        console.error("Error processing successful words:", error);
+        showToast({
+          message: t("error-processing-words"),
+          variant: "error",
+          duration: 3000,
         });
-
-        newWordsToAdd.forEach((wordObj) => {
-          const key = `${wordObj.word}|${wordObj.definition}`;
-          wordDefinitionMap.set(key, wordObj); // It overwrites if key exists
-        });
-
-        return Array.from(wordDefinitionMap.values());
-      });
+      }
     } else {
       setSuccessPoints({ ...successPoints, errors: successPoints.errors + 1 });
       setIsWrong(option.answer);
-      const newWordsToAdd = failWords(displayQuiz[quizStep].usedWords);
-      setUsedWords((prevUsedWords) => {
-        const wordDefinitionMap = new Map();
-
-        prevUsedWords.forEach((wordObj) => {
-          const key = `${wordObj.word}|${wordObj.definition}`;
-          wordDefinitionMap.set(key, wordObj);
+      try {
+        newWordsToAdd = await failWords(session as Session, displayQuiz[quizStep].usedWords);
+      } catch (error) {
+        console.error("Error processing failed words:", error);
+        showToast({
+          message: t("error-processing-words"),
+          variant: "error",
+          duration: 3000,
         });
-
-        newWordsToAdd.forEach((wordObj) => {
-          const key = `${wordObj.word}|${wordObj.definition}`;
-          wordDefinitionMap.set(key, wordObj); // It overwrites if key exists
-        });
-
-        return Array.from(wordDefinitionMap.values());
-      });
+      }
     }
 
-    if (questionStep < displayQuiz[quizStep].questions.length - 1) {
-      setTimeout(() => {
-        setIsCorrect("");
-        setIsWrong("");
+    setUsedWords((prevUsedWords) => {
+      const wordDefinitionMap = new Map<string, Word>();
+
+      prevUsedWords.forEach((wordObj) => {
+        const key = `${wordObj.word}|${wordObj.definition}`;
+        wordDefinitionMap.set(key, wordObj);
+      });
+
+      newWordsToAdd.forEach((wordObj) => {
+        const key = `${wordObj.word}|${wordObj.definition}`;
+        wordDefinitionMap.set(key, wordObj);
+      });
+
+      return Array.from(wordDefinitionMap.values());
+    });
+
+    setTimeout(() => {
+      setIsCorrect("");
+      setIsWrong("");
+      if (questionStep < displayQuiz[quizStep].questions.length - 1) {
         setQuestionStep((prev) => prev + 1);
-      }, 0); // change to 2000
-    } else {
-      setTimeout(() => {
+      } else {
         setQuizStep((prev) => prev + 1);
         setQuestionStep(0);
-      }, 0); // change to 2000
-    }
+      }
+    }, 500);
   };
 
   useEffect(() => {
@@ -215,6 +219,10 @@ const QuizPage = () => {
       });
     }
   }, [displayQuiz, quizStep, session, usedWords, userData]);
+
+  useEffect(() => {
+    console.log("NewWorkingWords", usedWords);
+  }, [usedWords]);
 
   if (isLoadingComponent || isGeneratingQuiz) {
     return <LoadingComponent />;

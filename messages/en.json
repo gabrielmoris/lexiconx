@@ -37,7 +37,8 @@
   "quiz": {
     "question": "Question {current}/{total}",
     "quiz": "Quiz {current}/{total}",
-    "error-getting-user": "Error getting user data"
+    "error-getting-user": "Error getting user data",
+    "error-processing-words": "Error processing Words"
   },
   "quiz-finished": {
     "congratulations": "Contratulations!",

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { generateQuizWithWords } from "@/lib/gemini";
-import User from "@/lib/models/user";
-import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/mongodb/models/user";
+import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
-import Word from "@/lib/models/word";
+import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
 
 const LANGUAGES: Record<string, Language> = { en: "english", de: "german", zh: "chinese", es: "spanish" };

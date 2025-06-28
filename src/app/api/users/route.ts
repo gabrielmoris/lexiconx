@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import User from "@/lib/models/user";
-import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/mongodb/models/user";
+import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
