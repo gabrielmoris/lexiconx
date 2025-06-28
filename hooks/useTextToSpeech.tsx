@@ -116,6 +116,15 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     };
   }, [isMounted, isSupported]);
 
+  const getVoicesForLanguage = useCallback(
+    (language: Language) => {
+      if (!language) return voices.filter((voice) => voice.lang.startsWith("en-US"));
+      const langCode = languages[language].split("-")[0];
+      return voices.filter((voice) => voice.lang.startsWith(langCode));
+    },
+    [voices, languages]
+  );
+
   const speak = useCallback(
     (text: string, language: Language) => {
       if (!isMounted || !isSupported) {
@@ -133,7 +142,20 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
       // Cancel any ongoing speech
       synth.cancel();
 
+      // 1. Find a suitable voice for the requested language.
+      const voicesForLang = getVoicesForLanguage(language);
+      const voiceToUse = voicesForLang[0]; // Let's just pick the first available one.
+
+      // 2. If no voice is found, log an error but still try to speak.
+      //    The browser might fall back to a default voice.
+      if (!voiceToUse) {
+        console.warn(`No voices found for language: ${language}. The browser will attempt to use a default.`);
+      }
+
       const utterance = new SpeechSynthesisUtterance(text);
+
+      // 3. Explicitly assign the found voice and language.
+      utterance.voice = voiceToUse;
       utterance.lang = languages[language];
       utterance.rate = options.rate ?? 1;
       utterance.pitch = options.pitch ?? 1;
@@ -162,7 +184,7 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
       utteranceRef.current = utterance;
       synth.speak(utterance);
     },
-    [isMounted, isSupported, options, languages]
+    [getVoicesForLanguage, isMounted, isSupported, languages, options]
   );
 
   const cancel = useCallback(() => {
@@ -186,15 +208,6 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     window.speechSynthesis.resume();
     setIsPaused(false);
   }, [isMounted, isSupported]);
-
-  const getVoicesForLanguage = useCallback(
-    (language: Language) => {
-      if (!language) return voices.filter((voice) => voice.lang.startsWith("en-US"));
-      const langCode = languages[language].split("-")[0];
-      return voices.filter((voice) => voice.lang.startsWith(langCode));
-    },
-    [voices, languages]
-  );
 
   return {
     speak,

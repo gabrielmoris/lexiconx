@@ -23,6 +23,12 @@ export const useQuizManager = (userData: User) => {
   const [usedWords, setUsedWords] = useState<Word[]>([]);
   const [score, setScore] = useState({ errors: 0, success: 0 });
   const [isQuizFinished, setIsQuizFinished] = useState(false);
+  const [startingTimer, setStartingTimer] = useState<number>();
+
+  useEffect(() => {
+    const start = Date.now();
+    setStartingTimer(start);
+  }, []);
 
   // Effect to load the quiz from context or localStorage
   useEffect(() => {
@@ -42,15 +48,35 @@ export const useQuizManager = (userData: User) => {
     if (!session) return;
     const finishQuiz = async () => {
       if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
+        const actualTimeEnd = Date.now();
         try {
           const { data: wordsData } = await saveWordsData(session, usedWords);
           const updatedWords = calculateNextReviewData(wordsData, userData);
           setIsQuizFinished(true);
+          // TODO:
+          // 1. Update the user's learning progress based on the quiz results
+          // 2. Update the user's words based on the quiz results
+          // 3. Update the user's level, words mastered, current streak,last session, time spent...
+          // 4. Save the user's data to the database
+          // 5. save the updated words in the database
+          // 6. Delete the quiz from localStorage
+
           // Here I must write and save all the logic tha tI will have to send to the Mongodb
           console.log("wordsData", wordsData);
           console.log("updatedWords", updatedWords);
           console.log("userData", userData);
           console.log("successPoints => ", score);
+          // do logic here
+          const learningProgress = userData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
+          if (!learningProgress) throw new Error("Learning progress not found");
+          learningProgress.level =
+            score.success / 2 > score.errors ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
+          learningProgress.wordsMastered += updatedWords.filter((word) => word.repetitions > 0).length;
+          learningProgress.currentStreak = score.success > 0 ? learningProgress.currentStreak + 1 : 0;
+          learningProgress.lastSessionDate = new Date();
+          if (!startingTimer) throw new Error("Starting timer not found");
+          learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer); // Saved in miliseconds
+          console.log(learningProgress); // Integrate it to the user and send to an API
           // deleteValue(); // at the end
         } catch (error) {
           console.error("Error finishing quiz:", error);
@@ -59,7 +85,7 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
-  }, [quizStep, displayQuiz, userData, session, usedWords]);
+  }, [quizStep, displayQuiz, userData, session, usedWords, score]);
 
   const handleAnswerClick = useCallback(
     async (option: QuizAnswer) => {
@@ -73,12 +99,10 @@ export const useQuizManager = (userData: User) => {
           setScore((prev) => ({ ...prev, success: prev.success + 1 }));
           setFeedback({ correct: option.answer, wrong: "" });
           newWordsToAdd = await successWords(session, currentQuiz.usedWords);
-          console.log("newWordsToAddgood", newWordsToAdd);
         } else {
           setScore((prev) => ({ ...prev, errors: prev.errors + 1 }));
           setFeedback({ correct: "", wrong: option.answer });
           newWordsToAdd = await failWords(session, currentQuiz.usedWords);
-          console.log("newWordsToAddbad", newWordsToAdd);
         }
       } catch (error) {
         console.error("Error processing words:", error);
