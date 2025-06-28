@@ -1,3 +1,5 @@
+import { Language } from "./Words";
+
 export interface QuizAnswer {
   answer: string;
   isCorrect: boolean;
@@ -12,7 +14,7 @@ export interface QuizQuestion {
 
 export interface Quiz {
   sentence: string;
-  language: string;
+  language: Language;
   phoneticNotation: string;
   translation: string;
   usedWords: string[];

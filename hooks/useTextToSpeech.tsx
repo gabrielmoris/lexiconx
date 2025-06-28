@@ -1,6 +1,5 @@
+import { Language } from "@/types/Words";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
-
-type Language = "chinese" | "english" | "german" | "spanish";
 
 interface UseTextToSpeechOptions {
   onStart?: () => void;

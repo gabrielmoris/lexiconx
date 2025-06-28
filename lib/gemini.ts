@@ -427,8 +427,8 @@ export async function generateQuizWithWords(
   apiKey: string,
   words: Word[],
   level: number,
-  learningLanguage: "english" | "spanish" | "german" | "chinese",
-  userLanguage: "english" | "spanish" | "german" | "chinese"
+  learningLanguage: Language,
+  userLanguage: Language
 ): Promise<QuizGeneratorResponse> {
   try {
     if (!apiKey) {

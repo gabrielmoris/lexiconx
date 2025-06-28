@@ -1,6 +1,6 @@
 import useTextToSpeech from "@/hooks/useTextToSpeech";
 import formatMongoDate from "@/lib/dateFormat";
-import { Word } from "@/types/Words";
+import { Language, Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
 import SoundIcon from "../Icons/SoundIcon";
 
@@ -14,7 +14,7 @@ const WordCard = ({ word }: { word: Word }) => {
   });
 
   const readWord = (text: string, language: string) => {
-    speak(text, language as "chinese" | "english" | "german" | "spanish");
+    speak(text, language as Language);
   };
 
   return (
