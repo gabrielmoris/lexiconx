@@ -1,9 +1,10 @@
 "use client";
 import { Word } from "@/types/Words";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useToastContext } from "./toastContext";
+import { useToastContext } from "./ToastContext";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "./LanguageToLearnContext";
+import { fetchUSerWords } from "@/lib/apis";
 
 interface WordsContextType {
   words: Word[];
@@ -30,13 +31,7 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
     if (session && !isSelectedLanguageLoading) {
       const fetchCards = async () => {
         try {
-          const response = await fetch(`/api/words?language=${selectedLanguage.language}&email=${session.user?.email}`);
-
-          if (!response.ok) {
-            throw new Error("Something went wrong and the cards could not be fetched.");
-          }
-
-          const { data } = await response.json();
+          const { data } = await fetchUSerWords(session, selectedLanguage.language);
           setWords(data);
         } catch (err) {
           showToast({

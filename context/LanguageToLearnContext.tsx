@@ -6,9 +6,10 @@ import EnglishFlag from "@/components/Icons/EnglishFlag";
 import GermanFlag from "@/components/Icons/GermanFlag";
 import { useTranslations } from "next-intl";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
+import { Language } from "@/types/Words";
 
 export interface LanguageOption {
-  language: "german" | "chinese" | "english" | "spanish";
+  language: Language;
   icon: React.ComponentType<{ className?: string }>;
   name: string;
 }
@@ -41,7 +42,7 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
     [t]
   );
 
-  const [storedLangCode, setStoredLangCode] = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
+  const { storedValue: storedLangCode, setValue: setStoredLangCode } = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
   const [isSelectedLanguageLoading, setIsSelectedLanguageLoading] = useState(true);
 
   const selectedLanguage = useMemo(() => {

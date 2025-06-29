@@ -1,5 +1,3 @@
-import React from "react";
-
 type ChinaFlagProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

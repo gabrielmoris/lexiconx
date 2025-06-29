@@ -1,5 +1,3 @@
-import React from "react";
-
 type CardsIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

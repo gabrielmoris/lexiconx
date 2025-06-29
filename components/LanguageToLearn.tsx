@@ -1,11 +1,12 @@
 "use client";
 
 import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
-import { useToastContext } from "@/context/toastContext";
+import { useToastContext } from "@/context/ToastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import LoadingComponent from "./Layout/LoadingComponen";
+import { selectUserLearningLanguage } from "@/lib/apis";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
   const t = useTranslations("languageToLearn");
@@ -32,23 +33,18 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
   const handleSelect = useCallback(
     async (language: LanguageOption) => {
       setSelectedLanguage(language);
-      const apiCall = await fetch("/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          activeLanguage: language.language,
-          session,
-        }),
-      });
 
-      if (!apiCall.ok) {
+      try {
+        if (!session) throw new Error("Session not found");
+        await selectUserLearningLanguage(session, language.language);
+      } catch (error) {
+        console.error("Failed to select language:", error);
         showToast({
           message: t("error-changing-language"),
           variant: "error",
           duration: 3000,
         });
+        return;
       }
 
       setIsOpen(false);

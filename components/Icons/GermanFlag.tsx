@@ -1,5 +1,3 @@
-import React from "react";
-
 type GermanFlagProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

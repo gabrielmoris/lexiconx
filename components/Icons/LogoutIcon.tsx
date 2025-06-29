@@ -1,5 +1,3 @@
-import React from "react";
-
 type LogoutIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

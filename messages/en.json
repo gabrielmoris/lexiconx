@@ -32,6 +32,21 @@
   },
   "ai-quiz-generator": {
     "generate-quiz": "Generate Quiz",
-    "error-generating quiz": "Error Generating Quiz"
+    "error-generating quiz": "Error Generating Quiz",
+    "error-getting-user": "Error getting user data"
+  },
+  "quiz": {
+    "question": "Question {current}/{total}",
+    "quiz": "Quiz {current}/{total}",
+    "error-getting-user": "Error getting user data",
+    "error-processing-words": "Error processing Words"
+  },
+  "quiz-finished": {
+    "congratulations": "Contratulations!",
+    "you-answered-correctly": "You answered correctly {count} of {total} questions",
+    "better-luck-next-time": "Better luck next time",
+    "fantastic-job-keep-it-up": "Fantastic job, keep it up!!",
+    "dont-give-up-try-again": "Don't give up yet, try again!",
+    "try-again": "Try again"
   }
 }

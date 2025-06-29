@@ -15,8 +15,8 @@ export interface Word {
   phoneticNotation: string;
   language: string;
   tags: string[];
-  lastReviewed: Date;
-  nextReview: Date;
+  lastReviewed: string | null;
+  nextReview: string;
   interval: number;
   repetitions: number;
   easeFactor: number;
@@ -35,3 +35,5 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type Language = "chinese" | "english" | "german" | "spanish";

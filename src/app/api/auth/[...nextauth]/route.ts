@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions, DefaultUser } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { connectDB } from "@/lib/mongodb";
-import User, { IUser } from "@/lib/models/user";
+import { connectDB } from "@/lib/mongodb/mongodb";
+import User, { IUser } from "@/lib/mongodb/models/user";
 
 // Extend the NextAuth User type with your custom 'dbId'
 // This ensures 'user.dbId' is recognized in callbacks
@@ -21,7 +21,7 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,

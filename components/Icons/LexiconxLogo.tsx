@@ -1,19 +1,8 @@
-"use client";
-import { useTheme } from "next-themes";
-import React, { useEffect } from "react";
-
 type LexiconxLogoProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };
 
 const LexiconxLogo: React.FC<LexiconxLogoProps> = ({ className, ...props }) => {
-  const { resolvedTheme } = useTheme();
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
-
-  useEffect(() => {
-    setIsDarkMode(resolvedTheme === "dark");
-  }, [resolvedTheme]);
-
   return (
     <svg width="300" height="300" viewBox="0 -20 300 300" className={className} {...props}>
       <defs id="SvgjsDefs1013"></defs>
@@ -21,7 +10,7 @@ const LexiconxLogo: React.FC<LexiconxLogoProps> = ({ className, ...props }) => {
         id="SvgjsG1014"
         data-featurekey="symbolContainer"
         transform="matrix(1.6257739402346432,0,0,1.6257739402346432,3.0005682431689222,-19.99971956075531)"
-        fill={isDarkMode ? "#f8f8f8" : "#1e272e"}
+        fill="currentColor"
       >
         <path
           xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +33,7 @@ const LexiconxLogo: React.FC<LexiconxLogoProps> = ({ className, ...props }) => {
         id="SvgjsG1015"
         data-featurekey="monogramFeature-0"
         transform="matrix(3.510337672703684,0,0,3.510337672703684,87.86007874167602,-56.5362394156775)"
-        fill={isDarkMode ? "#f8f8f8" : "#1e272e"}
+        fill="currentColor"
       >
         <path d="M36.54 70.14 c-14.46 7.02 -30.54 14.58 -33.66 14.58 c-2.7 0 -3.12 -1.86 -2.7 -4.62 c0.66 -4.62 6.24 -22.62 10.62 -39 c4.26 -15.78 6 -16.02 6.78 -16.14 c0.66 -0.06 1.02 -0.24 1.56 -0.54 c0.6 -0.36 0.24 1.2 -0.96 2.04 c-0.96 0.66 -1.62 1.8 -3.18 6.24 c-1.8 4.92 -3.06 8.22 -4.92 15.06 c-2.7 9.9 -7.38 27.06 -7.86 30.66 c-0.3 2.22 -0.3 4.38 0.9 4.38 s3.3 -0.42 13.92 -4.92 c10.68 -4.44 18.6 -8.46 19.86 -8.94 c0.3 -0.06 1.38 0.36 -0.36 1.2 z"></path>
       </g>

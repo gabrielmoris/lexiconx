@@ -1,5 +1,3 @@
-import React from "react";
-
 type AnonIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };

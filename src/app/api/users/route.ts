@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import User from "@/lib/models/user";
-import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/mongodb/models/user";
+import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -38,4 +38,22 @@ export async function POST(req: Request) {
   const saved = await user.save();
 
   return NextResponse.json({ error: null, data: saved.activeLanguage });
+}
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get("email");
+  await connectDB();
+
+  if (!email) {
+    return NextResponse.json({ error: "Email not provided" });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  return NextResponse.json({ error: null, data: user });
 }

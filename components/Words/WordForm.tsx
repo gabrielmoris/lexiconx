@@ -1,11 +1,12 @@
 "use client";
 import { useLanguage } from "@/context/LanguageToLearnContext";
-import { useToastContext } from "@/context/toastContext";
+import { useToastContext } from "@/context/ToastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import LoadingComponent from "../Layout/LoadingComponen";
+import { addword } from "@/lib/apis";
 
 const WordForm = ({ className }: { className?: string }) => {
   const { showToast } = useToastContext();
@@ -45,25 +46,8 @@ const WordForm = ({ className }: { className?: string }) => {
       return;
     }
     try {
-      const response = await fetch("/api/words", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-        }),
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        showToast({
-          message: t("error-adding-word"),
-          variant: "error",
-          duration: 3000,
-        });
-        throw new Error(result.error || "Something went wrong");
-      }
+      if (!formData.session) throw new Error("Session not found");
+      addword(formData);
 
       showToast({
         message: t("success-word-added"),

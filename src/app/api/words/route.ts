@@ -1,7 +1,8 @@
-import Word from "@/lib/models/word";
-import User from "@/lib/models/user";
-import { connectDB } from "@/lib/mongodb";
+import Word from "@/lib/mongodb/models/word";
+import User from "@/lib/mongodb/models/user";
+import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
+// import type { Word as WordType } from "@/types/Words";
 
 export async function POST(req: Request) {
   const { word, definition, phoneticNotation, language, session } = await req.json();
@@ -30,9 +31,12 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const language = searchParams.get("language");
   const email = searchParams.get("email");
+  const worIds = searchParams.get("ids");
+  const ids = worIds ? worIds.split(",") : [];
+
   await connectDB();
 
-  if (!language || !email) {
+  if ((!language || !email) && !ids.length) {
     return NextResponse.json({ error: "Language or email not provided" });
   }
 
@@ -42,7 +46,44 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "User not found" });
   }
 
-  const words = await Word.find({ userId: user._id, language });
+  if (ids.length) {
+    const words = await Word.find({ _id: { $in: ids } });
+    return NextResponse.json({ error: null, data: words });
+  } else {
+    const words = await Word.find({ userId: user._id, language });
+    return NextResponse.json({ error: null, data: words });
+  }
+}
+
+export async function PUT(req: Request) {
+  const { words, session } = await req.json();
+  await connectDB();
+
+  if (!session.user.email) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  // Uncomment for PROD
+
+  // const updatedWords = await Word.bulkWrite(
+  //   words.map((word: WordType) => ({
+  //     updateOne: {
+  //       filter: { _id: word._id },
+  //       update: {
+  //         nextReview: word.nextReview,
+  //         interval: word.interval,
+  //         repetitions: word.repetitions,
+  //         easeFactor: word.easeFactor,
+  //       },
+  //     },
+  //   }))
+  // );
 
   return NextResponse.json({ error: null, data: words });
 }
