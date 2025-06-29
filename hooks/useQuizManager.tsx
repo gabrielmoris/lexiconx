@@ -45,16 +45,17 @@ export const useQuizManager = (userData: User) => {
 
   // Effect to handle the end of the quiz
   useEffect(() => {
-    if (!session) return;
+    if (isQuizFinished || !session) return;
     const finishQuiz = async () => {
       if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
         const actualTimeEnd = Date.now();
         try {
           const updatedWords = calculateNextReviewData(usedWords, userData);
           await updateWordsData(session, updatedWords);
+          const updatedUserData: User = JSON.parse(JSON.stringify(userData));
 
           const isSucceed = score.success / 2 > score.errors;
-          const learningProgress = userData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
+          const learningProgress = updatedUserData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
           if (!learningProgress) throw new Error("Learning progress not found");
           learningProgress.level = isSucceed ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
           learningProgress.wordsMastered += updatedWords.filter((word) => word.repetitions > 0).length;
@@ -63,7 +64,7 @@ export const useQuizManager = (userData: User) => {
           if (!startingTimer) throw new Error("Starting timer not found");
           learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer); // Saved in miliseconds
 
-          await updateUserData(session, userData);
+          await updateUserData(session, updatedUserData);
           if (isSucceed) {
             deleteValue();
           }
@@ -75,7 +76,7 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
-  }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue]);
+  }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
 
   const handleAnswerClick = useCallback(
     async (option: QuizAnswer) => {

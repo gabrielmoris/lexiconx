@@ -71,7 +71,6 @@ export async function POST(req: Request) {
 
     // Limit to the desired number of words for the quiz
     wordsForQuiz = wordsForQuiz.slice(0, desiredTotalWords);
-
     if (wordsForQuiz.length < 3) {
       return NextResponse.json(
         {
