@@ -75,7 +75,7 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
-  }, [quizStep, displayQuiz, userData, session, usedWords, score]);
+  }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue]);
 
   const handleAnswerClick = useCallback(
     async (option: QuizAnswer) => {

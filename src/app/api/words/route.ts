@@ -69,8 +69,6 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: "User not found" });
   }
 
-  console.log(words);
-
   const updatedWords = await Word.bulkWrite(
     words.map((word: WordType) => ({
       updateOne: {
