@@ -2,7 +2,7 @@ import Word from "@/lib/mongodb/models/word";
 import User from "@/lib/mongodb/models/user";
 import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
-// import type { Word as WordType } from "@/types/Words";
+import type { Word as WordType } from "@/types/Words";
 
 export async function POST(req: Request) {
   const { word, definition, phoneticNotation, language, session } = await req.json();
@@ -69,21 +69,21 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: "User not found" });
   }
 
-  // Uncomment for PROD
+  console.log(words);
 
-  // const updatedWords = await Word.bulkWrite(
-  //   words.map((word: WordType) => ({
-  //     updateOne: {
-  //       filter: { _id: word._id },
-  //       update: {
-  //         nextReview: word.nextReview,
-  //         interval: word.interval,
-  //         repetitions: word.repetitions,
-  //         easeFactor: word.easeFactor,
-  //       },
-  //     },
-  //   }))
-  // );
+  const updatedWords = await Word.bulkWrite(
+    words.map((word: WordType) => ({
+      updateOne: {
+        filter: { _id: word._id },
+        update: {
+          nextReview: word.nextReview,
+          interval: word.interval,
+          repetitions: word.repetitions,
+          easeFactor: word.easeFactor,
+        },
+      },
+    }))
+  );
 
-  return NextResponse.json({ error: null, data: words });
+  return NextResponse.json({ error: null, data: updatedWords });
 }

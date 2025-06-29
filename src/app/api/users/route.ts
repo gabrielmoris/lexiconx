@@ -57,3 +57,24 @@ export async function GET(req: Request) {
 
   return NextResponse.json({ error: null, data: user });
 }
+
+export async function PUT(req: Request) {
+  const { userData, session } = await req.json();
+  await connectDB();
+
+  if (!session.user.email) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  user.learningProgress = userData.learningProgress;
+  user.activeLanguage = userData.activeLanguage;
+  const saved = await user.save();
+
+  return NextResponse.json({ error: null, data: saved });
+}

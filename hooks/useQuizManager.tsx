@@ -5,7 +5,7 @@ import { useQuiz } from "@/context/QuizContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { failWords, successWords } from "@/lib/correctionWords";
 import { calculateNextReviewData } from "@/lib/mongodb/models/calculateNextReview";
-import { saveWordsData } from "@/lib/apis";
+import { updateWordsData, updateUserData } from "@/lib/apis";
 import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";
 
@@ -50,34 +50,24 @@ export const useQuizManager = (userData: User) => {
       if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
         const actualTimeEnd = Date.now();
         try {
-          const { data: wordsData } = await saveWordsData(session, usedWords);
-          const updatedWords = calculateNextReviewData(wordsData, userData);
-          setIsQuizFinished(true);
-          // TODO:
-          // 1. Update the user's learning progress based on the quiz results
-          // 2. Update the user's words based on the quiz results
-          // 3. Update the user's level, words mastered, current streak,last session, time spent...
-          // 4. Save the user's data to the database
-          // 5. save the updated words in the database
-          // 6. Delete the quiz from localStorage
+          const updatedWords = calculateNextReviewData(usedWords, userData);
+          await updateWordsData(session, updatedWords);
 
-          // Here I must write and save all the logic tha tI will have to send to the Mongodb
-          console.log("wordsData", wordsData);
-          console.log("updatedWords", updatedWords);
-          console.log("userData", userData);
-          console.log("successPoints => ", score);
-          // do logic here
+          const isSucceed = score.success / 2 > score.errors;
           const learningProgress = userData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
           if (!learningProgress) throw new Error("Learning progress not found");
-          learningProgress.level =
-            score.success / 2 > score.errors ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
+          learningProgress.level = isSucceed ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
           learningProgress.wordsMastered += updatedWords.filter((word) => word.repetitions > 0).length;
-          learningProgress.currentStreak = score.success > 0 ? learningProgress.currentStreak + 1 : 0;
+          learningProgress.currentStreak = isSucceed ? learningProgress.currentStreak + 1 : 0;
           learningProgress.lastSessionDate = new Date();
           if (!startingTimer) throw new Error("Starting timer not found");
           learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer); // Saved in miliseconds
-          console.log(learningProgress); // Integrate it to the user and send to an API
-          // deleteValue(); // at the end
+
+          await updateUserData(session, userData);
+          if (isSucceed) {
+            deleteValue();
+          }
+          setIsQuizFinished(true);
         } catch (error) {
           console.error("Error finishing quiz:", error);
           // Optionally show a toast message to the user
