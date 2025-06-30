@@ -74,7 +74,9 @@
   },
   "word-card": {
     "definition": "Definition",
+    "error-speech": "Speech functionality is not available",
     "last-reviewed": "Last review",
+    "loading-voices": "Please wait, loading speech voices...",
     "next-review": "Next review",
     "phonetic-notation": "Phonetic",
     "word": "Word"

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Language } from "@/types/Words";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
@@ -18,6 +19,7 @@ interface UseTextToSpeechReturn {
   isSpeaking: boolean;
   isPaused: boolean;
   isSupported: boolean;
+  isReady: boolean;
   voices: SpeechSynthesisVoice[];
   getVoicesForLanguage: (language: Language) => SpeechSynthesisVoice[];
 }
@@ -29,8 +31,10 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
   const [voicesLoaded, setVoicesLoaded] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const pendingSpeechRef = useRef<{ text: string; language: Language } | null>(null);
 
   const languages = useMemo(
     () => ({
@@ -45,7 +49,8 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
   // Handle hydration by checking support only after component mounts
   useEffect(() => {
     setIsMounted(true);
-    setIsSupported(typeof window !== "undefined" && "speechSynthesis" in window);
+    const supported = typeof window !== "undefined" && "speechSynthesis" in window;
+    setIsSupported(supported);
   }, []);
 
   // Load voices
@@ -54,17 +59,29 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
 
     const synth = window.speechSynthesis;
     const availableVoices = synth.getVoices();
-    setVoices(availableVoices);
-    setVoicesLoaded(true);
+
+    if (availableVoices.length > 0) {
+      setVoices(availableVoices);
+      setVoicesLoaded(true);
+      setIsReady(true);
+
+      // If there was a pending speech request, execute it now
+      if (pendingSpeechRef.current) {
+        const { text, language } = pendingSpeechRef.current;
+        pendingSpeechRef.current = null;
+        // Use setTimeout to avoid potential recursion issues
+        setTimeout(() => speak(text, language), 0);
+      }
+    }
   }, [isMounted, isSupported]);
 
-  // Initialize voices
+  // Initialize voices with more aggressive loading strategy
   useEffect(() => {
     if (!isMounted || !isSupported) return;
 
     const synth = window.speechSynthesis;
 
-    // Load voices immediately if available
+    // Force load voices immediately
     loadVoices();
 
     // Listen for voices changed event
@@ -74,17 +91,32 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
 
     synth.addEventListener("voiceschanged", handleVoicesChanged);
 
-    // Fallback: try loading voices periodically
+    // More aggressive fallback strategy
     let attempts = 0;
-    const maxAttempts = 50;
+    const maxAttempts = 100; // Increased attempts
     const interval = setInterval(() => {
       if (voicesLoaded || attempts >= maxAttempts) {
         clearInterval(interval);
         return;
       }
+
+      // Sometimes calling getVoices() multiple times helps trigger loading
+      synth.getVoices();
       loadVoices();
       attempts++;
-    }, 100);
+    }, 50); // Reduced interval for faster detection
+
+    // Additional fallback: try to trigger voice loading by creating a dummy utterance
+    if (!voicesLoaded) {
+      try {
+        const dummyUtterance = new SpeechSynthesisUtterance("");
+        synth.speak(dummyUtterance);
+        synth.cancel(); // Cancel immediately
+        loadVoices();
+      } catch (error) {
+        console.warn("Could not create dummy utterance:", error);
+      }
+    }
 
     return () => {
       synth.removeEventListener("voiceschanged", handleVoicesChanged);
@@ -137,25 +169,41 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
         return;
       }
 
+      // If voices aren't loaded yet, queue the request
+      if (!voicesLoaded || voices.length === 0) {
+        console.log("Voices not loaded yet, queuing speech request...");
+        pendingSpeechRef.current = { text, language };
+        // Try to force load voices again
+        loadVoices();
+        return;
+      }
+
       const synth = window.speechSynthesis;
 
       // Cancel any ongoing speech
       synth.cancel();
 
-      // 1. Find a suitable voice for the requested language.
+      // Find a suitable voice for the requested language
       const voicesForLang = getVoicesForLanguage(language);
-      const voiceToUse = voicesForLang[0]; // Let's just pick the first available one.
+      const voiceToUse = voicesForLang[0];
 
-      // 2. If no voice is found, log an error but still try to speak.
-      //    The browser might fall back to a default voice.
-      if (!voiceToUse) {
-        console.warn(`No voices found for language: ${language}. The browser will attempt to use a default.`);
+      // If no specific voice is found, try to find any voice for the language code
+      let fallbackVoice: SpeechSynthesisVoice | undefined = voiceToUse;
+      if (!fallbackVoice) {
+        const langCode = languages[language];
+        fallbackVoice = voices.find((voice) => voice.lang === langCode) || voices.find((voice) => voice.lang.startsWith(langCode.split("-")[0]));
+      }
+
+      if (!fallbackVoice) {
+        console.warn(`No voices found for language: ${language}. Using default voice.`);
       }
 
       const utterance = new SpeechSynthesisUtterance(text);
 
-      // 3. Explicitly assign the found voice and language.
-      utterance.voice = voiceToUse;
+      // Set voice and language
+      if (fallbackVoice) {
+        utterance.voice = fallbackVoice;
+      }
       utterance.lang = languages[language];
       utterance.rate = options.rate ?? 1;
       utterance.pitch = options.pitch ?? 1;
@@ -184,12 +232,14 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
       utteranceRef.current = utterance;
       synth.speak(utterance);
     },
-    [getVoicesForLanguage, isMounted, isSupported, languages, options]
+    [getVoicesForLanguage, isMounted, isSupported, languages, options, voicesLoaded, voices, loadVoices]
   );
 
   const cancel = useCallback(() => {
     if (!isMounted || !isSupported) return;
 
+    // Clear any pending speech
+    pendingSpeechRef.current = null;
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
     setIsPaused(false);
@@ -217,6 +267,7 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     isSpeaking,
     isPaused,
     isSupported,
+    isReady, // New property to indicate readiness
     voices,
     getVoicesForLanguage,
   };

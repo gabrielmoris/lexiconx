@@ -3,19 +3,50 @@ import formatMongoDate from "@/lib/dateFormat";
 import { Language, Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
 import SoundIcon from "../Icons/SoundIcon";
+import { useToastContext } from "@/context/ToastContext";
+import { useCallback } from "react";
 
 const WordCard = ({ word }: { word: Word }) => {
   const t = useTranslations("word-card");
+  const { showToast } = useToastContext();
 
-  const { speak } = useTextToSpeech({
-    onError: (error) => console.error("Speech error:", error),
-    rate: 1,
-    pitch: 1,
+  const { speak, isReady, isSupported } = useTextToSpeech({
+    onError: (error) => {
+      console.error("Speech error:", error);
+      showToast({
+        message: t("error-speech"),
+        variant: "error",
+        duration: 3000,
+      });
+    },
   });
 
-  const readWord = (text: string, language: string) => {
-    speak(text, language as Language);
-  };
+  const readWord = useCallback(
+    (text: string, language: Language) => {
+      if (!isSupported) {
+        showToast({
+          message: t("error-speech"),
+          variant: "error",
+          duration: 3000,
+        });
+        return;
+      }
+
+      if (!isReady) {
+        showToast({
+          message: t("loading-voices"),
+          variant: "info",
+          duration: 2000,
+        });
+        return;
+      }
+
+      if (text) {
+        speak(text, language);
+      }
+    },
+    [isReady, isSupported, showToast, speak, t]
+  );
 
   return (
     <div

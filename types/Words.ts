@@ -13,7 +13,7 @@ export interface Word {
   word: string;
   definition: string;
   phoneticNotation: string;
-  language: string;
+  language: Language;
   tags: string[];
   lastReviewed: string | null;
   nextReview: string;
