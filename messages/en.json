@@ -25,7 +25,9 @@
     "phonetic-notation": "Phonetic",
     "definition": "Definition",
     "last-reviewed": "Last review",
-    "next-review": "Next review"
+    "next-review": "Next review",
+    "error-speech": "Speech functionality is not available",
+    "loading-voices": "Please wait, loading speech voices..."
   },
   "word-list": {
     "no-words": "No words found"
@@ -39,7 +41,9 @@
     "question": "Question {current}/{total}",
     "quiz": "Quiz {current}/{total}",
     "error-getting-user": "Error getting user data",
-    "error-processing-words": "Error processing Words"
+    "error-processing-words": "Error processing Words",
+    "error-speech": "Speech functionality is not available",
+    "loading-voices": "Please wait, loading speech voices..."
   },
   "quiz-finished": {
     "congratulations": "Contratulations!",
