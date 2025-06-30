@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import SoundIcon from "@/components/Icons/SoundIcon";
 import TextIcon from "@/components/Icons/TextIcon";
@@ -17,6 +17,10 @@ interface Props {
 const QuizView = ({ quizItem, question, onAnswerClick, feedback, quizProgress, questionProgress, onReadQuiz }: Props) => {
   const [showText, setShowText] = React.useState(false);
   const t = useTranslations("quiz");
+
+  useEffect(() => {
+    setShowText(false);
+  }, [question]);
 
   if (!quizItem || !question) {
     return null;

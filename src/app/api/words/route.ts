@@ -76,6 +76,7 @@ export async function PUT(req: Request) {
         update: {
           nextReview: word.nextReview,
           interval: word.interval,
+          lastReviewed: word.lastReviewed,
           repetitions: word.repetitions,
           easeFactor: word.easeFactor,
         },
