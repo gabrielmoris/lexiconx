@@ -32,6 +32,7 @@ const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  // debug: true,
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async signIn({ user, account, profile }) {
@@ -50,6 +51,7 @@ const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             image: user.image,
+            googleID: user.id,
           });
           console.log("New user created:", existingUser.email);
         }

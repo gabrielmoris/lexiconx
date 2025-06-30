@@ -34,7 +34,7 @@ export function useConfetti(shape?: string) {
     if (typeof window === "undefined") return;
     const animationEnd = Date.now() + duration;
     const defaults = {
-      particleCount: 40,
+      particleCount: 20,
       angle: 60,
       spread: 55,
       origin: { x: 0 },
@@ -79,7 +79,7 @@ export function useConfetti(shape?: string) {
       }
 
       confetti({
-        particleCount: 100,
+        particleCount: 70,
         spread: 120,
         origin: {
           x: Math.random(),

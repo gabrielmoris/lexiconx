@@ -46,21 +46,40 @@ const QuizPage = () => {
     restartQuiz,
   } = useQuizManager(userData!);
 
-  const { speak, getVoicesForLanguage } = useTextToSpeech({
-    onError: (error) => console.error("Speech error:", error),
+  const { speak, isReady, isSupported } = useTextToSpeech({
+    onError: (error) => {
+      console.error("Speech error:", error);
+      showToast({
+        message: t("error-speech"),
+        variant: "error",
+        duration: 3000,
+      });
+    },
   });
 
-  useEffect(() => {
-    if (currentQuizItem?.language) {
-      getVoicesForLanguage(currentQuizItem.language);
-    }
-  }, [currentQuizItem, getVoicesForLanguage]);
-
   const readQuiz = useCallback(() => {
-    if (currentQuizItem?.sentence) {
-      speak(currentQuizItem.sentence, currentQuizItem.language);
+    if (!isSupported) {
+      showToast({
+        message: t("error-speech"),
+        variant: "error",
+        duration: 3000,
+      });
+      return;
     }
-  }, [currentQuizItem, speak]);
+
+    if (!isReady) {
+      showToast({
+        message: t("loading-voices"),
+        variant: "info",
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (currentQuizItem?.sentence) {
+      speak(currentQuizItem?.sentence, currentQuizItem?.language);
+    }
+  }, [isSupported, isReady, currentQuizItem?.sentence, currentQuizItem?.language, showToast, t, speak]);
 
   if (isLoading || status === "loading" || !userData) {
     return <LoadingComponent />;

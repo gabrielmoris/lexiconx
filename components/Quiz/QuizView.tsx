@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import SoundIcon from "@/components/Icons/SoundIcon";
 import TextIcon from "@/components/Icons/TextIcon";
@@ -12,11 +12,16 @@ interface Props {
   quizProgress: { current: number; total: number };
   questionProgress: { current: number; total: number };
   onReadQuiz: () => void;
+  ttsReady?: boolean;
 }
 
-const QuizView = ({ quizItem, question, onAnswerClick, feedback, quizProgress, questionProgress, onReadQuiz }: Props) => {
+const QuizView = ({ quizItem, question, onAnswerClick, feedback, quizProgress, questionProgress, onReadQuiz, ttsReady = true }: Props) => {
   const [showText, setShowText] = React.useState(false);
   const t = useTranslations("quiz");
+
+  useEffect(() => {
+    setShowText(false);
+  }, [question]);
 
   if (!quizItem || !question) {
     return null;
@@ -35,8 +40,14 @@ const QuizView = ({ quizItem, question, onAnswerClick, feedback, quizProgress, q
             <TextIcon className="w-8 h-8 cursor-pointer" />
           </button>
         )}
-        <button onClick={onReadQuiz} aria-label="Read sentence aloud">
-          <SoundIcon className="w-8 h-8 cursor-pointer" />
+        <button
+          onClick={onReadQuiz}
+          aria-label="Read sentence aloud"
+          disabled={!ttsReady}
+          className={`${!ttsReady ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+          title={!ttsReady ? "Loading speech voices..." : "Read sentence aloud"}
+        >
+          <SoundIcon className={`w-8 h-8 ${!ttsReady ? "animate-pulse" : ""}`} />
         </button>
       </div>
 
