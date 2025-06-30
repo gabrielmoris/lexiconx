@@ -13,9 +13,10 @@ export const languageProgressSchema = new Schema({
 
 export interface IUser extends Document {
   email: string;
-  googleID?: string;
+  googleID: string;
   name?: string;
   image?: string;
+  nativeLanguage?: string;
   activeLanguage: { type: string; default: "Chinese" };
   learningProgress: [typeof languageProgressSchema];
   createdAt: Date;

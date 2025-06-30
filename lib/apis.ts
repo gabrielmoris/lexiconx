@@ -1,3 +1,4 @@
+// TODO: Use 1 functiuon for all this.
 import { Language, User, Word } from "@/types/Words";
 import { Session } from "next-auth";
 
@@ -25,6 +26,7 @@ export const selectUserLearningLanguage = async (session: Session, language: Lan
   }
   return response.json();
 };
+
 export const updateUserData = async (session: Session, userData: User) => {
   const response = await fetch(`/api/users`, {
     method: "PUT",
