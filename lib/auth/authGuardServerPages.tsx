@@ -1,6 +1,6 @@
-import { authOptions } from "@/src/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { authOptions } from "./nextAuthOptions";
 
 /**
  * Ensures that the current user is authenticated on the server side.
