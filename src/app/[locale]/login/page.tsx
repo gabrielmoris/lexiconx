@@ -4,14 +4,16 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/src/i18n/navigation";
+import { useLocale } from "next-intl";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const locale = useLocale();
 
   const handleLogin = () => {
     setLoading(true);
     try {
-      signIn("google", { callbackUrl: "/" });
+      signIn("google", { callbackUrl: `/${locale}/cards` });
     } catch {
       setLoading(false);
       alert("Sign in failed. Please try again.");
