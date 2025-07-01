@@ -36,6 +36,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .blink-success {
   animation: blink-success 0.5s infinite;
 }

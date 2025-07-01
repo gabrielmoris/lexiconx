@@ -2,8 +2,11 @@ import WordList from "@/components/Words/WordList";
 import LanguageToLearn from "@/components/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
 import AiQuizzGenerator from "@/components/AI/AiQuizzGenerator";
+import { requireAuthSSR } from "@/lib/auth/authGuardServerPAges";
 
-export default function CardsPage() {
+export default async function CardsPage() {
+  await requireAuthSSR();
+
   return (
     <main
       className="min-h-screen w-screen md:w-xl px-5 md:px-0 flex flex-col items-center justify-start

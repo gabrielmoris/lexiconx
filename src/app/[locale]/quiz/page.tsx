@@ -10,6 +10,7 @@ import QuyizFinished from "@/components/Quiz/QuyizFinished";
 import QuizView from "@/components/Quiz/QuizView";
 import type { User } from "@/types/Words";
 import { getUserData } from "@/lib/apis";
+import { redirect } from "next/navigation";
 
 const QuizPage = () => {
   const { data: session, status } = useSession();
@@ -27,7 +28,10 @@ const QuizPage = () => {
         } catch (e) {
           console.error(e);
           showToast({ message: t("error-getting-user"), variant: "error", duration: 3000 });
+          redirect("/");
         }
+      } else if (status === "unauthenticated") {
+        redirect("/");
       }
     };
     fetchUser();

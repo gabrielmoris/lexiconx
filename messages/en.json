@@ -59,10 +59,13 @@
     "title": "Choose a language to learn"
   },
   "quiz": {
+    "question": "Question {current}/{total}",
+    "quiz": "Quiz {current}/{total}",
     "error-getting-user": "Error getting user data",
     "error-processing-words": "Error processing Words",
-    "question": "Question {current}/{total}",
-    "quiz": "Quiz {current}/{total}"
+    "error-speech": "Speech functionality is not available",
+    "loading-voices": "Please wait, loading speech voices...",
+    "error-adding-word": "Error adding a word"
   },
   "quiz-finished": {
     "better-luck-next-time": "Better luck next time",
