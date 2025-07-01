@@ -2,7 +2,7 @@ import WordList from "@/components/Words/WordList";
 import LanguageToLearn from "@/components/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
 import AiQuizzGenerator from "@/components/AI/AiQuizzGenerator";
-import { requireAuthSSR } from "@/lib/auth/authGuardServerPAges";
+import { requireAuthSSR } from "@/lib/auth/authGuardServerPages";
 
 export default async function CardsPage() {
   await requireAuthSSR();
