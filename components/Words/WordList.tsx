@@ -10,6 +10,7 @@ const WordList = () => {
   const { isSelectedLanguageLoading } = useLanguage();
   const t = useTranslations("word-list");
   const { loading, words } = useWords();
+  // fetch user data here and redirect to /onbooarding if no learningProgress.length
 
   if (loading) {
     return <LoadingComponent />;
