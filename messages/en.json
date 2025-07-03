@@ -95,6 +95,7 @@
     "success-word-added": "Word added!"
   },
   "word-list": {
-    "no-words": "No words found"
+    "no-words": "No words found",
+    "error-getting-user": "Error getting the user data"
   }
 }
