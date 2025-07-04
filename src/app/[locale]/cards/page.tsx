@@ -5,7 +5,7 @@ import AiQuizzGenerator from "@/components/AI/AiQuizzGenerator";
 import { requireAuthSSR } from "@/lib/auth/authGuardServerPages";
 
 export default async function CardsPage() {
-  await requireAuthSSR();
+   await requireAuthSSR();
 
   return (
     <main
