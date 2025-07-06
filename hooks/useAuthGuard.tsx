@@ -4,16 +4,17 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useLocale } from "next-intl";
 
 /**
  * A custom React hook to protect routes by redirecting unauthenticated users.
  *
- * @param redirectTo Optional path to redirect to if unauthenticated. Defaults to '/'.
  * @returns An object containing the session data, status, and a boolean indicating if loading.
  */
-export function useAuthProtection(redirectTo: string = "/") {
+export function useAuthGuard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
 
   useEffect(() => {
     if (status === "loading") {
@@ -21,9 +22,9 @@ export function useAuthProtection(redirectTo: string = "/") {
     }
 
     if (!session) {
-      router.replace(redirectTo);
+      router.replace(`/${locale}/login`);
     }
-  }, [session, status, router, redirectTo]);
+  }, [session, status, router]);
 
   return { session, status, isLoading: status === "loading" };
 }

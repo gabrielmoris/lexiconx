@@ -1,8 +1,8 @@
 import WordList from "@/components/Words/WordList";
-import LanguageToLearn from "@/components/LanguageToLearn";
+import LanguageToLearn from "@/components/Layout/LanguageToLearn";
 import WordForm from "@/components/Words/WordForm";
 import AiQuizGenerator from "@/components/AI/AiQuizzGenerator";
-import { requireAuthSSR } from "@/lib/auth/authGuardServerPages";
+import { requireAuthSSR } from "@/lib/auth/authGuardSSR";
 import { getLocale } from 'next-intl/server';
 
 export default async function CardsPage() {
