@@ -1,6 +1,6 @@
 "use client";
 import { useLanguage } from "@/context/LanguageToLearnContext";
-import React, { useEffect } from "react";
+import React from "react";
 import WordCard from "./WordCard";
 import { useTranslations } from "next-intl";
 import { useWords } from "@/context/WordsContext";

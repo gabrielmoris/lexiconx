@@ -37,3 +37,4 @@ export interface User {
 }
 
 export type Language = "chinese" | "english" | "german" | "spanish";
+export type Locale = "en" | "de" | "zh" | "es";

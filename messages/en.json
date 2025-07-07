@@ -97,5 +97,8 @@
   "word-list": {
     "no-words": "No words found",
     "error-getting-user": "Error getting the user data"
+  },
+  "locale-switcher": {
+    "title": "Select your native language!"
   }
 }
