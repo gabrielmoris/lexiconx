@@ -30,6 +30,7 @@ export interface User {
   googleID?: string;
   name?: string;
   image?: string;
+  nativeLanguage?: Locale;
   activeLanguage: string;
   learningProgress: LearningProgress[];
   createdAt: Date;

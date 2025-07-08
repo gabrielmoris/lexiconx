@@ -9,6 +9,8 @@ import GermanFlag from "@/components/Icons/GermanFlag";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
 import { Locale } from "@/types/Words";
 import { createElement, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { updateUserData } from "@/lib/apis";
 
 const languages = {
   en: { name: "English", icon: EnglishFlag },
@@ -22,6 +24,7 @@ export default function LocaleSwitcher() {
   const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const t = useTranslations("locale-switcher");
 
   // Initialize static positions for flags when user starts choosing
@@ -47,6 +50,19 @@ export default function LocaleSwitcher() {
     }
   }, [isUserChoosing]);
 
+  // Check why it is not updating the database
+
+  const handleUserChoice = async (language: Locale) => {
+    console.log("User chose a language", language);
+    try {
+      if (!session || status !== "authenticated") throw new Error("Session not found");
+      await updateUserData(session, { nativeLanguage: language });
+    } catch (error) {
+      console.error("Failed to select language:", error);
+    }
+    setIsUserChoosing(false);
+  };
+
   return (
     <section className="relative flex flex-col items-center justify-start gap-10 min-h-[65vh] overflow-hidden">
       <p className="text-2xl font-bold text-center z-10">{t("title")}</p>
@@ -66,7 +82,10 @@ export default function LocaleSwitcher() {
               }}
             >
               <Link href={`/${pathname.split("/")[1]}`} locale={locale} className="block hover:scale-110 transition-transform duration-200">
-                <div onClick={() => setIsUserChoosing(false)} className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
+                <div
+                  onClick={() => handleUserChoice(locale as Locale)}
+                  className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20"
+                >
                   {createElement(languages[locale as Locale].icon, {
                     className: "w-full h-full object-contain",
                   })}
