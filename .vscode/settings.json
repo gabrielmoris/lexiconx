@@ -1,5 +1,8 @@
 {
-  "i18n-ally.localesPaths": ["messages", "src/i18n"],
+  "i18n-ally.localesPaths": [
+    "messages",
+    "src/i18n"
+  ],
   "i18n-ally.keystyle": "nested",
   "workbench.colorCustomizations": {
     "activityBar.background": "#121F80",

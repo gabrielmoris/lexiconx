@@ -38,10 +38,10 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
 
   const languages = useMemo(
     () => ({
-      chinese: "zh-CN",
-      english: "en-US",
-      german: "de-DE",
-      spanish: "es-ES",
+      中文: "zh-CN",
+      English: "en-US",
+      Deutsch: "de-DE",
+      Español: "es-ES",
     }),
     []
   );

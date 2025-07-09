@@ -34,10 +34,10 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
 
   const languages: LanguageOption[] = useMemo(
     () => [
-      { language: "chinese", icon: ChinaFlag, name: t("chinese") },
-      { language: "german", icon: GermanFlag, name: t("german") },
-      { language: "english", icon: EnglishFlag, name: t("english") },
-      { language: "spanish", icon: SpanishFlag, name: t("spanish") },
+      { language: "中文", icon: ChinaFlag, name: t("chinese"), tts: "zh-CN" },
+      { language: "Deutsch", icon: GermanFlag, name: t("german"), tts: "de-DE" },
+      { language: "English", icon: EnglishFlag, name: t("english"), tts: "en-US" },
+      { language: "Español", icon: SpanishFlag, name: t("spanish"), tts: "es-ES" },
     ],
     [t]
   );

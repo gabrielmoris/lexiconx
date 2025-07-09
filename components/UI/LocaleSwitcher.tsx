@@ -1,16 +1,17 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Link, usePathname } from "@/src/i18n/navigation";
 import { locales } from "@/src/i18n/routing";
 import ChinaFlag from "@/components/Icons/ChinaFlag";
 import EnglishFlag from "@/components/Icons/EnglishFlag";
 import GermanFlag from "@/components/Icons/GermanFlag";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
-import { Locale } from "@/types/Words";
+import { Language, Locale } from "@/types/Words";
 import { createElement, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { updateUserData } from "@/lib/apis";
+import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
 
 const languages = {
   en: { name: "English", icon: EnglishFlag },
@@ -19,13 +20,15 @@ const languages = {
   es: { name: "Español", icon: SpanishFlag },
 };
 
-export default function LocaleSwitcher() {
+const titles = ["Select your native language!", "Wähle deine Muttersprache!", "Selecciona tu idioma nativo!", "选择你的母语！"];
+
+export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => void }) {
   const [isUserChoosing, setIsUserChoosing] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const t = useTranslations("locale-switcher");
 
   // Initialize static positions for flags when user starts choosing
   useEffect(() => {
@@ -48,24 +51,71 @@ export default function LocaleSwitcher() {
       });
       setFlagPositions(positions);
     }
-  }, [isUserChoosing]);
+  }, [currentLocale, isUserChoosing]);
 
   // Check why it is not updating the database
 
   const handleUserChoice = async (language: Locale) => {
-    console.log("User chose a language", language);
     try {
       if (!session || status !== "authenticated") throw new Error("Session not found");
-      await updateUserData(session, { nativeLanguage: language });
+      await updateUserData(session, { nativeLanguage: languages[language].name as Language });
+
+      setNextStep();
     } catch (error) {
       console.error("Failed to select language:", error);
     }
     setIsUserChoosing(false);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
+    }, 3000); // Change title every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const variants = {
+    enter: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.5,
+        ease: easeOut,
+      },
+    },
+    center: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: easeOut,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        duration: 0.5,
+        ease: easeIn,
+      },
+    },
+  };
+
   return (
     <section className="relative flex flex-col items-center justify-start gap-10 min-h-[65vh] overflow-hidden">
-      <p className="text-2xl font-bold text-center z-10">{t("title")}</p>
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={currentIndex}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="text-2xl font-bold text-center z-10" // Re-apply your styling
+        >
+          {titles[currentIndex]}
+        </motion.p>
+      </AnimatePresence>
 
       {isUserChoosing ? (
         <>

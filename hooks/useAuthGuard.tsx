@@ -24,7 +24,7 @@ export function useAuthGuard() {
     if (!session) {
       router.replace(`/${locale}/login`);
     }
-  }, [session, status, router]);
+  }, [session, status, router, locale]);
 
   return { session, status, isLoading: status === "loading" };
 }
