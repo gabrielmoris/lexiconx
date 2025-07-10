@@ -30,10 +30,12 @@ export interface User {
   googleID?: string;
   name?: string;
   image?: string;
+  nativeLanguage?: Language;
   activeLanguage: string;
   learningProgress: LearningProgress[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-export type Language = "chinese" | "english" | "german" | "spanish";
+export type Language = "中文" | "English" | "Deutsch" | "Español";
+export type Locale = "en" | "de" | "zh" | "es";

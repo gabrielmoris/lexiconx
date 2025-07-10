@@ -4,7 +4,7 @@ import { useRouter } from "@/src/i18n/navigation";
 import { useQuiz } from "@/context/QuizContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { failWords, successWords } from "@/lib/correctionWords";
-import { calculateNextReviewData } from "@/lib/mongodb/models/calculateNextReview";
+import { calculateNextReviewData } from "@/lib/mongodb/calculateNextReview";
 import { updateWordsData, updateUserData } from "@/lib/apis";
 import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";

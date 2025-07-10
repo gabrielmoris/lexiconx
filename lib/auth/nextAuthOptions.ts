@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
             image: user.image,
             googleID: user.id,
           });
-          console.log("New user created:", existingUser.email);
+          console.log("New user createdW");
         }
 
         user.dbId = existingUser?._id?.toString();

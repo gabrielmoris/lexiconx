@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
 
-const LANGUAGES: Record<string, Language> = { en: "english", de: "german", zh: "chinese", es: "spanish" };
+const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español" };
 
 // Updated Next.js API endpoint
 export async function POST(req: Request) {

@@ -29,7 +29,7 @@ const userSchema: Schema = new mongoose.Schema(
     googleID: { type: String, unique: true, trim: true },
     name: { type: String, trim: true },
     image: { type: String, trim: true },
-
+    nativeLanguage: { type: String, trim: true },
     activeLanguage: { type: String, default: "Chinese" },
     learningProgress: { type: [languageProgressSchema], default: [] },
   },

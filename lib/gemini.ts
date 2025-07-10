@@ -7,7 +7,7 @@ const MODEL_NAME = "gemini-2.0-flash-001";
 
 // Multilingual prompts with level-based complexity - FIXED VERSION
 const QUIZ_PROMPTS = {
-  english: {
+  English: {
     systemPrompt: (
       userLanguage: Language,
       learningLanguage: Language
@@ -110,7 +110,7 @@ const QUIZ_PROMPTS = {
       ✓ All required fields present in JSON structure`,
   },
 
-  spanish: {
+  Español: {
     systemPrompt: (
       userLanguage: Language,
       learningLanguage: Language
@@ -213,7 +213,7 @@ const QUIZ_PROMPTS = {
       ✓ Todos los campos requeridos presentes en la estructura JSON`,
   },
 
-  german: {
+  Deutsch: {
     systemPrompt: (
       userLanguage: Language,
       learningLanguage: Language
@@ -316,7 +316,7 @@ const QUIZ_PROMPTS = {
       ✓ Alle erforderlichen Felder in der JSON-Struktur vorhanden`,
   },
 
-  chinese: {
+  中文: {
     systemPrompt: (
       userLanguage: Language,
       learningLanguage: Language

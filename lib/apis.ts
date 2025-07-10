@@ -1,117 +1,116 @@
-// TODO: Use 1 functiuon for all this.
 import { Language, User, Word } from "@/types/Words";
 import { Session } from "next-auth";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+// PRIVATE API HANDLER
+const _apiHandler = async (
+  endpoint: string,
+  options: {
+    method?: "GET" | "POST" | "PUT";
+    body?: Record<string, unknown>;
+    session?: Session | null;
+    isSSR?: boolean;
+  } = {}
+) => {
+  const { method = "GET", body, session, isSSR = false } = options;
+  const url = isSSR ? `${baseURL}${endpoint}` : endpoint;
+
+  const config: RequestInit = {
+    method,
+    headers: { "Content-Type": "application/json" },
+  };
+
+  if (body || session) {
+    config.body = JSON.stringify({
+      ...(session && { session }),
+      ...body,
+    });
+  }
+
+  const response = await fetch(url, config);
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const errorMessage = errorData.error || `Failed to fetch from ${endpoint}`;
+    throw new Error(errorMessage);
+  }
+
+  return response.json();
+};
+
+// EXPORTED FUNCTIONS
+
 // USER RELATED APIS
-export const getUserData = async (session: Session) => {
-  const response = await fetch(`/api/users?email=${session?.user?.email}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-  return response.json();
+export const getUserData = async (session: Session, isSSR = false) => {
+  const endpoint = `/api/users?email=${session?.user?.email}`;
+  return _apiHandler(endpoint, { isSSR });
 };
 
-export const selectUserLearningLanguage = async (session: Session, language: Language) => {
-  const response = await fetch(`/api/users`, {
+export const selectUserLearningLanguage = async (session: Session, language: Language, isSSR = false) => {
+  return _apiHandler("/api/users", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ session, activeLanguage: language }),
+    session,
+    body: { activeLanguage: language },
+    isSSR,
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to select language");
-  }
-  return response.json();
 };
 
-export const updateUserData = async (session: Session, userData: User) => {
-  const response = await fetch(`/api/users`, {
+export const updateUserData = async (session: Session, userData: Partial<User>, isSSR = false) => {
+  return _apiHandler("/api/users", {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ session, userData }),
+    session,
+    body: { userData },
+    isSSR,
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to update user data");
-  }
-  return response.json();
 };
 
-export const fetchUserWords = async (session: Session, language: Language) => {
-  const response = await fetch(`/api/words?language=${language}&email=${session.user?.email}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch user words");
-  }
-  return response.json();
+export const fetchUserWords = async (session: Session, language: Language, isSSR = false) => {
+  const endpoint = `/api/words?language=${language}&email=${session.user?.email}`;
+  return _apiHandler(endpoint, { isSSR });
 };
 
 // WORDS RELATED APIS
-export const getWordsByIds = async (ids: string[], userEmail: string) => {
-  const response = await fetch(`/api/words?ids=${ids.join(",")}&email=${userEmail}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch words by ID");
-  }
-  return response.json();
+export const getWordsByIds = async (ids: string[], userEmail: string, isSSR = false) => {
+  const endpoint = `/api/words?ids=${ids.join(",")}&email=${userEmail}`;
+  return _apiHandler(endpoint, { isSSR });
 };
 
-export const updateWordsData = async (session: Session, words: Word[]) => {
-  const response = await fetch(`/api/words`, {
+export const updateWordsData = async (session: Session, words: Word[], isSSR = false) => {
+  return _apiHandler("/api/words", {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ session, words }),
+    session,
+    body: { words },
+    isSSR,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to save words data");
-  }
-  return response.json();
 };
 
-export const addword = async (formData: {
-  word: string;
-  definition: string;
-  phoneticNotation: string;
-  language: Language;
-  session: Session | null;
-}) => {
+export const addword = async (
+  formData: {
+    word: string;
+    definition: string;
+    phoneticNotation: string;
+    language: Language;
+    session: Session | null;
+  },
+  isSSR = false
+) => {
   if (!formData.session) throw new Error("Session not found");
-
-  const response = await fetch(`/api/words`, {
+  const { session, ...wordData } = formData;
+  return _apiHandler("/api/words", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ ...formData }),
+    session,
+    body: wordData,
+    isSSR,
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to add word");
-  }
-  return response.json();
 };
 
 // QUIZ RELATED APIS
-export const quizGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number) => {
-  const response = await fetch(`/api/ai-gen`, {
+export const quizGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number, isSSR = false) => {
+  return _apiHandler("/api/ai-gen", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ session, languageToLearn, userLanguage, level }),
+    session,
+    body: { languageToLearn, userLanguage, level },
+    isSSR,
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to generate quiz");
-  }
-  return response.json();
 };

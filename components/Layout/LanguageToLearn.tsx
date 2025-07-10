@@ -5,7 +5,7 @@ import { useToastContext } from "@/context/ToastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import LoadingComponent from "./Layout/LoadingComponen";
+import LoadingComponent from "./LoadingComponen";
 import { selectUserLearningLanguage } from "@/lib/apis";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {

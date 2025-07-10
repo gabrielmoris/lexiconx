@@ -74,6 +74,7 @@ export async function PUT(req: Request) {
 
   user.learningProgress = userData.learningProgress;
   user.activeLanguage = userData.activeLanguage;
+  user.nativeLanguage = userData?.nativeLanguage;
   const saved = await user.save();
 
   return NextResponse.json({ error: null, data: saved });
