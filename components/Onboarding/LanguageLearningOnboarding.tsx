@@ -2,13 +2,19 @@
 import { useTranslations } from "next-intl";
 import { createElement, useState, useEffect } from "react";
 import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
+import LoadingComponent from "../Layout/LoadingComponen";
+import { selectUserLearningLanguage } from "@/lib/apis";
+import { useSession } from "next-auth/react";
 
 export default function LanguageLearningOnboarding({ setNextStep }: { setNextStep: () => void }) {
-  const [isUserChoosing, setIsUserChoosing] = useState(false);
+  const [isUserChoosing, setIsUserChoosing] = useState(true);
   const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
-  const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
+  const [isLoading, setIsLoading] = useState(true);
 
   const t = useTranslations("languageToLearn");
+  const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
+
+  const { data: session, status } = useSession();
 
   // Initialize static positions for flags when user starts choosing
   useEffect(() => {
@@ -30,23 +36,23 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
         };
       });
       setFlagPositions(positions);
+      setIsLoading(false);
     }
   }, [isUserChoosing, languages]);
 
   const handleUserChoice = async (language: LanguageOption) => {
-    console.log("Uncoment the select language after testing", language);
-    // Next steps:
-    // Create a page to explain the minimum of words to generate the quiz
-    // Allow deleting or editing words
-    // Rething UIX after all functionalities are set
-    // Write tests (check which tool is best)
-    // setSelectedLanguage(language);
+    setIsUserChoosing(false);
+    setSelectedLanguage(language);
+    if (!session || status !== "authenticated") throw new Error("Session not found");
+    await selectUserLearningLanguage(session, language.language);
     setNextStep();
   };
 
+  if (isLoading) return <LoadingComponent />;
+
   return (
-    <section className="relative flex flex-col items-center justify-start gap-10 min-h-[65vh] overflow-hidden">
-      <p className="text-2xl font-bold text-center z-10">{t("title")}</p>
+    <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96  w-72 lg:w-96 overflow-hidden">
+      <p className="lg:text-2xl text-xl font-bold text-center z-10">{t("title")}</p>
 
       {isUserChoosing ? (
         <>
@@ -59,7 +65,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
                 left: `${flagPositions[lang.language]?.x || 50}%`,
                 top: `${flagPositions[lang.language]?.y || 50}%`,
                 transform: `translate(-50%, -50%)`,
-                animation: `wave-${lang} 3s ease-in-out infinite`,
+                animation: `wave-${lang.language} 3s ease-in-out infinite`,
               }}
             >
               <div className="block hover:scale-110 transition-transform duration-200">
@@ -98,7 +104,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
 
       {/* CSS animations for flag waving */}
       <style jsx>{`
-        @keyframes wave-en {
+        @keyframes wave-English {
           0%,
           100% {
             transform: translate(-50%, -50%) rotate(-2deg) scale(1);
@@ -107,7 +113,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
             transform: translate(-50%, -50%) rotate(2deg) scale(1.05);
           }
         }
-        @keyframes wave-de {
+        @keyframes wave-Deutsch {
           0%,
           100% {
             transform: translate(-50%, -50%) rotate(1deg) scale(1);
@@ -116,7 +122,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
             transform: translate(-50%, -50%) rotate(-3deg) scale(1.05);
           }
         }
-        @keyframes wave-zh {
+        @keyframes wave-中文 {
           0%,
           100% {
             transform: translate(-50%, -50%) rotate(2deg) scale(1);
@@ -125,7 +131,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
             transform: translate(-50%, -50%) rotate(-1deg) scale(1.05);
           }
         }
-        @keyframes wave-es {
+        @keyframes wave-Español {
           0%,
           100% {
             transform: translate(-50%, -50%) rotate(-1deg) scale(1);

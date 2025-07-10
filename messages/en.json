@@ -92,10 +92,14 @@
     "close-btn": "Close",
     "error-adding-word": "Error adding a word",
     "error-form-empty": "Please, fill at least the word and the definition.",
-    "success-word-added": "Word added!"
+    "success-word-added": "Word added!",
+    "finish-btn": "Finish"
   },
   "word-list": {
     "no-words": "No words found",
     "error-getting-user": "Error getting the user data"
+  },
+  "add-first-cards": {
+    "title": "Please, add at least 5 words"
   }
 }

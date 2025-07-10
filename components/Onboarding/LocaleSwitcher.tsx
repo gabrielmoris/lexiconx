@@ -12,6 +12,7 @@ import { createElement, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { updateUserData } from "@/lib/apis";
 import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
+import LoadingComponent from "../Layout/LoadingComponen";
 
 const languages = {
   en: { name: "English", icon: EnglishFlag },
@@ -23,9 +24,10 @@ const languages = {
 const titles = ["Select your native language!", "Wähle deine Muttersprache!", "Selecciona tu idioma nativo!", "选择你的母语！"];
 
 export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => void }) {
-  const [isUserChoosing, setIsUserChoosing] = useState(false);
+  const [isUserChoosing, setIsUserChoosing] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
+  const [isLoading, setIsLoading] = useState(true);
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -50,6 +52,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
         };
       });
       setFlagPositions(positions);
+      setIsLoading(false);
     }
   }, [currentLocale, isUserChoosing]);
 
@@ -64,7 +67,6 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
     } catch (error) {
       console.error("Failed to select language:", error);
     }
-    setIsUserChoosing(false);
   };
 
   useEffect(() => {
@@ -102,8 +104,10 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
     },
   };
 
+  if (isLoading) return <LoadingComponent />;
+
   return (
-    <section className="relative flex flex-col items-center justify-start gap-10 min-h-[65vh] overflow-hidden">
+    <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96  w-72 lg:w-96 overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.p
           key={currentIndex}
@@ -111,7 +115,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
           initial="enter"
           animate="center"
           exit="exit"
-          className="text-2xl font-bold text-center z-10" // Re-apply your styling
+          className="lg:text-2xl text-xl font-bold text-center z-10"
         >
           {titles[currentIndex]}
         </motion.p>

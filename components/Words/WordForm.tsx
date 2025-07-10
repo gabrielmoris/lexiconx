@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import LoadingComponent from "../Layout/LoadingComponen";
 import { addword } from "@/lib/apis";
+import { useRouter } from "@/src/i18n/navigation";
 
-const WordForm = ({ className }: { className?: string }) => {
+const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: boolean }) => {
   const { showToast } = useToastContext();
   const { selectedLanguage } = useLanguage();
   const { data: session, status } = useSession();
   const t = useTranslations("word-form");
+  const route = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [addWord, setAddWord] = useState(false);
@@ -87,7 +89,7 @@ const WordForm = ({ className }: { className?: string }) => {
     return <LoadingComponent />;
   }
 
-  if (addWord) {
+  if (addWord || isOpen) {
     return (
       <section
         className="fixed top-0 left-0 w-screen h-screen
@@ -132,9 +134,15 @@ const WordForm = ({ className }: { className?: string }) => {
             onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
           />
 
-          <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
-            {t("close-btn")}
-          </Button>
+          {!isOpen ? (
+            <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
+              {t("close-btn")}
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => route.push("/cards")} variant="secondary" className="mb-5">
+              {t("finish-btn")}
+            </Button>
+          )}
 
           <Button type="submit" disabled={loading} variant="primary" className="mb-5">
             {loading ? t("adding") : t("add")}
