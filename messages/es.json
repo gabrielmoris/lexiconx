@@ -1,0 +1,105 @@
+{
+  "ai-quiz-generator": {
+    "error-generating quiz": "Error al generar el cuestionario",
+    "error-getting-user": "Error al obtener los datos de usuario",
+    "generate-quiz": "Generar cuestionario"
+  },
+  "example": {
+    "title": "Inicio de la aplicación de vocabulario"
+  },
+  "landing": {
+    "cta": {
+      "description": "Comienza tu viaje hoy mismo, ¡es totalmente gratis!",
+      "get-started": "Empezar ahora",
+      "subtitle": "Únete y acelera tu dominio del idioma con LexiconX.",
+      "title": "¿Listo para transformar tu aprendizaje de idiomas?"
+    },
+    "features": {
+      "ai-quizzes": {
+        "description": "Cuestionarios dinámicos adaptados a tu nivel de habilidad y objetivos de aprendizaje, manteniéndote motivado y desafiado en cada paso",
+        "title": "Cuestionarios generados por IA"
+      },
+      "fast-progress": {
+        "description": "Aprende 3 veces más rápido que con los métodos tradicionales con nuestro enfoque científicamente probado para la adquisición de vocabulario",
+        "title": "Progreso ultrarrápido"
+      },
+      "mobile-friendly": {
+        "description": "Aprende en cualquier lugar, en cualquier momento con nuestro diseño adaptable que funciona perfectamente en todos tus dispositivos",
+        "title": "Adaptable a dispositivos móviles"
+      },
+      "multiple-languages": {
+        "description": "Domina español, alemán, chino, inglés y más con nuestro completo sistema de apoyo lingüístico",
+        "title": "Múltiples idiomas"
+      },
+      "progress-tracking": {
+        "description": "El seguimiento visual del progreso y los análisis detallados te ayudan a mantenerte motivado y a ver tu mejora con el tiempo",
+        "title": "Seguimiento de progreso"
+      },
+      "spaced-repetition": {
+        "description": "Nuestro algoritmo de IA optimiza el tiempo de revisión basándose en tus patrones de aprendizaje, asegurando la máxima retención con el mínimo esfuerzo",
+        "title": "Repetición inteligente espaciada"
+      },
+      "subtitle": "Nuestro enfoque respaldado científicamente combina la IA de vanguardia con técnicas de aprendizaje probadas",
+      "title": "¿Por qué elegir LexiconX?"
+    },
+    "hero": {
+      "description": "Aprende más rápido, recuerda por más tiempo, habla con confianza",
+      "explore-features": "Explorar funciones",
+      "start-learning": "Empezar a aprender gratis",
+      "subtitle": "Acelera tu viaje de aprendizaje de idiomas con la repetición espaciada y los cuestionarios inteligentes impulsados por la IA.",
+      "title": "Domina idiomas con "
+    }
+  },
+  "languageToLearn": {
+    "chinese": "中文",
+    "english": "English",
+    "error-changing-language": "No se pudo establecer el idioma activo",
+    "german": "Deutsch",
+    "spanish": "Español",
+    "title": "Elige un idioma para aprender"
+  },
+  "quiz": {
+    "question": "Pregunta {current}/{total}",
+    "quiz": "Cuestionario {current}/{total}",
+    "error-getting-user": "Error al obtener los datos de usuario",
+    "error-processing-words": "Error al procesar las palabras",
+    "error-speech": "La funcionalidad de voz no está disponible",
+    "loading-voices": "Espera, cargando las voces...",
+    "error-adding-word": "Error al añadir una palabra"
+  },
+  "quiz-finished": {
+    "better-luck-next-time": "Mejor suerte la próxima vez",
+    "congratulations": "¡Felicidades!",
+    "dont-give-up-try-again": "No te rindas, ¡inténtalo de nuevo!",
+    "fantastic-job-keep-it-up": "¡Fantástico trabajo, sigue así!",
+    "try-again": "Intentar de nuevo",
+    "you-answered-correctly": "Respondiste correctamente a {count} de {total} preguntas"
+  },
+  "word-card": {
+    "definition": "Definición",
+    "error-speech": "La funcionalidad de voz no está disponible",
+    "last-reviewed": "Última revisión",
+    "loading-voices": "Espera, cargando las voces...",
+    "next-review": "Siguiente revisión",
+    "phonetic-notation": "Fonética",
+    "word": "Palabra"
+  },
+  "word-form": {
+    "add": "Añadir",
+    "add-word": "Añadir una palabra",
+    "adding": "Añadiendo...",
+    "cards-form": "Guardar una nueva palabra",
+    "close-btn": "Cerrar",
+    "error-adding-word": "Error al añadir una palabra",
+    "error-form-empty": "Por favor, rellena al menos la palabra y la definición.",
+    "success-word-added": "¡Palabra añadida!",
+    "finish-btn": "Terminar"
+  },
+  "word-list": {
+    "no-words": "No se encontraron palabras",
+    "error-getting-user": "Error al obtener los datos de usuario"
+  },
+  "add-first-cards": {
+    "title": "Por favor, añade al menos 5 palabras"
+  }
+}

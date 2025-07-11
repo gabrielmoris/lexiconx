@@ -1,0 +1,105 @@
+{
+  "ai-quiz-generator": {
+    "error-generating quiz": "Fehler beim Erstellen des Quiz",
+    "error-getting-user": "Fehler beim Abrufen der Benutzerdaten",
+    "generate-quiz": "Quiz erstellen"
+  },
+  "example": {
+    "title": "Vokabel-App Starter"
+  },
+  "landing": {
+    "cta": {
+      "description": "Starte deine Reise noch heute - es ist komplett kostenlos!",
+      "get-started": "Jetzt starten",
+      "subtitle": "Tritt bei und beschleunige deine Sprachbeherrschung mit LexiconX.",
+      "title": "Bereit, dein Sprachenlernen zu transformieren?"
+    },
+    "features": {
+      "ai-quizzes": {
+        "description": "Dynamische Quizze, die auf dein Sprachniveau und deine Lernziele zugeschnitten sind und dich bei jedem Schritt motivieren und herausfordern",
+        "title": "KI-generierte Quizze"
+      },
+      "fast-progress": {
+        "description": "Lerne 3x schneller als mit herkömmlichen Methoden, dank unseres wissenschaftlich erprobten Ansatzes zum Vokabelerwerb",
+        "title": "Blitzschneller Fortschritt"
+      },
+      "mobile-friendly": {
+        "description": "Lerne überall und jederzeit mit unserem responsiven Design, das auf all deinen Geräten perfekt funktioniert",
+        "title": "Mobilfreundlich"
+      },
+      "multiple-languages": {
+        "description": "Meistere Spanisch, Deutsch, Chinesisch, Englisch und mehr mit unserem umfassenden System zur Sprachunterstützung",
+        "title": "Mehrere Sprachen"
+      },
+      "progress-tracking": {
+        "description": "Visuelle Fortschrittsverfolgung und detaillierte Analysen helfen dir, motiviert zu bleiben und deine Verbesserung im Laufe der Zeit zu sehen",
+        "title": "Fortschrittsverfolgung"
+      },
+      "spaced-repetition": {
+        "description": "Unser KI-Algorithmus optimiert die Überprüfungszeitpunkte basierend auf deinen Lernmustern, um maximale Speicherung bei minimalem Aufwand zu gewährleisten",
+        "title": "Intelligente räumliche Wiederholung"
+      },
+      "subtitle": "Unser wissenschaftlich fundierter Ansatz kombiniert modernste KI mit bewährten Lerntechniken",
+      "title": "Warum LexiconX wählen?"
+    },
+    "hero": {
+      "description": "Lerne schneller, erinnere dich länger, sprich selbstbewusst",
+      "explore-features": "Funktionen erkunden",
+      "start-learning": "Kostenlos starten",
+      "subtitle": "Beschleunige dein Sprachenlernen mit KI-gestützter räumlicher Wiederholung und intelligenten Quizzen.",
+      "title": "Sprachen meistern mit "
+    }
+  },
+  "languageToLearn": {
+    "chinese": "中文",
+    "english": "English",
+    "error-changing-language": "Sprachwechsel fehlgeschlagen",
+    "german": "Deutsch",
+    "spanish": "Español",
+    "title": "Wähle eine Sprache zum Lernen"
+  },
+  "quiz": {
+    "question": "Frage {current}/{total}",
+    "quiz": "Quiz {current}/{total}",
+    "error-getting-user": "Fehler beim Abrufen der Benutzerdaten",
+    "error-processing-words": "Fehler beim Verarbeiten der Wörter",
+    "error-speech": "Sprachfunktion ist nicht verfügbar",
+    "loading-voices": "Bitte warten, Sprachausgabe wird geladen...",
+    "error-adding-word": "Fehler beim Hinzufügen eines Wortes"
+  },
+  "quiz-finished": {
+    "better-luck-next-time": "Viel Glück beim nächsten Mal",
+    "congratulations": "Herzlichen Glückwunsch!",
+    "dont-give-up-try-again": "Gib nicht auf, versuch es noch einmal!",
+    "fantastic-job-keep-it-up": "Fantastische Arbeit, mach weiter so!",
+    "try-again": "Erneut versuchen",
+    "you-answered-correctly": "Du hast {count} von {total} Fragen richtig beantwortet"
+  },
+  "word-card": {
+    "definition": "Definition",
+    "error-speech": "Sprachfunktion ist nicht verfügbar",
+    "last-reviewed": "Zuletzt überprüft",
+    "loading-voices": "Bitte warten, Sprachausgabe wird geladen...",
+    "next-review": "Nächste Überprüfung",
+    "phonetic-notation": "Lautschrift",
+    "word": "Wort"
+  },
+  "word-form": {
+    "add": "Hinzufügen",
+    "add-word": "Ein Wort hinzufügen",
+    "adding": "Wird hinzugefügt...",
+    "cards-form": "Ein neues Wort speichern",
+    "close-btn": "Schließen",
+    "error-adding-word": "Fehler beim Hinzufügen eines Wortes",
+    "error-form-empty": "Bitte fülle mindestens das Wort und die Definition aus.",
+    "success-word-added": "Wort hinzugefügt!",
+    "finish-btn": "Beenden"
+  },
+  "word-list": {
+    "no-words": "Keine Wörter gefunden",
+    "error-getting-user": "Fehler beim Abrufen der Benutzerdaten"
+  },
+  "add-first-cards": {
+    "title": "Bitte füge mindestens 5 Wörter hinzu"
+  }
+}

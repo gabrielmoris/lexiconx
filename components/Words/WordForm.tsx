@@ -8,13 +8,18 @@ import Button from "../UI/Button";
 import LoadingComponent from "../Layout/LoadingComponen";
 import { addword } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
+import { useWords } from "@/context/WordsContext";
+import { Word } from "@/types/Words";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: boolean }) => {
   const { showToast } = useToastContext();
+  const { setWords, words } = useWords();
   const { selectedLanguage } = useLanguage();
   const { data: session, status } = useSession();
   const t = useTranslations("word-form");
   const route = useRouter();
+  const { session: userSession } = useAuthGuard();
 
   const [loading, setLoading] = useState(false);
   const [addWord, setAddWord] = useState(false);
@@ -48,8 +53,30 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
       return;
     }
     try {
+      if (!formData.word || !formData.definition) {
+        throw new Error("Please, fill at least the word and the definition.");
+      }
+
       if (!formData.session) throw new Error("Session not found");
-      addword(formData);
+      const newWord: Word = {
+        _id: new Date().getMilliseconds().toString(),
+        word: formData.word,
+        definition: formData.definition,
+        phoneticNotation: formData.phoneticNotation,
+        language: formData.language,
+        userId: userSession?.user?.id || "fakeUserId",
+        tags: [],
+        lastReviewed: null,
+        nextReview: new Date().toISOString(),
+        interval: 0,
+        repetitions: 0,
+        easeFactor: 2.5,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      await addword(formData);
+      setWords([...words, newWord]);
 
       showToast({
         message: t("success-word-added"),
@@ -92,15 +119,15 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   if (addWord || isOpen) {
     return (
       <section
-        className="fixed top-0 left-0 w-screen h-screen
-        shadow-sm dark:shadow-theme-fg-dark
-        backdrop-blur-2xl
-        z-29"
+        className={`shadow-sm dark:shadow-theme-fg-dark
+        backdrop-blur-2xl z-29
+        ${isOpen ? "relative overflow-y-auto" : "fixed top-0 left-0 w-screen h-screen overflow-y-hidden"}`}
       >
         <form
           onSubmit={handlesubmit}
-          className={`w-5/6 max-w-xl absolute transform top-1/2 left-1/2 -translate-x-1/2 
-            -translate-y-1/2  bg-theme-bg-light dark:bg-theme-bg-dark md:border rounded-lg 
+          className={` ${
+            isOpen ? "relative" : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          } w-5/6 max-w-xl transform  bg-theme-bg-light dark:bg-theme-bg-dark md:border rounded-lg 
             md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ""}`}
         >
           <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>

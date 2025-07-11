@@ -1,0 +1,105 @@
+{
+  "ai-quiz-generator": {
+    "error-generating quiz": "生成测验时出错",
+    "error-getting-user": "获取用户数据时出错",
+    "generate-quiz": "生成测验"
+  },
+  "example": {
+    "title": "词汇应用入门"
+  },
+  "landing": {
+    "cta": {
+      "description": "今天就开始你的旅程吧 - 完全免费！",
+      "get-started": "立即开始",
+      "subtitle": "加入 LexiconX，加速你的语言掌握。",
+      "title": "准备好改变你的语言学习方式了吗？"
+    },
+    "features": {
+      "ai-quizzes": {
+        "description": "根据你的技能水平和学习目标量身定制的动态测验，让你每一步都保持专注和挑战",
+        "title": "人工智能生成的测验"
+      },
+      "fast-progress": {
+        "description": "通过我们经过科学验证的词汇习得方法，学习速度比传统方法快3倍",
+        "title": "飞速进步"
+      },
+      "mobile-friendly": {
+        "description": "我们的响应式设计在你的所有设备上都能完美运行，让你随时随地学习",
+        "title": "移动设备友好"
+      },
+      "multiple-languages": {
+        "description": "通过我们全面的语言支持系统，掌握西班牙语、德语、中文、英语等多种语言",
+        "title": "多种语言"
+      },
+      "progress-tracking": {
+        "description": "可视化的进度跟踪和详细的分析，帮助你保持动力并看到自己的进步",
+        "title": "进度跟踪"
+      },
+      "spaced-repetition": {
+        "description": "我们的人工智能算法根据你的学习模式优化复习时间，确保以最小的努力获得最大的记忆效果",
+        "title": "智能间隔重复"
+      },
+      "subtitle": "我们以科学为基础的方法将尖端人工智能与成熟的学习技术相结合",
+      "title": "为什么选择 LexiconX？"
+    },
+    "hero": {
+      "description": "学得更快，记得更久，说得更自信",
+      "explore-features": "探索功能",
+      "start-learning": "免费开始学习",
+      "subtitle": "通过人工智能驱动的间隔重复和智能测验，加速你的语言学习之旅。",
+      "title": "用 LexiconX 掌握语言"
+    }
+  },
+  "languageToLearn": {
+    "chinese": "中文",
+    "english": "English",
+    "error-changing-language": "设置激活语言失败",
+    "german": "Deutsch",
+    "spanish": "Español",
+    "title": "选择要学习的语言"
+  },
+  "quiz": {
+    "question": "问题 {current}/{total}",
+    "quiz": "测验 {current}/{total}",
+    "error-getting-user": "获取用户数据时出错",
+    "error-processing-words": "处理单词时出错",
+    "error-speech": "语音功能不可用",
+    "loading-voices": "请稍候，正在加载语音...",
+    "error-adding-word": "添加单词时出错"
+  },
+  "quiz-finished": {
+    "better-luck-next-time": "下次好运",
+    "congratulations": "恭喜你！",
+    "dont-give-up-try-again": "不要放弃，再试一次！",
+    "fantastic-job-keep-it-up": "太棒了，继续保持！",
+    "try-again": "再试一次",
+    "you-answered-correctly": "你答对了 {total} 道题中的 {count} 道"
+  },
+  "word-card": {
+    "definition": "定义",
+    "error-speech": "语音功能不可用",
+    "last-reviewed": "上次复习",
+    "loading-voices": "请稍候，正在加载语音...",
+    "next-review": "下次复习",
+    "phonetic-notation": "音标",
+    "word": "单词"
+  },
+  "word-form": {
+    "add": "添加",
+    "add-word": "添加一个单词",
+    "adding": "正在添加...",
+    "cards-form": "保存一个新单词",
+    "close-btn": "关闭",
+    "error-adding-word": "添加单词时出错",
+    "error-form-empty": "请至少填写单词和定义。",
+    "success-word-added": "单词已添加！",
+    "finish-btn": "完成"
+  },
+  "word-list": {
+    "no-words": "没有找到单词",
+    "error-getting-user": "获取用户数据时出错"
+  },
+  "add-first-cards": {
+    "title": "请至少添加5个单词"
+  }
+}
