@@ -82,7 +82,8 @@
     "loading-voices": "Espera, cargando las voces...",
     "next-review": "Siguiente revisión",
     "phonetic-notation": "Fonética",
-    "word": "Palabra"
+    "word": "Palabra",
+    "delete-message": " ¿Está seguro de que desea eliminar esta palabra?"
   },
   "word-form": {
     "add": "Añadir",
@@ -101,5 +102,9 @@
   },
   "add-first-cards": {
     "title": "Por favor, añade al menos 5 palabras"
+  },
+  "popup": {
+    "close-popup": "Cancelar",
+    "accept-popup": "Aceptar"
   }
 }

@@ -82,7 +82,8 @@
     "loading-voices": "请稍候，正在加载语音...",
     "next-review": "下次复习",
     "phonetic-notation": "音标",
-    "word": "单词"
+    "word": "单词",
+    "delete-message": " 您确定要删除这个词吗？"
   },
   "word-form": {
     "add": "添加",
@@ -101,5 +102,9 @@
   },
   "add-first-cards": {
     "title": "请至少添加5个单词"
+  },
+  "popup": {
+    "close-popup": "取消 ",
+    "accept-popup": "接受 "
   }
 }

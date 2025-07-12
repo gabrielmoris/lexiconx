@@ -82,7 +82,8 @@
     "loading-voices": "Please wait, loading speech voices...",
     "next-review": "Next review",
     "phonetic-notation": "Phonetic",
-    "word": "Word"
+    "word": "Word",
+    "delete-message": "Are you sure that you wwant to delete this word?"
   },
   "word-form": {
     "add": "Add",
@@ -101,5 +102,9 @@
   },
   "add-first-cards": {
     "title": "Please, add at least 5 words"
+  },
+  "popup": {
+    "close-popup": "Cancel",
+    "accept-popup": "Accept"
   }
 }

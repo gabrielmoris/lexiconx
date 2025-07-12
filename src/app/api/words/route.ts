@@ -86,3 +86,25 @@ export async function PUT(req: Request) {
 
   return NextResponse.json({ error: null, data: updatedWords });
 }
+
+export async function DELETE(req: Request) {
+  const { word, session } = await req.json();
+
+  await connectDB();
+
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const wordToDelete = await Word.findOne({ _id: word._id });
+
+  if (!wordToDelete) {
+    return NextResponse.json({ error: "Word not found" });
+  }
+
+  const deletedWord = Word.deleteOne(wordToDelete);
+
+  return NextResponse.json({ error: null, data: deletedWord });
+}

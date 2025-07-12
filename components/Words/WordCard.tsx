@@ -4,11 +4,14 @@ import { Language, Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
 import SoundIcon from "../Icons/SoundIcon";
 import { useToastContext } from "@/context/ToastContext";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import RemoveIcon from "../Icons/RemoveIcon";
+import Popup from "../UI/Popup";
 
 const WordCard = ({ word }: { word: Word }) => {
   const t = useTranslations("word-card");
   const { showToast } = useToastContext();
+  const [deletePopup, setDeletePopup] = useState(false);
 
   const { speak, isReady, isSupported } = useTextToSpeech({
     onError: (error) => {
@@ -48,12 +51,22 @@ const WordCard = ({ word }: { word: Word }) => {
     [isReady, isSupported, showToast, speak, t]
   );
 
+  useEffect(() => {
+    if (deletePopup) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [deletePopup]);
+
   return (
     <div
       className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 
                  rounded-lg shadow-sm p-4 mb-4 flex flex-col space-y-2
                  hover:shadow-md transition-shadow duration-200"
     >
+      {deletePopup && <Popup handleAccept={() => console.log("YES")} handleClose={() => setDeletePopup(false)} message={t("delete-message")} />}
+
       <div className="flex flex-row sm:flex-row justify-between mb-2">
         <div className="flex flex-row gap-5">
           <h3 className="text-xl font-extrabold text-gray-900 dark:text-white">{word.word}</h3>
@@ -66,15 +79,18 @@ const WordCard = ({ word }: { word: Word }) => {
         <span className="font-semibold text-gray-500 dark:text-gray-400 mr-1">{t("definition")}:</span> {word.definition}
       </p>
 
-      <div className="pt-2 border-t border-gray-100 dark:border-gray-700 mt-2">
-        {word.lastReviewed && (
+      <div className="pt-2 flex flex-row justify-between items-end border-t border-gray-100 dark:border-gray-700 mt-2">
+        <div className="flex flex-col gap-1">
+          {word.lastReviewed && (
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="font-medium">{t("last-reviewed")}:</span> {formatMongoDate(word.lastReviewed)}
+            </p>
+          )}
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            <span className="font-medium">{t("last-reviewed")}:</span> {formatMongoDate(word.lastReviewed)}
+            <span className="font-medium">{t("next-review")}:</span> {formatMongoDate(word.nextReview)}
           </p>
-        )}
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          <span className="font-medium">{t("next-review")}:</span> {formatMongoDate(word.nextReview)}
-        </p>
+        </div>
+        <RemoveIcon className="w-5 h-5" onClick={() => setDeletePopup(true)} />
       </div>
     </div>
   );
