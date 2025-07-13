@@ -82,7 +82,8 @@
     "loading-voices": "Bitte warten, Sprachausgabe wird geladen...",
     "next-review": "Nächste Überprüfung",
     "phonetic-notation": "Lautschrift",
-    "word": "Wort"
+    "word": "Wort",
+    "delete-message": "Sind Sie sicher, dass Sie dieses Wort löschen möchten?"
   },
   "word-form": {
     "add": "Hinzufügen",
@@ -101,5 +102,9 @@
   },
   "add-first-cards": {
     "title": "Bitte füge mindestens 5 Wörter hinzu"
+  },
+  "popup": {
+    "close-popup": "Abbrechen",
+    "accept-popup": "Akzeptieren"
   }
 }

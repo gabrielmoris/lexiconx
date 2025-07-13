@@ -4,11 +4,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useToastContext } from "./ToastContext";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "./LanguageToLearnContext";
-import { fetchUserWords } from "@/lib/apis";
+import { deleteWordApi, fetchUserWords } from "@/lib/apis";
 
 interface WordsContextType {
   words: Word[];
   setWords: (words: Word[]) => void;
+  deleteWord: (words: Word) => void;
   loading: boolean;
 }
 
@@ -16,6 +17,7 @@ const WordsContext = createContext<WordsContextType>({
   words: [],
   setWords: () => {},
   loading: false,
+  deleteWord: () => {},
 });
 
 export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -52,7 +54,30 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, selectedLanguage, isSelectedLanguageLoading]);
 
-  return <WordsContext.Provider value={{ words, setWords, loading }}>{children}</WordsContext.Provider>;
+  const deleteWord = async (word: Word) => {
+    if (!session) {
+      showToast({
+        message: "A session error occurred.",
+        variant: "error",
+        duration: 3000,
+      });
+      return;
+    }
+
+    try {
+      await deleteWordApi(word, session);
+      const filteredWords = words.filter((currWord) => currWord._id !== word._id);
+      setWords(filteredWords);
+    } catch (err) {
+      showToast({
+        message: err instanceof Error ? err.message : "An unknown error occurred.",
+        variant: "error",
+        duration: 3000,
+      });
+    }
+  };
+
+  return <WordsContext.Provider value={{ words, setWords, loading, deleteWord }}>{children}</WordsContext.Provider>;
 };
 
 export const useWords = () => {

@@ -7,7 +7,7 @@ const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const _apiHandler = async (
   endpoint: string,
   options: {
-    method?: "GET" | "POST" | "PUT";
+    method?: "GET" | "POST" | "PUT" | "DELETE";
     body?: Record<string, unknown>;
     session?: Session | null;
     isSSR?: boolean;
@@ -101,6 +101,17 @@ export const addword = async (
     method: "POST",
     session,
     body: wordData,
+    isSSR,
+  });
+};
+
+export const deleteWordApi = async (word: Word, session: Session, isSSR = false) => {
+  if (!word) throw new Error("Word not found");
+
+  return _apiHandler("/api/words", {
+    method: "DELETE",
+    session,
+    body: { word },
     isSSR,
   });
 };

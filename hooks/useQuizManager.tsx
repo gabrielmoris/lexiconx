@@ -66,7 +66,7 @@ export const useQuizManager = (userData: User) => {
 
           await updateUserData(session, updatedUserData);
           if (isSucceed) {
-            // deleteValue(); // Uncomment this line to delete the quizzes from localStorage after success
+            deleteValue(); // Delete from LocalStorage
           }
           setIsQuizFinished(true);
         } catch (error) {
