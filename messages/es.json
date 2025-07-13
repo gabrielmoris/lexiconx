@@ -106,5 +106,9 @@
   "popup": {
     "close-popup": "Cancelar",
     "accept-popup": "Aceptar"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "mode": "Modo de tema"
   }
 }

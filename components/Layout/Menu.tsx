@@ -10,6 +10,7 @@ import CardsIcon from "../Icons/CardsIcon";
 import UserIcon from "../Icons/UserIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import LoadingComponent from "./LoadingComponen";
+import SettingsIcon from "../Icons/SettingsIcon";
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -47,6 +48,14 @@ const Menu: React.FC = () => {
           href="/cards"
         >
           <CardsIcon className="w-4 h-4" /> Cards
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+          px-5 py-2"
+          href="/settings"
+        >
+          <SettingsIcon className="w-4 h-4" /> Settings
         </Link>
         {session?.user?.image ? (
           <p

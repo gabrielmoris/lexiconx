@@ -106,5 +106,9 @@
   "popup": {
     "close-popup": "取消 ",
     "accept-popup": "接受 "
+  },
+  "settings": {
+    "title": "设置",
+    "mode": "主题模式"
   }
 }

@@ -83,7 +83,7 @@
     "next-review": "Next review",
     "phonetic-notation": "Phonetic",
     "word": "Word",
-    "delete-message": "Are you sure that you wwant to delete this word?"
+    "delete-message": "Are you sure that you want to delete this word?"
   },
   "word-form": {
     "add": "Add",
@@ -106,5 +106,9 @@
   "popup": {
     "close-popup": "Cancel",
     "accept-popup": "Accept"
+  },
+  "settings": {
+    "title": "Settings",
+    "mode": "Theme Mode"
   }
 }
