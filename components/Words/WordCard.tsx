@@ -4,14 +4,16 @@ import { Language, Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
 import SoundIcon from "../Icons/SoundIcon";
 import { useToastContext } from "@/context/ToastContext";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import RemoveIcon from "../Icons/RemoveIcon";
 import Popup from "../UI/Popup";
+import { useWords } from "@/context/WordsContext";
 
 const WordCard = ({ word }: { word: Word }) => {
   const t = useTranslations("word-card");
   const { showToast } = useToastContext();
   const [deletePopup, setDeletePopup] = useState(false);
+  const { deleteWord } = useWords();
 
   const { speak, isReady, isSupported } = useTextToSpeech({
     onError: (error) => {
@@ -51,13 +53,20 @@ const WordCard = ({ word }: { word: Word }) => {
     [isReady, isSupported, showToast, speak, t]
   );
 
-  useEffect(() => {
-    if (deletePopup) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "auto";
-    }
-  }, [deletePopup]);
+  const openDeletePopup = () => {
+    setDeletePopup(true);
+    document.body.style.overflowY = "hidden";
+  };
+
+  const closeDeletePopup = () => {
+    setDeletePopup(false);
+    document.body.style.overflowY = "auto";
+  };
+
+  const handleDelete = () => {
+    deleteWord(word);
+    closeDeletePopup();
+  };
 
   return (
     <div
@@ -65,7 +74,7 @@ const WordCard = ({ word }: { word: Word }) => {
                  rounded-lg shadow-sm p-4 mb-4 flex flex-col space-y-2
                  hover:shadow-md transition-shadow duration-200"
     >
-      {deletePopup && <Popup handleAccept={() => console.log("YES")} handleClose={() => setDeletePopup(false)} message={t("delete-message")} />}
+      {deletePopup && <Popup handleAccept={handleDelete} handleClose={closeDeletePopup} message={t("delete-message")} />}
 
       <div className="flex flex-row sm:flex-row justify-between mb-2">
         <div className="flex flex-row gap-5">
@@ -90,7 +99,7 @@ const WordCard = ({ word }: { word: Word }) => {
             <span className="font-medium">{t("next-review")}:</span> {formatMongoDate(word.nextReview)}
           </p>
         </div>
-        <RemoveIcon className="w-5 h-5" onClick={() => setDeletePopup(true)} />
+        <RemoveIcon className="w-5 h-5 cursor-pointer" onClick={openDeletePopup} />
       </div>
     </div>
   );

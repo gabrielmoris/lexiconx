@@ -104,7 +104,7 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Word not found" });
   }
 
-  const deletedWord = Word.deleteOne(wordToDelete);
+  const deletedWord = await Word.deleteOne(wordToDelete);
 
   return NextResponse.json({ error: null, data: deletedWord });
 }
