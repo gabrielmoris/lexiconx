@@ -72,9 +72,10 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: "User not found" });
   }
 
-  user.learningProgress = userData.learningProgress;
-  user.activeLanguage = userData.activeLanguage;
-  user.nativeLanguage = userData?.nativeLanguage;
+  if (userData.learningProgress) user.learningProgress = userData?.learningProgress;
+  if (userData.activeLanguage) user.activeLanguage = userData?.activeLanguage;
+  if (userData.nativeLanguage) user.nativeLanguage = userData?.nativeLanguage;
+
   const saved = await user.save();
 
   return NextResponse.json({ error: null, data: saved });

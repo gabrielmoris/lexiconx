@@ -109,6 +109,12 @@
   },
   "settings": {
     "title": "Settings",
-    "mode": "Theme Mode"
+    "mode": "Theme Mode",
+    "native-language": "Native Language",
+    "learning-language": "Learning language",
+    "delete-account": "Delete account"
+  },
+  "NativeLanguage": {
+    "error-changing-language": "Error changing your language"
   }
 }

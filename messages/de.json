@@ -109,6 +109,12 @@
   },
   "settings": {
     "title": "Einstellungen",
-    "mode": "Themenmodus"
+    "mode": "Themenmodus",
+    "native-language": "Muttersprache",
+    "learning-language": "Lernsprache",
+    "delete-account": "Konto löschen"
+  },
+  "NativeLanguage": {
+    "error-changing-language": "Fehler Ändern Ihrer Sprache"
   }
 }
