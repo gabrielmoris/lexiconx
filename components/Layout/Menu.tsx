@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "@/src/i18n/navigation";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
@@ -10,17 +10,31 @@ import CardsIcon from "../Icons/CardsIcon";
 import UserIcon from "../Icons/UserIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import LoadingComponent from "./LoadingComponen";
+import SettingsIcon from "../Icons/SettingsIcon";
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (status === "loading") {
     return <LoadingComponent />;
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
         className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10 
                    border border-gray-300 dark:border-gray-600 right-5
@@ -47,6 +61,14 @@ const Menu: React.FC = () => {
           href="/cards"
         >
           <CardsIcon className="w-4 h-4" /> Cards
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+          px-5 py-2"
+          href="/settings"
+        >
+          <SettingsIcon className="w-4 h-4" /> Settings
         </Link>
         {session?.user?.image ? (
           <p

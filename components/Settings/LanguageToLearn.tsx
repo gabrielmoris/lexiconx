@@ -5,7 +5,7 @@ import { useToastContext } from "@/context/ToastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import LoadingComponent from "./LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponen";
 import { selectUserLearningLanguage } from "@/lib/apis";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
@@ -60,15 +60,10 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div
-      className={`w-full rounded-lg md:shadow-sm md:border border-gray-300 dark:border-gray-700 md:p-5 relative ${className || ""}`}
-      ref={dropdownRef}
-    >
-      <h1 className="text-xl font-bold">{t("title")}</h1>
-
+    <div className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ""}`} ref={dropdownRef}>
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}
       <div
-        className="mt-4 cursor-pointer px-4 py-2 border border-gray-200 dark:border-gray-700 bg-theme-fg-light text-theme-text-light w-full dark:bg-gray-800 dark:text-white rounded flex items-center justify-between"
+        className="cursor-pointer text-theme-text-light gap-2  dark:text-white rounded flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0} // Make it focusable
         role="button"
@@ -82,10 +77,7 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
           }
         }}
       >
-        <div className="flex items-center gap-2">
-          {SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}
-          <span>{selectedLanguage?.name}</span>
-        </div>
+        <div className="flex items-center">{SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}</div>
         {isOpen ? "▲" : "▼"}
       </div>
 
@@ -117,7 +109,6 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
               }}
             >
               <lang.icon className="w-6 h-6" />
-              <span>{lang.name}</span>
             </li>
           ))}
         </ul>

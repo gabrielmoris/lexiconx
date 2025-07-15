@@ -14,7 +14,7 @@ import { updateUserData } from "@/lib/apis";
 import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
 import LoadingComponent from "../Layout/LoadingComponen";
 
-const languages = {
+export const languages = {
   en: { name: "English", icon: EnglishFlag },
   de: { name: "Deutsch", icon: GermanFlag },
   zh: { name: "中文", icon: ChinaFlag },

@@ -83,7 +83,7 @@
     "next-review": "Next review",
     "phonetic-notation": "Phonetic",
     "word": "Word",
-    "delete-message": "Are you sure that you wwant to delete this word?"
+    "delete-message": "Are you sure that you want to delete this word?"
   },
   "word-form": {
     "add": "Add",
@@ -106,5 +106,19 @@
   "popup": {
     "close-popup": "Cancel",
     "accept-popup": "Accept"
+  },
+  "settings": {
+    "title": "Settings",
+    "mode": "Theme Mode",
+    "native-language": "Native Language",
+    "learning-language": "Learning language",
+    "delete-account": "Delete account"
+  },
+  "NativeLanguage": {
+    "error-changing-language": "Error changing your language"
+  },
+  "delete-account": {
+    "error-deleting-account": "Error deleting your account",
+    "delete message": "Heads up, deleting your account is permanent. This will erase all of your data, and once it's gone, you won't be able to get it back."
   }
 }

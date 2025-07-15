@@ -65,6 +65,15 @@ export const updateUserData = async (session: Session, userData: Partial<User>, 
   });
 };
 
+export const deleteUserData = async (session: Session, isSSR = false) => {
+  return _apiHandler("/api/users", {
+    method: "DELETE",
+    session,
+    body: { session },
+    isSSR,
+  });
+};
+
 export const fetchUserWords = async (session: Session, language: Language, isSSR = false) => {
   const endpoint = `/api/words?language=${language}&email=${session.user?.email}`;
   return _apiHandler(endpoint, { isSSR });

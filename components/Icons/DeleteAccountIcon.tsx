@@ -1,0 +1,14 @@
+type DeleteAccountIconProps = React.SVGProps<SVGSVGElement> & {
+  className?: string;
+};
+
+const DeleteAccountIcon: React.FC<DeleteAccountIconProps> = ({ className, ...props }) => (
+  <svg width="108" height="81" viewBox="0 0 108 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+    <path
+      d="M67.8886 50.5C81.2758 50.5 108 57.15 108 70.5V80.5H27.7772V70.5C27.7772 57.15 54.5014 50.5 67.8886 50.5ZM67.8886 40.5C62.5695 40.5 57.4682 38.3929 53.707 34.6421C49.9459 30.8914 47.8329 25.8043 47.8329 20.5C47.8329 15.1957 49.9459 10.1086 53.707 6.35786C57.4682 2.60714 62.5695 0.5 67.8886 0.5C73.2077 0.5 78.3089 2.60714 82.0701 6.35786C85.8313 10.1086 87.9443 15.1957 87.9443 20.5C87.9443 25.8043 85.8313 30.8914 82.0701 34.6421C78.3089 38.3929 73.2077 40.5 67.8886 40.5ZM17.7493 28.45L28.3788 17.8L35.4986 24.9L24.8189 35.5L35.4986 46.1L28.3788 53.2L17.7493 42.55L7.11978 53.2L0 46.1L10.6797 35.5L0 24.9L7.11978 17.8L17.7493 28.45Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+export default DeleteAccountIcon;
