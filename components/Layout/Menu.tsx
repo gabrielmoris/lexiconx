@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "@/src/i18n/navigation";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
@@ -15,13 +15,26 @@ import SettingsIcon from "../Icons/SettingsIcon";
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (status === "loading") {
     return <LoadingComponent />;
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
         className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10 
                    border border-gray-300 dark:border-gray-600 right-5
