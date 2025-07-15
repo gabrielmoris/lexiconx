@@ -116,5 +116,9 @@
   },
   "NativeLanguage": {
     "error-changing-language": "Error al cambiar su idioma"
+  },
+  "delete-account": {
+    "error-deleting-account": "Error de eliminar su cuenta",
+    "delete message": "IMPORTANTE: eliminar su cuenta es permanente. \nEsto borrará todos sus datos, y una vez que se haya ido, no podrá recuperarlos."
   }
 }

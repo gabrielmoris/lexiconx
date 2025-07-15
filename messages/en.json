@@ -116,5 +116,9 @@
   },
   "NativeLanguage": {
     "error-changing-language": "Error changing your language"
+  },
+  "delete-account": {
+    "error-deleting-account": "Error deleting your account",
+    "delete message": "Heads up, deleting your account is permanent. This will erase all of your data, and once it's gone, you won't be able to get it back."
   }
 }

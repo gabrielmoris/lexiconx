@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import User from "@/lib/mongodb/models/user";
+import Word from "@/lib/mongodb/models/word";
 import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 
@@ -79,4 +80,26 @@ export async function PUT(req: Request) {
   const saved = await user.save();
 
   return NextResponse.json({ error: null, data: saved });
+}
+
+export async function DELETE(req: Request) {
+  const { session } = await req.json();
+  if (!session.user.email) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  const words = await Word.find({ userId: user._id });
+
+  for (const word of words) {
+    await word.deleteOne();
+  }
+
+  const deleted = await user.deleteOne();
+  return NextResponse.json({ error: null, data: deleted });
 }

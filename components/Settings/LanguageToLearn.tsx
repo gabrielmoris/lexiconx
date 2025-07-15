@@ -5,7 +5,7 @@ import { useToastContext } from "@/context/ToastContext";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import LoadingComponent from "./LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponen";
 import { selectUserLearningLanguage } from "@/lib/apis";
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
@@ -60,7 +60,7 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className={`p-2 relative ${className || ""}`} ref={dropdownRef}>
+    <div className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ""}`} ref={dropdownRef}>
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}
       <div
         className="cursor-pointer text-theme-text-light gap-2  dark:text-white rounded flex items-center justify-between"

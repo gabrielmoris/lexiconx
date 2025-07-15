@@ -116,5 +116,9 @@
   },
   "NativeLanguage": {
     "error-changing-language": "错误改变您的语言"
+  },
+  "delete-account": {
+    "error-deleting-account": "错误删除您的帐户",
+    "delete message": "请注意，删除账户是永久操作，此后您的所有数据，包括学习进度、词汇记录和个性化设置都将被彻底清除且无法恢复。"
   }
 }

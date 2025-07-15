@@ -6,7 +6,7 @@ import { Locale, useLocale, useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 // Import all necessary assets from your files
 import { languages } from "../Onboarding/LocaleSwitcher";
-import LoadingComponent from "./LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponen";
 import { locales } from "@/src/i18n/routing";
 import { Locale as ILocale, Language } from "@/types/Words";
 import { updateUserData } from "@/lib/apis";
@@ -71,9 +71,9 @@ const NativeLanguage = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className={`p-2 relative ${className || ""}`} ref={dropdownRef}>
+    <div className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ""}`} ref={dropdownRef}>
       <div
-        className="cursor-pointer gap-2   rounded flex items-center justify-between"
+        className="cursor-pointer gap-2 rounded flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0}
         role="button"

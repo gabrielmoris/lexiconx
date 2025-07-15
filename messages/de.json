@@ -116,5 +116,9 @@
   },
   "NativeLanguage": {
     "error-changing-language": "Fehler Ändern Ihrer Sprache"
+  },
+  "delete-account": {
+    "error-deleting-account": "Fehler beim Löschen Ihres Kontos",
+    "delete message": "WICHTIG! das Löschen Ihres Kontos ist dauerhaft. \nDadurch werden alle Ihre Daten gelöscht, und sobald es weg ist, können Sie sie nicht zurückbekommen."
   }
 }

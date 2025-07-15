@@ -1,6 +1,7 @@
-import LanguageToLearn from "@/components/Layout/LanguageToLearn";
-import NativeLanguage from "@/components/Layout/NativeLanguage";
-import { ThemeSwitcher } from "@/components/Layout/ThemeSwitcher";
+import DeleteAccount from "@/components/Settings/DeleteAccount";
+import LanguageToLearn from "@/components/Settings/LanguageToLearn";
+import NativeLanguage from "@/components/Settings/NativeLanguage";
+import { ThemeSwitcher } from "@/components/Settings/ThemeSwitcher";
 import { useTranslations } from "next-intl";
 import React from "react";
 
@@ -24,6 +25,7 @@ const SettingsPage = () => {
         </div>
         <div className="flex flex-row items-center justify-between border-b border-bg-theme-fg-light dark:border-theme-fg-dark  w-5/6 md:w-2/3">
           <p>{t("delete-account")}</p>
+          <DeleteAccount />
         </div>
       </section>
     </main>
