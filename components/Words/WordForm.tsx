@@ -54,10 +54,10 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
     }
     try {
       if (!formData.word || !formData.definition) {
-        throw new Error("Please, fill at least the word and the definition.");
+        throw new Error();
       }
 
-      if (!formData.session) throw new Error("Session not found");
+      if (!formData.session) throw new Error();
       const newWord: Word = {
         _id: new Date().getMilliseconds().toString(),
         word: formData.word,
@@ -95,7 +95,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
     } catch (error: unknown) {
       console.error("Failed to add word:", error);
       showToast({
-        message: error instanceof Error ? error.message : t("error-adding-word"),
+        message: t("error-adding-word"),
         variant: "error",
         duration: 3000,
       });
@@ -136,7 +136,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             type="text"
             name="word"
             required
-            placeholder="Word *"
+            placeholder={t("placeholder-word")}
             className="w-full p-2 border rounded mb-4"
             value={formData.word}
             onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
@@ -145,7 +145,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
           <input
             type="text"
             name="phoneticNotation"
-            placeholder="Phonetic Notation / Pinyin"
+            placeholder={t("placeholder-phonetic notation")}
             className="w-full p-2 border rounded mb-4"
             value={formData.phoneticNotation}
             onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
@@ -153,8 +153,8 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
 
           <input
             type="text"
-            name="definition"
-            placeholder="Definition *"
+            name="translation"
+            placeholder={t("placeholder-translation")}
             required
             className="w-full p-2 border rounded mb-4"
             value={formData.definition}

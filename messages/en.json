@@ -94,7 +94,10 @@
     "error-adding-word": "Error adding a word",
     "error-form-empty": "Please, fill at least the word and the definition.",
     "success-word-added": "Word added!",
-    "finish-btn": "Finish"
+    "finish-btn": "Finish",
+    "placeholder-phonetic notation": "Phonetic Notation",
+    "placeholder-translation": "Translation *",
+    "placeholder-word": "Word *"
   },
   "word-list": {
     "no-words": "No words found",
@@ -120,5 +123,11 @@
   "delete-account": {
     "error-deleting-account": "Error deleting your account",
     "delete message": "Heads up, deleting your account is permanent. This will erase all of your data, and once it's gone, you won't be able to get it back."
+  },
+  "onboarding": {
+    "second-step-title": "Your First Step to Fluency!",
+    "second-step-text": "To start, let's select: What language do you want to learn?",
+    "forth-step-title": "Time to Learn!",
+    "forth-step-text": "To get started, please add at least 5 words and their translations. Once you've done that, you can click Finish and you'll be able to generate your first quiz!"
   }
 }

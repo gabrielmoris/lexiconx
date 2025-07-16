@@ -94,7 +94,10 @@
     "error-adding-word": "Fehler beim Hinzufügen eines Wortes",
     "error-form-empty": "Bitte fülle mindestens das Wort und die Definition aus.",
     "success-word-added": "Wort hinzugefügt!",
-    "finish-btn": "Beenden"
+    "finish-btn": "Beenden",
+    "placeholder-phonetic notation": "Phonetische Notation",
+    "placeholder-translation": "Übersetzung *",
+    "placeholder-word": "Wort *"
   },
   "word-list": {
     "no-words": "Keine Wörter gefunden",
@@ -120,5 +123,11 @@
   "delete-account": {
     "error-deleting-account": "Fehler beim Löschen Ihres Kontos",
     "delete message": "WICHTIG! das Löschen Ihres Kontos ist dauerhaft. \nDadurch werden alle Ihre Daten gelöscht, und sobald es weg ist, können Sie sie nicht zurückbekommen."
+  },
+  "onboarding": {
+    "second-step-title": "Ihr erster Schritt zur fließenden!",
+    "second-step-text": "Lassen Sie uns zunächst auswählen: Welche Sprache möchten Sie lernen?",
+    "forth-step-title": "Zeit zu lernen!",
+    "forth-step-text": "Wenn Sie loslegen, fügen Sie bitte mindestens 5 Wörter und ihre Übersetzungen hinzu. \nSobald Sie das getan haben, können Sie auf Fertig stellen und Sie können Ihr erstes Quiz generieren!"
   }
 }

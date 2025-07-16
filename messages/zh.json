@@ -94,7 +94,10 @@
     "error-adding-word": "添加单词时出错",
     "error-form-empty": "请至少填写单词和定义。",
     "success-word-added": "单词已添加！",
-    "finish-btn": "完成"
+    "finish-btn": "完成",
+    "placeholder-phonetic notation": "语音符号",
+    "placeholder-translation": "翻译 *",
+    "placeholder-word": "单词 *"
   },
   "word-list": {
     "no-words": "没有找到单词",
@@ -120,5 +123,11 @@
   "delete-account": {
     "error-deleting-account": "错误删除您的帐户",
     "delete message": "请注意，删除账户是永久操作，此后您的所有数据，包括学习进度、词汇记录和个性化设置都将被彻底清除且无法恢复。"
+  },
+  "onboarding": {
+    "second-step-title": "您迈向流利的第一步！",
+    "second-step-text": "首先，让我们选择：您想学习哪种语言？",
+    "forth-step-title": "是时候学习了！",
+    "forth-step-text": "首先，请添加至少5个单词及其翻译。\n完成此操作后，您可以单击完成，您将能够生成第一个测验！"
   }
 }

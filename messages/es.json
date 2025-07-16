@@ -94,7 +94,10 @@
     "error-adding-word": "Error al añadir una palabra",
     "error-form-empty": "Por favor, rellena al menos la palabra y la definición.",
     "success-word-added": "¡Palabra añadida!",
-    "finish-btn": "Terminar"
+    "finish-btn": "Terminar",
+    "placeholder-phonetic notation": "Notación fonética",
+    "placeholder-translation": "Traducción *",
+    "placeholder-word": "Palabra *"
   },
   "word-list": {
     "no-words": "No se encontraron palabras",
@@ -120,5 +123,11 @@
   "delete-account": {
     "error-deleting-account": "Error de eliminar su cuenta",
     "delete message": "IMPORTANTE: eliminar su cuenta es permanente. \nEsto borrará todos sus datos, y una vez que se haya ido, no podrá recuperarlos."
+  },
+  "onboarding": {
+    "second-step-title": "¡Tu primer paso para la fluidez!",
+    "second-step-text": "Para comenzar, seleccionemos: ¿Qué idioma quieres aprender?",
+    "forth-step-title": "¡Hora de aprender!",
+    "forth-step-text": "Para comenzar, agregue al menos 5 palabras y sus traducciones. \nUna vez que haya hecho eso, ¡puede hacer clic en Finalizar y podrá generar su primer cuestionario!"
   }
 }

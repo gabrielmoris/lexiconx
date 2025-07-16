@@ -20,7 +20,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const session = await getServerSession();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className="overflow-x-hidden">
       <head>
         {/* This script runs before React hydration and prevents theme flashing */}
         <script
@@ -49,7 +49,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           }}
         />
       </head>
-      <body className="overflow-x-hidden flex flex-col items-center justify-start">
+      <body className="flex flex-col items-center justify-start overflow-x-hidden">
         <NextIntlClientProvider>
           <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
             <AuthProvider session={session}>

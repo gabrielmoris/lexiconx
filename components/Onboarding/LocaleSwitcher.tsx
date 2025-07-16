@@ -8,11 +8,11 @@ import EnglishFlag from "@/components/Icons/EnglishFlag";
 import GermanFlag from "@/components/Icons/GermanFlag";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
 import { Language, Locale } from "@/types/Words";
-import { createElement, useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { createElement, useState, useEffect, useMemo } from "react";
 import { updateUserData } from "@/lib/apis";
 import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
 import LoadingComponent from "../Layout/LoadingComponen";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 export const languages = {
   en: { name: "English", icon: EnglishFlag },
@@ -26,43 +26,43 @@ const titles = ["Select your native language!", "Wähle deine Muttersprache!", "
 export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => void }) {
   const [isUserChoosing, setIsUserChoosing] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
-  const [isLoading, setIsLoading] = useState(true);
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const { session, status } = useAuthGuard();
 
-  // Initialize static positions for flags when user starts choosing
+  const flagPositions = useMemo(() => {
+    const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
+    const flagCount = locales.length;
+
+    locales.forEach((locale, index) => {
+      const angle = (index / flagCount) * 2 * Math.PI;
+      const radius = 25;
+      const centerX = 50;
+      const centerY = 50;
+
+      positions[locale] = {
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius,
+        rotation: 0,
+      };
+    });
+    return positions;
+  }, []);
+
+  const [isFlagPositionsReady, setIsFlagPositionsReady] = useState(false);
+
   useEffect(() => {
-    if (isUserChoosing) {
-      const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
-      const flagCount = locales.length;
-
-      locales.forEach((locale, index) => {
-        // Distribute flags evenly across screen
-        const angle = (index / flagCount) * 2 * Math.PI;
-        const radius = 25;
-        const centerX = 50;
-        const centerY = 50;
-
-        positions[locale] = {
-          x: centerX + Math.cos(angle) * radius,
-          y: centerY + Math.sin(angle) * radius,
-          rotation: 0,
-        };
-      });
-      setFlagPositions(positions);
-      setIsLoading(false);
-    }
-  }, [currentLocale, isUserChoosing]);
-
-  // Check why it is not updating the database
+    setIsFlagPositionsReady(true);
+  }, []);
 
   const handleUserChoice = async (language: Locale) => {
     try {
-      if (!session || status !== "authenticated") throw new Error("Session not found");
-      await updateUserData(session, { nativeLanguage: languages[language].name as Language });
+      if (!session || status !== "authenticated") {
+        console.warn("Session not found or not authenticated. Cannot update user data.");
+        return;
+      }
 
+      await updateUserData(session, { nativeLanguage: languages[language].name as Language });
       setNextStep();
     } catch (error) {
       console.error("Failed to select language:", error);
@@ -72,7 +72,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
-    }, 3000); // Change title every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -104,10 +104,10 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
     },
   };
 
-  if (isLoading) return <LoadingComponent />;
+  if (!isFlagPositionsReady || status === "loading") return <LoadingComponent />;
 
   return (
-    <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96  w-72 lg:w-96 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96 w-72 lg:w-96 overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.p
           key={currentIndex}
@@ -125,27 +125,32 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
         <>
           {/* Floating flags with waving animation */}
           {locales.map((locale) => (
-            <div
+            <motion.div
               key={`floating-${locale}`}
-              className="absolute z-20 animate-pulse"
+              className="absolute z-20"
               style={{
                 left: `${flagPositions[locale]?.x || 50}%`,
                 top: `${flagPositions[locale]?.y || 50}%`,
                 transform: `translate(-50%, -50%)`,
                 animation: `wave-${locale} 3s ease-in-out infinite`,
               }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.1 * locales.indexOf(locale) } }}
             >
-              <Link href={`/${pathname.split("/")[1]}`} locale={locale} className="block hover:scale-110 transition-transform duration-200">
-                <div
-                  onClick={() => handleUserChoice(locale as Locale)}
-                  className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20"
-                >
+              <Link
+                href={`/${pathname.split("/")[1]}`}
+                locale={locale}
+                className="block hover:scale-110 transition-transform duration-200"
+                onClick={() => handleUserChoice(locale as Locale)}
+                aria-label={`Switch to ${languages[locale as Locale].name}`}
+              >
+                <div className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
                   {createElement(languages[locale as Locale].icon, {
                     className: "w-full h-full object-contain",
                   })}
                 </div>
               </Link>
-            </div>
+            </motion.div>
           ))}
 
           {/* Close button */}
@@ -165,7 +170,11 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
           </button>
         </>
       ) : (
-        <button onClick={() => setIsUserChoosing(true)} className="hover:scale-120 transition-transform">
+        <button
+          onClick={() => setIsUserChoosing(true)}
+          className="hover:scale-120 transition-transform"
+          aria-label={`Open language selector. Current language: ${languages[currentLocale].name}`}
+        >
           <div className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
             {createElement(languages[currentLocale].icon, {
               className: "w-full h-full object-contain",

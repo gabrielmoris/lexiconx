@@ -36,15 +36,15 @@ const Menu: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
-        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10 
-                   border border-gray-300 dark:border-gray-600 right-5
-                   bg-white dark:bg-theme-fg-dark rounded-md 
-                   shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
-                   text-theme-text-light dark:text-theme-text-dark
-                   transition-all duration-300 ease-in-out
-                   ${openMenu ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"}
-                   `}
         onClick={() => setOpenMenu(!openMenu)}
+        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10
+               border border-gray-300 dark:border-gray-600 -right-5
+               bg-white dark:bg-theme-fg-dark rounded-md
+               shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
+               text-theme-text-light dark:text-theme-text-dark
+               transition-all duration-300 ease-in-out
+               ${openMenu ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1/2 pointer-events-none"}
+               `}
       >
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -102,8 +102,7 @@ const Menu: React.FC = () => {
         />
       ) : (
         <AnonIcon
-          className="w-[50px] h-[50px] p-1 rounded-full cursor-pointer border 
-          border-gray-300 dark:border-gray-600"
+          className="w-[50px] h-[50px] p-1 rounded-full cursor-pointer border border-gray-300 dark:border-gray-600"
           onClick={() => setOpenMenu(!openMenu)}
         />
       )}

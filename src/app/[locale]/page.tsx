@@ -32,7 +32,7 @@ export default function Home() {
   const t = useTranslations("landing");
 
   return (
-    <main className="min-h-screen min-w-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+    <main className="w-screen relative md:w-xl px-5 md:px-0 flex flex-col items-center justify-start min-w-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
