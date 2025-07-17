@@ -11,11 +11,14 @@ import UserIcon from "../Icons/UserIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import LoadingComponent from "./LoadingComponen";
 import SettingsIcon from "../Icons/SettingsIcon";
+import StatsIcon from "@/components/Icons/StatsIcon";
+import {useTranslations} from "next-intl";
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
   const menuRef = useRef<HTMLDivElement>(null);
+  const t= useTranslations("menu")
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -52,7 +55,7 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/"
         >
-          <HomeIcon className="w-4 h-4" /> Home
+          <HomeIcon className="w-4 h-4" /> {t("home")}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -60,7 +63,7 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/cards"
         >
-          <CardsIcon className="w-4 h-4" /> Cards
+          <CardsIcon className="w-4 h-4" /> {t("cards")}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -68,7 +71,15 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/settings"
         >
-          <SettingsIcon className="w-4 h-4" /> Settings
+          <SettingsIcon className="w-4 h-4" /> {t("settings")}
+        </Link>
+        <Link
+            className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark
+          px-5 py-2"
+            href="/stats"
+        >
+          <StatsIcon className="w-4 h-4" /> {t("stats")}
         </Link>
         {session?.user?.image ? (
           <p
@@ -77,7 +88,7 @@ const Menu: React.FC = () => {
             dark:hover:text-theme-text-dark px-5 py-2"
             onClick={() => signOut()}
           >
-            <LogoutIcon className="w-4 h-4" /> Logout
+            <LogoutIcon className="w-4 h-4" /> {t("logout")}
           </p>
         ) : (
           <Link
@@ -86,7 +97,7 @@ const Menu: React.FC = () => {
             dark:hover:text-theme-text-dark px-5 py-2"
             href="/login"
           >
-            <UserIcon className="w-4 h-4" /> Login
+            <UserIcon className="w-4 h-4" /> {t("login")}
           </Link>
         )}
       </nav>
