@@ -30,7 +30,7 @@ export async function requireAuthSSR(redirectSuccess?:string) {
      redirect(redirectSuccess);
    }
 
-  return session;
+  return {session, userData};
 }
 
 export async function getAuthSessionSSR() {

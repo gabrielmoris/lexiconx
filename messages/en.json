@@ -129,5 +129,7 @@
     "second-step-text": "To start, let's select: What language do you want to learn?",
     "forth-step-title": "Time to Learn!",
     "forth-step-text": "To get started, please add at least 5 words and their translations. Once you've done that, you can click Finish and you'll be able to generate your first quiz!"
-  }
+  },
+  "menu": {},
+  "stats": {}
 }
