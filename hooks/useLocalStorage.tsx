@@ -50,14 +50,14 @@ function useLocalStorage<T>(
     [key, storedValue]
   );
 
-  const deleteValue = useCallback(() => {
+  const deleteValue = () => {
     try {
       window.localStorage.removeItem(key);
       setStoredValue(initialValue);
     } catch (error) {
       console.error(`Error deleting from localStorage key "${key}":`, error);
     }
-  }, [key, initialValue]);
+  }
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {

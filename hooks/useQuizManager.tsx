@@ -67,6 +67,7 @@ export const useQuizManager = (userData: User) => {
           await updateUserData(session, updatedUserData);
           if (isSucceed) {
             deleteValue(); // Delete from LocalStorage
+            setTimeout(()=>router.push("/cards"), 5000);
           }
           setIsQuizFinished(true);
         } catch (error) {
