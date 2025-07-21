@@ -129,5 +129,22 @@
     "second-step-text": "首先，让我们选择：您想学习哪种语言？",
     "forth-step-title": "是时候学习了！",
     "forth-step-text": "首先，请添加至少5个单词及其翻译。\n完成此操作后，您可以单击完成，您将能够生成第一个测验！"
+  },
+  "menu": {
+    "logout": "注销",
+    "login": "登录",
+    "stats": "统计",
+    "settings": "设置",
+    "cards": "牌",
+    "home": "家"
+  },
+  "stats": {
+    "title": "您的统计数据",
+    "current-streak": "当前条纹",
+    "learning-language": "你正在学习",
+    "last-session": "上一次会话",
+    "learning-level": "学习水平",
+    "time-spent": "时间学习",
+    "words-mastered": "掌握了单词"
   }
 }

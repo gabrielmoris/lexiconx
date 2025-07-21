@@ -67,7 +67,7 @@ export const useQuizManager = (userData: User) => {
           await updateUserData(session, updatedUserData);
           if (isSucceed) {
             deleteValue(); // Delete from LocalStorage
-            setTimeout(()=>router.push("/cards"), 5000);
+            setTimeout(() => router.push("/cards"), 5000);
           }
           setIsQuizFinished(true);
         } catch (error) {
@@ -77,6 +77,7 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
 
   const handleAnswerClick = useCallback(

@@ -129,5 +129,22 @@
     "second-step-text": "Para comenzar, seleccionemos: ¿Qué idioma quieres aprender?",
     "forth-step-title": "¡Hora de aprender!",
     "forth-step-text": "Para comenzar, agregue al menos 5 palabras y sus traducciones. \nUna vez que haya hecho eso, ¡puede hacer clic en Finalizar y podrá generar su primer cuestionario!"
+  },
+  "menu": {
+    "logout": "Cierre de sesión",
+    "login": "Acceso",
+    "stats": "Estadísticas",
+    "settings": "Ajustes",
+    "cards": "Tarjetas",
+    "home": "Inicio"
+  },
+  "stats": {
+    "title": "Tus estadísticas",
+    "current-streak": "Racha actual",
+    "learning-language": "Estás aprendiendo",
+    "last-session": "Última sesión",
+    "learning-level": "Nivel de aprendizaje",
+    "time-spent": "Tiempo de aprendizaje",
+    "words-mastered": "Palabras masterizadas"
   }
 }

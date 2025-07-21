@@ -129,5 +129,22 @@
     "second-step-text": "Lassen Sie uns zunächst auswählen: Welche Sprache möchten Sie lernen?",
     "forth-step-title": "Zeit zu lernen!",
     "forth-step-text": "Wenn Sie loslegen, fügen Sie bitte mindestens 5 Wörter und ihre Übersetzungen hinzu. \nSobald Sie das getan haben, können Sie auf Fertig stellen und Sie können Ihr erstes Quiz generieren!"
+  },
+  "menu": {
+    "logout": "Abmelden",
+    "login": "Login",
+    "stats": "Statistiken",
+    "settings": "Einstellungen",
+    "cards": "Karten",
+    "home": "Home"
+  },
+  "stats": {
+    "title": "Ihre Statistiken",
+    "current-streak": "Aktuelle Streifen",
+    "learning-language": "Sie lernen",
+    "last-session": "Letzte Sitzung",
+    "learning-level": "Lernstufe",
+    "time-spent": "Zeitlernen",
+    "words-mastered": "Worte gemeistert"
   }
 }

@@ -8,7 +8,7 @@ import React from "react";
 const SettingsPage = () => {
   const t = useTranslations("settings");
   return (
-    <main className="p-5 w-full md:w-1/2">
+    <main className="p-5 w-full h-[70vh] md:w-1/2">
       <h1 className="text-xl md:text-2xl font-bold w-full text-center mb-10">{t("title")}</h1>
       <section className="flex flex-col gap-5 w-full items-center justify-center">
         <div className="flex flex-row items-center justify-between border-b border-bg-theme-fg-light dark:border-theme-fg-dark w-5/6 md:w-2/3">

@@ -130,6 +130,21 @@
     "forth-step-title": "Time to Learn!",
     "forth-step-text": "To get started, please add at least 5 words and their translations. Once you've done that, you can click Finish and you'll be able to generate your first quiz!"
   },
-  "menu": {},
-  "stats": {}
+  "menu": {
+    "logout": "Logout",
+    "login": "Login",
+    "stats": "Stats",
+    "settings": "Settings",
+    "cards": "Cards",
+    "home": "Home"
+  },
+  "stats": {
+    "title": "Your Stats",
+    "current-streak": "Current streak",
+    "learning-language": "You are learning",
+    "last-session": "Last session",
+    "learning-level": "Learning level",
+    "time-spent": "Time learning",
+    "words-mastered": "Words mastered"
+  }
 }
