@@ -4,6 +4,46 @@
     "error-getting-user": "Fehler beim Abrufen der Benutzerdaten",
     "generate-quiz": "Quiz erstellen"
   },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "section1": {
+      "title": "Einführung",
+      "content": "Willkommen bei LexiconX. Mit der Nutzung unseres Services stimmen Sie diesen Bedingungen zu. Bitte lesen Sie sie sorgfältig."
+    },
+    "section2": {
+      "title": "Servicebeschreibung",
+      "content": "LexiconX ist eine Sprachlernplattform, die Folgendes bietet:",
+      "features": {
+        "quiz": "KI-generierte Quizze, die auf Ihr Lernniveau abgestimmt sind",
+        "progress": "Fortschrittsverfolgung und Analysen",
+        "spaced": "Intelligentes Lernsystem mit zeitversetzter Wiederholung",
+        "languages": "Unterstützung für mehrere Sprachen, einschließlich Englisch, Deutsch, Chinesisch und Spanisch"
+      }
+    },
+    "section3": {
+      "title": "Nutzerpflichten",
+      "content": "Nutzer müssen genaue Informationen angeben, die Kontosicherheit aufrechterhalten und den Service verantwortungsvoll nutzen."
+    },
+    "section4": {
+      "title": "Datenschutz",
+      "content": "Wir erheben und verarbeiten die folgenden Daten gemäß DSGVO:",
+      "data": {
+        "google": "Authentifizierungsdaten über Google Sign-In",
+        "progress": "Lernfortschritt und Leistungsstatistiken",
+        "words": "Vom Benutzer hinzugefügte Vokabeln und Übersetzungen",
+        "usage": "Nutzungsmuster des Services zur Verbesserung der Benutzererfahrung"
+      }
+    },
+    "section5": {
+      "title": "Kündigung und Beendigung",
+      "content": "Sie können Ihr Konto jederzeit löschen. Dies entfernt alle Ihre Daten dauerhaft aus unseren Systemen."
+    },
+    "section6": {
+      "title": "Rechtliche Informationen",
+      "content": "Dieser Service wird von LexiconX mit Sitz in Deutschland bereitgestellt. Diese Bedingungen unterliegen deutschem Recht."
+    },
+    "lastUpdated": "Zuletzt aktualisiert: 22. Juli 2025"
+  },
   "example": {
     "title": "Vokabel-App Starter"
   },
@@ -73,7 +113,8 @@
     "dont-give-up-try-again": "Gib nicht auf, versuch es noch einmal!",
     "fantastic-job-keep-it-up": "Fantastische Arbeit, mach weiter so!",
     "try-again": "Erneut versuchen",
-    "you-answered-correctly": "Du hast {count} von {total} Fragen richtig beantwortet"
+    "you-answered-correctly": "Du hast {count} von {total} Fragen richtig beantwortet",
+    "go-cards": "Gehen Sie zu Karten"
   },
   "word-card": {
     "definition": "Definition",
@@ -129,5 +170,88 @@
     "second-step-text": "Lassen Sie uns zunächst auswählen: Welche Sprache möchten Sie lernen?",
     "forth-step-title": "Zeit zu lernen!",
     "forth-step-text": "Wenn Sie loslegen, fügen Sie bitte mindestens 5 Wörter und ihre Übersetzungen hinzu. \nSobald Sie das getan haben, können Sie auf Fertig stellen und Sie können Ihr erstes Quiz generieren!"
+  },
+  "menu": {
+    "logout": "Abmelden",
+    "login": "Login",
+    "stats": "Statistiken",
+    "settings": "Einstellungen",
+    "cards": "Karten",
+    "home": "Home"
+  },
+  "stats": {
+    "title": "Ihre Statistiken",
+    "current-streak": "Aktuelle Streifen",
+    "learning-language": "Sie lernen",
+    "last-session": "Letzte Sitzung",
+    "learning-level": "Lernstufe",
+    "time-spent": "Zeitlernen",
+    "words-mastered": "Worte gemeistert",
+    "hours": "Std."
+  },
+  "privacy": {
+    "title": "Datenschutzrichtlinie",
+    "lastUpdated": "Zuletzt aktualisiert: 22. Juli 2025",
+    "intro": {
+      "title": "Einführung",
+      "description": "Lexikonx (\"wir\", \"unser\" oder \"uns\") setzt sich zum Schutz Ihrer Privatsphäre ein. \nIn dieser Datenschutzrichtlinie wird erläutert, wie wir Ihre persönlichen Daten sammeln, verwenden und schützen, wenn Sie unsere Sprachlernanwendung verwenden.",
+      "contact": "Für Fragen zu dieser Richtlinie wenden Sie sich bitte an unseren Datenschutzbeauftragten unter gabrielcmoris@gmail.com"
+    },
+    "dataCollection": {
+      "title": "Informationen, die wir sammeln",
+      "google": "Google -Kontoinformationen Wenn Sie sich anmelden (E -Mail, Name, Profilbild)",
+      "profile": "Profilinformationen und Vorlieben",
+      "language": "Sprachlernpräferenzen und Muttersprache",
+      "progress": "Lernfortschritts- und Leistungsdaten",
+      "usage": "Verwendungsstatistik und Interaktion mit der Anwendung"
+    },
+    "dataUsage": {
+      "title": "Wie wir Ihre Informationen verwenden",
+      "personalization": "Um Ihre Lernerfahrung zu personalisieren",
+      "progress": "Um Ihren Lernfortschritt zu verfolgen und anzuzeigen",
+      "improvement": "Um unsere Dienste und Funktionen zu verbessern",
+      "legal": "Rechtliche Verpflichtungen einzuhalten"
+    },
+    "thirdParty": {
+      "title": "Dienste von Drittanbietern",
+      "google": "Google-Authentifizierung für sichere Anmeldung",
+      "mongodb": "MongoDB -Atlas für sichere Datenspeicherung",
+      "gemini": "Google Gemini AI für die Quizgeneration"
+    },
+    "userRights": {
+      "title": "Ihre Rechte unter DSGVO",
+      "access": "Recht, auf Ihre persönlichen Daten zuzugreifen",
+      "rectification": "Recht, ungenaue Daten zu korrigieren",
+      "erasure": "Recht, Ihre Daten zu löschen",
+      "portability": "Recht, Ihre Daten in einem tragbaren Format zu empfangen",
+      "withdraw": "Recht, die Zustimmung jederzeit zurückzuziehen",
+      "contact": "Um diese Rechte auszuüben, kontaktieren Sie uns bitte unter gabrielcmoris@gmail.com"
+    },
+    "security": {
+      "title": "Datensicherheit",
+      "measures": "Wir implementieren geeignete technische und organisatorische Maßnahmen, um Ihre Daten zu schützen:",
+      "encryption": "Datenverschlüsselung im Transport und in Ruhe",
+      "access": "Strenge Zugriffskontrollen und Authentifizierung",
+      "monitoring": "Regelmäßige Sicherheitsüberwachung und Updates"
+    },
+    "retention": {
+      "title": "Datenbindung",
+      "period": "Wir behalten Ihre personenbezogenen Daten nur so lange nach Bedarf, um unsere Dienstleistungen bereitzustellen und rechtliche Verpflichtungen einzuhalten.",
+      "deletion": "Sie können jederzeit die Löschung Ihres Kontos und die zugehörigen Daten anfordern."
+    },
+    "children": {
+      "title": "Privatsphäre der Kinder",
+      "policy": "Unser Service ist nicht für Benutzer unter 13 Jahren gedacht. \nWir sammeln nicht wissentlich Daten von Kindern unter 13 Jahren."
+    },
+    "changes": {
+      "title": "Änderungen an dieser Datenschutzrichtlinie",
+      "notification": "Wir können diese Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. \nWir werden Sie über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen."
+    },
+    "contact": {
+      "title": "Kontaktinformationen",
+      "info": "Für Fragen zu diesen Datenschutzrichtlinien wenden Sie sich bitte an: gabrielcmoris@gmail.com",
+      "dpo": "Datenschutzbeauftragter: dpo@lexiconx.com"
+    },
+    "effectiveDate": "Diese Datenschutzrichtlinie ist ab dem 22. Juli 2025 wirksam"
   }
 }

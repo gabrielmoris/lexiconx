@@ -2,6 +2,7 @@ import { useConfetti } from "@/hooks/useConfetti";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { motion, AnimatePresence, easeOut, easeIn } from "framer-motion";
+import { useRouter } from "@/src/i18n/navigation";
 
 interface Props {
   isSuccess: boolean;
@@ -12,6 +13,7 @@ interface Props {
 const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
   const { triggerFireworks, triggerSchoolPride, resetConfetti } = useConfetti();
   const t = useTranslations("quiz-finished");
+  const router = useRouter();
 
   const totalQuestions = successPoints.success + successPoints.errors;
   const percentageCorrect = totalQuestions > 0 ? (successPoints.success / totalQuestions) * 100 : 0;
@@ -34,6 +36,10 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
     exit: { opacity: 0, y: -50, scale: 0.5, transition: { duration: 0.4, ease: easeIn } },
   };
 
+  const onGoToCards = () => {
+    router.push("/cards");
+  };
+
   return (
     // Use theme-bg-light and theme-bg-dark for the background
     <div className="flex items-center justify-center bg-theme-bg-light dark:bg-theme-bg-dark p-4 relative overflow-hidden">
@@ -42,7 +48,7 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
           <motion.div
             key="success-card"
             // Use theme-fg-light/dark for card background and theme-text-light/dark for general text
-            className="rounded-3xl p-8 md:p-12 text-center max-w-md w-full relative overflow-hidden transform transition-all duration-500 hover:scale-105
+            className="rounded-3xl p-8 md:p-12 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-105
                        bg-theme-fg-light text-theme-text-light
                        dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
@@ -50,14 +56,6 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
             animate="visible"
             exit="exit"
           >
-            <div
-              className="absolute inset-0 z-0 opacity-20"
-              style={{
-                backgroundImage: "radial-gradient(circle at center, rgba(255,255,255,0.1) 1px, transparent 1px)",
-                backgroundSize: "10px 10px",
-              }}
-            ></div>
-
             <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">{t("congratulations")}!</h1>
             <p className="text-xl  font-semibold mb-6 leading-tight">
               {t("you-answered-correctly", { count: successPoints.success, total: totalQuestions })}
@@ -66,6 +64,12 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
               <span className="text-2xl font-bold text-secondary">{Math.round(percentageCorrect)}%</span>
             </div>
             <p className="text-lg mb-8">{t("fantastic-job-keep-it-up")}</p>
+            <button
+              onClick={onGoToCards}
+              className="bg-secondary cursor-pointer hover:brightness-110 text-theme-text-dark font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-secondary/50"
+            >
+              {t("go-cards")}
+            </button>
           </motion.div>
         ) : (
           <motion.div

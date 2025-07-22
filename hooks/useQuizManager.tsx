@@ -66,9 +66,11 @@ export const useQuizManager = (userData: User) => {
 
           await updateUserData(session, updatedUserData);
           if (isSucceed) {
+            setIsQuizFinished(true);
             deleteValue(); // Delete from LocalStorage
+          } else {
+            setIsQuizFinished(true);
           }
-          setIsQuizFinished(true);
         } catch (error) {
           console.error("Error finishing quiz:", error);
           // Optionally show a toast message to the user
@@ -76,6 +78,7 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
 
   const handleAnswerClick = useCallback(

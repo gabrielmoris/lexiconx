@@ -4,6 +4,111 @@
     "error-getting-user": "Error getting user data",
     "generate-quiz": "Generate Quiz"
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated: July 22, 2025",
+    "intro": {
+      "title": "Introduction",
+      "description": "LexiconX ('we', 'our', or 'us') is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our language learning application.",
+      "contact": "For any questions about this policy, please contact our Data Protection Officer at gabrielcmoris@gmail.com"
+    },
+    "dataCollection": {
+      "title": "Information We Collect",
+      "google": "Google Account information when you sign in (email, name, profile picture)",
+      "profile": "Profile information and preferences",
+      "language": "Language learning preferences and native language",
+      "progress": "Learning progress and performance data",
+      "usage": "Usage statistics and interaction with the application"
+    },
+    "dataUsage": {
+      "title": "How We Use Your Information",
+      "personalization": "To personalize your learning experience",
+      "progress": "To track and display your learning progress",
+      "improvement": "To improve our services and features",
+      "legal": "To comply with legal obligations"
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "google": "Google Authentication for secure sign-in",
+      "mongodb": "MongoDB Atlas for secure data storage",
+      "gemini": "Google Gemini AI for quiz generation"
+    },
+    "userRights": {
+      "title": "Your Rights Under GDPR",
+      "access": "Right to access your personal data",
+      "rectification": "Right to correct inaccurate data",
+      "erasure": "Right to request deletion of your data",
+      "portability": "Right to receive your data in a portable format",
+      "withdraw": "Right to withdraw consent at any time",
+      "contact": "To exercise these rights, please contact us at gabrielcmoris@gmail.com"
+    },
+    "security": {
+      "title": "Data Security",
+      "measures": "We implement appropriate technical and organizational measures to protect your data:",
+      "encryption": "Data encryption in transit and at rest",
+      "access": "Strict access controls and authentication",
+      "monitoring": "Regular security monitoring and updates"
+    },
+    "retention": {
+      "title": "Data Retention",
+      "period": "We retain your personal data only for as long as necessary to provide our services and comply with legal obligations.",
+      "deletion": "You can request deletion of your account and associated data at any time."
+    },
+    "children": {
+      "title": "Children's Privacy",
+      "policy": "Our service is not intended for users under 13 years of age. We do not knowingly collect data from children under 13."
+    },
+    "changes": {
+      "title": "Changes to This Privacy Policy",
+      "notification": "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "info": "For any questions about this Privacy Policy, please contact us at: gabrielcmoris@gmail.com",
+      "dpo": "Data Protection Officer: DPO@lexiconx.com"
+    },
+    "effectiveDate": "This Privacy Policy is effective as of July 22, 2025"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "section1": {
+      "title": "Introduction",
+      "content": "Welcome to LexiconX. By using our service, you agree to these terms. Please read them carefully."
+    },
+    "section2": {
+      "title": "Service Description",
+      "content": "LexiconX is a language learning platform that provides:",
+      "features": {
+        "quiz": "AI-generated quizzes tailored to your learning level",
+        "progress": "Progress tracking and analytics",
+        "spaced": "Smart spaced repetition learning system",
+        "languages": "Support for multiple languages including English, German, Chinese, and Spanish"
+      }
+    },
+    "section3": {
+      "title": "User Obligations",
+      "content": "Users must provide accurate information, maintain account security, and use the service responsibly."
+    },
+    "section4": {
+      "title": "Data Protection",
+      "content": "We collect and process the following data in accordance with GDPR:",
+      "data": {
+        "google": "Authentication data through Google Sign-In",
+        "progress": "Learning progress and performance statistics",
+        "words": "User-added vocabulary and translations",
+        "usage": "Service usage patterns to improve user experience"
+      }
+    },
+    "section5": {
+      "title": "Cancellation and Termination",
+      "content": "You may delete your account at any time. This will permanently remove all your data from our systems."
+    },
+    "section6": {
+      "title": "Legal Information",
+      "content": "This service is provided by LexiconX, based in Germany. These terms are governed by German law."
+    },
+    "lastUpdated": "Last updated: July 22, 2025"
+  },
   "example": {
     "title": "Vocabulary App Starter"
   },
@@ -73,7 +178,8 @@
     "dont-give-up-try-again": "Don't give up yet, try again!",
     "fantastic-job-keep-it-up": "Fantastic job, keep it up!!",
     "try-again": "Try again",
-    "you-answered-correctly": "You answered correctly {count} of {total} questions"
+    "you-answered-correctly": "You answered correctly {count} of {total} questions",
+    "go-cards": "Go to Cards"
   },
   "word-card": {
     "definition": "Definition",
@@ -129,5 +235,23 @@
     "second-step-text": "To start, let's select: What language do you want to learn?",
     "forth-step-title": "Time to Learn!",
     "forth-step-text": "To get started, please add at least 5 words and their translations. Once you've done that, you can click Finish and you'll be able to generate your first quiz!"
+  },
+  "menu": {
+    "logout": "Logout",
+    "login": "Login",
+    "stats": "Stats",
+    "settings": "Settings",
+    "cards": "Cards",
+    "home": "Home"
+  },
+  "stats": {
+    "title": "Your Stats",
+    "current-streak": "Current streak",
+    "learning-language": "You are learning",
+    "last-session": "Last session",
+    "learning-level": "Learning level",
+    "time-spent": "Time learning",
+    "words-mastered": "Words mastered",
+    "hours": "hours"
   }
 }

@@ -4,6 +4,46 @@
     "error-getting-user": "Error al obtener los datos de usuario",
     "generate-quiz": "Generar cuestionario"
   },
+  "terms": {
+    "title": "Términos de Servicio",
+    "section1": {
+      "title": "Introducción",
+      "content": "Bienvenido a LexiconX. Al utilizar nuestro servicio, aceptas estos términos. Por favor, léelos cuidadosamente."
+    },
+    "section2": {
+      "title": "Descripción del Servicio",
+      "content": "LexiconX es una plataforma de aprendizaje de idiomas que ofrece:",
+      "features": {
+        "quiz": "Cuestionarios generados por IA adaptados a tu nivel de aprendizaje",
+        "progress": "Seguimiento de progreso y análisis",
+        "spaced": "Sistema inteligente de repetición espaciada",
+        "languages": "Soporte para múltiples idiomas incluyendo inglés, alemán, chino y español"
+      }
+    },
+    "section3": {
+      "title": "Obligaciones del Usuario",
+      "content": "Los usuarios deben proporcionar información precisa, mantener la seguridad de la cuenta y usar el servicio de manera responsable."
+    },
+    "section4": {
+      "title": "Protección de Datos",
+      "content": "Recopilamos y procesamos los siguientes datos de acuerdo con el RGPD:",
+      "data": {
+        "google": "Datos de autenticación a través de Google Sign-In",
+        "progress": "Estadísticas de progreso y rendimiento del aprendizaje",
+        "words": "Vocabulario y traducciones añadidos por el usuario",
+        "usage": "Patrones de uso del servicio para mejorar la experiencia del usuario"
+      }
+    },
+    "section5": {
+      "title": "Cancelación y Terminación",
+      "content": "Puedes eliminar tu cuenta en cualquier momento. Esto eliminará permanentemente todos tus datos de nuestros sistemas."
+    },
+    "section6": {
+      "title": "Información Legal",
+      "content": "Este servicio es proporcionado por LexiconX, con sede en Alemania. Estos términos se rigen por la ley alemana."
+    },
+    "lastUpdated": "Última actualización: 22 de julio de 2025"
+  },
   "example": {
     "title": "Inicio de la aplicación de vocabulario"
   },
@@ -73,7 +113,8 @@
     "dont-give-up-try-again": "No te rindas, ¡inténtalo de nuevo!",
     "fantastic-job-keep-it-up": "¡Fantástico trabajo, sigue así!",
     "try-again": "Intentar de nuevo",
-    "you-answered-correctly": "Respondiste correctamente a {count} de {total} preguntas"
+    "you-answered-correctly": "Respondiste correctamente a {count} de {total} preguntas",
+    "go-cards": "Ir a cartas"
   },
   "word-card": {
     "definition": "Definición",
@@ -129,5 +170,88 @@
     "second-step-text": "Para comenzar, seleccionemos: ¿Qué idioma quieres aprender?",
     "forth-step-title": "¡Hora de aprender!",
     "forth-step-text": "Para comenzar, agregue al menos 5 palabras y sus traducciones. \nUna vez que haya hecho eso, ¡puede hacer clic en Finalizar y podrá generar su primer cuestionario!"
+  },
+  "menu": {
+    "logout": "Cierre de sesión",
+    "login": "Acceso",
+    "stats": "Estadísticas",
+    "settings": "Ajustes",
+    "cards": "Tarjetas",
+    "home": "Inicio"
+  },
+  "stats": {
+    "title": "Tus estadísticas",
+    "current-streak": "Racha actual",
+    "learning-language": "Estás aprendiendo",
+    "last-session": "Última sesión",
+    "learning-level": "Nivel de aprendizaje",
+    "time-spent": "Tiempo de aprendizaje",
+    "words-mastered": "Palabras masterizadas",
+    "hours": "horas"
+  },
+  "privacy": {
+    "title": "política de privacidad",
+    "lastUpdated": "Última actualización: 22 de julio de 2025",
+    "intro": {
+      "title": "Introducción",
+      "description": "Lexiconx ('nosotros', 'nuestro' o 'nosotros') se compromete a proteger su privacidad. \nEsta política de privacidad explica cómo recopilamos, usamos y salvaguardamos su información personal cuando usa nuestra aplicación de aprendizaje de idiomas.",
+      "contact": "Para cualquier pregunta sobre esta política, comuníquese con nuestro oficial de protección de datos en gabrielcmoris@gmail.com"
+    },
+    "dataCollection": {
+      "title": "Información que recopilamos",
+      "google": "Información de la cuenta de Google cuando inicia sesión (correo electrónico, nombre, foto de perfil)",
+      "profile": "Información y preferencias de perfil",
+      "language": "Preferencias de aprendizaje de idiomas e idioma nativo",
+      "progress": "Datos de progreso y rendimiento del aprendizaje",
+      "usage": "Estadísticas de uso e interacción con la aplicación"
+    },
+    "dataUsage": {
+      "title": "Cómo usamos su información",
+      "personalization": "Para personalizar su experiencia de aprendizaje",
+      "progress": "Para rastrear y mostrar el progreso de su aprendizaje",
+      "improvement": "Para mejorar nuestros servicios y características",
+      "legal": "Cumplir con las obligaciones legales"
+    },
+    "thirdParty": {
+      "title": "Servicios de terceros",
+      "google": "Autenticación de Google para inicio de sesión seguro",
+      "mongodb": "MongoDB Atlas para almacenamiento de datos seguro",
+      "gemini": "Google Gemini AI para la generación de preguntas"
+    },
+    "userRights": {
+      "title": "Tus derechos bajo GDPR",
+      "access": "Derecho a acceder a sus datos personales",
+      "rectification": "Derecho a corregir datos inexactos",
+      "erasure": "Derecho a solicitar la eliminación de sus datos",
+      "portability": "Derecho a recibir sus datos en un formato portátil",
+      "withdraw": "Derecho a retirar el consentimiento en cualquier momento",
+      "contact": "Para ejercer estos derechos, contáctenos en gabrielcmoris@gmail.com"
+    },
+    "security": {
+      "title": "Seguridad de datos",
+      "measures": "Implementamos medidas técnicas y organizativas apropiadas para proteger sus datos:",
+      "encryption": "Cifrado de datos en tránsito y en reposo",
+      "access": "Controles de acceso estrictos y autenticación",
+      "monitoring": "Monitoreo y actualizaciones de seguridad regulares"
+    },
+    "retention": {
+      "title": "Retención de datos",
+      "period": "Mantenemos sus datos personales solo durante el tiempo que sea necesario para proporcionar nuestros servicios y cumplir con las obligaciones legales.",
+      "deletion": "Puede solicitar la eliminación de su cuenta y los datos asociados en cualquier momento."
+    },
+    "children": {
+      "title": "Privacidad de los niños",
+      "policy": "Nuestro servicio no está destinado a usuarios menores de 13 años. \nNo recopilamos a sabiendas datos de niños menores de 13 años."
+    },
+    "changes": {
+      "title": "Cambios a esta Política de privacidad",
+      "notification": "Podemos actualizar esta política de privacidad de vez en cuando. \nLe notificaremos cualquier cambio publicando la nueva política en esta página."
+    },
+    "contact": {
+      "title": "Información del contacto",
+      "info": "Para cualquier pregunta sobre esta Política de privacidad, contáctenos en: gabrielcmoris@gmail.com",
+      "dpo": "Oficial de protección de datos: dpo@lexiconx.com"
+    },
+    "effectiveDate": "Esta política de privacidad es efectiva a partir del 22 de julio de 2025"
   }
 }
