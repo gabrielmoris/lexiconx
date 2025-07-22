@@ -12,13 +12,13 @@ import LogoutIcon from "../Icons/LogoutIcon";
 import LoadingComponent from "./LoadingComponen";
 import SettingsIcon from "../Icons/SettingsIcon";
 import StatsIcon from "@/components/Icons/StatsIcon";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
   const menuRef = useRef<HTMLDivElement>(null);
-  const t= useTranslations("menu")
+  const t = useTranslations("menu");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,7 +40,7 @@ const Menu: React.FC = () => {
     <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
         onClick={() => setOpenMenu(!openMenu)}
-        className={`absolute h-max flex flex-col py-5 bottom-10 md:top-10
+        className={`absolute h-max flex flex-col min-w-[8rem] py-5 bottom-10 md:top-10
                border border-gray-300 dark:border-gray-600 -right-5
                bg-white dark:bg-theme-fg-dark rounded-md
                shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
@@ -74,10 +74,10 @@ const Menu: React.FC = () => {
           <SettingsIcon className="w-4 h-4" /> {t("settings")}
         </Link>
         <Link
-            className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
           dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark
           px-5 py-2"
-            href="/stats"
+          href="/stats"
         >
           <StatsIcon className="w-4 h-4" /> {t("stats")}
         </Link>

@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 import { LearningProgress } from "@/types/Words";
@@ -8,6 +8,8 @@ const StatsPage = () => {
   const t = useTranslations("stats");
   const { userData, status } = useAuthGuard();
   const [userInfo, setUserInfo] = useState<LearningProgress>();
+
+  const locale = useLocale();
 
   useEffect(() => {
     if (status === "authenticated" && !!userData) {
@@ -28,7 +30,12 @@ const StatsPage = () => {
         <div className="space-y-4">
           <StatItem label={t("current-streak")} value={userInfo?.currentStreak} />
           <StatItem label={t("learning-language")} value={userInfo?.language} />
-          {userInfo?.lastSessionDate && <StatItem label={t("last-session")} value={new Date(userInfo?.lastSessionDate).toLocaleDateString()} />}
+          {userInfo?.lastSessionDate && (
+            <StatItem
+              label={t("last-session")}
+              value={new Date(userInfo?.lastSessionDate).toLocaleDateString(locale === "en" ? locale + "-uk" : locale)}
+            />
+          )}
           <StatItem label={t("learning-level")} value={userInfo?.level} />
           {userInfo?.timeSpent && <StatItem label={t("time-spent")} value={`${(userInfo?.timeSpent / 3600000).toFixed(2)} ${t("hours")}`} />}
           <StatItem label={t("words-mastered")} value={userInfo?.wordsMastered} />

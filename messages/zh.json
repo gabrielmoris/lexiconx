@@ -4,6 +4,46 @@
     "error-getting-user": "获取用户数据时出错",
     "generate-quiz": "生成测验"
   },
+  "terms": {
+    "title": "服务条款",
+    "section1": {
+      "title": "介绍",
+      "content": "欢迎使用 LexiconX。使用我们的服务即表示您同意这些条款。请仔细阅读。"
+    },
+    "section2": {
+      "title": "服务描述",
+      "content": "LexiconX 是一个语言学习平台，提供：",
+      "features": {
+        "quiz": "根据您的学习水平定制的人工智能生成测验",
+        "progress": "进度跟踪和分析",
+        "spaced": "智能间隔重复学习系统",
+        "languages": "支持多种语言，包括英语、德语、中文和西班牙语"
+      }
+    },
+    "section3": {
+      "title": "用户义务",
+      "content": "用户必须提供准确信息，维护账户安全，并负责任地使用服务。"
+    },
+    "section4": {
+      "title": "数据保护",
+      "content": "我们根据 GDPR 收集和处理以下数据：",
+      "data": {
+        "google": "通过 Google 登录的身份验证数据",
+        "progress": "学习进度和表现统计",
+        "words": "用户添加的词汇和翻译",
+        "usage": "服务使用模式以改善用户体验"
+      }
+    },
+    "section5": {
+      "title": "取消和终止",
+      "content": "您可以随时删除您的账户。这将永久从我们的系统中删除您的所有数据。"
+    },
+    "section6": {
+      "title": "法律信息",
+      "content": "本服务由位于德国的 LexiconX 提供。这些条款受德国法律管辖。"
+    },
+    "lastUpdated": "最后更新：2025年7月22日"
+  },
   "example": {
     "title": "词汇应用入门"
   },
@@ -73,7 +113,8 @@
     "dont-give-up-try-again": "不要放弃，再试一次！",
     "fantastic-job-keep-it-up": "太棒了，继续保持！",
     "try-again": "再试一次",
-    "you-answered-correctly": "你答对了 {total} 道题中的 {count} 道"
+    "you-answered-correctly": "你答对了 {total} 道题中的 {count} 道",
+    "go-cards": "去卡"
   },
   "word-card": {
     "definition": "定义",
@@ -145,6 +186,72 @@
     "last-session": "上一次会话",
     "learning-level": "学习水平",
     "time-spent": "时间学习",
-    "words-mastered": "掌握了单词"
+    "words-mastered": "掌握了单词",
+    "hours": "小时"
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新：2025年7月22日",
+    "intro": {
+      "title": "介绍",
+      "description": "词典（“我们”，“我们的”或“我们”）致力于保护您的隐私。\n本隐私政策解释了当您使用我们的语言学习应用程序时，我们如何收集，使用和保护您的个人信息。",
+      "contact": "有关此政策的任何疑问，请通过gabrielcmoris@gmail.com与我们的数据保护官联系"
+    },
+    "dataCollection": {
+      "title": "我们收集的信息",
+      "google": "登录时Google帐户信息（电子邮件，名称，个人资料图片）",
+      "profile": "个人资料信息和偏好",
+      "language": "语言学习偏好和母语",
+      "progress": "学习进度和绩效数据",
+      "usage": "用法统计和与应用程序的互动"
+    },
+    "dataUsage": {
+      "title": "我们如何使用您的信息",
+      "personalization": "个性化您的学习经历",
+      "progress": "跟踪和展示您的学习进度",
+      "improvement": "改善我们的服务和功能",
+      "legal": "遵守法律义务"
+    },
+    "thirdParty": {
+      "title": "第三方服务",
+      "google": "Google身份验证以进行安全登录",
+      "mongodb": "MongoDB Atlas用于安全数据存储",
+      "gemini": "Google Gemini AI用于测验一代"
+    },
+    "userRights": {
+      "title": "您的权利GDPR",
+      "access": "有权访问您的个人数据",
+      "rectification": "纠正数据不准确的权利",
+      "erasure": "要求删除数据的权利",
+      "portability": "以便携式格式接收您的数据的权利",
+      "withdraw": "随时撤回同意的权利",
+      "contact": "要行使这些权利，请通过gabrielcmoris@gmail.com与我们联系"
+    },
+    "security": {
+      "title": "数据安全",
+      "measures": "我们实施适当的技术和组织措施来保护您的数据：",
+      "encryption": "运输和休息中的数据加密",
+      "access": "严格的访问控制和身份验证",
+      "monitoring": "定期安全监控和更新"
+    },
+    "retention": {
+      "title": "数据保留",
+      "period": "我们只保留您的个人数据，只要有必要提供我们的服务并遵守法律义务。",
+      "deletion": "您可以随时要求删除帐户和关联数据。"
+    },
+    "children": {
+      "title": "儿童的隐私",
+      "policy": "我们的服务不适合13岁以下的用户。\n我们没有故意从13岁以下的儿童那里收集数据。"
+    },
+    "changes": {
+      "title": "更改本隐私政策",
+      "notification": "我们可能会不时更新本隐私政策。\n我们将通过在此页面上发布新政策来通知您任何更改。"
+    },
+    "contact": {
+      "title": "联系信息",
+      "info": "有关此隐私政策的任何疑问，请通过以下方式与我们联系：gabrielcmoris@gmail.com",
+      "dpo": "数据保护官：dpo@lexiconx.com"
+    },
+    "effectiveDate": "本隐私政策截至2025年7月22日生效"
   }
 }

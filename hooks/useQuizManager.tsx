@@ -66,10 +66,11 @@ export const useQuizManager = (userData: User) => {
 
           await updateUserData(session, updatedUserData);
           if (isSucceed) {
+            setIsQuizFinished(true);
             deleteValue(); // Delete from LocalStorage
-            setTimeout(() => router.push("/cards"), 5000);
+          } else {
+            setIsQuizFinished(true);
           }
-          setIsQuizFinished(true);
         } catch (error) {
           console.error("Error finishing quiz:", error);
           // Optionally show a toast message to the user
