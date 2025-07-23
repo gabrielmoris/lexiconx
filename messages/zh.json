@@ -96,7 +96,8 @@
     "error-changing-language": "设置激活语言失败",
     "german": "Deutsch",
     "spanish": "Español",
-    "title": "选择要学习的语言"
+    "title": "选择要学习的语言",
+    "russian": "русский"
   },
   "quiz": {
     "question": "问题 {current}/{total}",
@@ -250,8 +251,11 @@
     "contact": {
       "title": "联系信息",
       "info": "有关此隐私政策的任何疑问，请通过以下方式与我们联系：gabrielcmoris@gmail.com",
-      "dpo": "数据保护官：dpo@lexiconx.com"
+      "dpo": "数据保护官：gabrielcmoris@gmail.com"
     },
     "effectiveDate": "本隐私政策截至2025年7月22日生效"
+  },
+  "show-learning-flag": {
+    "currently-learning": "学习"
   }
 }

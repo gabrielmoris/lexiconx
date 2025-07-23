@@ -7,12 +7,16 @@ import { deleteUserData } from "@/lib/apis";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import Popup from "../UI/Popup";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { Quiz } from "@/types/Quiz";
 
 const DeleteAccount = () => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const { showToast } = useToastContext();
   const { session, status } = useAuthGuard();
   const t = useTranslations("delete-account");
+  const { deleteValue: deleteStep } = useLocalStorage("onboardingStep", 1);
+  const { deleteValue: deleteQuiz } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
 
   const handleDelete = async () => {
     try {
@@ -26,6 +30,8 @@ const DeleteAccount = () => {
         throw new Error();
       }
 
+      deleteStep();
+      deleteQuiz();
       signOut();
     } catch {
       showToast({

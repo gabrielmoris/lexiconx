@@ -96,7 +96,8 @@
     "error-changing-language": "Sprachwechsel fehlgeschlagen",
     "german": "Deutsch",
     "spanish": "Español",
-    "title": "Wähle eine Sprache zum Lernen"
+    "title": "Wähle eine Sprache zum Lernen",
+    "russian": "русский"
   },
   "quiz": {
     "question": "Frage {current}/{total}",
@@ -250,8 +251,11 @@
     "contact": {
       "title": "Kontaktinformationen",
       "info": "Für Fragen zu diesen Datenschutzrichtlinien wenden Sie sich bitte an: gabrielcmoris@gmail.com",
-      "dpo": "Datenschutzbeauftragter: dpo@lexiconx.com"
+      "dpo": "Datenschutzbeauftragter: gabrielcmoris@gmail.com"
     },
     "effectiveDate": "Diese Datenschutzrichtlinie ist ab dem 22. Juli 2025 wirksam"
+  },
+  "show-learning-flag": {
+    "currently-learning": "Lernen"
   }
 }

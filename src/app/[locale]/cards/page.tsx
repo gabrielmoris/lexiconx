@@ -3,6 +3,7 @@ import WordForm from "@/components/Words/WordForm";
 import AiQuizGenerator from "@/components/AI/AiQuizzGenerator";
 import { requireAuthSSR } from "@/lib/auth/authGuardSSR";
 import { getLocale } from "next-intl/server";
+import ShowLearningFlag from "@/components/Words/ShowLearningFlag";
 
 export default async function CardsPage() {
   const locale = await getLocale();
@@ -14,8 +15,11 @@ export default async function CardsPage() {
      py-20"
     >
       <div className="flex w-full gap-5 items-center justify-between md:justify-end mb-5">
-        <AiQuizGenerator />
-        <WordForm />
+        <ShowLearningFlag />
+        <div className="flex w-full gap-5 items-center justify-between md:justify-end">
+          <AiQuizGenerator />
+          <WordForm />
+        </div>
       </div>
       <WordList />
     </main>

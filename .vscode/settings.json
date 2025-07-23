@@ -12,6 +12,15 @@
       "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
     ]
   },
-  "i18n-ally.extract.ignored": ["Session not found", "placeholder-phonetic notation", "中文", "English", "Deutsch", "Español"],
-  "i18n-ally.extract.autoDetect": true
+  "i18n-ally.extract.ignored": [
+    "Session not found",
+    "placeholder-phonetic notation",
+    "中文",
+    "English",
+    "Deutsch",
+    "Español",
+    "русский",
+    "\n      词汇输入:\n      ${words.map((w, index) => `单词 ${index + 1}: ${JSON.stringify(w, null, 2)}`).join(\"\\n\\n\")}\n\n      生成参数:\n      - 用户级别: ${level}/100\n      - 目标语言: ${learningLanguage}\n      - 指令语言: ${userLanguage}\n      - 所需测验数量: EXACTLY 4\n\n      强制 JSON 结构 - 严格遵循:\n      {\n        \"quizzes\": [\n          {\n            \"sentence\": \"只用${learningLanguage}显示句子，不加注音\",\n            \"phoneticNotation\": \"句子的完整拼音标记\",\n            \"translation\": \"准确的 ${userLanguage} 翻译\",\n            \"usedWords\": [\n              // **关键：**精确复制所用单词的 _id\n              // 请勿修改任何字符\n              // 示例结构（使用输入中的实际值）：\n              ${words\n                .slice(0, 1)\n                .map((w) => `\"${w._id}\"`)\n                .join(\", \")}\n            ],\n            \"language\": \"${learningLanguage}\",\n            \"questions\": [\n              // 生成 3-5 个问题 (每个测验项目的问题数量不同)\n              {\n                \"question\": \"问题文本用 ${userLanguage} 或 ${learningLanguage} 编写，具体取决于级别\",\n                \"options\": [\n                  // 生成 3-5 个选项 (每个测验项目的问题数量不同)\n                  // 正确答案在 'options' 数组中的位置必须随机化\n                  {\"answer\": \"答案选项\", \"isCorrect\": false, \"translation\": \"${userLanguage} 翻译\", \"phoneticNotation\": \"如果答案选项是 ${learningLanguage}，则为其拼音标记\"},\n                  {\"answer\": \"答案选项\", \"isCorrect\": false, \"translation\": \"${userLanguage} 翻译\", \"phoneticNotation\": \"如果答案选项是 ${learningLanguage}，则为其拼音标记\"}\n                  {\"answer\": \"答案选项\", \"isCorrect\": true, \"translation\": \"${userLanguage} 翻译\", \"phoneticNotation\": \"如果答案选项是 ${learningLanguage}，则为其拼音标记\"},\n                  // ... 生成 2-5 个选项 (每个测验项目的问题数量不同)\n                ]\n              }\n              // ... 更多问题 (每个测验项目总共 3-5 个)\n            ]\n          }\n          // ... 另外 3 个测验项目，遵循相同结构\n        ]\n      }\n\n      验证清单 - 回复前验证:\n      ✓ 生成了 EXACTLY 4 个测验项目\n      ✓ 每个测验使用 2-4 个不同的词汇单词\n      ✓ 每个测验有 3-5 个问题 (测验之间数量不同)\n      ✓ 所有 usedWords 数组包含完整、未修改的 Word 对象\n      ✓ 所有 _id 和 userId 值完全保留为输入值\n      ✓ 句子复杂度与级别 ${level}/100 匹配\n      ✓ JSON 结构中存在所有必需字段"
+  ],
+  "i18n-ally.extract.autoDetect": false
 }
