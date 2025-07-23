@@ -7,6 +7,7 @@ import ChinaFlag from "@/components/Icons/ChinaFlag";
 import EnglishFlag from "@/components/Icons/EnglishFlag";
 import GermanFlag from "@/components/Icons/GermanFlag";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
+import RussianFlag from "@/components/Icons/RussianFlag";
 import { Language, Locale } from "@/types/Words";
 import { createElement, useState, useEffect, useMemo } from "react";
 import { updateUserData } from "@/lib/apis";
@@ -19,6 +20,7 @@ export const languages = {
   de: { name: "Deutsch", icon: GermanFlag },
   zh: { name: "中文", icon: ChinaFlag },
   es: { name: "Español", icon: SpanishFlag },
+  ru: { name: "русский", icon: RussianFlag },
 };
 
 const titles = ["Select your native language!", "Wähle deine Muttersprache!", "Selecciona tu idioma nativo!", "选择你的母语！"];
@@ -219,6 +221,15 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
           }
           50% {
             transform: translate(-50%, -50%) rotate(3deg) scale(1.05);
+          }
+        }
+        @keyframes wave-ru {
+          0%,
+          100% {
+            transform: translate(-50%, -50%) rotate(2deg) scale(1);
+          }
+          50% {
+            transform: translate(-50%, -50%) rotate(-2deg) scale(1.05);
           }
         }
       `}</style>

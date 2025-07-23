@@ -96,7 +96,8 @@
     "error-changing-language": "No se pudo establecer el idioma activo",
     "german": "Deutsch",
     "spanish": "Español",
-    "title": "Elige un idioma para aprender"
+    "title": "Elige un idioma para aprender",
+    "russian": "русский"
   },
   "quiz": {
     "question": "Pregunta {current}/{total}",
@@ -250,8 +251,11 @@
     "contact": {
       "title": "Información del contacto",
       "info": "Para cualquier pregunta sobre esta Política de privacidad, contáctenos en: gabrielcmoris@gmail.com",
-      "dpo": "Oficial de protección de datos: dpo@lexiconx.com"
+      "dpo": "Oficial de protección de datos: gabrielcmoris@gmail.com"
     },
     "effectiveDate": "Esta política de privacidad es efectiva a partir del 22 de julio de 2025"
+  },
+  "show-learning-flag": {
+    "currently-learning": "Aprendiendo"
   }
 }

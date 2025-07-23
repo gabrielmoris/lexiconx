@@ -65,7 +65,7 @@
     "contact": {
       "title": "Contact Information",
       "info": "For any questions about this Privacy Policy, please contact us at: gabrielcmoris@gmail.com",
-      "dpo": "Data Protection Officer: DPO@lexiconx.com"
+      "dpo": "Data Protection Officer: gabrielcmoris@gmail.com"
     },
     "effectiveDate": "This Privacy Policy is effective as of July 22, 2025"
   },
@@ -161,7 +161,8 @@
     "error-changing-language": "Failed to set active language",
     "german": "Deutsch",
     "spanish": "Español",
-    "title": "Choose a language to learn"
+    "title": "Choose a language to learn",
+    "russian": "русский"
   },
   "quiz": {
     "question": "Question {current}/{total}",
@@ -253,5 +254,8 @@
     "time-spent": "Time learning",
     "words-mastered": "Words mastered",
     "hours": "hours"
+  },
+  "show-learning-flag": {
+    "currently-learning": "Learning"
   }
 }

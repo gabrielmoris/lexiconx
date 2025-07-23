@@ -37,5 +37,5 @@ export interface User {
   updatedAt: Date;
 }
 
-export type Language = "中文" | "English" | "Deutsch" | "Español";
-export type Locale = "en" | "de" | "zh" | "es";
+export type Language = "中文" | "English" | "Deutsch" | "Español" | "русский";
+export type Locale = "en" | "de" | "zh" | "es" | "ru";

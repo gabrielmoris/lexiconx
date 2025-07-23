@@ -7,6 +7,7 @@ import GermanFlag from "@/components/Icons/GermanFlag";
 import { useTranslations } from "next-intl";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
 import { Language } from "@/types/Words";
+import RussianFlag from "@/components/Icons/RussianFlag";
 
 export interface LanguageOption {
   language: Language;
@@ -38,6 +39,7 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
       { language: "Deutsch", icon: GermanFlag, name: t("german"), tts: "de-DE" },
       { language: "English", icon: EnglishFlag, name: t("english"), tts: "en-US" },
       { language: "Español", icon: SpanishFlag, name: t("spanish"), tts: "es-ES" },
+      { language: "русский", icon: RussianFlag, name: t("russian"), tts: "ru-RU" },
     ],
     [t]
   );

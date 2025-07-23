@@ -42,6 +42,7 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
       English: "en-US",
       Deutsch: "de-DE",
       Español: "es-ES",
+      русский: "ru-RU",
     }),
     []
   );
