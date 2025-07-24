@@ -26,7 +26,7 @@ const AiQuizzGenerator = () => {
   }, [generateQuiz, storedQuizzesData, route]);
 
   return (
-    <Button disabled={isLoading} onClick={handleGenerateQuiz} className="flex items-center justify-between px-5 max-w-48">
+    <Button disabled={isLoading} onClick={handleGenerateQuiz} className="flex items-center justify-between px-5 w-full">
       {t("generate-quiz")} <span className="text-2xl font-extrabold"> {isLoading ? <LexiconxLogo className={`w-8 h-8 animate-spin`} /> : "🧠"}</span>
     </Button>
   );

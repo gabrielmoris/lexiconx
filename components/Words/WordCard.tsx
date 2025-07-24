@@ -4,7 +4,7 @@ import { Language, Word } from "@/types/Words";
 import { useTranslations } from "next-intl";
 import SoundIcon from "../Icons/SoundIcon";
 import { useToastContext } from "@/context/ToastContext";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RemoveIcon from "../Icons/RemoveIcon";
 import Popup from "../UI/Popup";
 import { useWords } from "@/context/WordsContext";
@@ -53,20 +53,22 @@ const WordCard = ({ word }: { word: Word }) => {
     [isReady, isSupported, showToast, speak, t]
   );
 
-  const openDeletePopup = () => {
-    setDeletePopup(true);
-    document.body.style.overflowY = "hidden";
-  };
+  useEffect(() => {
+    const htmlElement = document.documentElement; // This refers to the <html> tag
 
-  const closeDeletePopup = () => {
-    setDeletePopup(false);
-    document.body.style.overflowY = "auto";
-  };
+    if (deletePopup) {
+      htmlElement.style.overflow = "hidden";
+      htmlElement.style.height = "100%";
+    } else {
+      htmlElement.style.overflow = "";
+      htmlElement.style.height = "";
+    }
 
-  const handleDelete = () => {
-    deleteWord(word);
-    closeDeletePopup();
-  };
+    return () => {
+      htmlElement.style.overflow = "";
+      htmlElement.style.height = "";
+    };
+  }, [deletePopup]);
 
   return (
     <div
@@ -74,7 +76,7 @@ const WordCard = ({ word }: { word: Word }) => {
                  rounded-lg shadow-sm p-4 mb-4 flex flex-col space-y-2
                  hover:shadow-md transition-shadow duration-200"
     >
-      {deletePopup && <Popup handleAccept={handleDelete} handleClose={closeDeletePopup} message={t("delete-message")} />}
+      {deletePopup && <Popup handleAccept={() => deleteWord(word)} handleClose={() => setDeletePopup(false)} message={t("delete-message")} />}
 
       <div className="flex flex-row sm:flex-row justify-between mb-2">
         <div className="flex flex-row gap-5">
@@ -99,7 +101,7 @@ const WordCard = ({ word }: { word: Word }) => {
             <span className="font-medium">{t("next-review")}:</span> {formatMongoDate(word.nextReview)}
           </p>
         </div>
-        <RemoveIcon className="w-5 h-5 cursor-pointer" onClick={openDeletePopup} />
+        <RemoveIcon className="w-5 h-5 cursor-pointer" onClick={() => setDeletePopup(true)} />
       </div>
     </div>
   );

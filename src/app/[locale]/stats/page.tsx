@@ -23,7 +23,7 @@ const StatsPage = () => {
   }, [status, userData]);
 
   return (
-    <main className="flex items-center justify-center p-4 w-xl md:p-20">
+    <main className="flex items-center justify-center py-20 px-4 md:w-xl md:p-20">
       <div className="w-full max-w-xl border border-theme-bg-light dark:border-theme-bg-dark rounded-lg shadow-lg p-6 space-y-5">
         <h1 className="text-3xl font-extrabold text-center pb-4 border-b border-theme-bg-light dark:border-theme-bg-dark">{t("title")}</h1>
 

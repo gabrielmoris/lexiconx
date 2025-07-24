@@ -35,12 +35,12 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
   const flagPositions = useMemo(() => {
     const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
     const flagCount = locales.length;
+    const radius = 25;
+    const centerX = 50;
+    const centerY = 50;
 
     locales.forEach((locale, index) => {
-      const angle = (index / flagCount) * 2 * Math.PI;
-      const radius = 25;
-      const centerX = 50;
-      const centerY = 50;
+      const angle = (index / flagCount) * 2 * Math.PI - Math.PI / 2;
 
       positions[locale] = {
         x: centerX + Math.cos(angle) * radius,

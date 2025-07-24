@@ -24,7 +24,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
 
       languages.forEach((lang, index) => {
         // Distribute flags evenly across screen
-        const angle = (index / flagCount) * 2 * Math.PI;
+        const angle = (index / flagCount) * 2 * Math.PI - Math.PI / 2;
         const radius = 25;
         const centerX = 50;
         const centerY = 50;
