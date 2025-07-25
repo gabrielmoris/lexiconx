@@ -257,5 +257,8 @@
   },
   "show-learning-flag": {
     "currently-learning": "Lernen"
+  },
+  "generate-words": {
+    "generate-words": "Wörter erzeugen"
   }
 }

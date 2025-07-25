@@ -257,5 +257,8 @@
   },
   "show-learning-flag": {
     "currently-learning": "学习"
+  },
+  "generate-words": {
+    "generate-words": "产生单词"
   }
 }
