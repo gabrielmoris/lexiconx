@@ -19,8 +19,8 @@ export default async function CardsPage() {
         <ShowLearningFlag />
         <div className="flex w-full flex-col md:flex-row gap-5 items-ceenter justify-center md:justify-end">
           <AiQuizGenerator />
-          <WordForm />
           <AiGenerateVocabulary />
+          <WordForm />
         </div>
       </div>
       <WordList />

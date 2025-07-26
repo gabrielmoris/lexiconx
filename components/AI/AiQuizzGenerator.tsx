@@ -5,6 +5,7 @@ import LexiconxLogo from "../Icons/LexiconxLogo";
 import { useQuiz } from "@/context/QuizContext";
 import { useRouter } from "@/src/i18n/navigation";
 import { useCallback } from "react";
+import QuestionAiIcon from "../Icons/QuestionAiIcon";
 
 const AiQuizzGenerator = () => {
   const t = useTranslations("ai-quiz-generator");
@@ -27,7 +28,10 @@ const AiQuizzGenerator = () => {
 
   return (
     <Button disabled={isLoading} onClick={handleGenerateQuiz} className="flex items-center justify-between px-5 w-full">
-      {t("generate-quiz")} <span className="text-2xl font-extrabold"> {isLoading ? <LexiconxLogo className={`w-8 h-8 animate-spin`} /> : "🧠"}</span>
+      {t("generate-quiz")}
+      <span className="text-2xl font-extrabold">
+        {isLoading ? <LexiconxLogo className={`w-8 h-8 animate-spin`} /> : <QuestionAiIcon className="w-6 h-6" />}
+      </span>
     </Button>
   );
 };

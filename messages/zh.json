@@ -259,6 +259,7 @@
     "currently-learning": "学习"
   },
   "generate-words": {
-    "generate-words": "产生单词"
+    "generate-words": "产生单词",
+    "error-generating words": "产生新单词的错误"
   }
 }

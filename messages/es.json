@@ -259,6 +259,7 @@
     "currently-learning": "Aprendiendo"
   },
   "generate-words": {
-    "generate-words": "Generar palabras"
+    "generate-words": "Generar palabras",
+    "error-generating words": "Error a generar nuevas palabras"
   }
 }

@@ -259,6 +259,7 @@
     "currently-learning": "Обучение"
   },
   "generate-words": {
-    "generate-words": "Генерировать слова"
+    "generate-words": "Генерировать слова",
+    "error-generating words": "Ошибка генерирования новых слов"
   }
 }

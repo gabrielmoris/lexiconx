@@ -37,5 +37,9 @@ export interface User {
   updatedAt: Date;
 }
 
+export interface WordsGeneratorResponse {
+  words: Word[];
+}
+
 export type Language = "中文" | "English" | "Deutsch" | "Español" | "русский";
 export type Locale = "en" | "de" | "zh" | "es" | "ru";
