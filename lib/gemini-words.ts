@@ -13,7 +13,9 @@ const QUIZ_PROMPTS = {
   English: {
     systemPrompt: (userLanguage: Language, learningLanguage: Language) =>
       `You are an expert languages teacher. your task is to choose the most adecuate words to help the users to learn taking in account the user level from 0 to 100 and the words the user already know. You MUST follow ALL requirements exactly to ensure consistent, reliable output.
-        CRITICAL STRUCTURAL REQUIREMENTS - THESE ARE NON-NEGOTIABLE:
+    
+    CRITICAL STRUCTURAL REQUIREMENTS - THESE ARE NON-NEGOTIABLE:
+    
     `,
     userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => ``,
   },
