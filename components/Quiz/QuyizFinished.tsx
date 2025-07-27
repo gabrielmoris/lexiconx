@@ -42,13 +42,13 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
 
   return (
     // Use theme-bg-light and theme-bg-dark for the background
-    <div className="flex items-center justify-center bg-theme-bg-light dark:bg-theme-bg-dark p-4 relative overflow-hidden">
+    <div className="flex items-center w-full md:-my-10 justify-center bg-theme-bg-light dark:bg-theme-bg-dark relative overflow-hidden">
       <AnimatePresence mode="wait">
         {isSuccess ? (
           <motion.div
             key="success-card"
             // Use theme-fg-light/dark for card background and theme-text-light/dark for general text
-            className="rounded-3xl p-8 md:p-12 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-105
+            className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
                        bg-theme-fg-light text-theme-text-light
                        dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
@@ -74,7 +74,7 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
         ) : (
           <motion.div
             key="failure-card"
-            className="rounded-3xl p-8 md:p-12 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-105
+            className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
                        bg-theme-fg-light text-theme-text-light
                        dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}

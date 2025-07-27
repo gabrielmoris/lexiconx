@@ -78,7 +78,6 @@ export const useQuizManager = (userData: User) => {
       }
     };
     finishQuiz();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
 
   const handleAnswerClick = useCallback(

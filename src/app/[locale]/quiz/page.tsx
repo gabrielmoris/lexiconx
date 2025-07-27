@@ -90,7 +90,7 @@ const QuizPage = () => {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-start py-20 px-4">
+    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
       {isQuizFinished ? (
         <QuyizFinished isSuccess={score.success / 2 > score.errors} successPoints={score} onRestartQuiz={restartQuiz} />
       ) : (

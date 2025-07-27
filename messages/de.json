@@ -260,6 +260,7 @@
   },
   "generate-words": {
     "generate-words": "Wörter erzeugen",
-    "error-generating words": "Fehler bei der Erzeugung neuer Wörter"
+    "error-generating words": "Fehler bei der Erzeugung neuer Wörter",
+    "words-generated-success": "Worte erzeugt erfolgreich!"
   }
 }

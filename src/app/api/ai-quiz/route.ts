@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     if (wordsForQuiz.length < 3) {
       return NextResponse.json(
         {
-          error: "Not enough words found for quiz generation",
+          error: "Not enough words",
         },
         { status: 404 }
       );
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
     console.error("Quiz generation error:", error);
     return NextResponse.json(
       {
-        error: "An internal server error occurred during quiz generation.",
+        error: "Internal server error",
       },
       { status: 500 }
     );
