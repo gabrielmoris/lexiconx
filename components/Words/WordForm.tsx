@@ -180,7 +180,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   }
 
   return (
-    <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 max-w-38">
+    <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 w-full">
       {t("add-word")} <span className="text-2xl font-extrabold">+</span>
     </Button>
   );

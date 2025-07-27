@@ -4,6 +4,7 @@ import AiQuizGenerator from "@/components/AI/AiQuizzGenerator";
 import { requireAuthSSR } from "@/lib/auth/authGuardSSR";
 import { getLocale } from "next-intl/server";
 import ShowLearningFlag from "@/components/Words/ShowLearningFlag";
+import AiGenerateVocabulary from "@/components/AI/AiGenerateVocabulary";
 
 export default async function CardsPage() {
   const locale = await getLocale();
@@ -11,13 +12,14 @@ export default async function CardsPage() {
 
   return (
     <main
-      className="min-h-screen w-screen md:w-xl px-5 md:px-0 flex flex-col items-center justify-start
-     py-20"
+      className="min-h-screen w-full md:w-5/6 px-5 md:px-0 flex flex-col items-center justify-start
+     py-10 md:py-15"
     >
-      <div className="flex w-full gap-5 items-center justify-between md:justify-end mb-5">
+      <div className="flex w-full flex-col md:flex-row gap-5 items-center justify-center md:justify-end mb-5">
         <ShowLearningFlag />
-        <div className="flex w-full gap-5 items-center justify-between md:justify-end">
+        <div className="flex w-full flex-col md:flex-row gap-5 items-ceenter justify-center md:justify-end">
           <AiQuizGenerator />
+          <AiGenerateVocabulary />
           <WordForm />
         </div>
       </div>

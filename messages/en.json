@@ -211,7 +211,7 @@
     "error-getting-user": "Error getting the user data"
   },
   "add-first-cards": {
-    "title": "Please, add at least 5 words"
+    "title": "Please, add at least 5 words or click on generate."
   },
   "popup": {
     "close-popup": "Cancel",
@@ -257,5 +257,10 @@
   },
   "show-learning-flag": {
     "currently-learning": "Learning"
+  },
+  "generate-words": {
+    "generate-words": "Generate words",
+    "error-generating words": "Error generating new words",
+    "words-generated-success": "Words generated sucessfully!"
   }
 }

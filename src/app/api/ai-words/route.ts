@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { generateQuizWithWords } from "@/lib/gemini";
 import User from "@/lib/mongodb/models/user";
 import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
+import { generateWords } from "@/lib/gemini-words";
 
 const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español" };
 
@@ -36,49 +36,13 @@ export async function POST(req: Request) {
     }
 
     // Fetch words for quiz
-    const now = new Date();
 
-    const overdueWords = await Word.find({
+    const wordsfromDatabase = await Word.find({
       userId: user._id,
       language: languageToLearn,
-      nextReview: { $lte: now },
-    })
-      .sort({ nextReview: 1 })
-      .limit(15)
-      .exec();
+    }).exec();
 
-    let newWords = [];
-    const desiredTotalWords = 10;
-    const newWordsToFetch = Math.max(0, desiredTotalWords - overdueWords.length);
-
-    // Fetch some new words if overdue words are scarce
-    if (newWordsToFetch > 0) {
-      newWords = await Word.find({
-        userId: user._id,
-        language: languageToLearn,
-        repetitions: 0,
-        lastReviewed: null,
-      })
-        .sort({ createdAt: 1 })
-        .limit(newWordsToFetch)
-        .exec();
-    }
-
-    let wordsForQuiz = [...overdueWords, ...newWords];
-
-    // Simple shuffle to mix overdue and new words, and randomize within due words
-    wordsForQuiz.sort(() => Math.random() - 0.5);
-
-    // Limit to the desired number of words for the quiz
-    wordsForQuiz = wordsForQuiz.slice(0, desiredTotalWords);
-    if (wordsForQuiz.length < 3) {
-      return NextResponse.json(
-        {
-          error: "Not enough words found for quiz generation",
-        },
-        { status: 404 }
-      );
-    }
+    const wordsForQuiz = wordsfromDatabase.map(({ word }) => word);
 
     // Get user's language progress or default level
     const learningProgressArray = Array.isArray(user.learningProgress)
@@ -90,13 +54,12 @@ export async function POST(req: Request) {
     const fullUserLanguage = LANGUAGES[userLanguage];
 
     // Generate quiz using the enhanced function
-    const quizResponse = await generateQuizWithWords(apikey, wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
+    const wordsResponse = await generateWords(apikey, wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
 
     return NextResponse.json({
       success: true,
-      ...quizResponse,
+      ...wordsResponse,
       userLevel,
-      totalWords: wordsForQuiz.length,
     });
   } catch (error) {
     console.error("Quiz generation error:", error);

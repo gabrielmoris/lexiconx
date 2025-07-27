@@ -125,9 +125,18 @@ export const deleteWordApi = async (word: Word, session: Session, isSSR = false)
   });
 };
 
+export const wordsGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number, isSSR = false) => {
+  return _apiHandler("/api/ai-words", {
+    method: "POST",
+    session,
+    body: { languageToLearn, userLanguage, level },
+    isSSR,
+  });
+};
+
 // QUIZ RELATED APIS
 export const quizGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number, isSSR = false) => {
-  return _apiHandler("/api/ai-gen", {
+  return _apiHandler("/api/ai-quiz", {
     method: "POST",
     session,
     body: { languageToLearn, userLanguage, level },
