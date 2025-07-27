@@ -146,7 +146,7 @@
     "error-getting-user": "获取用户数据时出错"
   },
   "add-first-cards": {
-    "title": "请至少添加5个单词"
+    "title": "请添加至少5个单词或单击生成。"
   },
   "popup": {
     "close-popup": "取消 ",
@@ -260,6 +260,7 @@
   },
   "generate-words": {
     "generate-words": "产生单词",
-    "error-generating words": "产生新单词的错误"
+    "error-generating words": "产生新单词的错误",
+    "words-generated-success": "单词成功产生！"
   }
 }

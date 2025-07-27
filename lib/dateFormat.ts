@@ -9,6 +9,7 @@ interface IntlOptions {
 }
 
 function formatMongoDate(mongoDate: Date | string, options: IntlOptions = {}) {
+  if (!mongoDate) return;
   const date = new Date(mongoDate);
 
   const defaultOptions: IntlOptions = {

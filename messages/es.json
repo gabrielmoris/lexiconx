@@ -146,7 +146,7 @@
     "error-getting-user": "Error al obtener los datos de usuario"
   },
   "add-first-cards": {
-    "title": "Por favor, añade al menos 5 palabras"
+    "title": "Por favor, agregue al menos 5 palabras o haga clic en Generar."
   },
   "popup": {
     "close-popup": "Cancelar",
