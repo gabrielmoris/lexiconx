@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { createElement, useState, useEffect } from "react";
 import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
-import LoadingComponent from "../Layout/LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponent";
 import { selectUserLearningLanguage } from "@/lib/apis";
 import { useSession } from "next-auth/react";
 

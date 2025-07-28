@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useToastContext } from "@/context/ToastContext";
 import useTextToSpeech from "@/hooks/useTextToSpeech";
 import { useQuizManager } from "@/hooks/useQuizManager";
-import LoadingComponent from "@/components/Layout/LoadingComponen";
+import LoadingComponent from "@/components/Layout/LoadingComponent";
 import QuyizFinished from "@/components/Quiz/QuyizFinished";
 import QuizView from "@/components/Quiz/QuizView";
 import type { User } from "@/types/Words";

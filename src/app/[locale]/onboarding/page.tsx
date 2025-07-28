@@ -5,7 +5,7 @@ import { useAuthGuard } from "@/hooks/useAuthGuard";
 import LocaleSwitcher from "@/components/Onboarding/LocaleSwitcher";
 import LanguageLearningOnboarding from "@/components/Onboarding/LanguageLearningOnboarding";
 import AddFirstCards from "@/components/Onboarding/AddFirstCards";
-import LoadingComponent from "@/components/Layout/LoadingComponen";
+import LoadingComponent from "@/components/Layout/LoadingComponent";
 import OnboardingText from "@/components/Onboarding/OnboardingText";
 import { useTranslations } from "next-intl";
 

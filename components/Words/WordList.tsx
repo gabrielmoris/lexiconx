@@ -4,7 +4,7 @@ import React from "react";
 import WordCard from "./WordCard";
 import { useTranslations } from "next-intl";
 import { useWords } from "@/context/WordsContext";
-import LoadingComponent from "../Layout/LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponent";
 
 const WordList = () => {
   const { isSelectedLanguageLoading } = useLanguage();
