@@ -61,6 +61,7 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
             <div
               key={`floating-tolearn-${lang.language}`}
               className="absolute z-20 animate-pulse"
+              aria-label={`flag ${lang.language}`}
               style={{
                 left: `${flagPositions[lang.language]?.x || 50}%`,
                 top: `${flagPositions[lang.language]?.y || 50}%`,
