@@ -6,7 +6,7 @@ import { Locale, useLocale, useTranslations } from "next-intl";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 // Import all necessary assets from your files
 import { languages } from "../Onboarding/LocaleSwitcher";
-import LoadingComponent from "../Layout/LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponent";
 import { locales } from "@/src/i18n/routing";
 import { Locale as ILocale, Language } from "@/types/Words";
 import { updateUserData } from "@/lib/apis";

@@ -12,7 +12,7 @@ import { Language, Locale } from "@/types/Words";
 import { createElement, useState, useEffect, useMemo } from "react";
 import { updateUserData } from "@/lib/apis";
 import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
-import LoadingComponent from "../Layout/LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponent";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 export const languages = {

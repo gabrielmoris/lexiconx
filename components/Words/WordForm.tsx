@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button";
-import LoadingComponent from "../Layout/LoadingComponen";
+import LoadingComponent from "../Layout/LoadingComponent";
 import { addword } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
 import { useWords } from "@/context/WordsContext";

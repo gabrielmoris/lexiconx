@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useToastContext } from "@/context/ToastContext";
 import useTextToSpeech from "@/hooks/useTextToSpeech";
 import { useQuizManager } from "@/hooks/useQuizManager";
-import LoadingComponent from "@/components/Layout/LoadingComponen";
+import LoadingComponent from "@/components/Layout/LoadingComponent";
 import QuyizFinished from "@/components/Quiz/QuyizFinished";
 import QuizView from "@/components/Quiz/QuizView";
 import type { User } from "@/types/Words";
@@ -90,7 +90,7 @@ const QuizPage = () => {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-start py-20 px-4">
+    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
       {isQuizFinished ? (
         <QuyizFinished isSuccess={score.success / 2 > score.errors} successPoints={score} onRestartQuiz={restartQuiz} />
       ) : (

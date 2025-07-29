@@ -9,7 +9,7 @@ import HomeIcon from "../Icons/Homeicon";
 import CardsIcon from "../Icons/CardsIcon";
 import UserIcon from "../Icons/UserIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
-import LoadingComponent from "./LoadingComponen";
+import LoadingComponent from "./LoadingComponent";
 import SettingsIcon from "../Icons/SettingsIcon";
 import StatsIcon from "@/components/Icons/StatsIcon";
 import { useTranslations } from "next-intl";
