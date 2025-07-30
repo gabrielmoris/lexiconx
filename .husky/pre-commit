@@ -1,0 +1,18 @@
+# Using echo to create the file and add content
+echo '#!/bin/sh' > pre-commit
+echo '. "$(dirname "$0")/_/husky.sh"' >> pre-commit # Keep this line, it's added by Husky init
+echo '' >> pre-commit # Add an empty line for readability
+echo 'echo "Running tests before commit..."' >> pre-commit
+echo '' >> pre-commit
+echo 'pnpm test || {' >> pre-commit # IMPORTANT: Use 'pnpm test' as per your query
+echo '  echo ""' >> pre-commit
+echo '  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"' >> pre-commit
+echo '  echo "!!! TESTS FAILED! COMMIT ABORTED.       !!!"' >> pre-commit
+echo '  echo "!!! Please fix the tests and try again. !!!"' >> pre-commit
+echo '  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"' >> pre-commit
+echo '  echo ""' >> pre-commit
+echo '  exit 1' >> pre-commit
+echo '}' >> pre-commit
+echo '' >> pre-commit
+echo 'echo "Tests passed! Proceeding with commit."' >> pre-commit
+echo 'exit 0' >> pre-commit
