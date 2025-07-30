@@ -20,5 +20,5 @@ pnpm test || {
   exit 1
 }
 
-echo "Tests passed! Proceeding with commit."
+echo "[36m Tests passed! Proceeding with commit. [0m"
 exit 0
