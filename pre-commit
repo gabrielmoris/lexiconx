@@ -1,0 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running tests before commit..."
+
+pnpm test || {
+  echo ""
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!! TESTS FAILED! COMMIT ABORTED.       !!!"
+  echo "!!! Please fix the tests and try again. !!!"
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo ""
+  exit 1
+}
+
+echo "Tests passed! Proceeding with commit."
+exit 0
