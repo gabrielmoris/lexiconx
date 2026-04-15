@@ -9,7 +9,7 @@ import Button from "../UI/Button";
 import { useLanguage } from "@/context/LanguageToLearnContext";
 import { useToastContext } from "@/context/ToastContext";
 import { Language, Word } from "@/types/Words";
-import { addword, wordsGeneration } from "@/lib/apis";
+import { addWord, wordsGeneration } from "@/lib/apis";
 import { useWords } from "@/context/WordsContext";
 
 const AiGenerateVocabulary = () => {
@@ -40,7 +40,7 @@ const AiGenerateVocabulary = () => {
         );
 
         const addWordPromises = newWordsGenerated.map(async (word: Word) => {
-          const { data: wordToAdd } = await addword({ ...word, session });
+          const { data: wordToAdd } = await addWord({ ...word, session });
           return wordToAdd;
         });
 

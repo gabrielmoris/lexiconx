@@ -11,7 +11,7 @@ const _apiHandler = async (
     body?: Record<string, unknown>;
     session?: Session | null;
     isSSR?: boolean;
-  } = {}
+  } = {},
 ) => {
   const { method = "GET", body, session, isSSR = false } = options;
   const url = isSSR ? `${baseURL}${endpoint}` : endpoint;
@@ -94,7 +94,7 @@ export const updateWordsData = async (session: Session, words: Word[], isSSR = f
   });
 };
 
-export const addword = async (
+export const addWord = async (
   formData: {
     word: string;
     definition: string;
@@ -102,7 +102,7 @@ export const addword = async (
     language: Language;
     session: Session | null;
   },
-  isSSR = false
+  isSSR = false,
 ) => {
   if (!formData.session) throw new Error("Session not found");
   const { session, ...wordData } = formData;

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import LoadingComponent from "../Layout/LoadingComponent";
-import { addword } from "@/lib/apis";
+import { addWord } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
 import { useWords } from "@/context/WordsContext";
 import { Word } from "@/types/Words";
@@ -22,7 +22,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   const { session: userSession } = useAuthGuard();
 
   const [loading, setLoading] = useState(false);
-  const [addWord, setAddWord] = useState(false);
+  const [isAddingWord, setIsAddingWord] = useState(false);
   const [formData, setFormData] = useState({
     word: "",
     definition: "",
@@ -75,7 +75,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         updatedAt: new Date().toISOString(),
       };
 
-      await addword(formData);
+      await addWord(formData);
       setWords([...words, newWord]);
 
       showToast({
@@ -91,7 +91,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         language: selectedLanguage.language,
         session: session,
       });
-      setAddWord(false);
+      setIsAddingWord(false);
     } catch (error: unknown) {
       console.error("Failed to add word:", error);
       showToast({
@@ -105,18 +105,18 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   };
 
   useEffect(() => {
-    if (addWord) {
+    if (isAddingWord) {
       document.body.style.overflowY = "hidden";
     } else {
       document.body.style.overflowY = "auto";
     }
-  }, [addWord]);
+  }, [isAddingWord]);
 
   if (status === "loading") {
     return <LoadingComponent />;
   }
 
-  if (addWord || isOpen) {
+  if (isAddingWord || isOpen) {
     return (
       <section
         className={`shadow-sm dark:shadow-theme-fg-dark
@@ -162,7 +162,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
           />
 
           {!isOpen ? (
-            <Button type="button" onClick={() => setAddWord(false)} variant="secondary" className="mb-5">
+            <Button type="button" onClick={() => setIsAddingWord(false)} variant="secondary" className="mb-5">
               {t("close-btn")}
             </Button>
           ) : (
@@ -180,7 +180,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   }
 
   return (
-    <Button onClick={() => setAddWord(true)} className="flex items-center justify-between px-5 w-full">
+    <Button onClick={() => setIsAddingWord(true)} className="flex items-center justify-between px-5 w-full">
       {t("add-word")} <span className="text-2xl font-extrabold">+</span>
     </Button>
   );
