@@ -2,13 +2,13 @@ import { QuizGeneratorResponse } from "@/types/Quiz";
 import { Language, Word } from "@/types/Words";
 import { GoogleGenAI } from "@google/genai";
 
-const MODEL_NAME = "gemini-2.0-flash-001";
+const MODEL_NAME = "gemini-2.5-flash";
 
 const QUIZ_PROMPTS = {
   English: {
     systemPrompt: (
       userLanguage: Language,
-      learningLanguage: Language
+      learningLanguage: Language,
     ) => `You are an expert language learning quiz generator. Your task is to create engaging, educational quizzes that help users practice vocabulary in context. You MUST follow ALL requirements exactly to ensure consistent, reliable output.
 
       CRITICAL STRUCTURAL REQUIREMENTS - THESE ARE NON-NEGOTIABLE:
@@ -111,7 +111,7 @@ const QUIZ_PROMPTS = {
   Español: {
     systemPrompt: (
       userLanguage: Language,
-      learningLanguage: Language
+      learningLanguage: Language,
     ) => `Eres un generador experto de cuestionarios para el aprendizaje de idiomas. Tu tarea es crear cuestionarios atractivos y educativos que ayuden a los usuarios a practicar el vocabulario en contexto. DEBES seguir TODOS los requisitos exactamente para asegurar una salida consistente y fiable.
 
       REQUISITOS ESTRUCTURALES CRÍTICOS - ESTOS NO SON NEGOCIABLES:
@@ -214,7 +214,7 @@ const QUIZ_PROMPTS = {
   Deutsch: {
     systemPrompt: (
       userLanguage: Language,
-      learningLanguage: Language
+      learningLanguage: Language,
     ) => `Du bist ein erfahrener Quiz-Generator für das Sprachenlernen. Deine Aufgabe ist es, ansprechende, lehrreiche Quizze zu erstellen, die Nutzern helfen, Vokabeln im Kontext zu üben. Du MUSST ALLE Anforderungen exakt befolgen, um eine konsistente und zuverlässige Ausgabe zu gewährleisten.
 
       KRITISCHE STRUKTURELLE ANFORDERUNGEN - DIESE SIND NICHT VERHANDELBAR:
@@ -317,7 +317,7 @@ const QUIZ_PROMPTS = {
   中文: {
     systemPrompt: (
       userLanguage: Language,
-      learningLanguage: Language
+      learningLanguage: Language,
     ) => `你是一个专业的语言学习测验生成器。你的任务是创建引人入胜、寓教于乐的测验，帮助用户在上下文中练习词汇。你必须严格遵守所有要求，以确保输出的一致性和可靠性。
 
       关键结构要求 - 这些是不可协商的：
@@ -419,7 +419,7 @@ const QUIZ_PROMPTS = {
   русский: {
     systemPrompt: (
       userLanguage: Language,
-      learningLanguage: Language
+      learningLanguage: Language,
     ) => `Вы эксперт по созданию обучающих языковых викторин. Ваша задача — создавать увлекательные, образовательные викторины, которые помогают пользователям практиковать словарный запас в контексте. Вы ДОЛЖНЫ следовать ВСЕМ требованиям точно, чтобы обеспечить последовательный, надежный результат.
 
       КРИТИЧЕСКИЕ СТРУКТУРНЫЕ ТРЕБОВАНИЯ - ЭТИ ТРЕБОВАНИЯ НЕ ПОДЛЕЖАТ ОБСУЖДЕНИЮ:
@@ -528,7 +528,7 @@ export async function generateQuizWithWords(
   words: Word[],
   level: number,
   learningLanguage: Language,
-  userLanguage: Language
+  userLanguage: Language,
 ): Promise<QuizGeneratorResponse> {
   try {
     if (!apiKey) {
@@ -595,7 +595,7 @@ export async function generateQuizWithWords(
         quiz.questions.forEach((question, qIndex) => {
           if (!question.question || !Array.isArray(question.options) || question.options.length < 2 || question.options.length > 5) {
             throw new Error(
-              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 2-5) or missing 'question' field`
+              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 2-5) or missing 'question' field`,
             );
           }
 
