@@ -260,7 +260,7 @@
   },
   "generate-words": {
     "generate-words": "Generate words",
-    "error-generating words": "Error generating new words",
+    "error-generating-words": "Error generating new words",
     "words-generated-success": "Words generated sucessfully!"
   }
 }

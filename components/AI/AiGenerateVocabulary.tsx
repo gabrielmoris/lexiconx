@@ -58,7 +58,7 @@ const AiGenerateVocabulary = () => {
       } catch (error) {
         console.error("Error generating words:", error);
         showToast({
-          message: t("error-generating words"),
+          message: t("error-generating-words"),
           variant: "error",
           duration: 3000,
         });
