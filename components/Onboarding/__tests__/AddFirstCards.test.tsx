@@ -23,10 +23,10 @@ jest.mock("../../Words/WordList", () => {
 });
 
 jest.mock("../../AI/AiGenerateVocabulary", () => {
-  const MockAiGenerateVocabulary = () => {
+  const AiGenerateVocabulary = () => {
     return <div data-testid="ai-generate">AI Generate</div>;
   };
-  return MockAiGenerateVocabulary;
+   return { AiGenerateVocabulary };
 });
 
 describe("AddFirstCards", () => {

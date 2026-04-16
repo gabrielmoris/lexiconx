@@ -1,7 +1,7 @@
 import { Language, Word, WordsGeneratorResponse } from "@/types/Words";
 import { GoogleGenAI } from "@google/genai";
 
-const MODEL_NAME = "gemini-2.0-flash-001";
+const MODEL_NAME = "gemini-2.5-flash";
 
 // The word must have this structure
 // word: string;
@@ -282,7 +282,7 @@ export async function generateWords(
   words: Word[],
   level: number,
   learningLanguage: Language,
-  userLanguage: Language
+  userLanguage: Language,
 ): Promise<WordsGeneratorResponse> {
   try {
     if (!apiKey) {
