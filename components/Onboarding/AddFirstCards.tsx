@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import WordForm from "../Words/WordForm";
 import WordList from "../Words/WordList";
-import AiGenerateVocabulary from "../AI/AiGenerateVocabulary";
+import {AiGenerateVocabulary} from "../AI/AiGenerateVocabulary";
 
 const AddFirstCards = () => {
   const t = useTranslations("add-first-cards");

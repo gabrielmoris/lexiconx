@@ -94,7 +94,7 @@ export const updateWordsData = async (session: Session, words: Word[], isSSR = f
   });
 };
 
-export const addWord = async (
+export const addWordToDatabase = async (
   formData: {
     word: string;
     definition: string;
