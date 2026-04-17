@@ -1,5 +1,5 @@
 import { useWords } from "@/context/WordsContext";
-import { addWord, wordsGeneration } from "@/lib/apis";
+import { addWordToDatabase, wordsGeneration } from "@/lib/apis";
 import { Language, Word } from "@/types/Words";
 import { useState } from "react";
 import { useAuthGuard } from "./useAuthGuard";
@@ -34,11 +34,11 @@ export const useGenerateWords = () => {
         learningProgress.level
       );
 
-      const addedWords = await Promise.all(
-        newWords.map((word: Word) => addWord({ ...word, session }))
+      await Promise.all(
+        newWords.map((word: Word) => addWordToDatabase({ ...word, session }))
       );
 
-      setWords([...words, ...addedWords]);
+      setWords([ ...newWords,...words]);
       showToast({ message: t("words-generated-success"), variant: "success", duration: 3000, });
 
       return { success: true };

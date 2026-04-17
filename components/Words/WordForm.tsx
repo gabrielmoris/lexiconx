@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import LoadingComponent from "../Layout/LoadingComponent";
-import { addWord } from "@/lib/apis";
+import { addWordToDatabase } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
 import { useWords } from "@/context/WordsContext";
 import { Word } from "@/types/Words";
@@ -75,7 +75,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         updatedAt: new Date().toISOString(),
       };
 
-      await addWord(formData);
+      await addWordToDatabase(formData);
       setWords([...words, newWord]);
 
       showToast({
