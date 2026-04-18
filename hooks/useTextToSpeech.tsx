@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Language } from "@/types/Words";
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import EasySpeech from "easy-speech";
 
 interface UseTextToSpeechOptions {
   onStart?: () => void;
@@ -28,13 +29,9 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [voicesLoaded, setVoicesLoaded] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
-
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const pendingSpeechRef = useRef<{ text: string; language: Language } | null>(null);
 
   const languages = useMemo(
     () => ({
@@ -47,119 +44,76 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     []
   );
 
-  // Handle hydration by checking support only after component mounts
+  const handleStart = useCallback(() => {
+    setIsSpeaking(true);
+    setIsPaused(false);
+    options.onStart?.();
+  }, [options.onStart]);
+
+  const handleEnd = useCallback(() => {
+    setIsSpeaking(false);
+    setIsPaused(false);
+    options.onEnd?.();
+  }, [options.onEnd]);
+
+  const handleError = useCallback(
+    (error: SpeechSynthesisErrorEvent) => {
+      setIsSpeaking(false);
+      setIsPaused(false);
+      if (error.error !== "interrupted") {
+        options.onError?.(new Error(`Speech synthesis error: ${error.error}`));
+      }
+    },
+    [options.onError]
+  );
+
   useEffect(() => {
     setIsMounted(true);
-    const supported = typeof window !== "undefined" && "speechSynthesis" in window;
+    const detect = EasySpeech.detect();
+    const supported = !!detect.speechSynthesis && !!detect.speechSynthesisUtterance;
     setIsSupported(supported);
   }, []);
 
-  // Load voices
-  const loadVoices = useCallback(() => {
-    if (!isMounted || !isSupported) return;
-
-    const synth = window.speechSynthesis;
-    const availableVoices = synth.getVoices();
-
-    if (availableVoices.length > 0) {
-      setVoices(availableVoices);
-      setVoicesLoaded(true);
-      setIsReady(true);
-
-      // If there was a pending speech request, execute it now
-      if (pendingSpeechRef.current) {
-        const { text, language } = pendingSpeechRef.current;
-        pendingSpeechRef.current = null;
-        // Use setTimeout to avoid potential recursion issues
-        setTimeout(() => speak(text, language), 0);
-      }
-    }
-  }, [isMounted, isSupported]);
-
-  // Initialize voices with more aggressive loading strategy
   useEffect(() => {
     if (!isMounted || !isSupported) return;
 
-    const synth = window.speechSynthesis;
-
-    // Force load voices immediately
-    loadVoices();
-
-    // Listen for voices changed event
-    const handleVoicesChanged = () => {
-      loadVoices();
-    };
-
-    synth.addEventListener("voiceschanged", handleVoicesChanged);
-
-    // More aggressive fallback strategy
-    let attempts = 0;
-    const maxAttempts = 100; // Increased attempts
-    const interval = setInterval(() => {
-      if (voicesLoaded || attempts >= maxAttempts) {
-        clearInterval(interval);
-        return;
-      }
-
-      // Sometimes calling getVoices() multiple times helps trigger loading
-      synth.getVoices();
-      loadVoices();
-      attempts++;
-    }, 50); // Reduced interval for faster detection
-
-    // Additional fallback: try to trigger voice loading by creating a dummy utterance
-    if (!voicesLoaded) {
+    const initEasySpeech = async () => {
       try {
-        const dummyUtterance = new SpeechSynthesisUtterance("");
-        synth.speak(dummyUtterance);
-        synth.cancel(); // Cancel immediately
-        loadVoices();
+        await EasySpeech.init({ maxTimeout: 5000, interval: 250 });
+        setIsReady(true);
+        setVoices(EasySpeech.voices());
+
+        EasySpeech.on({
+          start: handleStart,
+          end: handleEnd,
+          error: handleError,
+          pause: () => setIsPaused(true),
+          resume: () => setIsPaused(false),
+        });
       } catch (error) {
-        console.warn("Could not create dummy utterance:", error);
-      }
-    }
-
-    return () => {
-      synth.removeEventListener("voiceschanged", handleVoicesChanged);
-      clearInterval(interval);
-    };
-  }, [isMounted, isSupported, loadVoices, voicesLoaded]);
-
-  // Update speaking state based on synthesis state
-  useEffect(() => {
-    if (!isMounted || !isSupported) return;
-
-    const updateState = () => {
-      const synth = window.speechSynthesis;
-      setIsSpeaking(synth.speaking);
-      setIsPaused(synth.paused);
-    };
-
-    const interval = setInterval(updateState, 100);
-
-    return () => clearInterval(interval);
-  }, [isMounted, isSupported]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (isMounted && isSupported && window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
+        console.warn("EasySpeech init failed:", error);
+        options.onError?.(error instanceof Error ? error : new Error("Failed to initialize speech"));
       }
     };
-  }, [isMounted, isSupported]);
+
+    initEasySpeech();
+
+    return () => {
+      EasySpeech.reset();
+    };
+  }, [isMounted, isSupported, handleStart, handleEnd, handleError, options.onError]);
 
   const getVoicesForLanguage = useCallback(
     (language: Language) => {
-      if (!language) return voices.filter((voice) => voice.lang.startsWith("en-US"));
+      if (!language) return voices.filter((voice: { lang: string; }) => voice.lang.startsWith("en-US"));
       const langCode = languages[language].split("-")[0];
-      return voices.filter((voice) => voice.lang.startsWith(langCode));
+      return voices.filter((voice: { lang: string; }) => voice.lang.startsWith(langCode));
     },
     [voices, languages]
   );
 
   const speak = useCallback(
-    (text: string, language: Language) => {
+    async (text: string, language: Language) => {
       if (!isMounted || !isSupported) {
         options.onError?.(new Error("Text-to-speech is not supported in this browser"));
         return;
@@ -170,78 +124,50 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
         return;
       }
 
-      // If voices aren't loaded yet, queue the request
-      if (!voicesLoaded || voices.length === 0) {
-        console.log("Voices not loaded yet, queuing speech request...");
-        pendingSpeechRef.current = { text, language };
-        // Try to force load voices again
-        loadVoices();
+      if (!isReady) {
+        console.log("EasySpeech not ready yet, queuing speech request...");
         return;
       }
 
-      const synth = window.speechSynthesis;
-
-      // Cancel any ongoing speech
-      synth.cancel();
-
-      // Find a suitable voice for the requested language
-      const voicesForLang = getVoicesForLanguage(language);
-      const voiceToUse = voicesForLang[0];
-
-      // If no specific voice is found, try to find any voice for the language code
-      let fallbackVoice: SpeechSynthesisVoice | undefined = voiceToUse;
-      if (!fallbackVoice) {
-        const langCode = languages[language];
-        fallbackVoice = voices.find((voice) => voice.lang === langCode) || voices.find((voice) => voice.lang.startsWith(langCode.split("-")[0]));
+      const status = EasySpeech.status();
+      if (status.status !== "init: complete") {
+        options.onError?.(new Error("Text-to-speech not initialized"));
+        return;
       }
 
-      if (!fallbackVoice) {
+      EasySpeech.cancel();
+
+      const voicesForLang = getVoicesForLanguage(language);
+      let voice: SpeechSynthesisVoice | undefined = voicesForLang[0];
+
+      if (!voice) {
+        const langCode = languages[language];
+        voice = voices.find((v: { lang: string; }) => v.lang === langCode) || voices.find((v: { lang: string; }) => v.lang.startsWith(langCode.split("-")[0]));
+      }
+
+      if (!voice) {
         console.warn(`No voices found for language: ${language}. Using default voice.`);
       }
 
-      const utterance = new SpeechSynthesisUtterance(text);
-
-      // Set voice and language
-      if (fallbackVoice) {
-        utterance.voice = fallbackVoice;
+      try {
+        await EasySpeech.speak({
+          text,
+          voice,
+          pitch: options.pitch ?? 1,
+          rate: options.rate ?? 1,
+          volume: options.volume ?? 1,
+        });
+      } catch (error) {
+        options.onError?.(error instanceof Error ? error : new Error("Speech synthesis failed"));
       }
-      utterance.lang = languages[language];
-      utterance.rate = options.rate ?? 1;
-      utterance.pitch = options.pitch ?? 1;
-      utterance.volume = options.volume ?? 1;
-
-      utterance.onstart = () => {
-        setIsSpeaking(true);
-        setIsPaused(false);
-        options.onStart?.();
-      };
-
-      utterance.onend = () => {
-        setIsSpeaking(false);
-        setIsPaused(false);
-        options.onEnd?.();
-      };
-
-      utterance.onerror = (event) => {
-        setIsSpeaking(false);
-        setIsPaused(false);
-        if (event.error !== "interrupted") {
-          options.onError?.(new Error(`Speech synthesis error: ${event.error}`));
-        }
-      };
-
-      utteranceRef.current = utterance;
-      synth.speak(utterance);
     },
-    [getVoicesForLanguage, isMounted, isSupported, languages, options, voicesLoaded, voices, loadVoices]
+    [getVoicesForLanguage, isMounted, isSupported, isReady, languages, options, voices]
   );
 
   const cancel = useCallback(() => {
     if (!isMounted || !isSupported) return;
 
-    // Clear any pending speech
-    pendingSpeechRef.current = null;
-    window.speechSynthesis.cancel();
+    EasySpeech.cancel();
     setIsSpeaking(false);
     setIsPaused(false);
   }, [isMounted, isSupported]);
@@ -249,14 +175,14 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
   const pause = useCallback(() => {
     if (!isMounted || !isSupported) return;
 
-    window.speechSynthesis.pause();
+    EasySpeech.pause();
     setIsPaused(true);
   }, [isMounted, isSupported]);
 
   const resume = useCallback(() => {
     if (!isMounted || !isSupported) return;
 
-    window.speechSynthesis.resume();
+    EasySpeech.resume();
     setIsPaused(false);
   }, [isMounted, isSupported]);
 
@@ -268,7 +194,7 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     isSpeaking,
     isPaused,
     isSupported,
-    isReady, // New property to indicate readiness
+    isReady,
     voices,
     getVoicesForLanguage,
   };
