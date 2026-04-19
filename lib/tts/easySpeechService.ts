@@ -64,12 +64,12 @@ export const initEasySpeech = async () => {
       };
       notify();
 
-      (EasySpeech as any).on?.({
+      EasySpeech.on?.({
         voiceschanged: () => {
           snapshot = { ...snapshot, voices: EasySpeech.voices() };
           notify();
         },
-      });
+      } as Parameters<typeof EasySpeech.on>[0]);
     } catch (e) {
       console.warn("EasySpeech init failed:", e);
     }

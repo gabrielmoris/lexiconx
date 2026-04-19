@@ -311,8 +311,7 @@ export async function generateWords(
       model: MODEL_NAME,
       contents: fullPrompt,
       config: {
-        temperature: 0.7, // Balanced creativity and consistency
-        maxOutputTokens: 8192, // Increased for complex multilingual content
+        temperature: 0.7,
         topK: 40,
         topP: 0.95,
         responseMimeType: "application/json",
