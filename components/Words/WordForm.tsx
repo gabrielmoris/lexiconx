@@ -9,8 +9,6 @@ import LoadingComponent from "../Layout/LoadingComponent";
 import { addWordToDatabase } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
 import { useWords } from "@/context/WordsContext";
-import { Word } from "@/types/Words";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: boolean }) => {
   const { showToast } = useToastContext();
@@ -19,7 +17,6 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   const { data: session, status } = useSession();
   const t = useTranslations("word-form");
   const route = useRouter();
-  const { session: userSession } = useAuthGuard();
 
   const [loading, setLoading] = useState(false);
   const [isAddingWord, setIsAddingWord] = useState(false);
@@ -59,7 +56,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
 
       if (!formData.session || formData.session.user?.id) throw new Error();
 
-      const {data: addedWord}= await addWordToDatabase(formData);
+      const {data: addedWord} = await addWordToDatabase(formData);
       setWords([...words, addedWord]);
 
       showToast({
