@@ -57,14 +57,14 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         throw new Error();
       }
 
-      if (!formData.session) throw new Error();
+      if (!formData.session || formData.session.user?.id) throw new Error();
       const newWord: Word = {
         _id: new Date().getMilliseconds().toString(),
         word: formData.word,
         definition: formData.definition,
         phoneticNotation: formData.phoneticNotation,
         language: formData.language,
-        userId: userSession?.user?.id || "fakeUserId",
+        userId:  formData.session.user?.id || userSession?.user?.name + "_No_ID",
         tags: [],
         lastReviewed: null,
         nextReview: new Date().toISOString(),
