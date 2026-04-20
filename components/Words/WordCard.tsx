@@ -79,11 +79,11 @@ const WordCard = ({ word }: { word: Word }) => {
       {deletePopup && <Popup handleAccept={() => deleteWord(word)} handleClose={() => setDeletePopup(false)} message={t("delete-message")} />}
 
       <div className="flex flex-row sm:flex-row justify-between mb-2">
-        <div className="flex flex-row gap-5">
-          <h3 className="text-xl font-extrabold text-gray-900 dark:text-white">{word.word}</h3>
-          {word.phoneticNotation && <p className="text-md text-gray-600 dark:text-gray-400">[{word.phoneticNotation}]</p>}
+        <div title={word.word} className="flex flex-row gap-5 overflow-x-hidden max-w-[90%]">
+          <h3 className="text-xl font-extrabold text-gray-900 dark:text-white overflow-hidden text-clip whitespace-nowrap">{word.word}</h3>
+          {word.phoneticNotation && <p className="text-md text-gray-600 dark:text-gray-400 whitespace-nowrap flex-shrink-0">{word.phoneticNotation}</p>}
         </div>
-        <SoundIcon className="w-5 h-5 cursor-pointer" onClick={() => readWord(word.word, word.language)} />
+        <SoundIcon className="w-5 h-5 cursor-pointer shrink-0" onClick={() => readWord(word.word, word.language)} />
       </div>
 
       <p className="text-gray-700 dark:text-gray-300 leading-relaxed">

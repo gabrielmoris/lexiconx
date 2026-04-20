@@ -58,25 +58,9 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
       }
 
       if (!formData.session || formData.session.user?.id) throw new Error();
-      const newWord: Word = {
-        _id: new Date().getMilliseconds().toString(),
-        word: formData.word,
-        definition: formData.definition,
-        phoneticNotation: formData.phoneticNotation,
-        language: formData.language,
-        userId:  formData.session.user?.id || userSession?.user?.name + "_No_ID",
-        tags: [],
-        lastReviewed: null,
-        nextReview: new Date().toISOString(),
-        interval: 0,
-        repetitions: 0,
-        easeFactor: 2.5,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
 
-      await addWordToDatabase(formData);
-      setWords([...words, newWord]);
+      const {data: addedWord}= await addWordToDatabase(formData);
+      setWords([...words, addedWord]);
 
       showToast({
         message: t("success-word-added"),
