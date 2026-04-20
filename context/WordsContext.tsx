@@ -64,7 +64,6 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    // TODO: Check if this function is right, it seems it is deleting the wrong word or not deleting it!
     try {
       await deleteWordApi(word, session);
       const filteredWords = words.filter((currWord) => currWord._id !== word._id);
