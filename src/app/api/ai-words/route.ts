@@ -4,7 +4,7 @@ import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
-import { generateWords } from "@/lib/gemini-words";
+import { generateWords } from "@/lib/ai/generate-words";
 
 const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español" };
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         {
           error: "API key, session, target language, and user language are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       {
         error: "An internal server error occurred during quiz generation.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

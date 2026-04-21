@@ -9,8 +9,6 @@ import LoadingComponent from "../Layout/LoadingComponent";
 import { addWordToDatabase } from "@/lib/apis";
 import { useRouter } from "@/src/i18n/navigation";
 import { useWords } from "@/context/WordsContext";
-import { Word } from "@/types/Words";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: boolean }) => {
   const { showToast } = useToastContext();
@@ -19,7 +17,6 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   const { data: session, status } = useSession();
   const t = useTranslations("word-form");
   const route = useRouter();
-  const { session: userSession } = useAuthGuard();
 
   const [loading, setLoading] = useState(false);
   const [isAddingWord, setIsAddingWord] = useState(false);
@@ -57,26 +54,10 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         throw new Error();
       }
 
-      if (!formData.session) throw new Error();
-      const newWord: Word = {
-        _id: new Date().getMilliseconds().toString(),
-        word: formData.word,
-        definition: formData.definition,
-        phoneticNotation: formData.phoneticNotation,
-        language: formData.language,
-        userId: userSession?.user?.id || "fakeUserId",
-        tags: [],
-        lastReviewed: null,
-        nextReview: new Date().toISOString(),
-        interval: 0,
-        repetitions: 0,
-        easeFactor: 2.5,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
+      if (!formData.session || formData.session.user?.id) throw new Error();
 
-      await addWordToDatabase(formData);
-      setWords([...words, newWord]);
+      const {data: addedWord} = await addWordToDatabase(formData);
+      setWords([...words, addedWord]);
 
       showToast({
         message: t("success-word-added"),
