@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { generateQuizWithWords } from "@/lib/gemini-quiz";
+import { generateQuizWithWords } from "@/lib/ai/generate-quiz";
 import User from "@/lib/mongodb/models/user";
 import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         {
           error: "API key, session, target language, and user language are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         {
           error: "Not enough words",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
       {
         error: "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
