@@ -18,11 +18,10 @@ export async function POST(req: Request) {
       level: number;
     };
 
-    const apikey = process.env.GEMINI_API_KEY;
-    if (!apikey || !session || !languageToLearn || !userLanguage) {
+    if (!session || !languageToLearn || !userLanguage) {
       return NextResponse.json(
         {
-          error: "API key, session, target language, and user language are required",
+          error: "Session, target language, and user language are required",
         },
         { status: 400 },
       );
@@ -89,8 +88,7 @@ export async function POST(req: Request) {
 
     const fullUserLanguage = LANGUAGES[userLanguage];
 
-    // Generate quiz using the enhanced function
-    const quizResponse = await generateQuizWithWords(apikey, wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
+    const quizResponse = await generateQuizWithWords(wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
 
     return NextResponse.json({
       success: true,

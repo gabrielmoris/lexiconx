@@ -2,25 +2,20 @@ import { Language, Word, WordsGeneratorResponse } from "@/types/Words";
 import { WORDS_PROMPTS } from "./words-prompts";
 import { createAIClient } from "./client";
 
-const MODEL_NAME = "gemini-2.5-flash";
+const MODEL_NAME = process.env.AI_MODEL || "gemini-2.5-flash";
 
 export async function generateWords(
-  apiKey: string,
   words: Word[],
   level: number,
   learningLanguage: Language,
   userLanguage: Language,
 ): Promise<WordsGeneratorResponse> {
   try {
-    if (!apiKey) {
-      throw new Error("API key is required");
-    }
-
     if (level < 1 || level > 100) {
       throw new Error("Level must be between 1 and 100");
     }
 
-    const client = createAIClient(apiKey);
+    const client = createAIClient();
 
     const promptConfig = WORDS_PROMPTS[userLanguage];
     if (!promptConfig) {
@@ -31,13 +26,14 @@ export async function generateWords(
     const userPrompt = promptConfig.userPrompt(words, level, learningLanguage, userLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
+    // TODO: Separate the response_format  and add it to the optiuons here
     const result = await client.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,
       config: {
         temperature: 0.7,
         topK: 40,
-        topP: 0.95,
+        topP: 0.9,
         responseMimeType: "application/json",
       },
     });
@@ -64,7 +60,7 @@ export async function generateWords(
       throw new Error(`Failed to parse quiz response: ${parseError instanceof Error ? parseError.message : String(parseError)}`);
     }
   } catch (error) {
-    console.error("Error generating quiz with Gemini:", error);
+    console.error("Error generating words:", error);
     throw new Error(`Failed to generate quiz: ${error instanceof Error ? error.message : String(error)}`);
   }
 }

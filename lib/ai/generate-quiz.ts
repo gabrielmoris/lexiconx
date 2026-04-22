@@ -9,17 +9,12 @@ const MODEL_NAME = process.env.AI_MODEL || "gemini-2.5-flash";
  * Enhanced quiz generation function with multilingual support and level-based complexity
  */
 export async function generateQuizWithWords(
-  apiKey: string,
   words: Word[],
   level: number,
   learningLanguage: Language,
   userLanguage: Language,
 ): Promise<QuizGeneratorResponse> {
   try {
-    if (!apiKey) {
-      throw new Error("API key is required");
-    }
-
     if (!words || words.length < 3) {
       throw new Error("At least 3 words are required for quiz generation");
     }
@@ -28,7 +23,7 @@ export async function generateQuizWithWords(
       throw new Error("Level must be between 1 and 100");
     }
 
-    const client = createAIClient(apiKey);
+    const client = createAIClient();
 
     const promptConfig = QUIZ_PROMPTS[learningLanguage];
     if (!promptConfig) {
@@ -45,7 +40,7 @@ export async function generateQuizWithWords(
       config: {
         temperature: 0.7,
         topK: 40,
-        topP: 0.95,
+        topP: 0.9,
         responseMimeType: "application/json",
       },
     });
@@ -94,7 +89,7 @@ export async function generateQuizWithWords(
       throw new Error(`Failed to parse quiz response: ${parseError instanceof Error ? parseError.message : String(parseError)}`);
     }
   } catch (error) {
-    console.error("Error generating quiz with Gemini:", error);
+    console.error("Error generating quiz:", error);
     throw new Error(`Failed to generate quiz: ${error instanceof Error ? error.message : String(error)}`);
   }
 }

@@ -38,7 +38,7 @@ export const WORDS_PROMPTS = {
         - User Level: ${level}/100
         - Target Language: ${learningLanguage}
         - Instructions Language: ${userLanguage}
-        - Known Words (words to avoid generating): ${knownWords.map((w) => `"${w.word}"`).join(", ") || "None"}
+        - Known Words (words to avoid generating): ${knownWords.join(", ") || "None"}
 
         MANDATORY JSON STRUCTURE - FOLLOW EXACTLY:
         {

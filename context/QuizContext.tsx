@@ -57,7 +57,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const generateQuiz = useCallback(async () => {
     if (status === "authenticated") {
       setIsLoading(true);
-      const learningProgress = userData?.learningProgress.find((lp) => lp.language === selectedLanguage.language);
+      const learningProgress = userData?.learningProgress?.find((lp) => lp.language === selectedLanguage.language);
       try {
         if (!learningProgress) {
           throw new Error("Learning progress not found");
