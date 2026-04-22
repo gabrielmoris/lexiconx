@@ -1,9 +1,9 @@
 import { QuizGeneratorResponse } from "@/types/Quiz";
 import { Language, Word } from "@/types/Words";
-import { GoogleGenAI } from "@google/genai";
 import { QUIZ_PROMPTS } from "./quiz-prompts";
+import { createAIClient } from "./client";
 
-const MODEL_NAME = process.env.AI_MODE || "gemini-2.5-flash";
+const MODEL_NAME = process.env.AI_MODEL || "gemini-2.5-flash";
 
 /**
  * Enhanced quiz generation function with multilingual support and level-based complexity
@@ -28,9 +28,7 @@ export async function generateQuizWithWords(
       throw new Error("Level must be between 1 and 100");
     }
 
-    // Initialize the Google GENAI client
-    const genAI = new GoogleGenAI({ apiKey });
-    const model = genAI.models;
+    const client = createAIClient(apiKey);
 
     const promptConfig = QUIZ_PROMPTS[learningLanguage];
     if (!promptConfig) {
@@ -41,8 +39,7 @@ export async function generateQuizWithWords(
     const userPrompt = promptConfig.userPrompt(words, level, learningLanguage, userLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
-    // optimized parameters
-    const result = await model.generateContent({
+    const result = await client.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,
       config: {
@@ -53,7 +50,7 @@ export async function generateQuizWithWords(
       },
     });
 
-    const responseText = result.text || "";
+    const responseText = result.text;
 
     try {
       const parsedResponse = JSON.parse(responseText) as QuizGeneratorResponse;

@@ -1,6 +1,6 @@
 import { Language, Word, WordsGeneratorResponse } from "@/types/Words";
-import { GoogleGenAI } from "@google/genai";
 import { WORDS_PROMPTS } from "./words-prompts";
+import { createAIClient } from "./client";
 
 const MODEL_NAME = "gemini-2.5-flash";
 
@@ -20,9 +20,7 @@ export async function generateWords(
       throw new Error("Level must be between 1 and 100");
     }
 
-    // Initialize the Google GENAI client
-    const genAI = new GoogleGenAI({ apiKey });
-    const model = genAI.models;
+    const client = createAIClient(apiKey);
 
     const promptConfig = WORDS_PROMPTS[userLanguage];
     if (!promptConfig) {
@@ -33,8 +31,7 @@ export async function generateWords(
     const userPrompt = promptConfig.userPrompt(words, level, learningLanguage, userLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
-    // optimized parameters
-    const result = await model.generateContent({
+    const result = await client.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,
       config: {
@@ -45,7 +42,7 @@ export async function generateWords(
       },
     });
 
-    const responseText = result.text || "";
+    const responseText = result.text;
 
     try {
       const parsedResponse = JSON.parse(responseText) as WordsGeneratorResponse;
@@ -54,7 +51,6 @@ export async function generateWords(
         throw new Error("Response missing quizzes array");
       }
 
-      // Validate quiz structure
       parsedResponse.words.forEach((word, index) => {
         if (!word.definition || !word.language || !word.phoneticNotation) {
           throw new Error(`Quiz ${index + 1} missing required fields (dfinition, language, proneticNotation)`);
