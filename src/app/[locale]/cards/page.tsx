@@ -13,7 +13,7 @@ export default async function CardsPage() {
   return (
     <main
       className="min-h-screen w-full md:w-5/6 px-5 md:px-0 flex flex-col items-center justify-start
-     py-10 md:py-15"
+     pt-10 pb-20 md:py-15"
     >
       <div className="flex w-full flex-col md:flex-row gap-5 items-center justify-center md:justify-end mb-5">
         <ShowLearningFlag />

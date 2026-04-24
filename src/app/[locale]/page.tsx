@@ -6,7 +6,8 @@ import EnglishFlag from "@/components/Icons/EnglishFlag";
 import SpanishFlag from "@/components/Icons/SpanishFlag";
 import GermanFlag from "@/components/Icons/GermanFlag";
 import ChinaFlag from "@/components/Icons/ChinaFlag";
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -30,6 +31,7 @@ const scaleIn = {
 
 export default function Home() {
   const t = useTranslations("landing");
+  const {status} = useAuthGuard()
 
   return (
     <main className="w-screen relative md:w-xl px-5 md:px-0 flex flex-col items-center justify-start min-w-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
@@ -65,7 +67,7 @@ export default function Home() {
               className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:items-center"
             >
               <Link
-                href="/login"
+                href={status === "authenticated" ? "/cards" : "/login"}
                 className="group relative overflow-hidden rounded-full bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <span className="relative z-10">{t("hero.start-learning")}</span>
@@ -275,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl mb-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold text-white mb-6">{t("cta.title")}</h2>
