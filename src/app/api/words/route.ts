@@ -34,77 +34,94 @@ export async function GET(req: Request) {
   const worIds = searchParams.get("ids");
   const ids = worIds ? worIds.split(",") : [];
 
-  await connectDB();
+  try {
+    await connectDB();
 
-  if ((!language || !email) && !ids.length) {
-    return NextResponse.json({ error: "Language or email not provided" });
-  }
+    if ((!language || !email) && !ids.length) {
+      return NextResponse.json({ error: "Language or email not provided" }, { status: 400 });
+    }
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    return NextResponse.json({ error: "User not found" });
-  }
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-  if (ids.length) {
-    const words = await Word.find({ _id: { $in: ids } });
-    return NextResponse.json({ error: null, data: words });
-  } else {
-    const words = await Word.find({ userId: user._id, language });
-    return NextResponse.json({ error: null, data: words });
+    if (ids.length) {
+      const words = await Word.find({ _id: { $in: ids } });
+      return NextResponse.json({ error: null, data: words });
+    } else {
+      const words = await Word.find({ userId: user._id, language });
+      return NextResponse.json({ error: null, data: words });
+    }
+  } catch {
+    return NextResponse.json({ error: "Error getting words" }, { status: 500 });
   }
 }
 
 export async function PUT(req: Request) {
   const { words, session } = await req.json();
-  await connectDB();
 
-  if (!session.user.email) {
-    return NextResponse.json({ error: "User not found" });
-  }
+  try {
+    await connectDB();
 
-  const user = await User.findOne({ email: session.user.email });
+    if (!session.user.email) {
+      return NextResponse.json({ error: "User not provided" }, { status: 400 });
+    }
 
-  if (!user) {
-    return NextResponse.json({ error: "User not found" });
-  }
+    const user = await User.findOne({ email: session.user.email });
 
-  const updatedWords = await Word.bulkWrite(
-    words.map((word: WordType) => ({
-      updateOne: {
-        filter: { _id: word._id },
-        update: {
-          nextReview: word.nextReview,
-          interval: word.interval,
-          lastReviewed: word.lastReviewed,
-          repetitions: word.repetitions,
-          easeFactor: word.easeFactor,
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const updatedWords = await Word.bulkWrite(
+      words.map((word: WordType) => ({
+        updateOne: {
+          filter: { _id: word._id },
+          update: {
+            nextReview: word.nextReview,
+            interval: word.interval,
+            lastReviewed: word.lastReviewed,
+            repetitions: word.repetitions,
+            easeFactor: word.easeFactor,
+          },
         },
-      },
-    }))
-  );
+      })),
+    );
 
-  return NextResponse.json({ error: null, data: updatedWords });
+    return NextResponse.json({ error: null, data: updatedWords });
+  } catch {
+    return NextResponse.json({ error: "Error updating words" }, { status: 500 });
+  }
 }
 
 export async function DELETE(req: Request) {
   const { word, session } = await req.json();
 
-  await connectDB();
+  try {
+    await connectDB();
 
-  const user = await User.findOne({ email: session.user.email });
+    const user = await User.findOne({ email: session.user.email });
 
-  if (!user) {
-    return NextResponse.json({ error: "User not found" });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const wordToDelete = await Word.findOne({ _id: word._id });
+
+    if (!wordToDelete.userId.equals(user._id)) {
+      return NextResponse.json({ error: "Not allowed" }, { status: 403 });
+    }
+
+    if (!wordToDelete) {
+      return NextResponse.json({ error: "Word not found" }, { status: 404 });
+    }
+
+    const deletedWord = await Word.deleteOne(wordToDelete);
+
+    return NextResponse.json({ error: null, data: deletedWord });
+  } catch {
+    return NextResponse.json({ error: "Error deleting words" }, { status: 500 });
   }
-
-  const wordToDelete = await Word.findOne({ _id: word._id });
-
-  if (!wordToDelete) {
-    return NextResponse.json({ error: "Word not found" });
-  }
-
-  const deletedWord = await Word.deleteOne(wordToDelete);
-
-  return NextResponse.json({ error: null, data: deletedWord });
 }

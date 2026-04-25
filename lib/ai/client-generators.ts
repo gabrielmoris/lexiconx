@@ -49,7 +49,6 @@ export function createGoogleClient(apiKey: string): AIClient {
 
   return {
     generateContent: async (params: AIGenerateContentParams): Promise<{ text: string }> => {
-      console.log(params);
       const result = await genAI.models.generateContent({
         model: params.model,
         contents: params.contents,
