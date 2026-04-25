@@ -6,7 +6,7 @@ import { useToastContext } from "@/context/ToastContext";
 import useTextToSpeech from "@/hooks/useTextToSpeech";
 import { useQuizManager } from "@/hooks/useQuizManager";
 import LoadingComponent from "@/components/Layout/LoadingComponent";
-import QuyizFinished from "@/components/Quiz/QuyizFinished";
+import QuizFinished from "@/components/Quiz/QuizFinished";
 import QuizView from "@/components/Quiz/QuizView";
 import type { User } from "@/types/Words";
 import { getUserData } from "@/lib/apis";
@@ -92,7 +92,7 @@ const QuizPage = () => {
   return (
     <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
       {isQuizFinished ? (
-        <QuyizFinished isSuccess={score.success / 2 > score.errors} successPoints={score} onRestartQuiz={restartQuiz} />
+        <QuizFinished isSuccess={score.success / 2 > score.errors} successPoints={score} onRestartQuiz={restartQuiz} />
       ) : (
         <QuizView
           quizItem={currentQuizItem}
