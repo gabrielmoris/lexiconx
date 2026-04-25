@@ -60,7 +60,7 @@ export async function generateQuizWithWords(
           throw new Error(`Quiz ${index + 1} missing required fields (sentence, translation, questions, phoneticNotation, usedWords)`);
         }
 
-        if (!Array.isArray(quiz.questions) || quiz.questions.length < 2 || quiz.questions.length > 5) {
+        if (!Array.isArray(quiz.questions) || quiz.questions.length < 3 || quiz.questions.length > 5) {
           throw new Error(`Quiz ${index + 1} must have between 3 and 5 questions, but has ${quiz.questions.length}`);
         }
 
@@ -69,9 +69,9 @@ export async function generateQuizWithWords(
         }
 
         quiz.questions.forEach((question, qIndex) => {
-          if (!question.question || !Array.isArray(question.options) || question.options.length < 2 || question.options.length > 5) {
+          if (!question.question || !Array.isArray(question.options) || question.options.length < 4 || question.options.length > 5) {
             throw new Error(
-              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 2-5) or missing 'question' field`,
+              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 4-5) or missing 'question' field`,
             );
           }
 
