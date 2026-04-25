@@ -17,7 +17,8 @@ export interface Quiz {
   language: Language;
   phoneticNotation: string;
   translation: string;
-  usedWords: Word["_id"][];
+  /** Array of Word _id string references */
+  usedWords: string[];
   questions: QuizQuestion[];
 }
 

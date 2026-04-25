@@ -24,7 +24,6 @@ export async function connectDB() {
         bufferCommands: false,
       })
       .then((m) => {
-        console.log("✅ Connected to MongoDB");
         return m;
       });
   }

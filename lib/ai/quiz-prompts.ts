@@ -105,7 +105,7 @@ export const QUIZ_PROMPTS = {
       ✓ Exactly 4 quiz items generated
       ✓ Each quiz uses 2-4 different vocabulary words
       ✓ Each quiz has 3-5 questions (counts vary between quizzes)
-      ✓ All usedWords arrays contain complete, unmodified Word objects
+      ✓ All usedWords arrays contain valid string _id values referencing the original words
       ✓ All _id and userId values preserved exactly as input
       ✓ Sentence complexity matches level ${level}/100
       ✓ All required fields present in JSON structure`,
@@ -208,7 +208,7 @@ export const QUIZ_PROMPTS = {
       ✓ Exactamente 4 elementos de cuestionario generados
       ✓ Cada cuestionario utiliza 2-4 palabras de vocabulario diferentes
       ✓ Cada cuestionario tiene 3-5 preguntas (los recuentos varían entre cuestionarios)
-      ✓ Todos los arrays usedWords contienen objetos Word completos y sin modificar
+      ✓ Todos los arrays usedWords contienen valores _id de tipo string que referencian las palabras originales
       ✓ Todos los valores _id y userId se conservan exactamente como se ingresaron
       ✓ La complejidad de la oración coincide con el nivel ${level}/100
       ✓ Todos los campos requeridos presentes en la estructura JSON`,
@@ -311,7 +311,7 @@ export const QUIZ_PROMPTS = {
       ✓ Genau 4 Quiz-Items generiert
       ✓ Jedes Quiz verwendet 2-4 verschiedene Vokabeln
       ✓ Jedes Quiz hat 3-5 Fragen (Anzahl variiert zwischen den Quizzen)
-      ✓ Alle usedWords-Arrays enthalten vollständige, unveränderte Word-Objekte
+      ✓ Alle usedWords-Arrays enthalten gültige String-_id-Werte, die die ursprünglichen Wörter referenzieren
       ✓ Alle _id- und userId-Werte exakt wie eingegeben beibehalten
       ✓ Satzkomplexität stimmt mit Niveau ${level}/100 überein
       ✓ Alle erforderlichen Felder in der JSON-Struktur vorhanden`,
@@ -414,7 +414,7 @@ export const QUIZ_PROMPTS = {
       ✓ 生成了 EXACTLY 4 个测验项目
       ✓ 每个测验使用 2-4 个不同的词汇单词
       ✓ 每个测验有 3-5 个问题 (测验之间数量不同)
-      ✓ 所有 usedWords 数组包含完整、未修改的 Word 对象
+      ✓ 所有 usedWords 数组包含引用原始单词的有效字符串 _id 值
       ✓ 所有 _id 和 userId 值完全保留为输入值
       ✓ 句子复杂度与级别 ${level}/100 匹配
       ✓ JSON 结构中存在所有必需字段`,
@@ -516,7 +516,7 @@ export const QUIZ_PROMPTS = {
       ✓ Создано ровно 4 элемента викторины
       ✓ Каждая викторина использует 2-4 разных словарных слова
       ✓ У каждой викторины есть 3-5 вопросов (количество варьируется между викторинами)
-      ✓ Все массивы usedWords содержат полные, неизмененные объекты Word
+      ✓ Все массивы usedWords содержат строковые значения _id, ссылающиеся на оригинальные слова
       ✓ Все значения _id и userId сохранены точно как во входных данных
       ✓ Сложность предложений соответствует уровню ${level}/100
       ✓ Все обязательные поля присутствуют в структуре JSON`,
