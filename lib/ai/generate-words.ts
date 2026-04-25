@@ -26,7 +26,7 @@ export async function generateWords(
     const userPrompt = promptConfig.userPrompt(words, level, learningLanguage, userLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
-    // TODO: Separate the response_format  and add it to the optiuons here
+    // TODO: Separate the response_format  and add it to the options here
     const result = await client.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,

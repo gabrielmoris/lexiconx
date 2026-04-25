@@ -6,7 +6,7 @@ import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
 import { generateWords } from "@/lib/ai/generate-words";
 
-const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español" };
+const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español", ru: "русский" };
 
 // Updated Next.js API endpoint
 export async function POST(req: Request) {

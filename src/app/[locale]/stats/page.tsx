@@ -18,7 +18,6 @@ const StatsPage = () => {
         return;
       }
       setUserInfo(languageInfo);
-      console.log(languageInfo);
     }
   }, [status, userData]);
 
