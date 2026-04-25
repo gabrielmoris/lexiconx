@@ -6,25 +6,30 @@ import type { Word as WordType } from "@/types/Words";
 
 export async function POST(req: Request) {
   const { word, definition, phoneticNotation, language, session } = await req.json();
-  await connectDB();
 
-  const user = await User.findOne({ email: session.user.email });
+  try {
+    await connectDB();
 
-  if (!user) {
-    return NextResponse.json({ error: "User not found" });
+    const user = await User.findOne({ email: session.user.email });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const wordData = {
+      userId: user._id,
+      word,
+      definition,
+      phoneticNotation,
+      language,
+    };
+
+    const saved = await Word.create(wordData);
+
+    return NextResponse.json({ error: null, data: saved });
+  } catch {
+    return NextResponse.json({ error: "Error saving words" }, { status: 500 });
   }
-
-  const wordData = {
-    userId: user._id,
-    word,
-    definition,
-    phoneticNotation,
-    language,
-  };
-
-  const saved = await Word.create(wordData);
-
-  return NextResponse.json({ error: null, data: saved });
 }
 
 export async function GET(req: Request) {
@@ -110,12 +115,12 @@ export async function DELETE(req: Request) {
 
     const wordToDelete = await Word.findOne({ _id: word._id });
 
-    if (!wordToDelete.userId.equals(user._id)) {
-      return NextResponse.json({ error: "Not allowed" }, { status: 403 });
-    }
-
     if (!wordToDelete) {
       return NextResponse.json({ error: "Word not found" }, { status: 404 });
+    }
+
+    if (!wordToDelete.userId.equals(user._id)) {
+      return NextResponse.json({ error: "Not allowed" }, { status: 403 });
     }
 
     const deletedWord = await Word.deleteOne(wordToDelete);

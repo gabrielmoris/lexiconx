@@ -1,4 +1,4 @@
-import { Language } from "./Words";
+import { Language, Word } from "./Words";
 
 export interface QuizAnswer {
   answer: string;
@@ -17,7 +17,7 @@ export interface Quiz {
   language: Language;
   phoneticNotation: string;
   translation: string;
-  usedWords: string[];
+  usedWords: Word["_id"][];
   questions: QuizQuestion[];
 }
 
