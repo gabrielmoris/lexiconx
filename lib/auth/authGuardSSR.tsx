@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "./nextAuthOptions";
 import { getUserData } from "@/lib/apis";
 import { getLocale } from 'next-intl/server';
+import { cookies } from "next/headers";
 
 
 /**
@@ -24,7 +25,11 @@ export async function requireAuthSSR(redirectSuccess?:string) {
 		redirect(`/${locale}/login`); // Server-side redirect
 	}
 
-	const {data: userData}= await getUserData(true)
+	// Forward cookies to the API route for server-side session validation
+	const cookieStore = await cookies();
+	const ssrHeaders = { Cookie: cookieStore.toString() };
+
+	const {data: userData}= await getUserData(true, ssrHeaders)
 
 	if(userData.learningProgress.length === 0 && redirectSuccess) {
 		redirect(redirectSuccess);
