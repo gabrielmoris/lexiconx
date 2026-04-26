@@ -1,26 +1,22 @@
-// Auth for client components
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { getUserData } from "@/lib/apis";
 import { UserProfile } from "@/types/User";
 
-/**
- * A custom React hook to protect routes by redirecting unauthenticated users.
- *
- * @returns An object containing the session data, status, and a boolean indicating if loading.
- */
+
 export function useAuthGuard() {
 	const { data: session, status } = useSession();
+	const pathName  = usePathname()
 	const router = useRouter();
 	const locale = useLocale();
 	const [userData, setUserData] = useState<UserProfile>();
 
 	useEffect(() => {
-		if (status === "loading") {
+		if (status === "loading" || pathName === `/${locale}`) {
 			return;
 		}
 

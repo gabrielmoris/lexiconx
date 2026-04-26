@@ -30,7 +30,6 @@ export const useQuizManager = (userData: User) => {
 		setStartingTimer(start);
 	}, []);
 
-	// Effect to load the quiz from context or localStorage
 	useEffect(() => {
 		if (!isLocalStorageHydrated) return;
 
@@ -73,7 +72,7 @@ export const useQuizManager = (userData: User) => {
 					}
 				} catch (error) {
 					console.error("Error finishing quiz:", error);
-					// Optionally show a toast message to the user
+					// TODO: Show a toast message to the user
 				}
 			}
 		};
@@ -99,10 +98,10 @@ export const useQuizManager = (userData: User) => {
 				}
 			} catch (error) {
 				console.error("Error processing words:", error);
-				// Show toast to user
+				// TODO: Show toast to user
 			}
 
-			// Efficiently merge new words, preventing duplicates
+			// Merge new words, preventing duplicates
 			setUsedWords((prev) => {
 				const wordMap = new Map(prev.map((w) => [`${w.word}|${w.definition}`, w]));
 				newWordsToAdd.forEach((w) => wordMap.set(`${w.word}|${w.definition}`, w));

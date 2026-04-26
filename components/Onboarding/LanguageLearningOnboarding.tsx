@@ -16,7 +16,6 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
 
 	const { status } = useSession();
 
-  // Initialize static positions for flags when user starts choosing
   useEffect(() => {
     if (isUserChoosing) {
       const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
