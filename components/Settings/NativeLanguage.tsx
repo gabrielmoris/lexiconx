@@ -19,7 +19,7 @@ const NativeLanguage = ({ className }: { className?: string }) => {
   const [selectedLanguage, setSelectedLanguage] = useState<ILanguage>(languages[currentLocale]);
   const t = useTranslations("NativeLanguage");
   const { showToast } = useToastContext();
-  const { data: session, status } = useSession();
+	const { status } = useSession();
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -49,10 +49,9 @@ const NativeLanguage = ({ className }: { className?: string }) => {
       setSelectedLanguage(language);
       setIsOpen(false);
 
-      try {
-        if (!session) throw new Error("Session not found");
-        await updateUserData(session, { nativeLanguage: language.name as Language });
-      } catch (error) {
+	try {
+		await updateUserData({ nativeLanguage: language.name as Language });
+	} catch (error) {
         console.error("Failed to select language:", error);
         showToast({
           message: t("error-changing-language"),
@@ -61,7 +60,7 @@ const NativeLanguage = ({ className }: { className?: string }) => {
         });
       }
     },
-    [session, showToast, t]
+	[showToast, t]
   );
 
   const SelectedLanguageIcon = selectedLanguage?.icon;

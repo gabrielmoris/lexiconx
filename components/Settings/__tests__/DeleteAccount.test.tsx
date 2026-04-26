@@ -82,11 +82,7 @@ describe("Delete Account", () => {
 
     expect(deleteUserData).toHaveBeenCalled();
     expect(signOut).toHaveBeenCalled();
-    expect(deleteUserData).toHaveBeenCalledWith(
-      expect.objectContaining({
-        user: { email: "test@example.com" },
-      })
-    );
+		expect(deleteUserData).toHaveBeenCalled();
 
     expect(mockDeleteStep).toHaveBeenCalled();
     expect(mockDeleteQuiz).toHaveBeenCalled();

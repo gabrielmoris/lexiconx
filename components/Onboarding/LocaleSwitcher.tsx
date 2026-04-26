@@ -30,7 +30,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
-  const { session, status } = useAuthGuard();
+	const { status } = useAuthGuard();
 
   const flagPositions = useMemo(() => {
     const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
@@ -58,13 +58,13 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
   }, []);
 
   const handleUserChoice = async (language: Locale) => {
-    try {
-      if (!session || status !== "authenticated") {
-        console.warn("Session not found or not authenticated. Cannot update user data.");
-        return;
-      }
+	try {
+		if (status !== "authenticated") {
+			console.warn("Not authenticated. Cannot update user data.");
+			return;
+		}
 
-      await updateUserData(session, { nativeLanguage: languages[language].name as Language });
+		await updateUserData({ nativeLanguage: languages[language].name as Language });
       setNextStep();
     } catch (error) {
       console.error("Failed to select language:", error);

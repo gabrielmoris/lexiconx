@@ -8,47 +8,46 @@ import { useToastContext } from "@/context/ToastContext";
 import { useLocale, useTranslations } from "next-intl";
 
 export const useGenerateWords = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { setWords, words } = useWords();
-  const { status, session, userData } = useAuthGuard();
-  const { selectedLanguage } = useLanguage();
-  const { showToast } = useToastContext();
-  const t = useTranslations("generate-words");
-  const currentLocale = useLocale();
+	const [isLoading, setIsLoading] = useState(false);
+	const { setWords, words } = useWords();
+	const { status, userData } = useAuthGuard();
+	const { selectedLanguage } = useLanguage();
+	const { showToast } = useToastContext();
+	const t = useTranslations("generate-words");
+	const currentLocale = useLocale();
 
-  const generateWords = async () => {
-    if (status !== "authenticated" || !session) return { success: false };
-    
-    setIsLoading(true);
-    const learningProgress = userData?.learningProgress.find(
-      (lp) => lp.language === selectedLanguage.language
-    );
+	const generateWords = async () => {
+		if (status !== "authenticated") return { success: false };
 
-    try {
-      if (!learningProgress) throw new Error("Learning progress not found");
+		setIsLoading(true);
+		const learningProgress = userData?.learningProgress.find(
+			(lp) => lp.language === selectedLanguage.language
+		);
 
-      const { words: newWords } = await wordsGeneration(
-        session,
-        selectedLanguage.language,
-        currentLocale as Language,
-        learningProgress.level
-      );
+		try {
+			if (!learningProgress) throw new Error("Learning progress not found");
 
-      await Promise.all(
-        newWords.map((word: Word) => addWordToDatabase({ ...word, session }))
-      );
+			const { words: newWords } = await wordsGeneration(
+				selectedLanguage.language,
+				currentLocale as Language,
+				learningProgress.level
+			);
 
-      setWords([ ...newWords,...words]);
-      showToast({ message: t("words-generated-success"), variant: "success", duration: 3000, });
+			await Promise.all(
+				newWords.map((word: Word) => addWordToDatabase(word))
+			);
 
-      return { success: true };
-    } catch {
-      showToast({ message: t("error-generating-words"), variant: "error", duration: 3000, });
-      return { success: false };
-    } finally {
-      setIsLoading(false);
-    }
-  };
+			setWords([ ...newWords,...words]);
+			showToast({ message: t("words-generated-success"), variant: "success", duration: 3000, });
 
-  return { generateWords, isLoading };
+			return { success: true };
+		} catch {
+			showToast({ message: t("error-generating-words"), variant: "error", duration: 3000, });
+			return { success: false };
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	return { generateWords, isLoading };
 };

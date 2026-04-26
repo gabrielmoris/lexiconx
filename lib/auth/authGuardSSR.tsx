@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "./nextAuthOptions";
-import {getUserData} from "@/lib/apis";
+import { getUserData } from "@/lib/apis";
 import { getLocale } from 'next-intl/server';
 
 
@@ -17,22 +17,22 @@ import { getLocale } from 'next-intl/server';
  */
 
 export async function requireAuthSSR(redirectSuccess?:string) {
-  const session = await getServerSession(authOptions);
-  const locale = await getLocale();
+	const session = await getServerSession(authOptions);
+	const locale = await getLocale();
 
-  if (!session) {
-    redirect(`/${locale}/login`); // Server-side redirect
-  }
+	if (!session) {
+		redirect(`/${locale}/login`); // Server-side redirect
+	}
 
-  const {data:userData}= await getUserData(session, true)
+	const {data: userData}= await getUserData(true)
 
-   if(userData.learningProgress.length === 0 && redirectSuccess) {
-     redirect(redirectSuccess);
-   }
+	if(userData.learningProgress.length === 0 && redirectSuccess) {
+		redirect(redirectSuccess);
+	}
 
-  return {session, userData};
+	return {session, userData};
 }
 
 export async function getAuthSessionSSR() {
-  return await getServerSession(authOptions);
+	return await getServerSession(authOptions);
 }

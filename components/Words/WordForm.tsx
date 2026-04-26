@@ -14,27 +14,25 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   const { showToast } = useToastContext();
   const { setWords, words } = useWords();
   const { selectedLanguage } = useLanguage();
-  const { data: session, status } = useSession();
+	const { status } = useSession();
   const t = useTranslations("word-form");
   const route = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [isAddingWord, setIsAddingWord] = useState(false);
-  const [formData, setFormData] = useState({
-    word: "",
-    definition: "",
-    phoneticNotation: "",
-    language: selectedLanguage.language,
-    session: session,
-  });
+	const [formData, setFormData] = useState({
+		word: "",
+		definition: "",
+		phoneticNotation: "",
+		language: selectedLanguage.language,
+	});
 
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      language: selectedLanguage.language,
-      session: session,
-    }));
-  }, [selectedLanguage, session]);
+	useEffect(() => {
+		setFormData((prevData) => ({
+			...prevData,
+			language: selectedLanguage.language,
+		}));
+	}, [selectedLanguage]);
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,9 +52,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         throw new Error();
       }
 
-      if (!formData.session || formData.session.user?.id) throw new Error();
-
-      const {data: addedWord} = await addWordToDatabase(formData);
+		const {data: addedWord} = await addWordToDatabase(formData);
       setWords([...words, addedWord]);
 
       showToast({
@@ -65,13 +61,12 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         duration: 3000,
       });
       // Clear the form
-      setFormData({
-        word: "",
-        definition: "",
-        phoneticNotation: "",
-        language: selectedLanguage.language,
-        session: session,
-      });
+		setFormData({
+			word: "",
+			definition: "",
+			phoneticNotation: "",
+			language: selectedLanguage.language,
+		});
       setIsAddingWord(false);
     } catch (error: unknown) {
       console.error("Failed to add word:", error);
