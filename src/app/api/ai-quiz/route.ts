@@ -5,104 +5,109 @@ import { connectDB } from "@/lib/mongodb/mongodb";
 import { NextResponse } from "next/server";
 import Word from "@/lib/mongodb/models/word";
 import { Language } from "@/types/Words";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/nextAuthOptions";
 
 const LANGUAGES: Record<string, Language> = { en: "English", de: "Deutsch", zh: "中文", es: "Español", ru: "русский" };
 
-// Updated Next.js API endpoint
 export async function POST(req: Request) {
-  try {
-    const { session, languageToLearn, userLanguage, level } = (await req.json()) as {
-      session: any;
-      languageToLearn: Language;
-      userLanguage: Language;
-      level: number;
-    };
+	try {
+		const session = await getServerSession(authOptions);
+		if (!session?.user?.email) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		}
 
-    if (!session || !languageToLearn || !userLanguage) {
-      return NextResponse.json(
-        {
-          error: "Session, target language, and user language are required",
-        },
-        { status: 400 },
-      );
-    }
+		const { languageToLearn, userLanguage, level } = (await req.json()) as {
+			languageToLearn: Language;
+			userLanguage: Language;
+			level: number;
+		};
 
-    await connectDB();
+		if (!languageToLearn || !userLanguage) {
+			return NextResponse.json(
+				{
+					error: "Target language and user language are required",
+				},
+				{ status: 400 },
+			);
+		}
 
-    const user = await User.findOne({ email: session.user.email });
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+		await connectDB();
 
-    // Fetch words for quiz
-    const now = new Date();
+		const user = await User.findOne({ email: session.user.email });
+		if (!user) {
+			return NextResponse.json({ error: "User not found" }, { status: 404 });
+		}
 
-    const overdueWords = await Word.find({
-      userId: user._id,
-      language: languageToLearn,
-      nextReview: { $lte: now },
-    })
-      .sort({ nextReview: 1 })
-      .limit(15)
-      .exec();
+		// Fetch words for quiz
+		const now = new Date();
 
-    let newWords = [];
-    const desiredTotalWords = 10;
-    const newWordsToFetch = Math.max(0, desiredTotalWords - overdueWords.length);
+		const overdueWords = await Word.find({
+			userId: user._id,
+			language: languageToLearn,
+			nextReview: { $lte: now },
+		})
+			.sort({ nextReview: 1 })
+			.limit(15)
+			.exec();
 
-    // Fetch some new words if overdue words are scarce
-    if (newWordsToFetch > 0) {
-      newWords = await Word.find({
-        userId: user._id,
-        language: languageToLearn,
-        repetitions: 0,
-        lastReviewed: null,
-      })
-        .sort({ createdAt: 1 })
-        .limit(newWordsToFetch)
-        .exec();
-    }
+		let newWords = [];
+		const desiredTotalWords = 10;
+		const newWordsToFetch = Math.max(0, desiredTotalWords - overdueWords.length);
 
-    let wordsForQuiz = [...overdueWords, ...newWords];
+		// Fetch some new words if overdue words are scarce
+		if (newWordsToFetch > 0) {
+			newWords = await Word.find({
+				userId: user._id,
+				language: languageToLearn,
+				repetitions: 0,
+				lastReviewed: null,
+			})
+				.sort({ createdAt: 1 })
+				.limit(newWordsToFetch)
+				.exec();
+		}
 
-    // Simple shuffle to mix overdue and new words, and randomize within due words
-    wordsForQuiz.sort(() => Math.random() - 0.5);
+		let wordsForQuiz = [...overdueWords, ...newWords];
 
-    // Limit to the desired number of words for the quiz
-    wordsForQuiz = wordsForQuiz.slice(0, desiredTotalWords);
-    if (wordsForQuiz.length < 3) {
-      return NextResponse.json(
-        {
-          error: "Not enough words",
-        },
-        { status: 404 },
-      );
-    }
+		// Simple shuffle to mix overdue and new words, and randomize within due words
+		wordsForQuiz.sort(() => Math.random() - 0.5);
 
-    // Get user's language progress or default level
-    const learningProgressArray = Array.isArray(user.learningProgress)
-      ? user.learningProgress.map((lp: any) => (typeof lp.toObject === "function" ? lp.toObject() : lp))
-      : [];
-    const languageProgress = learningProgressArray.find((lp: any) => lp?.language === languageToLearn);
-    const userLevel = level || languageProgress?.level || 1;
+		// Limit to the desired number of words for the quiz
+		wordsForQuiz = wordsForQuiz.slice(0, desiredTotalWords);
+		if (wordsForQuiz.length < 3) {
+			return NextResponse.json(
+				{
+					error: "Not enough words",
+				},
+				{ status: 404 },
+			);
+		}
 
-    const fullUserLanguage = LANGUAGES[userLanguage];
+		// Get user's language progress or default level
+		const learningProgressArray = Array.isArray(user.learningProgress)
+			? user.learningProgress.map((lp: any) => (typeof lp.toObject === "function" ? lp.toObject() : lp))
+			: [];
+		const languageProgress = learningProgressArray.find((lp: any) => lp?.language === languageToLearn);
+		const userLevel = level || languageProgress?.level || 1;
 
-    const quizResponse = await generateQuizWithWords(wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
+		const fullUserLanguage = LANGUAGES[userLanguage];
 
-    return NextResponse.json({
-      success: true,
-      ...quizResponse,
-      userLevel,
-      totalWords: wordsForQuiz.length,
-    });
-  } catch (error) {
-    console.error("Quiz generation error:", error);
-    return NextResponse.json(
-      {
-        error: "Internal server error",
-      },
-      { status: 500 },
-    );
-  }
+		const quizResponse = await generateQuizWithWords(wordsForQuiz, userLevel, languageToLearn, fullUserLanguage);
+
+		return NextResponse.json({
+			success: true,
+			...quizResponse,
+			userLevel,
+			totalWords: wordsForQuiz.length,
+		});
+	} catch (error) {
+		console.error("Quiz generation error:", error);
+		return NextResponse.json(
+			{
+				error: "Internal server error",
+			},
+			{ status: 500 },
+		);
+	}
 }

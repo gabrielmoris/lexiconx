@@ -34,10 +34,9 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
     async (language: LanguageOption) => {
       setSelectedLanguage(language);
 
-      try {
-        if (!session) throw new Error("Session not found");
-        await selectUserLearningLanguage(session, language.language);
-      } catch (error) {
+	try {
+		await selectUserLearningLanguage(language.language);
+	} catch (error) {
         console.error("Failed to select language:", error);
         showToast({
           message: t("error-changing-language"),

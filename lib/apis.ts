@@ -1,31 +1,34 @@
 import { Language, User, Word } from "@/types/Words";
-import { Session } from "next-auth";
 
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// PRIVATE API HANDLER
 const _apiHandler = async (
   endpoint: string,
   options: {
     method?: "GET" | "POST" | "PUT" | "DELETE";
     body?: Record<string, unknown>;
-    session?: Session | null;
     isSSR?: boolean;
+    ssrHeaders?: Record<string, string>;
   } = {},
 ) => {
-  const { method = "GET", body, session, isSSR = false } = options;
+  const { method = "GET", body, isSSR = false, ssrHeaders } = options;
   const url = isSSR ? `${baseURL}${endpoint}` : endpoint;
+
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+
+  // For SSR calls, forward any provided headers (e.g. Cookie for session)
+  if (isSSR && ssrHeaders) {
+    Object.assign(headers, ssrHeaders);
+  }
 
   const config: RequestInit = {
     method,
-    headers: { "Content-Type": "application/json" },
+    headers,
+    credentials: "include",
   };
 
-  if (body || session) {
-    config.body = JSON.stringify({
-      ...(session && { session }),
-      ...body,
-    });
+  if (body) {
+    config.body = JSON.stringify(body);
   }
 
   const response = await fetch(url, config);
@@ -39,107 +42,114 @@ const _apiHandler = async (
   return response.json();
 };
 
-// EXPORTED FUNCTIONS
-
 // USER RELATED APIS
-export const getUserData = async (session: Session, isSSR = false) => {
-  const endpoint = `/api/users?email=${session?.user?.email}`;
-  return _apiHandler(endpoint, { isSSR });
+export const getUserData = async (isSSR = false, ssrHeaders?: Record<string, string>) => {
+  const endpoint = "/api/users";
+  return _apiHandler(endpoint, { isSSR, ssrHeaders });
 };
 
-export const selectUserLearningLanguage = async (session: Session, language: Language, isSSR = false) => {
+export const selectUserLearningLanguage = async (language: Language, isSSR = false, ssrHeaders?: Record<string, string>) => {
   return _apiHandler("/api/users", {
     method: "POST",
-    session,
     body: { activeLanguage: language },
     isSSR,
+    ssrHeaders,
   });
 };
 
-export const updateUserData = async (session: Session, userData: Partial<User>, isSSR = false) => {
+export const updateUserData = async (userData: Partial<User>, isSSR = false, ssrHeaders?: Record<string, string>) => {
   return _apiHandler("/api/users", {
     method: "PUT",
-    session,
     body: { userData },
     isSSR,
+    ssrHeaders,
   });
 };
 
-export const deleteUserData = async (session: Session, isSSR = false) => {
+export const deleteUserData = async (isSSR = false, ssrHeaders?: Record<string, string>) => {
   return _apiHandler("/api/users", {
     method: "DELETE",
-    session,
-    body: { session },
     isSSR,
+    ssrHeaders,
   });
 };
 
-export const fetchUserWords = async (session: Session, language: Language, isSSR = false) => {
-  const endpoint = `/api/words?language=${language}&email=${session.user?.email}`;
-  return _apiHandler(endpoint, { isSSR });
+export const fetchUserWords = async (language: Language, isSSR = false, ssrHeaders?: Record<string, string>) => {
+  const endpoint = `/api/words?language=${language}`;
+  return _apiHandler(endpoint, { isSSR, ssrHeaders });
 };
 
 // WORDS RELATED APIS
-export const getWordsByIds = async (ids: string[], userEmail: string, isSSR = false) => {
-  const endpoint = `/api/words?ids=${ids.join(",")}&email=${userEmail}`;
-  return _apiHandler(endpoint, { isSSR });
+export const getWordsByIds = async (ids: string[], isSSR = false, ssrHeaders?: Record<string, string>) => {
+  const endpoint = `/api/words?ids=${ids.join(",")}`;
+  return _apiHandler(endpoint, { isSSR, ssrHeaders });
 };
 
-export const updateWordsData = async (session: Session, words: Word[], isSSR = false) => {
+export const updateWordsData = async (words: Word[], isSSR = false, ssrHeaders?: Record<string, string>) => {
   return _apiHandler("/api/words", {
     method: "PUT",
-    session,
     body: { words },
     isSSR,
+    ssrHeaders,
   });
 };
 
 export const addWordToDatabase = async (
-  formData: {
+  wordData: {
     word: string;
     definition: string;
     phoneticNotation: string;
     language: Language;
-    session: Session | null;
   },
   isSSR = false,
+  ssrHeaders?: Record<string, string>,
 ) => {
-  if (!formData.session) throw new Error("Session not found");
-  const { session, ...wordData } = formData;
   return _apiHandler("/api/words", {
     method: "POST",
-    session,
     body: wordData,
     isSSR,
+    ssrHeaders,
   });
 };
 
-export const deleteWordApi = async (word: Word, session: Session, isSSR = false) => {
+export const deleteWordApi = async (word: Word, isSSR = false, ssrHeaders?: Record<string, string>) => {
   if (!word) throw new Error("Word not found");
 
   return _apiHandler("/api/words", {
     method: "DELETE",
-    session,
     body: { word },
     isSSR,
+    ssrHeaders,
   });
 };
 
-export const wordsGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number, isSSR = false) => {
+export const wordsGeneration = async (
+  languageToLearn: Language,
+  userLanguage: Language,
+  level: number,
+  isSSR = false,
+  ssrHeaders?: Record<string, string>,
+) => {
   return _apiHandler("/api/ai-words", {
     method: "POST",
-    session,
     body: { languageToLearn, userLanguage, level },
     isSSR,
+    ssrHeaders,
   });
 };
 
 // QUIZ RELATED APIS
-export const quizGeneration = async (session: Session, languageToLearn: Language, userLanguage: Language, level: number, isSSR = false) => {
+export const quizGeneration = async (
+  languageToLearn: Language,
+  userLanguage: Language,
+  level: number,
+  isSSR = false,
+  ssrHeaders?: Record<string, string>,
+) => {
   return _apiHandler("/api/ai-quiz", {
     method: "POST",
-    session,
     body: { languageToLearn, userLanguage, level },
     isSSR,
+    ssrHeaders,
   });
 };

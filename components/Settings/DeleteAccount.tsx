@@ -24,7 +24,7 @@ const DeleteAccount = () => {
         throw new Error();
       }
 
-      const { data } = await deleteUserData(session);
+		const { data } = await deleteUserData();
 
       if (data.deletedCount !== 1) {
         throw new Error();

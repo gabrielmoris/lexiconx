@@ -14,9 +14,8 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
   const t = useTranslations("languageToLearn");
   const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
 
-  const { data: session, status } = useSession();
+	const { status } = useSession();
 
-  // Initialize static positions for flags when user starts choosing
   useEffect(() => {
     if (isUserChoosing) {
       const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
@@ -43,8 +42,8 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
   const handleUserChoice = async (language: LanguageOption) => {
     setIsUserChoosing(false);
     setSelectedLanguage(language);
-    if (!session || status !== "authenticated") throw new Error("Session not found");
-    await selectUserLearningLanguage(session, language.language);
+	if (status !== "authenticated") throw new Error("Not authenticated");
+	await selectUserLearningLanguage(language.language);
     setNextStep();
   };
 

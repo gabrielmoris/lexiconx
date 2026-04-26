@@ -23,7 +23,7 @@ const QuizPage = () => {
     const fetchUser = async () => {
       if (status === "authenticated") {
         try {
-          const { data } = await getUserData(session);
+				const { data } = await getUserData();
           setUserData(data);
         } catch (e) {
           console.error(e);
