@@ -4,7 +4,6 @@ import { useRouter } from "@/src/i18n/navigation";
 import { useQuiz } from "@/context/QuizContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { failWords, successWords } from "@/lib/correctionWords";
-import { calculateNextReviewData } from "@/lib/mongodb/calculateNextReview";
 import { updateWordsData, updateUserData } from "@/lib/apis";
 import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";
@@ -49,15 +48,14 @@ export const useQuizManager = (userData: User) => {
 			if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
 				const actualTimeEnd = Date.now();
 				try {
-					const updatedWords = calculateNextReviewData(usedWords, userData);
-					await updateWordsData(updatedWords);
+				await updateWordsData(usedWords);
 					const updatedUserData: User = JSON.parse(JSON.stringify(userData));
 
 					const isSucceed = score.success / 2 > score.errors;
 					const learningProgress = updatedUserData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
 					if (!learningProgress) throw new Error("Learning progress not found");
 					learningProgress.level = isSucceed ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
-					learningProgress.wordsMastered += updatedWords.filter((word) => word.repetitions > 0).length;
+					learningProgress.wordsMastered += usedWords.filter((word) => word.repetitions > 0).length;
 					learningProgress.currentStreak = isSucceed ? learningProgress.currentStreak + 1 : 0;
 					learningProgress.lastSessionDate = new Date();
 					if (!startingTimer) throw new Error("Starting timer not found");
