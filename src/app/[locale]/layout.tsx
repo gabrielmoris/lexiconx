@@ -21,34 +21,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={locale} suppressHydrationWarning className="overflow-x-hidden">
-      <head>
-        {/* This script runs before React hydration and prevents theme flashing */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  let storedTheme = localStorage.getItem('theme');
-                  let theme = storedTheme;
-
-                  if (!storedTheme) {
-                    let systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    theme = systemTheme;
-                  }
-
-                  if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {e
-                  console.error('Error accessing localStorage:', e);
-                }
-              })();
-            `,
-          }}
-        />
-      </head>
       <body className="flex flex-col items-center justify-start overflow-x-hidden">
         <NextIntlClientProvider>
           <NextThemesProvider attribute="class" defaultTheme="system" locale={locale} enableSystem forcedTheme={undefined}>
