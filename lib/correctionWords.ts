@@ -14,7 +14,6 @@ const addDays = (date: Date, days: number): Date => {
 
 export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor?: number): Word => {
   const updated = { ...word };
-  console.log("word", word);
 
   if (!isCorrect) {
     // Failed: reset reps, schedule for tomorrow, decrease easeFactor
@@ -47,7 +46,6 @@ export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor
   }
 
   updated.lastReviewed = new Date().toISOString();
-  console.log("updated", updated);
   return updated;
 };
 
