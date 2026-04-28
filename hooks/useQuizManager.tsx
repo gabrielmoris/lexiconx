@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "@/src/i18n/navigation";
 import { useQuiz } from "@/context/QuizContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { failWords, successWords } from "@/lib/correctionWords";
-import { calculateNextReviewData } from "@/lib/mongodb/calculateNextReview";
-import { updateWordsData, updateUserData } from "@/lib/apis";
+import { processAnswer } from "@/lib/correctionWords";
+import { getWordsByIds, updateWordsData, updateUserData } from "@/lib/apis";
 import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";
 
@@ -25,11 +24,14 @@ export const useQuizManager = (userData: User) => {
 	const [isQuizFinished, setIsQuizFinished] = useState(false);
 	const [startingTimer, setStartingTimer] = useState<number>();
 
+	const originalEaseFactors = useRef<Map<string, number>>(new Map());
+
 	useEffect(() => {
 		const start = Date.now();
 		setStartingTimer(start);
 	}, []);
 
+	// Load quiz data and prefetch all words used in the quiz
 	useEffect(() => {
 		if (!isLocalStorageHydrated) return;
 
@@ -37,6 +39,23 @@ export const useQuizManager = (userData: User) => {
 		if (quizSource?.length > 0) {
 			setDisplayQuiz(quizSource);
 			setIsLoading(false);
+
+			const allWordIds = [...new Set(quizSource.flatMap((q) => q.usedWords))];
+			if (allWordIds.length > 0) {
+				getWordsByIds(allWordIds)
+					.then(({ data }) => {
+						const easeMap = new Map<string, number>();
+						data.forEach((word: Word) => {
+							easeMap.set(word._id!, word.easeFactor || 2.5);
+						});
+						originalEaseFactors.current = easeMap;
+
+						setUsedWords(data);
+					})
+					.catch((error) => {
+						console.error("Error prefetching quiz words:", error);
+					});
+			}
 		} else {
 			router.push("/cards");
 		}
@@ -49,15 +68,14 @@ export const useQuizManager = (userData: User) => {
 			if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
 				const actualTimeEnd = Date.now();
 				try {
-					const updatedWords = calculateNextReviewData(usedWords, userData);
-					await updateWordsData(updatedWords);
+					await updateWordsData(usedWords);
 					const updatedUserData: User = JSON.parse(JSON.stringify(userData));
 
 					const isSucceed = score.success / 2 > score.errors;
 					const learningProgress = updatedUserData?.learningProgress.find((lp) => lp.language === displayQuiz[0].language);
 					if (!learningProgress) throw new Error("Learning progress not found");
 					learningProgress.level = isSucceed ? learningProgress.level + 1 : learningProgress.level > 0 ? learningProgress.level - 1 : 0;
-					learningProgress.wordsMastered += updatedWords.filter((word) => word.repetitions > 0).length;
+					learningProgress.wordsMastered += usedWords.filter((word) => word.repetitions > 0).length;
 					learningProgress.currentStreak = isSucceed ? learningProgress.currentStreak + 1 : 0;
 					learningProgress.lastSessionDate = new Date();
 					if (!startingTimer) throw new Error("Starting timer not found");
@@ -66,7 +84,7 @@ export const useQuizManager = (userData: User) => {
 					await updateUserData(updatedUserData);
 					if (isSucceed) {
 						setIsQuizFinished(true);
-						deleteValue(); // Delete from LocalStorage
+						deleteValue(); 
 					} else {
 						setIsQuizFinished(true);
 					}
@@ -80,31 +98,34 @@ export const useQuizManager = (userData: User) => {
 	}, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
 
 	const handleAnswerClick = useCallback(
-		async (option: QuizAnswer) => {
+		(option: QuizAnswer) => {
 			if (!session) return;
 			const currentQuiz = displayQuiz[quizStep];
 			if (!currentQuiz) return;
 
-			let newWordsToAdd: Word[] = [];
-			try {
-				if (option.isCorrect) {
-					setScore((prev) => ({ ...prev, success: prev.success + 1 }));
-					setFeedback({ correct: option.answer, wrong: "" });
-					newWordsToAdd = await successWords(currentQuiz.usedWords);
-				} else {
-					setScore((prev) => ({ ...prev, errors: prev.errors + 1 }));
-					setFeedback({ correct: "", wrong: option.answer });
-					newWordsToAdd = await failWords(currentQuiz.usedWords);
-				}
-			} catch (error) {
-				console.error("Error processing words:", error);
-				// TODO: Show toast to user
+			// Score and feedback
+			if (option.isCorrect) {
+				setScore((prev) => ({ ...prev, success: prev.success + 1 }));
+				setFeedback({ correct: option.answer, wrong: "" });
+			} else {
+				setScore((prev) => ({ ...prev, errors: prev.errors + 1 }));
+				setFeedback({ correct: "", wrong: option.answer });
 			}
 
-			// Merge new words, preventing duplicates
+			// Process each word used in this question against in-memory state
 			setUsedWords((prev) => {
-				const wordMap = new Map(prev.map((w) => [`${w.word}|${w.definition}`, w]));
-				newWordsToAdd.forEach((w) => wordMap.set(`${w.word}|${w.definition}`, w));
+				const wordMap = new Map(prev.map((w) => [w._id!, w]));
+
+				for (const wordId of currentQuiz.usedWords) {
+					const word = wordMap.get(wordId);
+					if (!word) continue; 
+
+					const originalEase = originalEaseFactors.current.get(wordId);
+
+					const updatedWord = processAnswer(word, option.isCorrect, originalEase);
+					wordMap.set(wordId, updatedWord);
+				}
+
 				return Array.from(wordMap.values());
 			});
 
@@ -127,7 +148,23 @@ export const useQuizManager = (userData: User) => {
 		setQuestionStep(0);
 		setIsQuizFinished(false);
 		setScore({ errors: 0, success: 0 });
-		setUsedWords([]);
+		
+		// Re-prefetch words to reset in-memory state
+		const allWordIds = [...new Set(displayQuiz.flatMap((q) => q.usedWords))];
+		if (allWordIds.length > 0) {
+			getWordsByIds(allWordIds)
+				.then(({ data }) => {
+					const easeMap = new Map<string, number>();
+					data.forEach((word: Word) => {
+						easeMap.set(word._id!, word.easeFactor || 2.5);
+					});
+					originalEaseFactors.current = easeMap;
+					setUsedWords(data);
+				})
+				.catch((error) => {
+					console.error("Error re-fetching quiz words:", error);
+				});
+		}
 	};
 
 	const currentQuizItem = displayQuiz[quizStep];
