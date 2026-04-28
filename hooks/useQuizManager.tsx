@@ -24,10 +24,6 @@ export const useQuizManager = (userData: User) => {
 	const [isQuizFinished, setIsQuizFinished] = useState(false);
 	const [startingTimer, setStartingTimer] = useState<number>();
 
-	/**
-	 * Stores the original easeFactor for each word at the start of the quiz.
-	 * Used to enforce per-quiz caps (MAX_EASE_DECREASE_PER_QUIZ).
-	 */
 	const originalEaseFactors = useRef<Map<string, number>>(new Map());
 
 	useEffect(() => {
@@ -44,12 +40,10 @@ export const useQuizManager = (userData: User) => {
 			setDisplayQuiz(quizSource);
 			setIsLoading(false);
 
-			// Prefetch all words used in the quiz
 			const allWordIds = [...new Set(quizSource.flatMap((q) => q.usedWords))];
 			if (allWordIds.length > 0) {
 				getWordsByIds(allWordIds)
 					.then(({ data }) => {
-						// Capture original easeFactors for per-quiz caps
 						const easeMap = new Map<string, number>();
 						data.forEach((word: Word) => {
 							easeMap.set(word._id!, word.easeFactor || 2.5);
@@ -124,12 +118,10 @@ export const useQuizManager = (userData: User) => {
 
 				for (const wordId of currentQuiz.usedWords) {
 					const word = wordMap.get(wordId);
-					if (!word) continue; // Skip if word not found (shouldn't happen after prefetch)
+					if (!word) continue; 
 
-					// Get original easeFactor for per-quiz cap
 					const originalEase = originalEaseFactors.current.get(wordId);
 
-					// Apply SM-2 processing using the in-memory word state
 					const updatedWord = processAnswer(word, option.isCorrect, originalEase);
 					wordMap.set(wordId, updatedWord);
 				}
@@ -156,6 +148,7 @@ export const useQuizManager = (userData: User) => {
 		setQuestionStep(0);
 		setIsQuizFinished(false);
 		setScore({ errors: 0, success: 0 });
+		
 		// Re-prefetch words to reset in-memory state
 		const allWordIds = [...new Set(displayQuiz.flatMap((q) => q.usedWords))];
 		if (allWordIds.length > 0) {
