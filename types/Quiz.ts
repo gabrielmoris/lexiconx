@@ -1,32 +1,29 @@
 import { Language } from "./Words";
 
 export interface QuizAnswer {
-	answer: string;
-	isCorrect: boolean;
-	phoneticNotation?: string;
-	translation?: string;
+  answer: string;
+  isCorrect: boolean;
+  phoneticNotation?: string;
+  translation?: string;
 }
 
 export interface QuizQuestion {
-	question: string;
-	options: QuizAnswer[];
-	/** Array of Word _id string references — words specifically tested by this question */
-	usedWords: string[];
+  question: string;
+  options: QuizAnswer[];
+  usedWords: string[];
 }
 
 export interface Quiz {
-	sentence: string;
-	language: Language;
-	phoneticNotation: string;
-	translation: string;
-	questions: QuizQuestion[];
+  sentence: string;
+  language: Language;
+  phoneticNotation: string;
+  translation: string;
+  questions: QuizQuestion[];
 }
 
 /** Derives all unique word IDs used across all questions in a quiz */
-export const getQuizUsedWords = (quiz: Quiz): string[] => [
-	...new Set(quiz.questions.flatMap((q) => q.usedWords)),
-];
+export const getQuizUsedWords = (quiz: Quiz): string[] => [...new Set(quiz.questions.flatMap((q) => q.usedWords))];
 
 export interface QuizGeneratorResponse {
-	quizzes: Quiz[];
+  quizzes: Quiz[];
 }
