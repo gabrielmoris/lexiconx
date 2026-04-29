@@ -40,7 +40,7 @@ export const useQuizManager = (userData: User) => {
 			setDisplayQuiz(quizSource);
 			setIsLoading(false);
 
-			const allWordIds = [...new Set(quizSource.flatMap((q) => q.usedWords))];
+			const allWordIds = [...new Set(quizSource.flatMap((q) => q.questions.flatMap((question) => question.usedWords)))];
 			if (allWordIds.length > 0) {
 				getWordsByIds(allWordIds)
 					.then(({ data }) => {
@@ -102,6 +102,8 @@ export const useQuizManager = (userData: User) => {
 			if (!session) return;
 			const currentQuiz = displayQuiz[quizStep];
 			if (!currentQuiz) return;
+			const currentQuestion = currentQuiz.questions[questionStep];
+			if (!currentQuestion) return;
 
 			// Score and feedback
 			if (option.isCorrect) {
@@ -116,7 +118,7 @@ export const useQuizManager = (userData: User) => {
 			setUsedWords((prev) => {
 				const wordMap = new Map(prev.map((w) => [w._id!, w]));
 
-				for (const wordId of currentQuiz.usedWords) {
+				for (const wordId of currentQuestion.usedWords) {
 					const word = wordMap.get(wordId);
 					if (!word) continue; 
 
@@ -150,7 +152,7 @@ export const useQuizManager = (userData: User) => {
 		setScore({ errors: 0, success: 0 });
 		
 		// Re-prefetch words to reset in-memory state
-		const allWordIds = [...new Set(displayQuiz.flatMap((q) => q.usedWords))];
+		const allWordIds = [...new Set(displayQuiz.flatMap((q) => q.questions.flatMap((question) => question.usedWords)))];
 		if (allWordIds.length > 0) {
 			getWordsByIds(allWordIds)
 				.then(({ data }) => {

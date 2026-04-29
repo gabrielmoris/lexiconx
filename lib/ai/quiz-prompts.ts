@@ -28,7 +28,7 @@ export const QUIZ_PROMPTS = {
       OBJECT PRESERVATION REQUIREMENTS - ABSOLUTELY CRITICAL:
       - Preserve EXACTLY the Original ID: _id
       - Do NOT modify or add any fields from the original Word objects
-      - Do NOT create duplicate entries in usedWords - if a word appears multiple times in a sentence, include it only once in the array
+      - Each question MUST include a 'usedWords' array with the _id values of the vocabulary words that question specifically tests. Assign 1-3 word IDs per question based on which words the question targets. Do NOT include words that are not directly tested by that question. Do NOT create duplicate entries within a single question's usedWords array.
 
       LEVEL-BASED COMPLEXITY GUIDELINES:
       - Levels 1-10 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts, answers in ${userLanguage}
@@ -71,20 +71,14 @@ export const QUIZ_PROMPTS = {
             "sentence": "sentence only in ${learningLanguage} without phonetic notation",
             "phoneticNotation": "complete phonetic notation for the sentence",
             "translation": "accurate ${userLanguage} translation",
-            "usedWords": [
-              // CRITICAL: Copy EXACTLY The _id of the used words
-              // Do NOT modify any character
-              // Example structure (use actual values from input):
-              ${words
-                .slice(0, 1)
-                .map((w) => `"${w._id}"`)
-                .join(", ")}
-            ],
             "language": "${learningLanguage}",
             "questions": [
-              // Generate 3-5 questions (vary count per quiz item)
-              {
-                "question": "Question text in ${userLanguage} or ${learningLanguage} depending on the level",
+{
+"question": "Question text in ${userLanguage} or ${learningLanguage} depending on the level",
+"usedWords": [
+// CRITICAL: Include the _id of the vocabulary words this question specifically tests (1-3 words). Only include words that are directly tested by this question.
+${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
+],
                 "options": [
                  // Generate a VARIABLE number of options per question (between 3 and 5)
                  // The position of the correct answer MUST be randomized in this array.
@@ -105,7 +99,8 @@ export const QUIZ_PROMPTS = {
       ✓ Exactly 4 quiz items generated
       ✓ Each quiz uses 2-4 different vocabulary words
       ✓ Each quiz has 3-5 questions (counts vary between quizzes)
-      ✓ All usedWords arrays contain valid string _id values referencing the original words
+      ✓ Each question has a usedWords array with valid _id values of the words it tests
+✓ Each question's usedWords only contains words that question specifically tests
       ✓ All _id and userId values preserved exactly as input
       ✓ Sentence complexity matches level ${level}/100
       ✓ All required fields present in JSON structure`,
@@ -131,7 +126,7 @@ export const QUIZ_PROMPTS = {
       REQUISITOS DE PRESERVACIÓN DE OBJETOS - ABSOLUTAMENTE CRÍTICOS:
       - Conserva EXACTAMENTE el campo de ID Original: _id
       - NO modifiques o añadas ningún campo de los objetos Word originales
-      - NO crees entradas duplicadas en usedWords; si una palabra aparece varias veces en una oración, inclúyela solo una vez en el array
+      - Cada pregunta DEBE incluir un array 'usedWords' con los valores _id de las palabras de vocabulario que esa pregunta evalúa específicamente. Asigna 1-3 IDs de palabras por pregunta según qué palabras enfoca la pregunta. NO incluyas palabras que no sean evaluadas directamente por esa pregunta. NO crees entradas duplicadas dentro del array usedWords de una sola pregunta.
 
       DIRECTRICES DE COMPLEJIDAD BASADAS EN NIVELES:
       - Niveles 1-10 (Principiante): Oraciones simples (8-12 palabras), gramática básica, preguntas directas sobre hechos, respuestas en ${userLanguage}
@@ -174,20 +169,15 @@ export const QUIZ_PROMPTS = {
             "sentence": "oración solo en ${learningLanguage} sin notación fonética",
             "phoneticNotation": "notación fonética completa de la oración",
             "translation": "traducción precisa en ${userLanguage}",
-            "usedWords": [
-              // IMPORTANTE: Copiar EXACTAMENTE el _id de las palabras utilizadas
-              // NO modificar ningún carácter
-              // Ejemplo de estructura (usar los valores reales de la entrada):
-              ${words
-                .slice(0, 1)
-                .map((w) => `"${w._id}"`)
-                .join(", ")}
-            ],
             "language": "${learningLanguage}",
             "questions": [
               // Generar 3-5 preguntas (variar el recuento por elemento del cuestionario)
               {
-                "question": "Texto de la pregunta en ${userLanguage} o ${learningLanguage} dependiendo del nivel",
+"question": "Texto de la pregunta en ${userLanguage} o ${learningLanguage} dependiendo del nivel",
+"usedWords": [
+// IMPORTANTE: Incluye el _id de las palabras de vocabulario que esta pregunta evalúa específicamente (1-3 palabras). Solo incluye palabras que sean evaluadas directamente por esta pregunta.
+${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
+],
                 "options": [
                   // Generar 3-5 opciones de respuesta (variar el recuento por pregunta)
                   // La posición de la respuesta correcta en el array 'options' DEBE ser aleatoria. NO coloques la respuesta correcta siempre en la misma posición
@@ -208,7 +198,8 @@ export const QUIZ_PROMPTS = {
       ✓ Exactamente 4 elementos de cuestionario generados
       ✓ Cada cuestionario utiliza 2-4 palabras de vocabulario diferentes
       ✓ Cada cuestionario tiene 3-5 preguntas (los recuentos varían entre cuestionarios)
-      ✓ Todos los arrays usedWords contienen valores _id de tipo string que referencian las palabras originales
+      ✓ Cada pregunta tiene un array usedWords con valores _id válidos de las palabras que evalúa
+✓ El usedWords de cada pregunta solo contiene palabras que esa pregunta evalúa específicamente
       ✓ Todos los valores _id y userId se conservan exactamente como se ingresaron
       ✓ La complejidad de la oración coincide con el nivel ${level}/100
       ✓ Todos los campos requeridos presentes en la estructura JSON`,
@@ -234,7 +225,7 @@ export const QUIZ_PROMPTS = {
       ANFORDERUNGEN ZUR OBJEKTERHALTUNG - ABSOLUT KRITISCH:
       - Behalten Sie die Original-ID EXAKT bei: _id
       - Ändern oder ergänzen Sie KEINE Felder der ursprünglichen Word-Objekte
-      - Erstellen Sie KEINE Duplikate in usedWords – wenn ein Wort mehrfach in einem Satz vorkommt, fügen Sie es nur einmal in das Array ein
+      - Jede Frage MUSS ein 'usedWords'-Array mit den _id-Werten der Vokabeln enthalten, die diese Frage speziell testet. Weisen Sie 1-3 Wort-IDs pro Frage zu, je nachdem, welche Wörter die Frage behandelt. Schließen Sie KEINE Wörter ein, die nicht direkt von dieser Frage getestet werden. Erstellen Sie KEINE Duplikate innerhalb des usedWords-Arrays einer einzelnen Frage.
 
       RICHTLINIEN FÜR KOMPLEXITÄT NACH NIVEAU:
       - Niveaus 1-10 (Anfänger): Einfache Sätze (8-12 Wörter), grundlegende Grammatik, unkomplizierte Fragen zu Fakten, Antworten in ${userLanguage}
@@ -277,20 +268,15 @@ export const QUIZ_PROMPTS = {
             "sentence": "Satz nur in ${learningLanguage} ohne phonetische Notation",
             "phoneticNotation": "vollständige phonetische Notation für den Satz",
             "translation": "genaue ${userLanguage}-Übersetzung",
-            "usedWords": [
-              // KRITISCH: Kopieren Sie die _id der verwendeten Wörter EXAKT
-              // Ändern Sie keinen einzigen Buchstaben
-              // Beispielstruktur (verwenden Sie tatsächliche Werte aus der Eingabe):
-               ${words
-                 .slice(0, 1)
-                 .map((w) => `"${w._id}"`)
-                 .join(", ")}
-            ],
             "language": "${learningLanguage}",
             "questions": [
               // 3-5 Fragen generieren (Anzahl pro Quiz-Item variieren)
               {
-                "question": "Fragetext in ${userLanguage} oder ${learningLanguage} je nach Niveau",
+"question": "Fragetext in ${userLanguage} oder ${learningLanguage} je nach Niveau",
+"usedWords": [
+// KRITISCH: Fügen Sie die _id der Vokabeln ein, die diese Frage speziell testet (1-3 Wörter). Fügen Sie nur Wörter ein, die direkt von dieser Frage getestet werden.
+${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
+],
                 "options": [
                   // 3-5 Antwortoptionen generieren (Anzahl pro Frage variieren)
                   // Die Position der richtigen Antwort in der 'options'-Array muss ZUFÄLLIG sein. Platziere die richtige Antwort NICHT immer an der selben Position
@@ -311,7 +297,8 @@ export const QUIZ_PROMPTS = {
       ✓ Genau 4 Quiz-Items generiert
       ✓ Jedes Quiz verwendet 2-4 verschiedene Vokabeln
       ✓ Jedes Quiz hat 3-5 Fragen (Anzahl variiert zwischen den Quizzen)
-      ✓ Alle usedWords-Arrays enthalten gültige String-_id-Werte, die die ursprünglichen Wörter referenzieren
+      ✓ Jede Frage hat ein usedWords-Array mit gültigen _id-Werten der von ihr getesteten Wörter
+✓ Das usedWords jeder Frage enthält nur Wörter, die diese Frage speziell testet
       ✓ Alle _id- und userId-Werte exakt wie eingegeben beibehalten
       ✓ Satzkomplexität stimmt mit Niveau ${level}/100 überein
       ✓ Alle erforderlichen Felder in der JSON-Struktur vorhanden`,
@@ -337,7 +324,7 @@ export const QUIZ_PROMPTS = {
       对象保留要求 - 绝对关键：
       - 精确保留原始 ID: _id
       - 请勿修改或添加原始 Word 对象的任何字段
-      - 请勿在 usedWords 中创建重复条目 - 如果一个单词在句子中出现多次，只需在数组中包含它一次
+      - 每个问题必须包含一个 'usedWords' 数组，其中包含该问题专门测试的词汇单词的 _id 值。根据问题针对的单词，为每个问题分配 1-3 个单词 ID。不要包含该问题未直接测试的单词。不要在单个问题的 usedWords 数组中创建重复条目。
 
       基于级别的复杂度指南：
       - 级别 1-10 (初学者): 简单句子 (8-12 个字), 基础语法, 直接的事实问题, 答案为 ${userLanguage}
@@ -380,20 +367,15 @@ export const QUIZ_PROMPTS = {
             "sentence": "只用${learningLanguage}显示句子，不加注音",
             "phoneticNotation": "句子的完整拼音标记",
             "translation": "准确的 ${userLanguage} 翻译",
-            "usedWords": [
-              // **关键：**精确复制所用单词的 _id
-              // 请勿修改任何字符
-              // 示例结构（使用输入中的实际值）：
-              ${words
-                .slice(0, 1)
-                .map((w) => `"${w._id}"`)
-                .join(", ")}
-            ],
             "language": "${learningLanguage}",
             "questions": [
               // 生成 3-5 个问题 (每个测验项目的问题数量不同)
               {
-                "question": "问题文本用 ${userLanguage} 或 ${learningLanguage} 编写，具体取决于级别",
+"question": "问题文本用 ${userLanguage} 或 ${learningLanguage} 编写，具体取决于级别",
+"usedWords": [
+// 关键：包含该问题专门测试的词汇单词的 _id（1-3 个单词）。仅包含该问题直接测试的单词。
+${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
+],
                 "options": [
                   // 生成 3-5 个选项 (每个测验项目的问题数量不同)
                   // 正确答案在 'options' 数组中的位置必须随机化
@@ -414,7 +396,8 @@ export const QUIZ_PROMPTS = {
       ✓ 生成了 EXACTLY 4 个测验项目
       ✓ 每个测验使用 2-4 个不同的词汇单词
       ✓ 每个测验有 3-5 个问题 (测验之间数量不同)
-      ✓ 所有 usedWords 数组包含引用原始单词的有效字符串 _id 值
+      ✓ 每个问题都有一个 usedWords 数组，包含其测试单词的有效 _id 值
+✓ 每个问题的 usedWords 仅包含该问题专门测试的单词
       ✓ 所有 _id 和 userId 值完全保留为输入值
       ✓ 句子复杂度与级别 ${level}/100 匹配
       ✓ JSON 结构中存在所有必需字段`,
@@ -439,7 +422,7 @@ export const QUIZ_PROMPTS = {
       ТРЕБОВАНИЯ К СОХРАНЕНИЮ ОБЪЕКТОВ - АБСОЛЮТНО КРИТИЧНО:
       - Сохраните ТОЧНО оригинальный ID: _id
       - НЕ изменяйте и не добавляйте поля из оригинальных объектов Word
-      - НЕ создавайте дублирующие записи в usedWords - если слово появляется несколько раз в предложении, включите его только один раз в массив
+      - Каждый вопрос ДОЛЖЕН включать массив 'usedWords' со значениями _id словарных слов, которые этот вопрос специально проверяет. Назначьте 1-3 ID слов на вопрос в зависимости от того, какие слова проверяет вопрос. НЕ включайте слова, которые не проверяются непосредственно этим вопросом. НЕ создавайте дублирующие записи в массиве usedWords одного вопроса.
 
       РУКОВОДЯЩИЕ ПРИНЦИПЫ СЛОЖНОСТИ ПО УРОВНЯМ:
       - Уровни 1-10 (Начинающий): Простые предложения (8-12 слов), базовая грамматика, прямолинейные вопросы о фактах, ответы на ${userLanguage}
@@ -482,20 +465,15 @@ export const QUIZ_PROMPTS = {
             "sentence": "предложение только на ${learningLanguage} без фонетической нотации",
             "phoneticNotation": "полная фонетическая нотация для предложения",
             "translation": "точный перевод на ${userLanguage}",
-            "usedWords": [
-              // КРИТИЧНО: Скопируйте ТОЧНО _id использованных слов
-              // НЕ изменяйте ни одного символа
-              // Пример структуры (используйте фактические значения из входных данных):
-              ${words
-                .slice(0, 1)
-                .map((w) => `"${w._id}"`)
-                .join(", ")}
-            ],
             "language": "${learningLanguage}",
             "questions": [
               // Создайте 3-5 вопросов (варьируйте количество для каждого элемента викторины)
               {
-                "question": "Текст вопроса на ${userLanguage} или ${learningLanguage} в зависимости от уровня",
+"question": "Текст вопроса на ${userLanguage} или ${learningLanguage} в зависимости от уровня",
+"usedWords": [
+// КРИТИЧЕСКИ: Включите _id словарных слов, которые этот вопрос специально проверяет (1-3 слова). Включайте только слова, которые непосредственно проверяются этим вопросом.
+${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
+],
                 "options": [
                  // Создайте ПЕРЕМЕННОЕ количество вариантов на вопрос (от 3 до 5)
                  // Позиция правильного ответа ДОЛЖНА быть рандомизирована в этом массиве.
@@ -516,7 +494,8 @@ export const QUIZ_PROMPTS = {
       ✓ Создано ровно 4 элемента викторины
       ✓ Каждая викторина использует 2-4 разных словарных слова
       ✓ У каждой викторины есть 3-5 вопросов (количество варьируется между викторинами)
-      ✓ Все массивы usedWords содержат строковые значения _id, ссылающиеся на оригинальные слова
+      ✓ Каждый вопрос имеет массив usedWords с допустимыми значениями _id проверяемых им слов
+✓ Массив usedWords каждого вопроса содержит только слова, которые этот вопрос специально проверяет
       ✓ Все значения _id и userId сохранены точно как во входных данных
       ✓ Сложность предложений соответствует уровню ${level}/100
       ✓ Все обязательные поля присутствуют в структуре JSON`,

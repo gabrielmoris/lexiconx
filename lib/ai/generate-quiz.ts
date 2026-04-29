@@ -56,24 +56,24 @@ export async function generateQuizWithWords(
 
       // Validate quiz structure
       parsedResponse.quizzes.forEach((quiz, index) => {
-        if (!quiz.sentence || !quiz.translation || !quiz.questions || !quiz.phoneticNotation || !quiz.usedWords) {
-          throw new Error(`Quiz ${index + 1} missing required fields (sentence, translation, questions, phoneticNotation, usedWords)`);
-        }
+			if (!quiz.sentence || !quiz.translation || !quiz.questions || !quiz.phoneticNotation) {
+				throw new Error(`Quiz ${index + 1} missing required fields (sentence, translation, questions, phoneticNotation)`);
+			}
 
-        if (!Array.isArray(quiz.questions) || quiz.questions.length < 3 || quiz.questions.length > 5) {
-          throw new Error(`Quiz ${index + 1} must have between 3 and 5 questions, but has ${quiz.questions.length}`);
-        }
+			if (!Array.isArray(quiz.questions) || quiz.questions.length < 3 || quiz.questions.length > 5) {
+				throw new Error(`Quiz ${index + 1} must have between 3 and 5 questions, but has ${quiz.questions.length}`);
+			}
 
-        if (!Array.isArray(quiz.usedWords)) {
-          throw new Error(`Quiz ${index + 1} 'usedWords' must be an array`);
-        }
+			quiz.questions.forEach((question, qIndex) => {
+				if (!question.question || !Array.isArray(question.options) || question.options.length < 4 || question.options.length > 5) {
+					throw new Error(
+						`Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 4-5) or missing 'question' field`,
+					);
+				}
 
-        quiz.questions.forEach((question, qIndex) => {
-          if (!question.question || !Array.isArray(question.options) || question.options.length < 4 || question.options.length > 5) {
-            throw new Error(
-              `Quiz ${index + 1}, Question ${qIndex + 1} has an invalid number of answer choices (expected 4-5) or missing 'question' field`,
-            );
-          }
+				if (!Array.isArray(question.usedWords) || question.usedWords.length === 0) {
+					throw new Error(`Quiz ${index + 1}, Question ${qIndex + 1} must have a non-empty 'usedWords' array`);
+				}
 
           const correctAnswers = question.options.filter((a) => a.isCorrect);
           if (correctAnswers.length !== 1) {
