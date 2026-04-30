@@ -31,16 +31,25 @@ export const QUIZ_PROMPTS = {
       - Each question MUST include a 'usedWords' array with the _id values of the vocabulary words that question specifically tests. Assign 1-3 word IDs per question based on which words the question targets. Do NOT include words that are not directly tested by that question. Do NOT create duplicate entries within a single question's usedWords array.
 
       LEVEL-BASED COMPLEXITY GUIDELINES:
-      - Levels 1-10 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts, answers in ${userLanguage}
-      - Levels 11-20 (Beginner-Intermediate): Simple sentences (10-14 words), basic grammar, slightly more detailed factual questions, answers in ${userLanguage}
-      - Levels 21-30 (Intermediate): Moderate sentences (12-18 words), compound sentences, questions about relationships and implications, answers in ${userLanguage}
-      - Levels 31-40 (Intermediate-Advanced): Moderate sentences (15-20 words), more complex compound sentences, basic implications, answers in ${userLanguage}
-      - Levels 41-50 (Advanced): Complex sentences (18-25 words), multiple clauses, analytical questions, answers in ${userLanguage} or ${learningLanguage}
-      - Levels 51-60 (Advanced-Expert): Complex sentences (20-28 words), multiple dependent clauses, deeper inference and nuanced contextual meaning, answers in ${userLanguage} or ${learningLanguage}
-      - Levels 61-70 (Expert): Sophisticated sentences (25+ words), advanced grammar, nuanced comprehension questions, abstract concepts, answers in ${userLanguage} or ${learningLanguage}
-      - Levels 71-80 (Expert-Mastery): Highly sophisticated sentences (30+ words), intricate structures, complex abstract concepts, intertextual connections, answers in ${learningLanguage}
-      - Levels 81-90 (Near-Native): Prose mimicking native speaker complexity, advanced rhetorical analysis, philosophical implications, fine distinctions in meaning, answers in ${learningLanguage}
-      - Levels 91-100 (Native/Mastery): Complete mastery of all grammatical forms and stylistic variations, deep cultural/historical context, nuanced subtext, highly academic/specialized analysis, answers in ${learningLanguage}
+- Levels 1-10 (Beginner): Simple sentences (8-12 words), basic grammar, straightforward questions about facts, questions in ${userLanguage}, answer options in ${userLanguage}
+- Levels 11-20 (Beginner-Intermediate): Simple sentences (10-14 words), basic grammar, slightly more detailed factual questions, questions in ${userLanguage}, answer options in ${userLanguage}
+- Levels 21-30 (Intermediate): Moderate sentences (12-18 words), compound sentences, questions about relationships and implications, questions in ${userLanguage}, answer options in ${userLanguage}
+- Levels 31-40 (Intermediate-Advanced): Moderate sentences (15-20 words), more complex compound sentences, basic implications, questions in ${userLanguage}, answer options in ${userLanguage}
+- Levels 41-50 (Advanced): Complex sentences (18-25 words), multiple clauses, analytical questions, questions in ${userLanguage} or ${learningLanguage}, answer options per ANSWER OPTIONS LANGUAGE RULES
+- Levels 51-60 (Advanced-Expert): Complex sentences (20-28 words), multiple dependent clauses, deeper inference and nuanced contextual meaning, questions in ${userLanguage} or ${learningLanguage}, answer options per ANSWER OPTIONS LANGUAGE RULES
+- Levels 61-70 (Expert): Sophisticated sentences (25+ words), advanced grammar, nuanced comprehension questions, abstract concepts, questions in ${learningLanguage}, answer options per ANSWER OPTIONS LANGUAGE RULES
+- Levels 71-80 (Expert-Mastery): Highly sophisticated sentences (30+ words), intricate structures, complex abstract concepts, intertextual connections, questions in ${learningLanguage}, answer options in ${learningLanguage}
+- Levels 81-90 (Near-Native): Prose mimicking native speaker complexity, advanced rhetorical analysis, philosophical implications, fine distinctions in meaning, questions in ${learningLanguage}, answer options in ${learningLanguage}
+- Levels 91-100 (Native/Mastery): Complete mastery of all grammatical forms and stylistic variations, deep cultural/historical context, nuanced subtext, highly academic/specialized analysis, questions in ${learningLanguage}, answer options in ${learningLanguage}
+
+ANSWER OPTIONS LANGUAGE RULES - STRICTLY ENFORCED:
+The language of the answer OPTIONS (not the question text) MUST follow this progression based on the user's level:
+- Levels 1-40 (Beginner through Intermediate-Advanced): ALL answer options MUST be in ${userLanguage}. Do NOT use ${learningLanguage} in any answer option.
+- Levels 41-60 (Advanced through Advanced-Expert): MIXED — approximately half the answer options in ${userLanguage} and half in ${learningLanguage}. Vary within each quiz.
+- Levels 61-80 (Expert through Expert-Mastery): Primarily in ${learningLanguage}, with occasional ${userLanguage} options for particularly difficult words.
+- Levels 81-100 (Near-Native through Mastery): ALL answer options in ${learningLanguage}.
+
+CRITICAL: At levels 1-40, the user is still building basic vocabulary. Answer options in ${learningLanguage} at this stage are counterproductive and confusing. ALWAYS use ${userLanguage} for answer options at these levels.
 
       QUESTION TYPES BY LEVEL:
       - Levels 1-20 (Beginner/Beginner-Intermediate): "What/Where/When/Who" factual questions
@@ -81,10 +90,11 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
 ],
                 "options": [
                  // Generate a VARIABLE number of options per question (between 3 and 5)
-                 // The position of the correct answer MUST be randomized in this array.
-                 {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
-                 {"answer": "Answer option", "isCorrect": true, translation: "translation in ${userLanguage}", phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"},
-                 {"answer": "Answer option", "isCorrect": false, translation: "translation in ${userLanguage}",  phoneticNotation: "phonetic notation of the answer option if it is in  ${learningLanguage}"}
+// The position of the correct answer MUST be randomized in this array.
+// CRITICAL: Answer options language MUST follow the ANSWER OPTIONS LANGUAGE RULES. At levels 1-40, ALL options MUST be in ${userLanguage}.
+{"answer": "Answer in ${userLanguage} (use ${userLanguage} for levels 1-40, see rules for other levels)", "isCorrect": false, "translation": "translation in ${userLanguage}", "phoneticNotation": "phonetic notation if answer is in ${learningLanguage}"},
+{"answer": "Answer in ${userLanguage}", "isCorrect": true, "translation": "translation in ${userLanguage}", "phoneticNotation": "phonetic notation if answer is in ${learningLanguage}"},
+{"answer": "Answer in ${userLanguage} (use ${userLanguage} for levels 1-40, see rules for other levels)", "isCorrect": false, "translation": "translation in ${userLanguage}", "phoneticNotation": "phonetic notation if answer is in ${learningLanguage}"}
                    // ... generate 2-5 options (vary count per quiz item)
                 ]
               }
@@ -102,7 +112,8 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Each question has a usedWords array with valid _id values of the words it tests
 ✓ Each question's usedWords only contains words that question specifically tests
       ✓ All _id and userId values preserved exactly as input
-      ✓ Sentence complexity matches level ${level}/100
+✓ Sentence complexity matches level ${level}/100
+✓ Answer options language matches the ANSWER OPTIONS LANGUAGE RULES for level ${level}/100
       ✓ All required fields present in JSON structure`,
   },
 
@@ -129,16 +140,25 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - Cada pregunta DEBE incluir un array 'usedWords' con los valores _id de las palabras de vocabulario que esa pregunta evalúa específicamente. Asigna 1-3 IDs de palabras por pregunta según qué palabras enfoca la pregunta. NO incluyas palabras que no sean evaluadas directamente por esa pregunta. NO crees entradas duplicadas dentro del array usedWords de una sola pregunta.
 
       DIRECTRICES DE COMPLEJIDAD BASADAS EN NIVELES:
-      - Niveles 1-10 (Principiante): Oraciones simples (8-12 palabras), gramática básica, preguntas directas sobre hechos, respuestas en ${userLanguage}
-      - Niveles 11-20 (Principiante-Intermedio): Oraciones simples (10-14 palabras), gramática básica, preguntas factuales ligeramente más detalladas, respuestas en ${userLanguage}
-      - Niveles 21-30 (Intermedio): Oraciones moderadas (12-18 palabras), oraciones compuestas, preguntas sobre relaciones e implicaciones, respuestas en ${userLanguage}
-      - Niveles 31-40 (Intermedio-Avanzado): Oraciones moderadas (15-20 palabras), oraciones compuestas más complejas, implicaciones básicas, respuestas en ${userLanguage}
-      - Niveles 41-50 (Avanzado): Oraciones complejas (18-25 palabras), múltiples cláusulas, preguntas analíticas, respuestas en ${userLanguage} o ${learningLanguage}
-      - Niveles 51-60 (Avanzado-Experto): Oraciones complejas (20-28 palabras), múltiples cláusulas dependientes, inferencia más profunda y significado contextual matizado, respuestas en ${userLanguage} o ${learningLanguage}
-      - Niveles 61-70 (Experto): Oraciones sofisticadas (25+ palabras), gramática avanzada, preguntas de comprensión matizadas, conceptos abstractos, respuestas en ${userLanguage} o ${learningLanguage}
-      - Niveles 71-80 (Experto-Dominio): Oraciones altamente sofisticadas (30+ palabras), estructuras intrincadas, conceptos abstractos complejos, conexiones intertextuales, respuestas en ${learningLanguage}
-      - Niveles 81-90 (Casi nativo): Prosa que imita la complejidad de un hablante nativo, análisis retórico avanzado, implicaciones filosóficas, distinciones finas en el significado, respuestas en ${learningLanguage}
-      - Niveles 91-100 (Nativo/Dominio): Dominio completo de todas las formas gramaticales y variaciones estilísticas, contexto cultural/histórico profundo, subtexto matizado, análisis altamente académico/especializado, respuestas en ${learningLanguage}
+- Niveles 1-10 (Principiante): Oraciones simples (8-12 palabras), gramática básica, preguntas directas sobre hechos, preguntas en ${userLanguage}, opciones de respuesta en ${userLanguage}
+- Niveles 11-20 (Principiante-Intermedio): Oraciones simples (10-14 palabras), gramática básica, preguntas factuales ligeramente más detalladas, preguntas en ${userLanguage}, opciones de respuesta en ${userLanguage}
+- Niveles 21-30 (Intermedio): Oraciones moderadas (12-18 palabras), oraciones compuestas, preguntas sobre relaciones e implicaciones, preguntas en ${userLanguage}, opciones de respuesta en ${userLanguage}
+- Niveles 31-40 (Intermedio-Avanzado): Oraciones moderadas (15-20 palabras), oraciones compuestas más complejas, implicaciones básicas, preguntas en ${userLanguage}, opciones de respuesta en ${userLanguage}
+- Niveles 41-50 (Avanzado): Oraciones complejas (18-25 palabras), múltiples cláusulas, preguntas analíticas, preguntas en ${userLanguage} o ${learningLanguage}, opciones de respuesta según REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA
+- Niveles 51-60 (Avanzado-Experto): Oraciones complejas (20-28 palabras), múltiples cláusulas dependientes, inferencia más profunda y significado contextual matizado, preguntas en ${userLanguage} o ${learningLanguage}, opciones de respuesta según REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA
+- Niveles 61-70 (Experto): Oraciones sofisticadas (25+ palabras), gramática avanzada, preguntas de comprensión matizadas, conceptos abstractos, preguntas en ${learningLanguage}, opciones de respuesta según REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA
+- Niveles 71-80 (Experto-Dominio): Oraciones altamente sofisticadas (30+ palabras), estructuras intrincadas, conceptos abstractos complejos, conexiones intertextuales, preguntas en ${learningLanguage}, opciones de respuesta en ${learningLanguage}
+- Niveles 81-90 (Casi nativo): Prosa que imita la complejidad de un hablante nativo, análisis retórico avanzado, implicaciones filosóficas, distinciones finas en el significado, preguntas en ${learningLanguage}, opciones de respuesta en ${learningLanguage}
+- Niveles 91-100 (Nativo/Dominio): Dominio completo de todas las formas gramaticales y variaciones estilísticas, contexto cultural/histórico profundo, subtexto matizado, análisis altamente académico/especializado, preguntas en ${learningLanguage}, opciones de respuesta en ${learningLanguage}
+
+REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA - CUMPLIMIENTO OBLIGATORIO:
+El idioma de las OPCIONES de respuesta (no del texto de la pregunta) DEBE seguir esta progresión según el nivel del usuario:
+- Niveles 1-40 (Principiante a Intermedio-Avanzado): TODAS las opciones de respuesta DEBEN estar en ${userLanguage}. NO uses ${learningLanguage} en ninguna opción de respuesta.
+- Niveles 41-60 (Avanzado a Avanzado-Experto): MEZCLADO — aproximadamente la mitad de las opciones de respuesta en ${userLanguage} y la otra mitad en ${learningLanguage}. Varía dentro de cada cuestionario.
+- Niveles 61-80 (Experto a Experto-Dominio): Principalmente en ${learningLanguage}, con opciones ocasionales en ${userLanguage} para palabras particularmente difíciles.
+- Niveles 81-100 (Casi nativo a Dominio): TODAS las opciones de respuesta en ${learningLanguage}.
+
+CRÍTICO: En los niveles 1-40, el usuario aún está construyendo vocabulario básico. Las opciones de respuesta en ${learningLanguage} en esta etapa son contraproducentes y confusas. USA SIEMPRE ${userLanguage} para las opciones de respuesta en estos niveles.
 
       TIPOS DE PREGUNTAS POR NIVEL:
       - Niveles 1-20 (Principiante/Principiante-Intermedio): Preguntas factuales de "Qué/Dónde/Cuándo/Quién"
@@ -180,10 +200,11 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
 ],
                 "options": [
                   // Generar 3-5 opciones de respuesta (variar el recuento por pregunta)
-                  // La posición de la respuesta correcta en el array 'options' DEBE ser aleatoria. NO coloques la respuesta correcta siempre en la misma posición
-                  {"answer": "Opción de respuesta", "isCorrect": true, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"},
-                  {"answer": "Opción de respuesta", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"},
-                  {"answer": "Opción de respuesta", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética de la opción de respuesta si está en ${learningLanguage}"}
+// La posición de la respuesta correcta en el array 'options' DEBE ser aleatoria. NO coloques la respuesta correcta siempre en la misma posición
+// IMPORTANTE: El idioma de las opciones de respuesta DEBE seguir las REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA. En niveles 1-40, TODAS las opciones DEBEN estar en ${userLanguage}.
+{"answer": "Respuesta en ${userLanguage} (usa ${userLanguage} para niveles 1-40, consulta las reglas para otros niveles)", "isCorrect": true, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética si la respuesta está en ${learningLanguage}"},
+{"answer": "Respuesta en ${userLanguage}", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética si la respuesta está en ${learningLanguage}"},
+{"answer": "Respuesta en ${userLanguage} (usa ${userLanguage} para niveles 1-40, consulta las reglas para otros niveles)", "isCorrect": false, "translation": "traducción en ${userLanguage}", "phoneticNotation": "notación fonética si la respuesta está en ${learningLanguage}"}
                   // ... generar 2-5 opciones (variar el recuento por elemento del cuestionario)
                 ]
               }
@@ -201,7 +222,8 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Cada pregunta tiene un array usedWords con valores _id válidos de las palabras que evalúa
 ✓ El usedWords de cada pregunta solo contiene palabras que esa pregunta evalúa específicamente
       ✓ Todos los valores _id y userId se conservan exactamente como se ingresaron
-      ✓ La complejidad de la oración coincide con el nivel ${level}/100
+✓ La complejidad de la oración coincide con el nivel ${level}/100
+✓ El idioma de las opciones de respuesta coincide con las REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA para el nivel ${level}/100
       ✓ Todos los campos requeridos presentes en la estructura JSON`,
   },
 
@@ -228,16 +250,25 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - Jede Frage MUSS ein 'usedWords'-Array mit den _id-Werten der Vokabeln enthalten, die diese Frage speziell testet. Weisen Sie 1-3 Wort-IDs pro Frage zu, je nachdem, welche Wörter die Frage behandelt. Schließen Sie KEINE Wörter ein, die nicht direkt von dieser Frage getestet werden. Erstellen Sie KEINE Duplikate innerhalb des usedWords-Arrays einer einzelnen Frage.
 
       RICHTLINIEN FÜR KOMPLEXITÄT NACH NIVEAU:
-      - Niveaus 1-10 (Anfänger): Einfache Sätze (8-12 Wörter), grundlegende Grammatik, unkomplizierte Fragen zu Fakten, Antworten in ${userLanguage}
-      - Niveaus 11-20 (Anfänger-Mittelstufe): Einfache Sätze (10-14 Wörter), grundlegende Grammatik, etwas detailliertere Faktenfragen, Antworten in ${userLanguage}
-      - Niveaus 21-30 (Mittelstufe): Moderate Sätze (12-18 Wörter), zusammengesetzte Sätze, Fragen zu Beziehungen und Implikationen, Antworten in ${userLanguage}
-      - Niveaus 31-40 (Mittelstufe-Fortgeschritten): Moderate Sätze (15-20 Wörter), komplexere zusammengesetzte Sätze, grundlegende Implikationen, Antworten in ${userLanguage}
-      - Niveaus 41-50 (Fortgeschritten): Komplexe Sätze (18-25 Wörter), mehrere Satzteile, analytische Fragen, Antworten in ${userLanguage} oder ${learningLanguage}
-      - Niveaus 51-60 (Fortgeschritten-Experte): Komplexe Sätze (20-28 Wörter), mehrere abhängige Satzteile, tiefere Schlussfolgerungen und nuancierte Kontextbedeutung, Antworten in ${userLanguage} oder ${learningLanguage}
-      - Niveaus 61-70 (Experte): Anspruchsvolle Sätze (25+ Wörter), fortgeschrittene Grammatik, nuancierte Verständnisfragen, abstrakte Konzepte, Antworten in ${userLanguage} oder ${learningLanguage}
-      - Niveaus 71-80 (Experte-Meisterschaft): Hochgradig anspruchsvolle Sätze (30+ Wörter), komplexe Strukturen, komplexe abstrakte Konzepte, intertextuelle Verbindungen, Antworten in ${learningLanguage}
-      - Niveaus 81-90 (Nahezu muttersprachlich): Prosa, die die Komplexität eines Muttersprachlers nachahmt, fortgeschrittene rhetorische Analyse, philosophische Implikationen, feine Bedeutungsunterschiede, Antworten in ${learningLanguage}
-      - Niveaus 91-100 (Muttersprachlich/Meisterschaft): Vollständige Beherrschung aller grammatikalischen Formen und stilistischen Variationen, tiefer kultureller/historischer Kontext, nuancierter Subtext, hochakademische/spezialisierte Analyse, Antworten in ${learningLanguage}
+- Niveaus 1-10 (Anfänger): Einfache Sätze (8-12 Wörter), grundlegende Grammatik, unkomplizierte Fragen zu Fakten, Fragen in ${userLanguage}, Antwortoptionen in ${userLanguage}
+- Niveaus 11-20 (Anfänger-Mittelstufe): Einfache Sätze (10-14 Wörter), grundlegende Grammatik, etwas detailliertere Faktenfragen, Fragen in ${userLanguage}, Antwortoptionen in ${userLanguage}
+- Niveaus 21-30 (Mittelstufe): Moderate Sätze (12-18 Wörter), zusammengesetzte Sätze, Fragen zu Beziehungen und Implikationen, Fragen in ${userLanguage}, Antwortoptionen in ${userLanguage}
+- Niveaus 31-40 (Mittelstufe-Fortgeschritten): Moderate Sätze (15-20 Wörter), komplexere zusammengesetzte Sätze, grundlegende Implikationen, Fragen in ${userLanguage}, Antwortoptionen in ${userLanguage}
+- Niveaus 41-50 (Fortgeschritten): Komplexe Sätze (18-25 Wörter), mehrere Satzteile, analytische Fragen, Fragen in ${userLanguage} oder ${learningLanguage}, Antwortoptionen gemäß ANTWORTOPTIONEN-SPRACHREGELN
+- Niveaus 51-60 (Fortgeschritten-Experte): Komplexe Sätze (20-28 Wörter), mehrere abhängige Satzteile, tiefere Schlussfolgerungen und nuancierte Kontextbedeutung, Fragen in ${userLanguage} oder ${learningLanguage}, Antwortoptionen gemäß ANTWORTOPTIONEN-SPRACHREGELN
+- Niveaus 61-70 (Experte): Anspruchsvolle Sätze (25+ Wörter), fortgeschrittene Grammatik, nuancierte Verständnisfragen, abstrakte Konzepte, Fragen in ${learningLanguage}, Antwortoptionen gemäß ANTWORTOPTIONEN-SPRACHREGELN
+- Niveaus 71-80 (Experte-Meisterschaft): Hochgradig anspruchsvolle Sätze (30+ Wörter), komplexe Strukturen, komplexe abstrakte Konzepte, intertextuelle Verbindungen, Fragen in ${learningLanguage}, Antwortoptionen in ${learningLanguage}
+- Niveaus 81-90 (Nahezu muttersprachlich): Prosa, die die Komplexität eines Muttersprachlers nachahmt, fortgeschrittene rhetorische Analyse, philosophische Implikationen, feine Bedeutungsunterschiede, Fragen in ${learningLanguage}, Antwortoptionen in ${learningLanguage}
+- Niveaus 91-100 (Muttersprachlich/Meisterschaft): Vollständige Beherrschung aller grammatikalischen Formen und stilistischen Variationen, tiefer kultureller/historischer Kontext, nuancierter Subtext, hochakademische/spezialisierte Analyse, Fragen in ${learningLanguage}, Antwortoptionen in ${learningLanguage}
+
+ANTWORTOPTIONEN-SPRACHREGELN - STRENG EINZUHALTEN:
+Die Sprache der ANTWORTOPTIONEN (nicht des Fragetextes) MUSS dieser Progression entsprechend dem Niveau des Benutzers folgen:
+- Niveaus 1-40 (Anfänger bis Mittelstufe-Fortgeschritten): ALLE Antwortoptionen MÜSSEN in ${userLanguage} sein. Verwenden Sie KEIN ${learningLanguage} in einer Antwortoption.
+- Niveaus 41-60 (Fortgeschritten bis Fortgeschritten-Experte): GEMISCHT — ungefähr die Hälfte der Antwortoptionen in ${userLanguage} und die Hälfte in ${learningLanguage}. Variieren Sie innerhalb jedes Quiz.
+- Niveaus 61-80 (Experte bis Experte-Meisterschaft): Hauptsächlich in ${learningLanguage}, mit gelegentlichen ${userLanguage}-Optionen für besonders schwierige Wörter.
+- Niveaus 81-100 (Nahezu muttersprachlich bis Meisterschaft): ALLE Antwortoptionen in ${learningLanguage}.
+
+KRITISCH: Auf den Niveaus 1-40 baut der Benutzer noch grundlegenden Wortschatz auf. Antwortoptionen in ${learningLanguage} sind in diesem Stadium kontraproduktiv und verwirrend. Verwenden Sie IMMER ${userLanguage} für Antwortoptionen auf diesen Niveaus.
 
       FRAGENTYPEN NACH NIVEAU:
       - Niveaus 1-20 (Anfänger/Anfänger-Mittelstufe): "Was/Wo/Wann/Wer" Faktenfragen
@@ -279,10 +310,11 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
 ],
                 "options": [
                   // 3-5 Antwortoptionen generieren (Anzahl pro Frage variieren)
-                  // Die Position der richtigen Antwort in der 'options'-Array muss ZUFÄLLIG sein. Platziere die richtige Antwort NICHT immer an der selben Position
-                  {"answer": "Antwortoption", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"},
-                  {"answer": "Antwortoption", "isCorrect": true, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"},
-                  {"answer": "Antwortoption", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation der Antwortoption, falls in ${learningLanguage}"}
+// Die Position der richtigen Antwort in der 'options'-Array muss ZUFÄLLIG sein. Platziere die richtige Antwort NICHT immer an der selben Position
+// KRITISCH: Die Sprache der Antwortoptionen MUSS den ANTWORTOPTIONEN-SPRACHREGELN folgen. Auf Niveaus 1-40 MÜSSEN ALLE Optionen auf ${userLanguage} sein.
+{"answer": "Antwort in ${userLanguage} (verwende ${userLanguage} für Niveaus 1-40, siehe Regeln für andere Niveaus)", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation, falls Antwort auf ${learningLanguage}"},
+{"answer": "Antwort in ${userLanguage}", "isCorrect": true, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation, falls Antwort auf ${learningLanguage}"},
+{"answer": "Antwort in ${userLanguage} (verwende ${userLanguage} für Niveaus 1-40, siehe Regeln für andere Niveaus)", "isCorrect": false, "translation": "Übersetzung in ${userLanguage}", "phoneticNotation": "phonetische Notation, falls Antwort auf ${learningLanguage}"}
                   // ... 2-5 Optionen generieren (Anzahl pro Quiz-Item variieren)
                 ]
               }
@@ -300,7 +332,8 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Jede Frage hat ein usedWords-Array mit gültigen _id-Werten der von ihr getesteten Wörter
 ✓ Das usedWords jeder Frage enthält nur Wörter, die diese Frage speziell testet
       ✓ Alle _id- und userId-Werte exakt wie eingegeben beibehalten
-      ✓ Satzkomplexität stimmt mit Niveau ${level}/100 überein
+✓ Satzkomplexität stimmt mit Niveau ${level}/100 überein
+✓ Die Sprache der Antwortoptionen entspricht den ANTWORTOPTIONEN-SPRACHREGELN für Niveau ${level}/100
       ✓ Alle erforderlichen Felder in der JSON-Struktur vorhanden`,
   },
 
@@ -327,16 +360,25 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - 每个问题必须包含一个 'usedWords' 数组，其中包含该问题专门测试的词汇单词的 _id 值。根据问题针对的单词，为每个问题分配 1-3 个单词 ID。不要包含该问题未直接测试的单词。不要在单个问题的 usedWords 数组中创建重复条目。
 
       基于级别的复杂度指南：
-      - 级别 1-10 (初学者): 简单句子 (8-12 个字), 基础语法, 直接的事实问题, 答案为 ${userLanguage}
-      - 级别 11-20 (初学者-中级): 简单句子 (10-14 个字), 基础语法, 稍微详细的事实问题, 答案为 ${userLanguage}
-      - 级别 21-30 (中级): 中等句子 (12-18 个字), 复合句, 关于关系和隐含意义的问题, 答案为 ${userLanguage}
-      - 级别 31-40 (中级-高级): 中等句子 (15-20 个字), 更复杂的复合句, 基本隐含意义, 答案为 ${userLanguage}
-      - 级别 41-50 (高级): 复杂句子 (18-25 个字), 多个从句, 分析性问题, 答案为 ${userLanguage} 或 ${learningLanguage}
-      - 级别 51-60 (高级-专家): 复杂句子 (20-28 个字), 多个从属从句, 更深层次的推断和细致的上下文含义, 答案为 ${userLanguage} 或 ${learningLanguage}
-      - 级别 61-70 (专家): 精致句子 (25+ 个字), 高级语法, 细致的理解问题, 抽象概念, 答案为 ${userLanguage} 或 ${learningLanguage}
-      - 级别 71-80 (专家-精通): 高度精致句子 (30+ 个字), 复杂结构, 复杂抽象概念, 语篇连接, 答案为 ${learningLanguage}
-      - 级别 81-90 (接近母语): 模仿母语者复杂度的散文, 高级修辞分析, 哲学含义, 细微的意义区别, 答案为 ${learningLanguage}
-      - 级别 91-100 (母语/精通): 完全掌握所有语法形式和文体变体, 深入的文化/历史背景, 细致的潜台词, 高度学术/专业分析, 答案为 ${learningLanguage}
+- 级别 1-10 (初学者): 简单句子 (8-12 个字), 基础语法, 直接的事实问题, 问题用 ${userLanguage}, 答案选项用 ${userLanguage}
+- 级别 11-20 (初学者-中级): 简单句子 (10-14 个字), 基础语法, 稍微详细的事实问题, 问题用 ${userLanguage}, 答案选项用 ${userLanguage}
+- 级别 21-30 (中级): 中等句子 (12-18 个字), 复合句, 关于关系和隐含意义的问题, 问题用 ${userLanguage}, 答案选项用 ${userLanguage}
+- 级别 31-40 (中级-高级): 中等句子 (15-20 个字), 更复杂的复合句, 基本隐含意义, 问题用 ${userLanguage}, 答案选项用 ${userLanguage}
+- 级别 41-50 (高级): 复杂句子 (18-25 个字), 多个从句, 分析性问题, 问题用 ${userLanguage} 或 ${learningLanguage}, 答案选项按照答案选项语言规则
+- 级别 51-60 (高级-专家): 复杂句子 (20-28 个字), 多个从属从句, 更深层次的推断和细致的上下文含义, 问题用 ${userLanguage} 或 ${learningLanguage}, 答案选项按照答案选项语言规则
+- 级别 61-70 (专家): 精致句子 (25+ 个字), 高级语法, 细致的理解问题, 抽象概念, 问题用 ${learningLanguage}, 答案选项按照答案选项语言规则
+- 级别 71-80 (专家-精通): 高度精致句子 (30+ 个字), 复杂结构, 复杂抽象概念, 语篇连接, 问题用 ${learningLanguage}, 答案选项用 ${learningLanguage}
+- 级别 81-90 (接近母语): 模仿母语者复杂度的散文, 高级修辞分析, 哲学含义, 细微的意义区别, 问题用 ${learningLanguage}, 答案选项用 ${learningLanguage}
+- 级别 91-100 (母语/精通): 完全掌握所有语法形式和文体变体, 深入的文化/历史背景, 细致的潜台词, 高度学术/专业分析, 问题用 ${learningLanguage}, 答案选项用 ${learningLanguage}
+
+答案选项语言规则 - 严格执行：
+答案选项（非问题文本）的语言必须根据用户级别遵循以下递进规则：
+- 级别 1-40（初学者至中级-高级）：所有答案选项必须使用 ${userLanguage}。不要在任何答案选项中使用 ${learningLanguage}。
+- 级别 41-60（高级至高级-专家）：混合 — 大约一半的答案选项使用 ${userLanguage}，另一半使用 ${learningLanguage}。在每个测验中变换搭配。
+- 级别 61-80（专家至专家-精通）：主要使用 ${learningLanguage}，偶尔使用 ${userLanguage} 选项用于特别难的单词。
+- 级别 81-100（接近母语至精通）：所有答案选项使用 ${learningLanguage}。
+
+关键：在1-40级别，用户仍在建立基础词汇。在此阶段使用 ${learningLanguage} 的答案选项会适得其反且令人困惑。在这些级别中，务必始终使用 ${userLanguage} 作为答案选项。
 
       问题类型按级别：
       - 级别 1-20 (初学者/初学者-中级): “什么/在哪里/何时/谁”的事实性问题
@@ -378,10 +420,11 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
 ],
                 "options": [
                   // 生成 3-5 个选项 (每个测验项目的问题数量不同)
-                  // 正确答案在 'options' 数组中的位置必须随机化
-                  {"answer": "答案选项", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"},
-                  {"answer": "答案选项", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"}
-                  {"answer": "答案选项", "isCorrect": true, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案选项是 ${learningLanguage}，则为其拼音标记"},
+// 正确答案在 'options' 数组中的位置必须随机化
+// 关键：答案选项语言必须遵循答案选项语言规则。在1-40级，所有选项必须使用${userLanguage}。
+{"answer": "用${userLanguage}的答案（1-40级使用${userLanguage}，其他级别见规则）", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案在${learningLanguage}中，则为其拼音标记"},
+{"answer": "用${userLanguage}的答案", "isCorrect": false, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案在${learningLanguage}中，则为其拼音标记"},
+{"answer": "用${userLanguage}的答案（1-40级使用${userLanguage}，其他级别见规则）", "isCorrect": true, "translation": "${userLanguage} 翻译", "phoneticNotation": "如果答案在${learningLanguage}中，则为其拼音标记"},
                   // ... 生成 2-5 个选项 (每个测验项目的问题数量不同)
                 ]
               }
@@ -399,7 +442,8 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ 每个问题都有一个 usedWords 数组，包含其测试单词的有效 _id 值
 ✓ 每个问题的 usedWords 仅包含该问题专门测试的单词
       ✓ 所有 _id 和 userId 值完全保留为输入值
-      ✓ 句子复杂度与级别 ${level}/100 匹配
+✓ 句子复杂度与级别 ${level}/100 匹配
+✓ 答案选项语言符合级别 ${level}/100 的答案选项语言规则
       ✓ JSON 结构中存在所有必需字段`,
   },
   русский: {
@@ -425,16 +469,25 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - Каждый вопрос ДОЛЖЕН включать массив 'usedWords' со значениями _id словарных слов, которые этот вопрос специально проверяет. Назначьте 1-3 ID слов на вопрос в зависимости от того, какие слова проверяет вопрос. НЕ включайте слова, которые не проверяются непосредственно этим вопросом. НЕ создавайте дублирующие записи в массиве usedWords одного вопроса.
 
       РУКОВОДЯЩИЕ ПРИНЦИПЫ СЛОЖНОСТИ ПО УРОВНЯМ:
-      - Уровни 1-10 (Начинающий): Простые предложения (8-12 слов), базовая грамматика, прямолинейные вопросы о фактах, ответы на ${userLanguage}
-      - Уровни 11-20 (Начинающий-Средний): Простые предложения (10-14 слов), базовая грамматика, слегка более детальные фактические вопросы, ответы на ${userLanguage}
-      - Уровни 21-30 (Средний): Умеренные предложения (12-18 слов), сложные предложения, вопросы о связях и следствиях, ответы на ${userLanguage}
-      - Уровни 31-40 (Средний-Продвинутый): Умеренные предложения (15-20 слов), более сложные составные предложения, базовые следствия, ответы на ${userLanguage}
-      - Уровни 41-50 (Продвинутый): Сложные предложения (18-25 слов), множественные придаточные, аналитические вопросы, ответы на ${userLanguage} или ${learningLanguage}
-      - Уровни 51-60 (Продвинутый-Эксперт): Сложные предложения (20-28 слов), множественные зависимые придаточные, более глубокие выводы и нюансированное контекстуальное значение, ответы на ${userLanguage} или ${learningLanguage}
-      - Уровни 61-70 (Эксперт): Изощренные предложения (25+ слов), продвинутая грамматика, нюансированные вопросы на понимание, абстрактные концепции, ответы на ${userLanguage} или ${learningLanguage}
-      - Уровни 71-80 (Эксперт-Мастерство): Высоко изощренные предложения (30+ слов), сложные структуры, сложные абстрактные концепции, интертекстуальные связи, ответы на ${learningLanguage}
-      - Уровни 81-90 (Почти носитель): Проза, имитирующая сложность носителя языка, продвинутый риторический анализ, философские следствия, тонкие различия в значении, ответы на ${learningLanguage}
-      - Уровни 91-100 (Носитель/Мастерство): Полное владение всеми грамматическими формами и стилистическими вариациями, глубокий культурный/исторический контекст, нюансированный подтекст, высоко академический/специализированный анализ, ответы на ${learningLanguage}
+- Уровни 1-10 (Начинающий): Простые предложения (8-12 слов), базовая грамматика, прямолинейные вопросы о фактах, вопросы на ${userLanguage}, варианты ответа на ${userLanguage}
+- Уровни 11-20 (Начинающий-Средний): Простые предложения (10-14 слов), базовая грамматика, слегка более детальные фактические вопросы, вопросы на ${userLanguage}, варианты ответа на ${userLanguage}
+- Уровни 21-30 (Средний): Умеренные предложения (12-18 слов), сложные предложения, вопросы о связях и следствиях, вопросы на ${userLanguage}, варианты ответа на ${userLanguage}
+- Уровни 31-40 (Средний-Продвинутый): Умеренные предложения (15-20 слов), более сложные составные предложения, базовые следствия, вопросы на ${userLanguage}, варианты ответа на ${userLanguage}
+- Уровни 41-50 (Продвинутый): Сложные предложения (18-25 слов), множественные придаточные, аналитические вопросы, вопросы на ${userLanguage} или ${learningLanguage}, варианты ответа согласно ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА
+- Уровни 51-60 (Продвинутый-Эксперт): Сложные предложения (20-28 слов), множественные зависимые придаточные, более глубокие выводы и нюансированное контекстуальное значение, вопросы на ${userLanguage} или ${learningLanguage}, варианты ответа согласно ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА
+- Уровни 61-70 (Эксперт): Изощренные предложения (25+ слов), продвинутая грамматика, нюансированные вопросы на понимание, абстрактные концепции, вопросы на ${learningLanguage}, варианты ответа согласно ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА
+- Уровни 71-80 (Эксперт-Мастерство): Высоко изощренные предложения (30+ слов), сложные структуры, сложные абстрактные концепции, интертекстуальные связи, вопросы на ${learningLanguage}, варианты ответа на ${learningLanguage}
+- Уровни 81-90 (Почти носитель): Проза, имитирующая сложность носителя языка, продвинутый риторический анализ, философские следствия, тонкие различия в значении, вопросы на ${learningLanguage}, варианты ответа на ${learningLanguage}
+- Уровни 91-100 (Носитель/Мастерство): Полное владение всеми грамматическими формами и стилистическими вариациями, глубокий культурный/исторический контекст, нюансированный подтекст, высоко академический/специализированный анализ, вопросы на ${learningLanguage}, варианты ответа на ${learningLanguage}
+
+ПРАВИЛА ЯЗЫКА ВАРИАНТОВ ОТВЕТА - СТРОГО СОБЛЮДАТЬ:
+Язык ВАРИАНТОВ ОТВЕТА (не текста вопроса) ДОЛЖЕН следовать этой прогрессии в зависимости от уровня пользователя:
+- Уровни 1-40 (Начинающий до Средний-Продвинутый): ВСЕ варианты ответа ДОЛЖНЫ быть на ${userLanguage}. НЕ используйте ${learningLanguage} ни в одном варианте ответа.
+- Уровни 41-60 (Продвинутый до Продвинутый-Эксперт): СМЕШАННО — примерно половина вариантов ответа на ${userLanguage} и половина на ${learningLanguage}. Варьируйте внутри каждой викторины.
+- Уровни 61-80 (Эксперт до Эксперт-Мастерство): Преимущественно на ${learningLanguage}, с отдельными вариантами на ${userLanguage} для особо трудных слов.
+- Уровни 81-100 (Почти носитель до Мастерство): ВСЕ варианты ответа на ${learningLanguage}.
+
+КРИТИЧНО: На уровнях 1-40 пользователь ещё формирует базовый словарный запас. Варианты ответа на ${learningLanguage} на этом этапе контрпродуктивны и запутывают. ВСЕГДА используйте ${userLanguage} для вариантов ответа на этих уровнях.
 
       ТИПЫ ВОПРОСОВ ПО УРОВНЯМ:
       - Уровни 1-20 (Начинающий/Начинающий-Средний): Фактические вопросы "Что/Где/Когда/Кто"
@@ -476,10 +529,11 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
 ],
                 "options": [
                  // Создайте ПЕРЕМЕННОЕ количество вариантов на вопрос (от 3 до 5)
-                 // Позиция правильного ответа ДОЛЖНА быть рандомизирована в этом массиве.
-                 {"answer": "Вариант ответа", "isCorrect": false, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация варианта ответа, если он на ${learningLanguage}"},
-                 {"answer": "Вариант ответа", "isCorrect": true, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация варианта ответа, если он на ${learningLanguage}"},
-                 {"answer": "Вариант ответа", "isCorrect": false, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация варианта ответа, если он на ${learningLanguage}"}
+// Позиция правильного ответа ДОЛЖНА быть рандомизирована в этом массиве.
+// КРИТИЧНО: Язык вариантов ответа ДОЛЖЕН соответствовать ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА. На уровнях 1-40 ВСЕ варианты ДОЛЖНЫ быть на ${userLanguage}.
+{"answer": "Ответ на ${userLanguage} (используйте ${userLanguage} для уровней 1-40, см. правила для других уровней)", "isCorrect": false, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация, если ответ на ${learningLanguage}"},
+{"answer": "Ответ на ${userLanguage}", "isCorrect": true, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация, если ответ на ${learningLanguage}"},
+{"answer": "Ответ на ${userLanguage} (используйте ${userLanguage} для уровней 1-40, см. правила для других уровней)", "isCorrect": false, "translation": "перевод на ${userLanguage}", "phoneticNotation": "фонетическая нотация, если ответ на ${learningLanguage}"}
                    // ... создайте 2-5 вариантов (варьируйте количество для каждого элемента викторины)
                 ]
               }
@@ -497,7 +551,8 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Каждый вопрос имеет массив usedWords с допустимыми значениями _id проверяемых им слов
 ✓ Массив usedWords каждого вопроса содержит только слова, которые этот вопрос специально проверяет
       ✓ Все значения _id и userId сохранены точно как во входных данных
-      ✓ Сложность предложений соответствует уровню ${level}/100
+✓ Сложность предложений соответствует уровню ${level}/100
+✓ Язык вариантов ответа соответствует ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА для уровня ${level}/100
       ✓ Все обязательные поля присутствуют в структуре JSON`,
   },
 };
