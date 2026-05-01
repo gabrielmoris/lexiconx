@@ -29,7 +29,7 @@ export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor
     }
 
     updated.easeFactor = parseFloat(Math.max(MIN_EASE_FACTOR, newEase).toFixed(2));
-    updated.nextReview = addDays(new Date(), -1).toISOString();
+	updated.nextReview = addDays(new Date(), 0).toISOString();
   } else {
     updated.repetitions = word.repetitions + 1;
     updated.easeFactor = parseFloat(((word.easeFactor || DEFAULT_EASE_FACTOR) + 0.05).toFixed(2));
