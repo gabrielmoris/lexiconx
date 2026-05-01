@@ -91,11 +91,11 @@ describe("processAnswer", () => {
       expect(result.easeFactor).toBe(parseFloat((DEFAULT_EASE_FACTOR - 0.15).toFixed(2))); // 2.35
     });
 
-    it("schedules review for the next day (addDays -1)", () => {
-      const word = createWord({ easeFactor: 2.5 });
-      const result = processAnswer(word, false);
+		it("schedules review for immediately (addDays 0)", () => {
+			const word = createWord({ easeFactor: 2.5 });
+			const result = processAnswer(word, false);
 
-      expect(toDate(result.nextReview)).toBe(daysFromNow(-1));
+			expect(toDate(result.nextReview)).toBe(daysFromNow(0));
     });
 
     it("sets lastReviewed to current time", () => {
