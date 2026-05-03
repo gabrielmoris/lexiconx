@@ -1,4 +1,5 @@
 import { Language, User, Word } from "@/types/Words";
+import { QuizSessionData } from "@/types/Words";
 
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -152,4 +153,18 @@ export const quizGeneration = async (
     isSSR,
     ssrHeaders,
   });
+};
+
+// STATS RELATED APIS
+export const saveQuizSession = async (session: Omit<QuizSessionData, "_id" | "userId" | "date" | "createdAt" | "updatedAt">) => {
+	return _apiHandler("/api/stats", {
+		method: "POST",
+		body: session,
+	});
+};
+
+
+export const getStats = async (language: Language) => {
+  const endpoint = `/api/stats?language=${language}`;
+  return _apiHandler(endpoint, { method: "GET" });
 };
