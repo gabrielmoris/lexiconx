@@ -36,6 +36,7 @@ export const useQuizManager = (userData: User) => {
 
 	// Load quiz data and prefetch all words used in the quiz
 	useEffect(() => {
+		if (isQuizFinished) return;
 		if (!isLocalStorageHydrated) return;
 
 		const quizSource = contextQuiz?.length > 0 ? contextQuiz : storedQuizzesData.quizzes;
