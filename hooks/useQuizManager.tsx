@@ -5,6 +5,7 @@ import { useQuiz } from "@/context/QuizContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { processAnswer } from "@/lib/correctionWords";
 import { getWordsByIds, updateWordsData, updateUserData } from "@/lib/apis";
+import { saveQuizSession } from "@/lib/apis";
 import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";
 
@@ -25,14 +26,17 @@ export const useQuizManager = (userData: User) => {
 	const [startingTimer, setStartingTimer] = useState<number>();
 
 	const originalEaseFactors = useRef<Map<string, number>>(new Map());
+	const quizStartTime = useRef(Date.now());
 
 	useEffect(() => {
 		const start = Date.now();
 		setStartingTimer(start);
+		quizStartTime.current = start;
 	}, []);
 
 	// Load quiz data and prefetch all words used in the quiz
 	useEffect(() => {
+		if (isQuizFinished) return;
 		if (!isLocalStorageHydrated) return;
 
 		const quizSource = contextQuiz?.length > 0 ? contextQuiz : storedQuizzesData.quizzes;
@@ -80,6 +84,16 @@ export const useQuizManager = (userData: User) => {
 					learningProgress.lastSessionDate = new Date();
 					if (!startingTimer) throw new Error("Starting timer not found");
 					learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer); // Saved in miliseconds
+
+					// Save quiz session for analytics
+					const wordsMasteredCount = usedWords.filter((word) => word.repetitions > 0).length;
+					saveQuizSession({
+						language: displayQuiz[0].language,
+						totalQuestions: score.success + score.errors,
+						correctAnswers: score.success,
+						wordsMastered: wordsMasteredCount,
+						duration: actualTimeEnd - quizStartTime.current,
+					}).catch((err) => console.error("Error saving quiz session:", err));
 
 					await updateUserData(updatedUserData);
 					if (isSucceed) {
