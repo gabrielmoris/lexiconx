@@ -55,7 +55,7 @@ const StatsPage = () => {
 	}
 
 	return (
-		<main className="flex items-center justify-center py-10 px-4 md:p-10">
+		<main className="flex items-center justify-center py-10 px-4 md:p-10 w-screen">
 			<div className="w-full max-w-3xl space-y-6">
 				<h1 className="text-3xl font-extrabold text-center pb-4 border-b border-theme-bg-light dark:border-theme-bg-dark text-theme-text-light dark:text-theme-text-dark">
 					{t("title")}
