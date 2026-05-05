@@ -56,7 +56,7 @@ export default function Home() {
             <motion.p
               {...fadeInUp}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="mx-auto mb-10 max-w-2xl text-xl text-gray-600 dark:text-gray-300"
+              className="mx-auto mb-10 max-w-2xl text-xl text-theme-fg-light dark:text-theme-fg-dark"
             >
               {t("hero.subtitle")} {t("hero.description")}
             </motion.p>
@@ -160,7 +160,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t("features.title")}</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{t("features.subtitle")}</p>
+            <p className="text-xl text-theme-fg-light dark:text-theme-fg-dark max-w-2xl mx-auto">{t("features.subtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -185,7 +185,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.spaced-repetition.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.spaced-repetition.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.spaced-repetition.description")}</p>
             </motion.div>
 
             <motion.div
@@ -203,7 +203,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.ai-quizzes.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.ai-quizzes.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.ai-quizzes.description")}</p>
             </motion.div>
 
             <motion.div
@@ -216,7 +216,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.fast-progress.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.fast-progress.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.fast-progress.description")}</p>
             </motion.div>
 
             <motion.div
@@ -234,7 +234,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.multiple-languages.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.multiple-languages.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.multiple-languages.description")}</p>
             </motion.div>
 
             <motion.div
@@ -252,7 +252,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.progress-tracking.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.progress-tracking.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.progress-tracking.description")}</p>
             </motion.div>
 
             <motion.div
@@ -270,14 +270,14 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.mobile-friendly.title")}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{t("features.mobile-friendly.description")}</p>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.mobile-friendly.description")}</p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl mb-10">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl mb-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold text-white mb-6">{t("cta.title")}</h2>

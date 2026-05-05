@@ -54,7 +54,7 @@ const WordCard = ({ word }: { word: Word }) => {
   );
 
   useEffect(() => {
-    const htmlElement = document.documentElement; // This refers to the <html> tag
+    const htmlElement = document.documentElement; 
 
     if (deletePopup) {
       htmlElement.style.overflow = "hidden";

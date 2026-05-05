@@ -60,7 +60,7 @@ Word.find({ userId, language, nextReview: { $lte: now } }).sort({ nextReview: 1 
 Word.find({ userId, language, repetitions: 0, lastReviewed: null }).sort({ createdAt: 1 })
 ```
 
-`lib/mongodb/calculateNextReview.ts` handles the SRS interval calculation.
+`lib/correctionWords.ts` handles the SRS interval calculation.
 
 ## User Model (`lib/mongodb/models/user.ts`)
 

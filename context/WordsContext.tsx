@@ -5,6 +5,7 @@ import { useToastContext } from "./ToastContext";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "./LanguageToLearnContext";
 import { deleteWordApi, fetchUserWords } from "@/lib/apis";
+import { useTranslations } from "next-intl";
 
 interface WordsContextType {
 	words: Word[];
@@ -28,6 +29,7 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
 	const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
 
 	const { showToast } = useToastContext();
+	const t = useTranslations("word-context");
 
 	useEffect(() => {
 		if (session && !isSelectedLanguageLoading) {
@@ -37,7 +39,7 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
 					setWords(data);
 				} catch (err) {
 					showToast({
-						message: err instanceof Error ? err.message : "An unknown error occurred.",
+						message: err instanceof Error ? err.message : t("unknown-error"),
 						variant: "error",
 						duration: 3000,
 					});
