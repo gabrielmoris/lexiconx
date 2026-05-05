@@ -37,7 +37,7 @@ export default function ReviewForecastChart({ data }: ReviewForecastProps) {
 
 	if (total === 0) {
 		return (
-			<div className="border border-theme-bg-light dark:border-theme-bg-dark rounded-lg p-6">
+			<div className="rounded-lg p-6">
 				<h3 className="text-lg font-semibold text-theme-text-light dark:text-theme-text-dark mb-4">
 					{t("review-forecast")}
 				</h3>
@@ -49,8 +49,8 @@ export default function ReviewForecastChart({ data }: ReviewForecastProps) {
 	}
 
 	return (
-		<div className="border border-theme-bg-light dark:border-theme-bg-dark rounded-lg p-6">
-			<h3 className="text-lg font-semibold text-theme-text-light dark:text-theme-text-dark mb-4">
+		<div className="rounded-lg p-6">
+			<h3 className="text-lg font-semibold mb-4">
 				{t("review-forecast")}
 			</h3>
 			<ResponsiveContainer width="100%" height={250}>

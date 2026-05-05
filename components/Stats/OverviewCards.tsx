@@ -41,7 +41,7 @@ export default function OverviewCards({ overview }: OverviewCardsProps) {
 			{cards.map((card) => (
 				<div
 					key={card.label}
-					className="border border-theme-bg-light dark:border-theme-bg-dark rounded-lg p-4 text-center"
+					className="rounded-lg p-4 text-center"
 				>
 					<p className="text-2xl font-bold text-theme-text-light dark:text-theme-text-dark">
 						{card.value}
