@@ -4,17 +4,18 @@ import React from "react";
 import LanguageToLearn from "../LanguageToLearn";
 import { LanguageToLearnProvider } from "@/context/LanguageToLearnContext";
 import { selectUserLearningLanguage } from "@/lib/apis";
+import { vi } from "vitest";
 
 // Mock next-intl and next/navigation
-jest.mock("next-intl", () => ({
+vi.mock("next-intl", () => ({
   useLocale: () => "en",
   useTranslations: () => (key: string) => key,
 }));
 
 // mock apis
-jest.mock("@/lib/apis");
+vi.mock("@/lib/apis");
 
-jest.mock("next-auth/react", () => ({
+vi.mock("next-auth/react", () => ({
   useSession: () => ({
     data: { user: { name: "Test User" } },
     status: "authenticated",
@@ -22,7 +23,7 @@ jest.mock("next-auth/react", () => ({
 }));
 
 describe("Language Learning Options", () => {
-  const mockSelectUserLearningLanguage = jest.mocked(selectUserLearningLanguage);
+  const mockSelectUserLearningLanguage = vi.mocked(selectUserLearningLanguage);
 
   beforeEach(() => {
     mockSelectUserLearningLanguage.mockClear();

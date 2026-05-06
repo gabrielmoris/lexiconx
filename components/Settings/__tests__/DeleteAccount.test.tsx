@@ -4,9 +4,10 @@ import DeleteAccount from "../DeleteAccount";
 import userEvent from "@testing-library/user-event";
 import { deleteUserData } from "@/lib/apis";
 import { signOut } from "next-auth/react";
+import { vi } from "vitest";
 
 // Mock useAuthGuard to avoid async state updates
-jest.mock("@/hooks/useAuthGuard", () => ({
+vi.mock("@/hooks/useAuthGuard", () => ({
   useAuthGuard: () => ({
     session: { user: { email: "test@example.com" } },
     status: "authenticated",
@@ -16,45 +17,45 @@ jest.mock("@/hooks/useAuthGuard", () => ({
 }));
 
 // Mock useLocalStorage for testing Delete Data after deleting account
-const mockDeleteStep = jest.fn();
-const mockDeleteQuiz = jest.fn();
+const mockDeleteStep = vi.fn();
+const mockDeleteQuiz = vi.fn();
 
-jest.mock("@/hooks/useLocalStorage", () => ({
+vi.mock("@/hooks/useLocalStorage", () => ({
   __esModule: true,
-  default: jest.fn((key: string) => {
+  default: vi.fn((key: string) => {
     if (key === "onboardingStep") {
       return { deleteValue: mockDeleteStep };
     }
     if (key === "quizes") {
       return { deleteValue: mockDeleteQuiz };
     }
-    return { deleteValue: jest.fn() };
+    return { deleteValue: vi.fn() };
   }),
 }));
 
 // Mock next-intl for translations
-jest.mock("next-intl", () => ({
+vi.mock("next-intl", () => ({
   useLocale: () => "en",
   useTranslations: () => (key: string) => key,
 }));
 
 // Mock next-auth/react for signOut
-jest.mock("next-auth/react", () => ({
+vi.mock("next-auth/react", () => ({
   useSession: () => ({
     data: { user: { name: "Test User" } },
     status: "authenticated",
   }),
-  signOut: jest.fn(),
+  signOut: vi.fn(),
 }));
 
 // Mock deleteUserData from lib/apis
-jest.mock("@/lib/apis", () => ({
-  deleteUserData: jest.fn().mockResolvedValue({ data: { deletedCount: 1 } }),
+vi.mock("@/lib/apis", () => ({
+  deleteUserData: vi.fn().mockResolvedValue({ data: { deletedCount: 1 } }),
 }));
 
 describe("Delete Account", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders delete account button", async () => {
