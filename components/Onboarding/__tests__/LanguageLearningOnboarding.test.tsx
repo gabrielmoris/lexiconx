@@ -4,17 +4,18 @@ import React from "react";
 import LanguageLearningOnboarding from "../LanguageLearningOnboarding";
 import { LanguageToLearnProvider } from "@/context/LanguageToLearnContext";
 import { selectUserLearningLanguage } from "@/lib/apis";
+import { vi } from "vitest";
 
 // Mock next-intl and next/navigation
-jest.mock("next-intl", () => ({
+vi.mock("next-intl", () => ({
   useLocale: () => "en",
   useTranslations: () => (key: string) => key,
 }));
 
 // mock apis
-jest.mock("@/lib/apis");
+vi.mock("@/lib/apis");
 
-jest.mock("next-auth/react", () => ({
+vi.mock("next-auth/react", () => ({
   useSession: () => ({
     data: { user: { name: "Test User" } },
     status: "authenticated",
@@ -22,7 +23,7 @@ jest.mock("next-auth/react", () => ({
 }));
 
 describe("Language Learning Options", () => {
-  const mockSelectUserLearningLanguage = jest.mocked(selectUserLearningLanguage);
+  const mockSelectUserLearningLanguage = vi.mocked(selectUserLearningLanguage);
 
   beforeEach(() => {
     mockSelectUserLearningLanguage.mockClear();
@@ -32,7 +33,7 @@ describe("Language Learning Options", () => {
   it("renders the LanguageLearningOnBoarding and its main components", async () => {
     render(
       <LanguageToLearnProvider>
-        <LanguageLearningOnboarding setNextStep={jest.fn()} />
+        <LanguageLearningOnboarding setNextStep={vi.fn()} />
       </LanguageToLearnProvider>
     );
 
@@ -55,7 +56,7 @@ describe("Language Learning Options", () => {
 
   it("Calls the API when a flag is clicked", async () => {
     const user = userEvent.setup();
-    const mockSetNextStep = jest.fn();
+    const mockSetNextStep = vi.fn();
 
     render(
       <LanguageToLearnProvider>

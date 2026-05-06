@@ -2,27 +2,28 @@
 import { render, screen } from "@testing-library/react";
 import AddFirstCards from "../AddFirstCards";
 import React from "react";
+import { vi } from "vitest";
 
 // Mock the dependencies
-jest.mock("next-intl", () => ({
+vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-jest.mock("../../Words/WordForm", () => {
+vi.mock("../../Words/WordForm", () => {
   const MockWordForm = ({ className, isOpen }: { className?: string; isOpen?: boolean }) => {
     return <div data-testid="word-form">Word Form</div>;
   };
-  return MockWordForm;
+  return { default: MockWordForm };
 });
 
-jest.mock("../../Words/WordList", () => {
+vi.mock("../../Words/WordList", () => {
   const MockWordList = () => {
     return <div data-testid="word-list">Word List</div>;
   };
-  return MockWordList;
+  return { default: MockWordList };
 });
 
-jest.mock("../../AI/AiGenerateVocabulary", () => {
+vi.mock("../../AI/AiGenerateVocabulary", () => {
   const AiGenerateVocabulary = () => {
     return <div data-testid="ai-generate">AI Generate</div>;
   };

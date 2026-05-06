@@ -2,16 +2,17 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LocaleSwitcher from "../LocaleSwitcher";
 import React from "react";
+import { vi } from "vitest";
 
 // Create a mock function for router.push and next step
-const mockPush = jest.fn();
+const mockPush = vi.fn();
 
 // Mock next-intl and next/navigation
-jest.mock("next-intl", () => ({
+vi.mock("next-intl", () => ({
   useLocale: () => "en",
 }));
 
-jest.mock("@/src/i18n/navigation", () => ({
+vi.mock("@/src/i18n/navigation", () => ({
   usePathname: () => "/onboarding",
   Link: ({ children, locale, onClick, ...props }: React.PropsWithChildren<{ locale: string; onClick?: () => void }>) => (
     <button
@@ -30,14 +31,14 @@ jest.mock("@/src/i18n/navigation", () => ({
   }),
 }));
 
-jest.mock("@/src/i18n/routing", () => ({
+vi.mock("@/src/i18n/routing", () => ({
   locales: ["en", "de", "zh", "es", "ru"],
 }));
 
 // Mock other dependencies
-jest.mock("@/lib/apis", () => ({ updateUserData: jest.fn() }));
+vi.mock("@/lib/apis", () => ({ updateUserData: vi.fn() }));
 
-jest.mock("@/hooks/useAuthGuard", () => ({
+vi.mock("@/hooks/useAuthGuard", () => ({
   useAuthGuard: () => ({ session: {}, status: "authenticated" }),
 }));
 
@@ -47,7 +48,7 @@ describe("LocaleSwitcher", () => {
   });
 
   it("shows correct aria-label for German flag", async () => {
-    render(<LocaleSwitcher setNextStep={jest.fn()} />);
+    render(<LocaleSwitcher setNextStep={vi.fn()} />);
 
     const germanFlag = screen.getByLabelText(/Switch to Deutsch/i);
     expect(germanFlag).toBeInTheDocument();
@@ -55,7 +56,7 @@ describe("LocaleSwitcher", () => {
 
   it("calls router.push with correct path when German flag is clicked", async () => {
     const user = userEvent.setup();
-    render(<LocaleSwitcher setNextStep={jest.fn()} />);
+    render(<LocaleSwitcher setNextStep={vi.fn()} />);
 
     const germanFlag = screen.getByLabelText(/Switch to Deutsch/i);
     await user.click(germanFlag);

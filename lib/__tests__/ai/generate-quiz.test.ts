@@ -1,9 +1,10 @@
 import { generateQuizWithWords } from "@/lib/ai/generate-quiz";
 import { Word, Language } from "@/types/Words";
+import { vi } from "vitest";
 
-const mockGenerateContent = jest.fn();
+const mockGenerateContent = vi.fn();
 
-jest.mock("@/lib/ai/client", () => ({
+vi.mock("@/lib/ai/client", () => ({
 	createAIClient: () => ({
 		generateContent: mockGenerateContent,
 	}),
