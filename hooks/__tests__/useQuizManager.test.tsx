@@ -397,8 +397,6 @@ describe('useQuizManager', () => {
     });
   });
 
-  // --- Quiz Restart ---
-
   describe('restartQuiz', () => {
     it('resets score to 0/0', async () => {
       const { result } = await setupHook();
