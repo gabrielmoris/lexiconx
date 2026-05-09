@@ -1,5 +1,7 @@
 import { Language, Word } from "@/types/Words";
 
+type PromptWord = Pick<Word, "_id" | "word" | "definition" | "phoneticNotation" | "tags">;
+
 export const QUIZ_PROMPTS = {
   English: {
     systemPrompt: (
@@ -63,9 +65,9 @@ CRITICAL: At levels 1-40, the user is still building basic vocabulary. Answer op
       - Follow the exact structure provided in the user prompt
       - Ensure all required fields are present and correctly formatted`,
 
-    userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (words: PromptWord[], level: number, learningLanguage: Language, userLanguage: Language) => `
       VOCABULARY INPUT:
-      ${words.map((w, index) => `Word ${index + 1}: ${JSON.stringify(w, null, 2)}`).join("\n\n")}
+      ${words.map((w, index) => `Word ${index + 1}: ${JSON.stringify(w)}`).join("\n\n")}
 
       GENERATION PARAMETERS:
       - User Level: ${level}/100
@@ -111,7 +113,7 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Each quiz has 3-5 questions (counts vary between quizzes)
       ✓ Each question has a usedWords array with valid _id values of the words it tests
 ✓ Each question's usedWords only contains words that question specifically tests
-      ✓ All _id and userId values preserved exactly as input
+      ✓ All _id values preserved exactly as input
 ✓ Sentence complexity matches level ${level}/100
 ✓ Answer options language matches the ANSWER OPTIONS LANGUAGE RULES for level ${level}/100
       ✓ All required fields present in JSON structure`,
@@ -172,9 +174,9 @@ CRÍTICO: En los niveles 1-40, el usuario aún está construyendo vocabulario b�
       - Sigue la estructura exacta proporcionada en la solicitud del usuario
       - Asegúrate de que todos los campos requeridos estén presentes y formateados correctamente`,
 
-    userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (words: PromptWord[], level: number, learningLanguage: Language, userLanguage: Language) => `
       ENTRADA DE VOCABULARIO:
-      ${words.map((w, index) => `Palabra ${index + 1}: ${JSON.stringify(w, null, 2)}`).join("\n\n")}
+      ${words.map((w, index) => `Palabra ${index + 1}: ${JSON.stringify(w)}`).join("\n\n")}
 
       PARÁMETROS DE GENERACIÓN:
       - Nivel de usuario: ${level}/100
@@ -221,7 +223,7 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Cada cuestionario tiene 3-5 preguntas (los recuentos varían entre cuestionarios)
       ✓ Cada pregunta tiene un array usedWords con valores _id válidos de las palabras que evalúa
 ✓ El usedWords de cada pregunta solo contiene palabras que esa pregunta evalúa específicamente
-      ✓ Todos los valores _id y userId se conservan exactamente como se ingresaron
+      ✓ Todos los valores _id se conservan exactamente como se ingresaron
 ✓ La complejidad de la oración coincide con el nivel ${level}/100
 ✓ El idioma de las opciones de respuesta coincide con las REGLAS DE IDIOMA DE OPCIONES DE RESPUESTA para el nivel ${level}/100
       ✓ Todos los campos requeridos presentes en la estructura JSON`,
@@ -282,9 +284,9 @@ KRITISCH: Auf den Niveaus 1-40 baut der Benutzer noch grundlegenden Wortschatz a
       - Befolge die exakte Struktur, die in der Benutzeraufforderung angegeben ist
       - Stelle sicher, dass alle erforderlichen Felder vorhanden und korrekt formatiert sind`,
 
-    userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (words: PromptWord[], level: number, learningLanguage: Language, userLanguage: Language) => `
       VOKABULAR-EINGABE:
-      ${words.map((w, index) => `Wort ${index + 1}: ${JSON.stringify(w, null, 2)}`).join("\n\n")}
+      ${words.map((w, index) => `Wort ${index + 1}: ${JSON.stringify(w)}`).join("\n\n")}
 
       GENERIERUNGSPARAMETER:
       - Benutzerlevel: ${level}/100
@@ -331,7 +333,7 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ Jedes Quiz hat 3-5 Fragen (Anzahl variiert zwischen den Quizzen)
       ✓ Jede Frage hat ein usedWords-Array mit gültigen _id-Werten der von ihr getesteten Wörter
 ✓ Das usedWords jeder Frage enthält nur Wörter, die diese Frage speziell testet
-      ✓ Alle _id- und userId-Werte exakt wie eingegeben beibehalten
+      ✓ Alle _id-Werte exakt wie eingegeben beibehalten
 ✓ Satzkomplexität stimmt mit Niveau ${level}/100 überein
 ✓ Die Sprache der Antwortoptionen entspricht den ANTWORTOPTIONEN-SPRACHREGELN für Niveau ${level}/100
       ✓ Alle erforderlichen Felder in der JSON-Struktur vorhanden`,
@@ -392,9 +394,9 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - 遵循用户提示中提供的确切结构
       - 确保所有必需字段都存在且格式正确`,
 
-    userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (words: PromptWord[], level: number, learningLanguage: Language, userLanguage: Language) => `
       词汇输入:
-      ${words.map((w, index) => `单词 ${index + 1}: ${JSON.stringify(w, null, 2)}`).join("\n\n")}
+      ${words.map((w, index) => `单词 ${index + 1}: ${JSON.stringify(w)}`).join("\n\n")}
 
       生成参数:
       - 用户级别: ${level}/100
@@ -441,7 +443,7 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ 每个测验有 3-5 个问题 (测验之间数量不同)
       ✓ 每个问题都有一个 usedWords 数组，包含其测试单词的有效 _id 值
 ✓ 每个问题的 usedWords 仅包含该问题专门测试的单词
-      ✓ 所有 _id 和 userId 值完全保留为输入值
+      ✓ 所有 _id 值完全保留为输入值
 ✓ 句子复杂度与级别 ${level}/100 匹配
 ✓ 答案选项语言符合级别 ${level}/100 的答案选项语言规则
       ✓ JSON 结构中存在所有必需字段`,
@@ -501,9 +503,9 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       - Следуйте точной структуре, предоставленной в пользовательском запросе
       - Убедитесь, что все обязательные поля присутствуют и правильно отформатированы`,
 
-    userPrompt: (words: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (words: PromptWord[], level: number, learningLanguage: Language, userLanguage: Language) => `
       ВХОДНЫЕ СЛОВАРНЫЕ ДАННЫЕ:
-      ${words.map((w, index) => `Слово ${index + 1}: ${JSON.stringify(w, null, 2)}`).join("\n\n")}
+      ${words.map((w, index) => `Слово ${index + 1}: ${JSON.stringify(w)}`).join("\n\n")}
 
       ПАРАМЕТРЫ ГЕНЕРАЦИИ:
       - Уровень пользователя: ${level}/100
@@ -550,7 +552,7 @@ ${words.slice(0, 1).map((w) => `"${w._id}"`).join(", ")}
       ✓ У каждой викторины есть 3-5 вопросов (количество варьируется между викторинами)
       ✓ Каждый вопрос имеет массив usedWords с допустимыми значениями _id проверяемых им слов
 ✓ Массив usedWords каждого вопроса содержит только слова, которые этот вопрос специально проверяет
-      ✓ Все значения _id и userId сохранены точно как во входных данных
+      ✓ Все значения _id сохранены точно как во входных данных
 ✓ Сложность предложений соответствует уровню ${level}/100
 ✓ Язык вариантов ответа соответствует ПРАВИЛАМ ЯЗЫКА ВАРИАНТОВ ОТВЕТА для уровня ${level}/100
       ✓ Все обязательные поля присутствуют в структуре JSON`,

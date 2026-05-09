@@ -3,7 +3,23 @@ import { Language, Word } from "@/types/Words";
 import { QUIZ_PROMPTS } from "./quiz-prompts";
 import { createAIClient } from "./client";
 
-const MODEL_NAME = process.env.AI_MODEL || "gemini-2.5-flash";
+const MODEL_NAME = process.env.AI_MODEL || "§§secret(GEMINI_MODEL)";
+
+/**
+ * Strip word data to only the fields the LLM needs for quiz generation.
+ * Removes userId, language, SRS fields (lastReviewed, nextReview, interval,
+ * repetitions, easeFactor), timestamps, and version — none of which
+ * are relevant for generating quiz content.
+ */
+function stripWordForPrompt(word: Word): Pick<Word, "_id" | "word" | "definition" | "phoneticNotation" | "tags"> {
+	return {
+		_id: word._id,
+		word: word.word,
+		definition: word.definition,
+		phoneticNotation: word.phoneticNotation,
+		tags: word.tags,
+	};
+}
 
 /**
  * Enhanced quiz generation function with multilingual support and level-based complexity
@@ -30,8 +46,9 @@ export async function generateQuizWithWords(
       throw new Error(`Unsupported user language: ${userLanguage}`);
     }
 
-    const systemPrompt = promptConfig.systemPrompt(userLanguage, learningLanguage);
-    const userPrompt = promptConfig.userPrompt(words, level, learningLanguage, userLanguage);
+		const systemPrompt = promptConfig.systemPrompt(userLanguage, learningLanguage);
+		const strippedWords = words.map(stripWordForPrompt);
+		const userPrompt = promptConfig.userPrompt(strippedWords, level, learningLanguage, userLanguage);
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
     const result = await client.generateContent({
