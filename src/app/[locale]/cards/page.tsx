@@ -1,10 +1,10 @@
-import WordList from "@/components/Words/WordList";
-import WordForm from "@/components/Words/WordForm";
-import AiQuizGenerator from "@/components/AI/AiQuizzGenerator";
-import { requireAuthSSR } from "@/lib/auth/authGuardSSR";
-import { getLocale } from "next-intl/server";
-import ShowLearningFlag from "@/components/Words/ShowLearningFlag";
-import {AiGenerateVocabulary} from "@/components/AI/AiGenerateVocabulary";
+import WordList from '@/components/Words/WordList';
+import WordForm from '@/components/Words/WordForm';
+import AiQuizGenerator from '@/components/AI/AiQuizzGenerator';
+import { requireAuthSSR } from '@/lib/auth/authGuardSSR';
+import { getLocale } from 'next-intl/server';
+import ShowLearningFlag from '@/components/Words/ShowLearningFlag';
+import { AiGenerateVocabulary } from '@/components/AI/AiGenerateVocabulary';
 
 export default async function CardsPage() {
   const locale = await getLocale();

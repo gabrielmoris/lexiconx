@@ -32,7 +32,7 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations('word-context');
 
   useEffect(() => {
-    if (session && !isSelectedLanguageLoading) {
+    if (session && !isSelectedLanguageLoading && !words.length) {
       const fetchCards = async () => {
         try {
           const { data } = await fetchUserWords(selectedLanguage.language);
