@@ -46,3 +46,6 @@ next-env.d.ts
 # LLM
 # AGENTS.md
 # /docs.a0proj/
+
+# Agent Zero project
+.a0proj/

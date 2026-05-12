@@ -10,7 +10,13 @@ import { Quiz, QuizAnswer } from "@/types/Quiz";
 import { User, Word } from "@/types/Words";
 
 export const useQuizManager = (userData: User) => {
-	const { clientQuizzes: contextQuiz, isLoading: isGeneratingQuiz } = useQuiz();
+	const {
+		clientQuizzes: contextQuiz,
+		isLoading: isGeneratingQuiz,
+		isGeneratingMore,
+		isAllQuizzesReady,
+		totalExpectedQuizzes,
+	} = useQuiz();
 	const { storedValue: storedQuizzesData, isHydrated: isLocalStorageHydrated, deleteValue } = useLocalStorage("quizes", { quizzes: [] });
 	const { data: session } = useSession();
 	const router = useRouter();
@@ -28,13 +34,22 @@ export const useQuizManager = (userData: User) => {
 	const originalEaseFactors = useRef<Map<string, number>>(new Map());
 	const quizStartTime = useRef(Date.now());
 
+	// True when user has finished all currently available quizzes but more are still being generated
+	const isWaitingForNextQuiz =
+		!isAllQuizzesReady &&
+		totalExpectedQuizzes > 0 &&
+		quizStep >= displayQuiz.length &&
+		displayQuiz.length > 0;
+
 	useEffect(() => {
 		const start = Date.now();
 		setStartingTimer(start);
 		quizStartTime.current = start;
 	}, []);
 
-	// Load quiz data and prefetch all words used in the quiz
+	// Load quiz data and prefetch words used in the quiz
+	// When new quizzes arrive progressively, we MERGE new words into usedWords
+	// instead of replacing, to preserve in-memory SRS updates from answered questions.
 	useEffect(() => {
 		if (isQuizFinished) return;
 		if (!isLocalStorageHydrated) return;
@@ -48,28 +63,47 @@ export const useQuizManager = (userData: User) => {
 			if (allWordIds.length > 0) {
 				getWordsByIds(allWordIds)
 					.then(({ data }) => {
-						const easeMap = new Map<string, number>();
+						// Build ease map from DB data for NEW words only
+						// (preserve original ease factors for words we haven't seen yet)
 						data.forEach((word: Word) => {
-							easeMap.set(word._id!, word.easeFactor || 2.5);
+							if (!originalEaseFactors.current.has(word._id!)) {
+								originalEaseFactors.current.set(word._id!, word.easeFactor || 2.5);
+							}
 						});
-						originalEaseFactors.current = easeMap;
 
-						setUsedWords(data);
+						// Merge new words into existing usedWords, preserving SRS updates
+						setUsedWords((prev) => {
+							const existingMap = new Map(prev.map((w) => [w._id!, w]));
+							data.forEach((word: Word) => {
+								// Only add words not already in state (preserve in-memory SRS updates)
+								if (!existingMap.has(word._id!)) {
+									existingMap.set(word._id!, word);
+								}
+							});
+							return Array.from(existingMap.values());
+						});
 					})
 					.catch((error) => {
 						console.error("Error prefetching quiz words:", error);
 					});
 			}
-		} else {
+		} else if (!isGeneratingQuiz && !isGeneratingMore) {
+			// Only redirect if no quizzes exist AND no generation is in progress
 			router.push("/cards");
 		}
-	}, [contextQuiz, storedQuizzesData.quizzes, isLocalStorageHydrated, router]);
+	}, [contextQuiz, storedQuizzesData.quizzes, isLocalStorageHydrated, router, isGeneratingQuiz, isGeneratingMore]);
 
 	// Effect to handle the end of the quiz
+	// Quiz only truly finishes when ALL quizzes are ready AND the user has answered all of them
 	useEffect(() => {
 		if (isQuizFinished || !session) return;
 		const finishQuiz = async () => {
 			if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
+				// If not all quizzes are ready yet, we're in waiting state (not finished)
+				if (!isAllQuizzesReady) {
+					return;
+				}
+
 				const actualTimeEnd = Date.now();
 				try {
 					await updateWordsData(usedWords);
@@ -109,7 +143,7 @@ export const useQuizManager = (userData: User) => {
 			}
 		};
 		finishQuiz();
-	}, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished]);
+	}, [quizStep, displayQuiz, userData, session, usedWords, score, startingTimer, deleteValue, isQuizFinished, isAllQuizzesReady]);
 
 	const handleAnswerClick = useCallback(
 		(option: QuizAnswer) => {
@@ -189,6 +223,7 @@ export const useQuizManager = (userData: User) => {
 	return {
 		isLoading: isLoading || isGeneratingQuiz,
 		isQuizFinished,
+		isWaitingForNextQuiz,
 		score,
 		currentQuizItem,
 		currentQuestion,

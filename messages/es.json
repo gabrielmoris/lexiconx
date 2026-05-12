@@ -106,8 +106,9 @@
     "error-processing-words": "Error al procesar las palabras",
     "error-speech": "La funcionalidad de voz no está disponible",
     "loading-voices": "Espera, cargando las voces...",
-    "error-adding-word": "Error al añadir una palabra"
-  },
+		"error-adding-word": "Error al añadir una palabra",
+		"preparing-next-quiz": "Preparando el siguiente cuestionario, por favor espere..."
+	},
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",
     "congratulations": "¡Felicidades!",

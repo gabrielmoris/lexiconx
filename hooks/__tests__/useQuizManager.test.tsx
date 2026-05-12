@@ -17,10 +17,13 @@ vi.mock('next-auth/react', () => ({
 
 const mockClientQuizzes = vi.fn(() => []);
 vi.mock('@/context/QuizContext', () => ({
-  useQuiz: () => ({
-    clientQuizzes: mockClientQuizzes(),
-    isLoading: false,
-  }),
+	useQuiz: () => ({
+		clientQuizzes: mockClientQuizzes(),
+		isLoading: false,
+		isGeneratingMore: false,
+		isAllQuizzesReady: true,
+		totalExpectedQuizzes: 0,
+	}),
 }));
 
 let storedQuizzes: any[] = [];
