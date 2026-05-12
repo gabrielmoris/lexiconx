@@ -40,6 +40,7 @@ const QuizPage = () => {
 	const {
 		isLoading,
 		isQuizFinished,
+		isFinishing,
 		isWaitingForNextQuiz,
 		score,
 		currentQuizItem,
@@ -94,6 +95,11 @@ const QuizPage = () => {
 	// Show waiting message while next quiz is being generated
 	if (isWaitingForNextQuiz) {
 		return <LoadingComponent message={t("preparing-next-quiz")} />;
+	}
+
+	// Show loading while finish operations are running (saving SRS, updating level, etc.)
+	if (isFinishing) {
+		return <LoadingComponent message={t("finishing-quiz")} />;
 	}
 
 	return (

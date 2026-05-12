@@ -106,7 +106,8 @@
     "error-processing-words": "Fehler beim Verarbeiten der Wörter",
     "error-speech": "Sprachfunktion ist nicht verfügbar",
     "error-adding-word": "Fehler beim Hinzufügen eines Wortes",
-    "preparing-next-quiz": "Nächstes Quiz wird vorbereitet, bitte warten..."
+    "preparing-next-quiz": "Nächstes Quiz wird vorbereitet, bitte warten...",
+    "finishing-quiz": "Quiz wird abgeschlossen, bitte warten..."
   },
   "quiz-finished": {
     "better-luck-next-time": "Viel Glück beim nächsten Mal",
