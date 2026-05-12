@@ -57,12 +57,24 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 	// Ref to track if background generation is still running
 	const isGeneratingRef = useRef(false);
 
+	// Captured refs for background generation (avoid stale closures)
+	const selectedLanguageRef = useRef<Language | null>(null);
+	const currentLocaleRef = useRef<string>('en');
+	const levelRef = useRef<number>(1);
+	const fetchedWordsRef = useRef<Word[]>([]);
+
 	const { status } = useSession();
 	const { selectedLanguage } = useLanguage();
 	const { showToast } = useToastContext();
 	const t = useTranslations('ai-quiz-generator');
 	const currentLocale = useLocale();
 	const [userData, setUserData] = useState<User>();
+
+	// Keep refs in sync with current values
+	useEffect(() => {
+		selectedLanguageRef.current = selectedLanguage.language;
+		currentLocaleRef.current = currentLocale;
+	}, [selectedLanguage, currentLocale]);
 
 	// Fetch user data
 	useEffect(() => {
@@ -79,6 +91,47 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 		};
 		fetchUser();
 	}, [status, showToast, t]);
+
+	/**
+	 * Generates remaining quizzes in the background (fire-and-forget).
+	 * Uses refs to avoid stale closures since this runs after the
+	 * main generateQuiz function has already returned.
+	 */
+	const generateRemainingQuizzes = useCallback(async (
+		quiz1: Quiz,
+		quizCount: number,
+	) => {
+		const backgroundQuizzes: Quiz[] = [quiz1];
+
+		for (let i = 1; i < quizCount; i++) {
+			if (!isGeneratingRef.current) break;
+
+			try {
+				const result = await quizGeneration(
+					selectedLanguageRef.current!,
+					currentLocaleRef.current as Language,
+					levelRef.current,
+					fetchedWordsRef.current,
+					1
+				);
+
+				if (result.quizzes[0]) {
+					backgroundQuizzes.push(result.quizzes[0]);
+					setClientQuizzes([...backgroundQuizzes]);
+				}
+			} catch (error) {
+				console.error(`Error generating quiz ${i + 1}:`, error);
+				// Continue generating remaining quizzes even if one fails
+			}
+		}
+
+		setIsGeneratingMore(false);
+		isGeneratingRef.current = false;
+
+		// Save to localStorage only when ALL quizzes are generated
+		setIsAllQuizzesReady(true);
+		setStoredQuizzes({ quizzes: backgroundQuizzes });
+	}, [setStoredQuizzes]);
 
 	const generateQuiz = useCallback(async () => {
 		if (status === 'authenticated') {
@@ -118,10 +171,9 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
 				setTotalExpectedQuizzes(quizCount);
 
-				// We pass the FULL word pool to each quiz generation call with quizCount=1.
-				// The AI naturally selects different subsets for each quiz across
-				// separate calls, avoiding the partitioning bug where splitting
-				// words into groups could create partitions with <3 words.
+				// Store values in refs for background generation
+				levelRef.current = learningProgress!.level;
+				fetchedWordsRef.current = fetchedWords;
 
 				// Step 3: Generate quiz 1 immediately
 				const data = await quizGeneration(
@@ -136,47 +188,22 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 				setClientQuizzes([quiz1]);
 				setIsLoading(false);
 
-				// Step 4: If more quizzes expected, generate them in background sequentially
+				// Step 4: If more quizzes expected, fire-and-forget background generation
+				// This runs independently — the user is already navigating to /quiz
 				if (quizCount > 1) {
 					setIsGeneratingMore(true);
 					isGeneratingRef.current = true;
 
-					const backgroundQuizzes: Quiz[] = [quiz1];
-
-					for (let i = 1; i < quizCount; i++) {
-						if (!isGeneratingRef.current) break;
-
-						try {
-							const result = await quizGeneration(
-								selectedLanguage.language,
-								currentLocale as Language,
-								learningProgress!.level,
-								fetchedWords,
-								1
-							);
-
-							if (result.quizzes[0]) {
-								backgroundQuizzes.push(result.quizzes[0]);
-								setClientQuizzes([...backgroundQuizzes]);
-							}
-						} catch (error) {
-							console.error(`Error generating quiz ${i + 1}:`, error);
-							// Continue generating remaining quizzes even if one fails
-						}
-					}
-
-					setIsGeneratingMore(false);
-					isGeneratingRef.current = false;
-
-					// Step 5: Save to localStorage only when ALL quizzes are generated
-					setIsAllQuizzesReady(true);
-					setStoredQuizzes({ quizzes: backgroundQuizzes });
+					// Fire-and-forget: don't await this!
+					generateRemainingQuizzes(quiz1, quizCount);
 				} else {
 					// Only 1 quiz - it's already ready
 					setIsAllQuizzesReady(true);
 					setStoredQuizzes({ quizzes: [quiz1] });
 				}
 
+				// Return success IMMEDIATELY after quiz 1 is ready
+				// so the user can navigate to /quiz and start playing
 				return { success: true };
 			} catch (error) {
 				console.error('Error generating quiz:', error);
@@ -198,7 +225,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 			return { success: false };
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [status, selectedLanguage, userData]);
+	}, [status, selectedLanguage, userData, generateRemainingQuizzes]);
 
 	// Cleanup: cancel background generation on unmount
 	useEffect(() => {
