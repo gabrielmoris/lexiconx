@@ -179,20 +179,20 @@ export const getWordsForQuiz = async (
 
 // QUIZ RELATED APIS
 export const quizGeneration = async (
-	languageToLearn: Language,
-	userLanguage: Language,
-	level: number,
-	wordsForQuiz: Word[],
-	quizCount: number = 1,
-	isSSR = false,
-	ssrHeaders?: Record<string, string>
+  languageToLearn: Language,
+  userLanguage: Language,
+  level: number,
+  wordsForQuiz: Word[],
+  quizCount: number = 1,
+  isSSR = false,
+  ssrHeaders?: Record<string, string>
 ) => {
-	return _apiHandler('/api/ai-quiz', {
-		method: 'POST',
-		body: { languageToLearn, userLanguage, wordsForQuiz, level, quizCount },
-		isSSR,
-		ssrHeaders,
-	});
+  return _apiHandler('/api/ai-quiz', {
+    method: 'POST',
+    body: { languageToLearn, userLanguage, wordsForQuiz, level, quizCount },
+    isSSR,
+    ssrHeaders,
+  });
 };
 
 // STATS RELATED APIS

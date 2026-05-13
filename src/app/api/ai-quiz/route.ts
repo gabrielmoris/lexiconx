@@ -22,13 +22,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-	const { languageToLearn, userLanguage, level, wordsForQuiz, quizCount } = (await req.json()) as {
-		languageToLearn: Language;
-		userLanguage: Language;
-		level: number;
-		wordsForQuiz: Word[];
-		quizCount?: number;
-	};
+    const { languageToLearn, userLanguage, level, wordsForQuiz, quizCount } =
+      (await req.json()) as {
+        languageToLearn: Language;
+        userLanguage: Language;
+        level: number;
+        wordsForQuiz: Word[];
+        quizCount?: number;
+      };
 
     if (!languageToLearn || !userLanguage || !wordsForQuiz) {
       return NextResponse.json(
@@ -59,13 +60,13 @@ export async function POST(req: Request) {
 
     const fullUserLanguage = LANGUAGES[userLanguage];
 
-	const quizResponse = await generateQuizWithWords(
-		wordsForQuiz,
-		userLevel,
-		languageToLearn,
-		fullUserLanguage,
-		quizCount || 1
-	);
+    const quizResponse = await generateQuizWithWords(
+      wordsForQuiz,
+      userLevel,
+      languageToLearn,
+      fullUserLanguage,
+      quizCount || 1
+    );
 
     return NextResponse.json({
       success: true,
