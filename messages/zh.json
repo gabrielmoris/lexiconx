@@ -106,7 +106,9 @@
     "error-processing-words": "处理单词时出错",
     "error-speech": "语音功能不可用",
     "loading-voices": "请稍候，正在加载语音...",
-    "error-adding-word": "添加单词时出错"
+    "error-adding-word": "添加单词时出错",
+    "preparing-next-quiz": "正在准备下一个测验，请稍候...",
+    "finishing-quiz": "正在完成测验，请稍候..."
   },
   "quiz-finished": {
     "better-luck-next-time": "下次好运",

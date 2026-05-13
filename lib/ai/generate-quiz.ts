@@ -14,10 +14,11 @@ function stripWordForPrompt(word: Word): Pick<Word, '_id' | 'word' | 'definition
 }
 
 export async function generateQuizWithWords(
-  words: Word[],
-  level: number,
-  learningLanguage: Language,
-  userLanguage: Language
+	words: Word[],
+	level: number,
+	learningLanguage: Language,
+	userLanguage: Language,
+	quizCount: number = 1
 ): Promise<QuizGeneratorResponse> {
   try {
     if (!words || words.length < 3) {
@@ -35,15 +36,16 @@ export async function generateQuizWithWords(
       throw new Error(`Unsupported user language: ${userLanguage}`);
     }
 
-    const systemPrompt = promptConfig.systemPrompt(userLanguage, learningLanguage);
-    const strippedWords = words.map(stripWordForPrompt);
-    const userPrompt = promptConfig.userPrompt(
-      strippedWords,
-      level,
-      learningLanguage,
-      userLanguage
-    );
-    const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
+	const systemPrompt = promptConfig.systemPrompt(userLanguage, learningLanguage, quizCount);
+	const strippedWords = words.map(stripWordForPrompt);
+	const userPrompt = promptConfig.userPrompt(
+		strippedWords,
+		level,
+		learningLanguage,
+		userLanguage,
+		quizCount
+	);
+	const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
     const result = await client.generateContent({
       model: MODEL_NAME,

@@ -183,12 +183,13 @@ export const quizGeneration = async (
   userLanguage: Language,
   level: number,
   wordsForQuiz: Word[],
+  quizCount: number = 1,
   isSSR = false,
   ssrHeaders?: Record<string, string>
 ) => {
   return _apiHandler('/api/ai-quiz', {
     method: 'POST',
-    body: { languageToLearn, userLanguage, wordsForQuiz, level },
+    body: { languageToLearn, userLanguage, wordsForQuiz, level, quizCount },
     isSSR,
     ssrHeaders,
   });

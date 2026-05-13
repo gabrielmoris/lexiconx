@@ -6,10 +6,12 @@ import { useQuiz } from '@/context/QuizContext';
 import { useRouter } from '@/src/i18n/navigation';
 import { useCallback } from 'react';
 import QuestionAiIcon from '../Icons/QuestionAiIcon';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 const AiQuizzGenerator = () => {
   const t = useTranslations('ai-quiz-generator');
-  const { generateQuiz, isLoading, storedQuizzesData } = useQuiz();
+  const { generateQuiz, isLoading } = useQuiz();
+  const { storedValue: storedQuizzesData } = useLocalStorage('quizes', { quizzes: [] });
   const route = useRouter();
 
   const handleGenerateQuiz = useCallback(() => {
