@@ -38,7 +38,7 @@
 | NextAuth.js       | 4       | Authentication (Google OAuth, JWT strategy)              | [docs](https://next-auth.js.org/getting-started/introduction)        |
 | next-intl         | 4       | Internationalization (5 locales)                         | [docs](https://next-intl.dev/docs)                                   |
 | Framer Motion     | 12      | Animations                                               | [docs](https://www.framer.com/motion/)                               |
-| EasySpeech        | 2       | Text-to-speech in browser                                | [docs](https://github.com/nicholasgasior/easy-speech)                |
+| EasySpeech        | 2       | Text-to-speech in browser                                | [docs](https://leaonline.github.io/easy-speech/)                     |
 | Recharts          | 3       | Stats charts                                             | [docs](https://recharts.org/)                                        |
 | canvas-confetti   | 1       | Celebrations on level up                                 | [docs](https://github.com/catdad/canvas-confetti)                    |
 | Vitest            | 3       | Unit testing                                             | [docs](https://vitest.dev/)                                          |
