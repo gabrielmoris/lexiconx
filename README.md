@@ -4,8 +4,8 @@
 
 ## 🌐 Supported Languages
 
-| Learning | UI Locales |
-|----------|------------|
+| Learning                                 | UI Locales         |
+| ---------------------------------------- | ------------------ |
 | English, Deutsch, 中文, Español, русский | en, de, zh, es, ru |
 
 ---
@@ -25,26 +25,26 @@
 
 ## 🛠 Tech Stack
 
-| Technology | Version | Purpose | Docs |
-|---|---|---|---|
-| Next.js | 15 | Full-stack React framework (App Router, SSR, API routes) | [docs](https://nextjs.org/docs) |
-| React | 19 | UI library | [docs](https://react.dev) |
-| TypeScript | 5 | Type safety | [docs](https://www.typescriptlang.org/docs) |
-| Tailwind CSS | 4 | Utility-first CSS | [docs](https://tailwindcss.com/docs) |
-| MongoDB | — | NoSQL database | [docs](https://www.mongodb.com/docs/) |
-| Mongoose | 8 | MongoDB ODM | [docs](https://mongoosejs.com/docs/) |
-| Google Gemini AI | — | Quiz & word generation via `@google/genai` | [docs](https://ai.google.dev/gemini-api/docs) |
-| OpenAI-compatible | — | Alternative AI provider via `openai` SDK | [docs](https://platform.openai.com/docs/api-reference) |
-| NextAuth.js | 4 | Authentication (Google OAuth, JWT strategy) | [docs](https://next-auth.js.org/getting-started/introduction) |
-| next-intl | 4 | Internationalization (5 locales) | [docs](https://next-intl.dev/docs) |
-| Framer Motion | 12 | Animations | [docs](https://www.framer.com/motion/) |
-| EasySpeech | 2 | Text-to-speech in browser | [docs](https://github.com/nicholasgasior/easy-speech) |
-| Recharts | 3 | Stats charts | [docs](https://recharts.org/) |
-| canvas-confetti | 1 | Celebrations on level up | [docs](https://github.com/catdad/canvas-confetti) |
-| Vitest | 3 | Unit testing | [docs](https://vitest.dev/) |
-| Testing Library | 16 | React component testing | [docs](https://testing-library.com/docs/react-testing-library/intro) |
-| Husky | 9 | Git hooks (pre-commit lint + test) | [docs](https://typicode.github.io/husky/) |
-| pnpm | — | Package manager | [docs](https://pnpm.io/) |
+| Technology        | Version | Purpose                                                  | Docs                                                                 |
+| ----------------- | ------- | -------------------------------------------------------- | -------------------------------------------------------------------- |
+| Next.js           | 15      | Full-stack React framework (App Router, SSR, API routes) | [docs](https://nextjs.org/docs)                                      |
+| React             | 19      | UI library                                               | [docs](https://react.dev)                                            |
+| TypeScript        | 5       | Type safety                                              | [docs](https://www.typescriptlang.org/docs)                          |
+| Tailwind CSS      | 4       | Utility-first CSS                                        | [docs](https://tailwindcss.com/docs)                                 |
+| MongoDB           | —       | NoSQL database                                           | [docs](https://www.mongodb.com/docs/)                                |
+| Mongoose          | 8       | MongoDB ODM                                              | [docs](https://mongoosejs.com/docs/)                                 |
+| Google Gemini AI  | —       | Quiz & word generation via `@google/genai`               | [docs](https://ai.google.dev/gemini-api/docs)                        |
+| OpenAI-compatible | —       | Alternative AI provider via `openai` SDK                 | [docs](https://platform.openai.com/docs/api-reference)               |
+| NextAuth.js       | 4       | Authentication (Google OAuth, JWT strategy)              | [docs](https://next-auth.js.org/getting-started/introduction)        |
+| next-intl         | 4       | Internationalization (5 locales)                         | [docs](https://next-intl.dev/docs)                                   |
+| Framer Motion     | 12      | Animations                                               | [docs](https://www.framer.com/motion/)                               |
+| EasySpeech        | 2       | Text-to-speech in browser                                | [docs](https://github.com/nicholasgasior/easy-speech)                |
+| Recharts          | 3       | Stats charts                                             | [docs](https://recharts.org/)                                        |
+| canvas-confetti   | 1       | Celebrations on level up                                 | [docs](https://github.com/catdad/canvas-confetti)                    |
+| Vitest            | 3       | Unit testing                                             | [docs](https://vitest.dev/)                                          |
+| Testing Library   | 16      | React component testing                                  | [docs](https://testing-library.com/docs/react-testing-library/intro) |
+| Husky             | 9       | Git hooks (pre-commit lint + test)                       | [docs](https://typicode.github.io/husky/)                            |
+| pnpm              | —       | Package manager                                          | [docs](https://pnpm.io/)                                             |
 
 ---
 
@@ -200,32 +200,32 @@ Open [localhost:3000](http://localhost:3000) in your browser.
 
 ## 🔌 API Routes
 
-| Method | Route | Purpose |
-|---|---|---|
-| GET / POST / PUT / DELETE | `/api/words` | CRUD for user vocabulary words |
-| POST | `/api/words-for-quiz` | Fetch overdue + new words for quiz generation |
-| POST | `/api/ai-quiz` | Generate AI quiz from word pool |
-| POST | `/api/ai-words` | Generate AI vocabulary words |
-| GET / PUT | `/api/users` | Get/update user data & learning progress |
-| GET | `/api/stats` | Analytics aggregations |
-| POST | `/api/stats` | Save quiz session |
-| GET / POST | `/api/auth/[...nextauth]` | NextAuth.js endpoints |
+| Method                    | Route                     | Purpose                                       |
+| ------------------------- | ------------------------- | --------------------------------------------- |
+| GET / POST / PUT / DELETE | `/api/words`              | CRUD for user vocabulary words                |
+| POST                      | `/api/words-for-quiz`     | Fetch overdue + new words for quiz generation |
+| POST                      | `/api/ai-quiz`            | Generate AI quiz from word pool               |
+| POST                      | `/api/ai-words`           | Generate AI vocabulary words                  |
+| GET / PUT                 | `/api/users`              | Get/update user data & learning progress      |
+| GET                       | `/api/stats`              | Analytics aggregations                        |
+| POST                      | `/api/stats`              | Save quiz session                             |
+| GET / POST                | `/api/auth/[...nextauth]` | NextAuth.js endpoints                         |
 
 ---
 
 ## 📄 Pages
 
-| Route | Purpose |
-|---|---|
-| `/[locale]` | Home / landing |
-| `/[locale]/cards` | Vocabulary card management |
-| `/[locale]/quiz` | Quiz gameplay |
-| `/[locale]/stats` | Learning analytics |
-| `/[locale]/settings` | User settings |
-| `/[locale]/onboarding` | New user setup |
-| `/[locale]/login` | Authentication |
-| `/[locale]/terms` | Terms of service |
-| `/[locale]/privacy` | Privacy policy |
+| Route                  | Purpose                    |
+| ---------------------- | -------------------------- |
+| `/[locale]`            | Home / landing             |
+| `/[locale]/cards`      | Vocabulary card management |
+| `/[locale]/quiz`       | Quiz gameplay              |
+| `/[locale]/stats`      | Learning analytics         |
+| `/[locale]/settings`   | User settings              |
+| `/[locale]/onboarding` | New user setup             |
+| `/[locale]/login`      | Authentication             |
+| `/[locale]/terms`      | Terms of service           |
+| `/[locale]/privacy`    | Privacy policy             |
 
 ---
 
@@ -280,15 +280,15 @@ lexiconx/
 
 ## 🔧 Scripts
 
-| Command | Description |
-|---|---|
-| `pnpm dev` | Start dev server (Turbopack) |
-| `pnpm build` | Production build |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
-| `pnpm test` | Run Vitest once |
-| `pnpm test:watch` | Run Vitest in watch mode |
-| `pnpm test:coverage` | Generate coverage report |
+| Command              | Description                  |
+| -------------------- | ---------------------------- |
+| `pnpm dev`           | Start dev server (Turbopack) |
+| `pnpm build`         | Production build             |
+| `pnpm start`         | Start production server      |
+| `pnpm lint`          | Run ESLint                   |
+| `pnpm test`          | Run Vitest once              |
+| `pnpm test:watch`    | Run Vitest in watch mode     |
+| `pnpm test:coverage` | Generate coverage report     |
 
 ### Pre-commit Hook
 
@@ -321,5 +321,9 @@ Husky runs `pnpm lint` and `pnpm test` on every commit. Tests must pass for the 
 ---
 
 ## 📄 License
+
+Lexiconx is available under the GNU AGPLv3 for open-source use.
+
+Commercial use without open-sourcing your modifications requires a separate commercial license. Contact [software@gabrielcmoris.com](mailto:software@gabrielcmoris.com).
 
 This project is licensed under the terms found in the [LICENSE](./LICENSE) file.
