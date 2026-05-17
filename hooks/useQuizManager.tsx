@@ -34,7 +34,8 @@ export const useQuizManager = (userData: User) => {
   const [usedWords, setUsedWords] = useState<Word[]>([]);
   const [score, setScore] = useState({ errors: 0, success: 0 });
   const [isQuizFinished, setIsQuizFinished] = useState(false);
-  const [isFinishing, setIsFinishing] = useState(false);
+const [showingExplanation, setShowingExplanation] = useState(false);
+const [isFinishing, setIsFinishing] = useState(false);
   const [startingTimer, setStartingTimer] = useState<number>();
 
   const originalEaseFactors = useRef<Map<string, number>>(new Map());
@@ -175,49 +176,73 @@ export const useQuizManager = (userData: User) => {
     isAllQuizzesReady,
   ]);
 
-  const handleAnswerClick = useCallback(
-    (option: QuizAnswer) => {
-      if (!session) return;
-      const currentQuiz = displayQuiz[quizStep];
-      if (!currentQuiz) return;
-      const currentQuestion = currentQuiz.questions[questionStep];
-      if (!currentQuestion) return;
+const handleAnswerClick = useCallback(
+	(option: QuizAnswer) => {
+		if (!session) return;
+		const currentQuiz = displayQuiz[quizStep];
+		if (!currentQuiz) return;
+		const currentQuestion = currentQuiz.questions[questionStep];
+		if (!currentQuestion) return;
 
-      if (option.isCorrect) {
-        setScore(prev => ({ ...prev, success: prev.success + 1 }));
-        setFeedback({ correct: option.answer, wrong: '' });
-      } else {
-        setScore(prev => ({ ...prev, errors: prev.errors + 1 }));
-        setFeedback({ correct: '', wrong: option.answer });
-      }
+		if (option.isCorrect) {
+			setScore(prev => ({ ...prev, success: prev.success + 1 }));
+			setFeedback({ correct: option.answer, wrong: '' });
+		} else {
+			setScore(prev => ({ ...prev, errors: prev.errors + 1 }));
+			setFeedback({ correct: '', wrong: option.answer });
+		}
 
-      setUsedWords(prev => {
-        const wordMap = new Map(prev.map(w => [w._id!, w]));
+		setUsedWords(prev => {
+			const wordMap = new Map(prev.map(w => [w._id!, w]));
 
-        for (const wordId of currentQuestion.usedWords) {
-          const word = wordMap.get(wordId);
-          if (!word) continue;
+			for (const wordId of currentQuestion.usedWords) {
+				const word = wordMap.get(wordId);
+				if (!word) continue;
 
-          const originalEase = originalEaseFactors.current.get(wordId);
-          const updatedWord = processAnswer(word, option.isCorrect, originalEase);
-          wordMap.set(wordId, updatedWord);
-        }
+				const originalEase = originalEaseFactors.current.get(wordId);
+				const updatedWord = processAnswer(word, option.isCorrect, originalEase);
+				wordMap.set(wordId, updatedWord);
+			}
 
-        return Array.from(wordMap.values());
-      });
+			return Array.from(wordMap.values());
+		});
 
-      setTimeout(() => {
-        setFeedback({ correct: '', wrong: '' });
-        if (questionStep < currentQuiz.questions.length - 1) {
-          setQuestionStep(prev => prev + 1);
-        } else {
-          setQuizStep(prev => prev + 1);
-          setQuestionStep(0);
-        }
-      }, 500);
-    },
-    [displayQuiz, quizStep, questionStep, session]
-  );
+		// Check if the question has an explanation to show
+		const hasExplanation =
+			(option.isCorrect && currentQuestion.elaboration) ||
+			(!option.isCorrect && currentQuestion.errorExplanation);
+
+		if (hasExplanation) {
+			setShowingExplanation(true);
+		} else {
+			setTimeout(() => {
+				setFeedback({ correct: '', wrong: '' });
+				if (questionStep < currentQuiz.questions.length - 1) {
+					setQuestionStep(prev => prev + 1);
+				} else {
+					setQuizStep(prev => prev + 1);
+					setQuestionStep(0);
+				}
+			}, 500);
+		}
+	},
+	[displayQuiz, quizStep, questionStep, session]
+);
+
+const handleContinue = useCallback(() => {
+	const currentQuiz = displayQuiz[quizStep];
+	if (!currentQuiz) return;
+
+	setShowingExplanation(false);
+	setFeedback({ correct: '', wrong: '' });
+
+	if (questionStep < currentQuiz.questions.length - 1) {
+		setQuestionStep(prev => prev + 1);
+	} else {
+		setQuizStep(prev => prev + 1);
+		setQuestionStep(0);
+	}
+}, [displayQuiz, quizStep, questionStep]);
 
   const restartQuiz = () => {
     setQuizStep(0);
@@ -249,18 +274,20 @@ export const useQuizManager = (userData: User) => {
   const currentQuizItem = displayQuiz[quizStep];
   const currentQuestion = currentQuizItem?.questions[questionStep];
 
-  return {
-    isLoading: isLoading || isGeneratingQuiz,
-    isQuizFinished,
-    isFinishing,
-    isWaitingForNextQuiz,
-    score,
-    currentQuizItem,
-    currentQuestion,
-    feedback,
-    quizProgress: { current: quizStep + 1, total: displayQuiz.length },
-    questionProgress: { current: questionStep + 1, total: currentQuizItem?.questions.length || 0 },
-    handleAnswerClick,
-    restartQuiz,
-  };
+return {
+	isLoading: isLoading || isGeneratingQuiz,
+	isQuizFinished,
+	isFinishing,
+	isWaitingForNextQuiz,
+	score,
+	currentQuizItem,
+	currentQuestion,
+	feedback,
+	showingExplanation,
+	quizProgress: { current: quizStep + 1, total: displayQuiz.length },
+	questionProgress: { current: questionStep + 1, total: currentQuizItem?.questions.length || 0 },
+	handleAnswerClick,
+	handleContinue,
+	restartQuiz,
+};
 };

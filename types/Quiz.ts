@@ -10,7 +10,9 @@ export interface QuizAnswer {
 export interface QuizQuestion {
   question: string;
   options: QuizAnswer[];
-  usedWords: string[];
+ usedWords: string[];
+ elaboration?: string;
+ errorExplanation?: string;
 }
 
 export interface Quiz {
