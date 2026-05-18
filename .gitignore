@@ -52,3 +52,10 @@ next-env.d.ts
 .a0proj/
 package-lock.json
 /docs
+
+# Agent Zero documentation (belongs in .a0proj/)
+/docs/
+/documents/
+
+# npm lock file (project uses pnpm)
+package-lock.json
