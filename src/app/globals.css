@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-theme-bg-light: #f8f8f8;
@@ -21,7 +21,7 @@
   100% {
     background-color: theme(colors.info);
   }
-  50% {
+  5% {
     background-color: transparent;
   }
 }
@@ -31,7 +31,7 @@
   100% {
     background-color: theme(colors.error);
   }
-  50% {
+  5% {
     background-color: transparent;
   }
 }
@@ -41,16 +41,21 @@ html {
 }
 
 .blink-success {
-  animation: blink-success 0.5s infinite;
+  animation: blink-success 3s infinite;
 }
 
 .blink-error {
-  animation: blink-error 0.5s infinite;
+  animation: blink-error 3s infinite;
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   background-color: theme(colors.theme-bg-light);
   color: theme(colors.theme-text-light);
 }

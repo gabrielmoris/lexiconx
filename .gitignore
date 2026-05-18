@@ -51,5 +51,4 @@ next-env.d.ts
 # Agent Zero project
 .a0proj/
 package-lock.json
-docs/audit-2026-04.md
-docs/project-analysis.md
+docs
