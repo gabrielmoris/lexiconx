@@ -36,20 +36,22 @@ const QuizPage = () => {
     fetchUser();
   }, [session, status, showToast, t]);
 
-  const {
-    isLoading,
-    isQuizFinished,
-    isFinishing,
-    isWaitingForNextQuiz,
-    score,
-    currentQuizItem,
-    currentQuestion,
-    feedback,
-    quizProgress,
-    questionProgress,
-    handleAnswerClick,
-    restartQuiz,
-  } = useQuizManager(userData!);
+const {
+	isLoading,
+	isQuizFinished,
+	isFinishing,
+	isWaitingForNextQuiz,
+	score,
+	currentQuizItem,
+	currentQuestion,
+	feedback,
+	showingExplanation,
+	quizProgress,
+	questionProgress,
+	handleAnswerClick,
+	handleContinue,
+	restartQuiz,
+} = useQuizManager(userData!);
 
   const { speak, isReady, isSupported } = useTextToSpeech({
     onError: error => {
@@ -106,27 +108,29 @@ const QuizPage = () => {
     return <LoadingComponent message={t('finishing-quiz')} />;
   }
 
-  return (
-    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
-      {isQuizFinished ? (
-        <QuizFinished
-          isSuccess={score.success / 2 > score.errors}
-          successPoints={score}
-          onRestartQuiz={restartQuiz}
-        />
-      ) : (
-        <QuizView
-          quizItem={currentQuizItem}
-          question={currentQuestion}
-          onAnswerClick={handleAnswerClick}
-          feedback={feedback}
-          quizProgress={quizProgress}
-          questionProgress={questionProgress}
-          onReadQuiz={readQuiz}
-        />
-      )}
-    </main>
-  );
+return (
+	<main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
+		{isQuizFinished ? (
+			<QuizFinished
+				isSuccess={score.success / 2 > score.errors}
+				successPoints={score}
+				onRestartQuiz={restartQuiz}
+			/>
+		) : (
+			<QuizView
+				quizItem={currentQuizItem}
+				question={currentQuestion}
+				onAnswerClick={handleAnswerClick}
+				feedback={feedback}
+				showingExplanation={showingExplanation}
+				onContinue={handleContinue}
+				quizProgress={quizProgress}
+				questionProgress={questionProgress}
+				onReadQuiz={readQuiz}
+			/>
+		)}
+	</main>
+);
 };
 
 export default QuizPage;

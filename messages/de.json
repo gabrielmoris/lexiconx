@@ -107,7 +107,10 @@
     "error-speech": "Sprachfunktion ist nicht verfügbar",
     "error-adding-word": "Fehler beim Hinzufügen eines Wortes",
     "preparing-next-quiz": "Nächstes Quiz wird vorbereitet, bitte warten...",
-    "finishing-quiz": "Quiz wird abgeschlossen, bitte warten..."
+    "finishing-quiz": "Quiz wird abgeschlossen, bitte warten...",
+    "why-correct": "Warum das richtig ist",
+    "why-wrong": "Warum das falsch ist",
+    "continue": "Weiter"
   },
   "quiz-finished": {
     "better-luck-next-time": "Viel Glück beim nächsten Mal",

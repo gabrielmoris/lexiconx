@@ -108,7 +108,10 @@
     "loading-voices": "Espera, cargando las voces...",
     "error-adding-word": "Error al añadir una palabra",
     "preparing-next-quiz": "Preparando el siguiente cuestionario, por favor espere...",
-    "finishing-quiz": "Finalizando el cuestionario, por favor espere..."
+    "finishing-quiz": "Finalizando el cuestionario, por favor espere...",
+    "why-correct": "Por qué esto es correcto",
+    "why-wrong": "Por qué esto es incorrecto",
+    "continue": "Continuar"
   },
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",
