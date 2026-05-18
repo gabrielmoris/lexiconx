@@ -51,4 +51,4 @@ next-env.d.ts
 # Agent Zero project
 .a0proj/
 package-lock.json
-docs
+/docs
