@@ -119,7 +119,7 @@ const QuizView = ({
       {showingExplanation && (
         <button
           onClick={onContinue}
-          className="w-full py-2 px-4 rounded-md font-medium transition-colors bg-primary bg-info dark: text-white hover:bg-primary/90 active:bg-primary/80"
+          className="w-full py-2 px-4 rounded-md font-medium transition-colors bg-primary bg-info cursor-pointer hover:bg-info/80 text-white hover:bg-primary/90 active:bg-primary/80"
         >
           {t('continue')}
         </button>
