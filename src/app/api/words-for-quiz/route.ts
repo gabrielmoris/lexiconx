@@ -5,19 +5,7 @@ import Word from '@/lib/mongodb/models/word';
 import { Language } from '@/types/Words';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/nextAuthOptions';
-
-/**
- * Categorize a word into its SRS category.
- */
-function getWordCategory(word: {
- repetitions: number;
- lastReviewed: Date | null;
- interval: number;
-}): 'new' | 'learning' | 'mastered' {
-  if (word.repetitions === 0 && word.lastReviewed === null) return 'new';
-  if (word.interval > 21) return 'mastered';
-  return 'learning';
-}
+import { getWordCategory } from '@/lib/correctionWords';
 
 export async function POST(req: Request) {
   try {
@@ -110,11 +98,7 @@ export async function POST(req: Request) {
 
     if (unfilled > 0) {
       // Fetch additional overdue words to fill the gap
-      const alreadyFetchedIds = [
-        ...newWords,
-        ...learningWords,
-        ...masteredWords,
-      ].map((w) => w._id);
+      const alreadyFetchedIds = [...newWords, ...learningWords, ...masteredWords].map(w => w._id);
 
       const extraWords = await Word.find({
         userId: user._id,
@@ -162,9 +146,9 @@ export async function POST(req: Request) {
 
     // Compute final composition counts
     const composition = {
-      new: interleaved.filter((w) => getWordCategory(w) === 'new').length,
-      learning: interleaved.filter((w) => getWordCategory(w) === 'learning').length,
-      mastered: interleaved.filter((w) => getWordCategory(w) === 'mastered').length,
+      new: interleaved.filter(w => getWordCategory(w) === 'new').length,
+      learning: interleaved.filter(w => getWordCategory(w) === 'learning').length,
+      mastered: interleaved.filter(w => getWordCategory(w) === 'mastered').length,
     };
 
     return NextResponse.json({

@@ -1,4 +1,4 @@
-import { Language } from "./Words";
+import { Language } from './Words';
 
 export interface QuizAnswer {
   answer: string;
@@ -10,9 +10,9 @@ export interface QuizAnswer {
 export interface QuizQuestion {
   question: string;
   options: QuizAnswer[];
- usedWords: string[];
- elaboration?: string;
- errorExplanation?: string;
+  usedWords: string[];
+  elaboration?: string;
+  errorExplanation?: string;
 }
 
 export interface Quiz {
@@ -24,8 +24,16 @@ export interface Quiz {
 }
 
 /** Derives all unique word IDs used across all questions in a quiz */
-export const getQuizUsedWords = (quiz: Quiz): string[] => [...new Set(quiz.questions.flatMap((q) => q.usedWords))];
+export const getQuizUsedWords = (quiz: Quiz): string[] => [
+  ...new Set(quiz.questions.flatMap(q => q.usedWords)),
+];
 
 export interface QuizGeneratorResponse {
   quizzes: Quiz[];
+}
+
+export interface QuizComposition {
+  new: number;
+  learning: number;
+  mastered: number;
 }

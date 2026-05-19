@@ -1,4 +1,4 @@
-import { Word } from "@/types/Words";
+import { Word } from '@/types/Words';
 
 const MIN_EASE_FACTOR = 1.3;
 const DEFAULT_EASE_FACTOR = 2.5;
@@ -12,7 +12,11 @@ const addDays = (date: Date, days: number): Date => {
   return result;
 };
 
-export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor?: number): Word => {
+export const processAnswer = (
+  word: Word,
+  isCorrect: boolean,
+  originalEaseFactor?: number
+): Word => {
   const updated = { ...word };
 
   if (!isCorrect) {
@@ -29,7 +33,7 @@ export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor
     }
 
     updated.easeFactor = parseFloat(Math.max(MIN_EASE_FACTOR, newEase).toFixed(2));
-	updated.nextReview = addDays(new Date(), 0).toISOString();
+    updated.nextReview = addDays(new Date(), 0).toISOString();
   } else {
     updated.repetitions = word.repetitions + 1;
     updated.easeFactor = parseFloat(((word.easeFactor || DEFAULT_EASE_FACTOR) + 0.05).toFixed(2));
@@ -47,6 +51,20 @@ export const processAnswer = (word: Word, isCorrect: boolean, originalEaseFactor
 
   updated.lastReviewed = new Date().toISOString();
   return updated;
+};
+
+/**
+ * Categorize a word into its SRS category.
+ */
+
+export const getWordCategory = (word: {
+  repetitions: number;
+  lastReviewed: Date | null;
+  interval: number;
+}): 'new' | 'learning' | 'mastered' => {
+  if (word.repetitions === 0 && word.lastReviewed === null) return 'new';
+  if (word.interval > 21) return 'mastered';
+  return 'learning';
 };
 
 export { MIN_EASE_FACTOR, DEFAULT_EASE_FACTOR, MAX_EASE_DECREASE_PER_QUIZ };
