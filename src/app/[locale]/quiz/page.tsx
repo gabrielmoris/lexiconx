@@ -127,7 +127,7 @@ return (
 				onContinue={handleContinue}
 				quizProgress={quizProgress}
 				questionProgress={questionProgress}
-t		composition={composition}
+			composition={composition}
 				onReadQuiz={readQuiz}
 			/>
 		)}
