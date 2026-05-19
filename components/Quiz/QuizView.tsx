@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import SoundIcon from '@/components/Icons/SoundIcon';
 import TextIcon from '@/components/Icons/TextIcon';
-import { Quiz, QuizAnswer, QuizQuestion } from '@/types/Quiz';
+import { Quiz, QuizAnswer, QuizQuestion, QuizComposition } from '@/types/Quiz';
 
 interface Props {
   quizItem: Quiz;
@@ -14,6 +14,7 @@ interface Props {
   quizProgress: { current: number; total: number };
   questionProgress: { current: number; total: number };
   onReadQuiz: () => void;
+  composition?: QuizComposition;
   ttsReady?: boolean;
 }
 
@@ -27,6 +28,7 @@ const QuizView = ({
   quizProgress,
   questionProgress,
   onReadQuiz,
+  composition,
   ttsReady = true,
 }: Props) => {
   const [showText, setShowText] = React.useState(false);
@@ -51,8 +53,27 @@ const QuizView = ({
         ? question.errorExplanation
         : null;
 
+  const hasComposition =
+    composition && composition.new + composition.learning + composition.mastered > 0;
+
   return (
     <div className="flex flex-col gap-5 w-full max-w-md" aria-live="polite">
+      {hasComposition && (
+        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span className="inline-flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            {composition.new} {t('composition-new')}
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            {composition.learning} {t('composition-learning')}
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-green-500" />
+            {composition.mastered} {t('composition-mastered')}
+          </span>
+        </div>
+      )}
       <div className="flex items-center gap-4">
         {showText ? (
           <div className="flex-grow">

@@ -51,6 +51,7 @@ const {
 	handleAnswerClick,
 	handleContinue,
 	restartQuiz,
+	composition,
 } = useQuizManager(userData!);
 
   const { speak, isReady, isSupported } = useTextToSpeech({
@@ -126,6 +127,7 @@ return (
 				onContinue={handleContinue}
 				quizProgress={quizProgress}
 				questionProgress={questionProgress}
+			composition={composition}
 				onReadQuiz={readQuiz}
 			/>
 		)}
