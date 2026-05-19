@@ -176,7 +176,10 @@
     "finishing-quiz": "Finishing quiz, please wait...",
     "why-correct": "Why this is correct",
     "why-wrong": "Why this is wrong",
-    "continue": "Continue"
+    "continue": "Continue",
+    "composition-new": "new",
+    "composition-learning": "learning",
+    "composition-mastered": "mastered"
   },
   "quiz-finished": {
     "better-luck-next-time": "Better luck next time",

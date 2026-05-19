@@ -17,6 +17,7 @@ export const useQuizManager = (userData: User) => {
     isGeneratingMore,
     isAllQuizzesReady,
     totalExpectedQuizzes,
+	composition,
   } = useQuiz();
   const {
     storedValue: storedQuizzesData,
@@ -285,6 +286,7 @@ return {
 	feedback,
 	showingExplanation,
 	quizProgress: { current: quizStep + 1, total: displayQuiz.length },
+	composition,
 	questionProgress: { current: questionStep + 1, total: currentQuizItem?.questions.length || 0 },
 	handleAnswerClick,
 	handleContinue,

@@ -111,7 +111,10 @@
     "finishing-quiz": "正在完成测验，请稍候...",
     "why-correct": "为什么这是正确的",
     "why-wrong": "为什么这是错误的",
-    "continue": "继续"
+    "continue": "继续",
+    "composition-new": "新词",
+    "composition-learning": "学习中",
+    "composition-mastered": "已掌握"
   },
   "quiz-finished": {
     "better-luck-next-time": "下次好运",

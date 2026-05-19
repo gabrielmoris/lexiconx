@@ -17,6 +17,12 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { getUserData, getWordsForQuiz, quizGeneration } from '@/lib/apis';
 import { Language, User, Word } from '@/types/Words';
 
+interface QuizComposition {
+  new: number;
+  learning: number;
+  mastered: number;
+}
+
 interface QuizContextType {
   clientQuizzes: Quiz[];
   setClientQuizzes: (quizes: Quiz[]) => void;
@@ -25,6 +31,7 @@ interface QuizContextType {
   totalExpectedQuizzes: number;
   isAllQuizzesReady: boolean;
   wordsForQuiz: Word[];
+  composition: QuizComposition;
   generateQuiz: () => Promise<{ success: boolean } | undefined>;
 }
 
@@ -36,6 +43,7 @@ const QuizContext = createContext<QuizContextType>({
   totalExpectedQuizzes: 0,
   isAllQuizzesReady: false,
   wordsForQuiz: [],
+ composition: { new: 0, learning: 0, mastered: 0 },
   generateQuiz: async () => ({ success: false }),
 });
 
@@ -60,6 +68,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [totalExpectedQuizzes, setTotalExpectedQuizzes] = useState(0);
   const [isAllQuizzesReady, setIsAllQuizzesReady] = useState(false);
   const [wordsForQuiz, setWordsForQuiz] = useState<Word[]>([]);
+ const [composition, setComposition] = useState<QuizComposition>({ new: 0, learning: 0, mastered: 0 });
 
   const isGeneratingRef = useRef(false);
 
@@ -151,7 +160,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         }
 
         // Fetch words for quiz
-        const { wordsForQuiz: fetchedWords } = await getWordsForQuiz(
+        const { wordsForQuiz: fetchedWords, composition: fetchedComposition } = await getWordsForQuiz(
           selectedLanguage.language,
           currentLocale as Language
         );
@@ -162,6 +171,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         }
 
         setWordsForQuiz(fetchedWords);
+ if (fetchedComposition) { setComposition(fetchedComposition); }
 
         // Determine quiz count from word count
         const quizCount = determineQuizCount(fetchedWords.length);
@@ -239,6 +249,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         totalExpectedQuizzes,
         isAllQuizzesReady,
         wordsForQuiz,
+ composition,
         generateQuiz,
       }}
     >

@@ -110,7 +110,10 @@
     "finishing-quiz": "Quiz wird abgeschlossen, bitte warten...",
     "why-correct": "Warum das richtig ist",
     "why-wrong": "Warum das falsch ist",
-    "continue": "Weiter"
+    "continue": "Weiter",
+    "composition-new": "neu",
+    "composition-learning": "lernen",
+    "composition-mastered": "beherrscht"
   },
   "quiz-finished": {
     "better-luck-next-time": "Viel Glück beim nächsten Mal",

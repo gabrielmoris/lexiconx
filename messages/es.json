@@ -111,7 +111,10 @@
     "finishing-quiz": "Finalizando el cuestionario, por favor espere...",
     "why-correct": "Por qué esto es correcto",
     "why-wrong": "Por qué esto es incorrecto",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "composition-new": "nuevas",
+    "composition-learning": "aprendiendo",
+    "composition-mastered": "dominadas"
   },
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",
