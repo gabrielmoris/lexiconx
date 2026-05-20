@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useToastContext, type ToastParams } from './ToastContext';
+import { useToastContext } from './ToastContext';
 import { useSession } from 'next-auth/react';
 import { useLanguage } from './LanguageToLearnContext';
 import { useLocale, useTranslations } from 'next-intl';

@@ -3,7 +3,7 @@
 import { Toast, ToastProps } from '@/components/Layout/Toast';
 import React, { createContext, useState, useContext } from 'react';
 
-export interface ToastParams extends ToastProps {
+interface ToastParams extends ToastProps {
   duration: number;
 }
 
