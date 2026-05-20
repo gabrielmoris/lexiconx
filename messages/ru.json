@@ -2,7 +2,9 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Ошибка при создании викторины",
     "error-getting-user": "Ошибка получения данных пользователя",
-    "generate-quiz": "Сгенерировать викторину"
+    "generate-quiz": "Сгенерировать викторину",
+    "quiz-generation-partial-failure": "1 тест не удалось сгенерировать, продолжаем с доступными тестами",
+    "quiz-generation-partial-failure-plural": "{count} тестов не удалось сгенерировать, продолжаем с доступными тестами"
   },
   "privacy": {
     "title": "Политика конфиденциальности",

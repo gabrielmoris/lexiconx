@@ -2,7 +2,9 @@
   "ai-quiz-generator": {
     "error-generating quiz": "生成测验时出错",
     "error-getting-user": "获取用户数据时出错",
-    "generate-quiz": "生成测验"
+    "generate-quiz": "生成测验",
+    "quiz-generation-partial-failure": "1个测验无法生成，继续使用可用测验",
+    "quiz-generation-partial-failure-plural": "{count}个测验无法生成，继续使用可用测验"
   },
   "terms": {
     "title": "服务条款",

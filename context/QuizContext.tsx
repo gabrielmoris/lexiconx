@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useToastContext } from './ToastContext';
+import { useToastContext, type ToastParams } from './ToastContext';
 import { useSession } from 'next-auth/react';
 import { useLanguage } from './LanguageToLearnContext';
 import { useLocale, useTranslations } from 'next-intl';
@@ -74,6 +74,9 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const currentLocaleRef = useRef<string>('en');
   const levelRef = useRef<number>(1);
   const fetchedWordsRef = useRef<Word[]>([]);
+  const totalExpectedRef = useRef<number>(0);
+  const showToastRef = useRef<((params: ToastParams) => void) | null>(null);
+  const tRef = useRef<((key: string, params?: Record<string, number>) => string) | null>(null);
 
   const { status } = useSession();
   const { selectedLanguage } = useLanguage();
@@ -86,6 +89,11 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     selectedLanguageRef.current = selectedLanguage.language;
     currentLocaleRef.current = currentLocale;
   }, [selectedLanguage, currentLocale]);
+
+  useEffect(() => {
+    showToastRef.current = showToast;
+    tRef.current = t;
+  }, [showToast, t]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -104,10 +112,13 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
   /**
    * Generates remaining quizzes in the background (fire-and-forget).
+   * Adapts totalExpectedQuizzes when a generation fails so the
+   * finish screen triggers correctly with partial quiz sets.
    */
   const generateRemainingQuizzes = useCallback(
     async (quiz1: Quiz, quizCount: number) => {
       const backgroundQuizzes: Quiz[] = [quiz1];
+      let failedCount = 0;
 
       for (let i = 1; i < quizCount; i++) {
         if (!isGeneratingRef.current) break;
@@ -124,17 +135,41 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           if (result.quizzes[0]) {
             backgroundQuizzes.push(result.quizzes[0]);
             setClientQuizzes([...backgroundQuizzes]);
+          } else {
+            failedCount++;
           }
         } catch (error) {
-          console.error(`Error generating quiz ${i + 1}:`, error);
-          // Continue generating remaining quizzes even if one fails
+          console.error('Error generating quiz ' + (i + 1) + ':', error);
+          failedCount++;
+          // Adjust expected count so the finish screen triggers correctly
+          const newExpected = totalExpectedRef.current - failedCount;
+          setTotalExpectedQuizzes(newExpected);
+        }
+      }
+
+      // If any quizzes failed, adjust the expected count to match reality
+      if (failedCount > 0) {
+        const finalExpected = backgroundQuizzes.length;
+        setTotalExpectedQuizzes(finalExpected);
+
+        if (showToastRef.current && tRef.current) {
+          const message =
+            failedCount === 1
+              ? tRef.current('quiz-generation-partial-failure')
+              : tRef.current('quiz-generation-partial-failure-plural', {
+                  count: failedCount,
+                });
+          showToastRef.current({
+            message,
+            variant: 'warning',
+            duration: 4000,
+          });
         }
       }
 
       setIsGeneratingMore(false);
       isGeneratingRef.current = false;
 
-      // Save to localStorage only when ALL quizzes are generated. Maybe I can change this but I think this makes sense for me.
       setIsAllQuizzesReady(true);
       setStoredQuizzes({ quizzes: backgroundQuizzes });
     },
@@ -179,6 +214,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         }
 
         setTotalExpectedQuizzes(quizCount);
+        totalExpectedRef.current = quizCount;
 
         // Store values in refs for background generation
         levelRef.current = learningProgress!.level;
@@ -202,7 +238,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           setIsGeneratingMore(true);
           isGeneratingRef.current = true;
 
-          // Fire-and-forget more quiz
           generateRemainingQuizzes(quiz1, quizCount);
         } else {
           setIsAllQuizzesReady(true);
