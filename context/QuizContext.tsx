@@ -16,6 +16,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { getUserData, getWordsForQuiz, quizGeneration } from '@/lib/apis';
 import { Language, User, Word } from '@/types/Words';
+import { sleep } from '@/lib/helpers';
 
 interface QuizContextType {
   clientQuizzes: Quiz[];
@@ -75,8 +76,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const levelRef = useRef<number>(1);
   const fetchedWordsRef = useRef<Word[]>([]);
   const totalExpectedRef = useRef<number>(0);
-  const showToastRef = useRef<((params: ToastParams) => void) | null>(null);
-  const tRef = useRef<((key: string, params?: Record<string, number>) => string) | null>(null);
 
   const { status } = useSession();
   const { selectedLanguage } = useLanguage();
@@ -89,11 +88,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     selectedLanguageRef.current = selectedLanguage.language;
     currentLocaleRef.current = currentLocale;
   }, [selectedLanguage, currentLocale]);
-
-  useEffect(() => {
-    showToastRef.current = showToast;
-    tRef.current = t;
-  }, [showToast, t]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -124,6 +118,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         if (!isGeneratingRef.current) break;
 
         try {
+          await sleep(3000);
           const result = await quizGeneration(
             selectedLanguageRef.current!,
             currentLocaleRef.current as Language,
@@ -147,24 +142,20 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         }
       }
 
-      // If any quizzes failed, adjust the expected count to match reality
       if (failedCount > 0) {
         const finalExpected = backgroundQuizzes.length;
         setTotalExpectedQuizzes(finalExpected);
-
-        if (showToastRef.current && tRef.current) {
-          const message =
-            failedCount === 1
-              ? tRef.current('quiz-generation-partial-failure')
-              : tRef.current('quiz-generation-partial-failure-plural', {
-                  count: failedCount,
-                });
-          showToastRef.current({
-            message,
-            variant: 'warning',
-            duration: 4000,
-          });
-        }
+        const message =
+          failedCount === 1
+            ? t('quiz-generation-partial-failure')
+            : t('quiz-generation-partial-failure-plural', {
+                count: failedCount,
+              });
+        showToast({
+          message,
+          variant: 'warning',
+          duration: 4000,
+        });
       }
 
       setIsGeneratingMore(false);
