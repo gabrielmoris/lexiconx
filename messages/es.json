@@ -2,7 +2,9 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Error al generar el cuestionario",
     "error-getting-user": "Error al obtener los datos de usuario",
-    "generate-quiz": "Generar cuestionario"
+    "generate-quiz": "Generar cuestionario",
+    "quiz-generation-partial-failure": "1 cuestionario no pudo generarse, continuando con los disponibles",
+    "quiz-generation-partial-failure-plural": "{count} cuestionarios no pudieron generarse, continuando con los disponibles"
   },
   "terms": {
     "title": "Términos de Servicio",

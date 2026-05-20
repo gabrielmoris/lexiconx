@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Toast, ToastProps } from "@/components/Layout/Toast";
-import React, { createContext, useState, useContext } from "react";
+import { Toast, ToastProps } from '@/components/Layout/Toast';
+import React, { createContext, useState, useContext } from 'react';
 
 interface ToastParams extends ToastProps {
   duration: number;

@@ -16,6 +16,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { getUserData, getWordsForQuiz, quizGeneration } from '@/lib/apis';
 import { Language, User, Word } from '@/types/Words';
+import { sleep } from '@/lib/helpers';
 
 interface QuizContextType {
   clientQuizzes: Quiz[];
@@ -74,6 +75,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const currentLocaleRef = useRef<string>('en');
   const levelRef = useRef<number>(1);
   const fetchedWordsRef = useRef<Word[]>([]);
+  const totalExpectedRef = useRef<number>(0);
 
   const { status } = useSession();
   const { selectedLanguage } = useLanguage();
@@ -104,15 +106,19 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
   /**
    * Generates remaining quizzes in the background (fire-and-forget).
+   * Adapts totalExpectedQuizzes when a generation fails so the
+   * finish screen triggers correctly with partial quiz sets.
    */
   const generateRemainingQuizzes = useCallback(
     async (quiz1: Quiz, quizCount: number) => {
       const backgroundQuizzes: Quiz[] = [quiz1];
+      let failedCount = 0;
 
       for (let i = 1; i < quizCount; i++) {
         if (!isGeneratingRef.current) break;
 
         try {
+          await sleep(3000);
           const result = await quizGeneration(
             selectedLanguageRef.current!,
             currentLocaleRef.current as Language,
@@ -124,17 +130,37 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           if (result.quizzes[0]) {
             backgroundQuizzes.push(result.quizzes[0]);
             setClientQuizzes([...backgroundQuizzes]);
+          } else {
+            failedCount++;
           }
         } catch (error) {
-          console.error(`Error generating quiz ${i + 1}:`, error);
-          // Continue generating remaining quizzes even if one fails
+          console.error('Error generating quiz ' + (i + 1) + ':', error);
+          failedCount++;
+          // Adjust expected count so the finish screen triggers correctly
+          const newExpected = totalExpectedRef.current - failedCount;
+          setTotalExpectedQuizzes(newExpected);
         }
+      }
+
+      if (failedCount > 0) {
+        const finalExpected = backgroundQuizzes.length;
+        setTotalExpectedQuizzes(finalExpected);
+        const message =
+          failedCount === 1
+            ? t('quiz-generation-partial-failure')
+            : t('quiz-generation-partial-failure-plural', {
+                count: failedCount,
+              });
+        showToast({
+          message,
+          variant: 'warning',
+          duration: 4000,
+        });
       }
 
       setIsGeneratingMore(false);
       isGeneratingRef.current = false;
 
-      // Save to localStorage only when ALL quizzes are generated. Maybe I can change this but I think this makes sense for me.
       setIsAllQuizzesReady(true);
       setStoredQuizzes({ quizzes: backgroundQuizzes });
     },
@@ -179,6 +205,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         }
 
         setTotalExpectedQuizzes(quizCount);
+        totalExpectedRef.current = quizCount;
 
         // Store values in refs for background generation
         levelRef.current = learningProgress!.level;
@@ -202,7 +229,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           setIsGeneratingMore(true);
           isGeneratingRef.current = true;
 
-          // Fire-and-forget more quiz
           generateRemainingQuizzes(quiz1, quizCount);
         } else {
           setIsAllQuizzesReady(true);
