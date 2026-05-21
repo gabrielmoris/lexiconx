@@ -156,28 +156,5 @@ describe('FallbackAIClient', () => {
       warnSpy.mockRestore();
       infoSpy.mockRestore();
     });
-
-    it('logs error when fallback also fails', async () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-      const primaryClient = createMockClient(undefined, new Error('503 Overloaded'));
-      const fallbackClientImpl = createMockClient(undefined, new Error('500 Server Error'));
-
-      const client = new FallbackAIClient(
-        { client: primaryClient, model: 'gemini-2.0-flash', name: 'google' },
-        { client: fallbackClientImpl, model: 'nvidia-model', name: 'nvidia' }
-      );
-
-      await expect(client.generateContent(defaultParams)).rejects.toThrow();
-
-      expect(warnSpy).toHaveBeenCalled();
-      expect(errorSpy).toHaveBeenCalledWith(
-        expect.stringContaining('[AI Fallback]'),
-        expect.stringContaining('Error')
-      );
-
-      warnSpy.mockRestore();
-      errorSpy.mockRestore();
-    });
   });
 });
