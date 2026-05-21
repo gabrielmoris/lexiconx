@@ -4,7 +4,7 @@ const AI_PROVIDER_ENDPOINT = process.env.AI_PROVIDER_ENDPOINT;
 const AI_PROVIDER_API_KEY = process.env.AI_PROVIDER_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
-const NVIDIA_MODEL = process.env.AI_MODEL || 'meta/llama-3.3-70b-instruct';
+const AI_MODEL = process.env.AI_MODEL || 'meta/llama-3.3-70b-instruct';
 
 export type AIProvider = 'google' | 'nvidia';
 
@@ -74,23 +74,9 @@ export class FallbackAIClient implements AIClient {
   }
 }
 
-function isCustomProviderConfigured(): boolean {
-  return !!(AI_PROVIDER_ENDPOINT && AI_PROVIDER_API_KEY);
-}
-
-function isGeminiConfigured(): boolean {
-  return !!GEMINI_API_KEY;
-}
-
-export function getAIProvider(): AIProvider {
-  if (isCustomProviderConfigured()) return 'nvidia';
-  if (isGeminiConfigured()) return 'google';
-  throw new Error('No api keys provided!');
-}
-
 export function createAIClient(): AIClient {
-  const nvidiaConfigured = isCustomProviderConfigured();
-  const geminiConfigured = isGeminiConfigured();
+  const nvidiaConfigured = !!(AI_PROVIDER_ENDPOINT && AI_PROVIDER_API_KEY);
+  const geminiConfigured = !!GEMINI_API_KEY;
 
   if (nvidiaConfigured && geminiConfigured) {
     // Both configured: Gemini primary, Nvidia fallback
@@ -104,7 +90,7 @@ export function createAIClient(): AIClient {
         apiKey: AI_PROVIDER_API_KEY!,
         baseURL: AI_PROVIDER_ENDPOINT!,
       }),
-      model: NVIDIA_MODEL,
+      model: AI_MODEL,
       name: 'nvidia',
     };
     return new FallbackAIClient(primary, fallback);
@@ -124,7 +110,7 @@ export function createAIClient(): AIClient {
         apiKey: AI_PROVIDER_API_KEY!,
         baseURL: AI_PROVIDER_ENDPOINT!,
       }),
-      model: NVIDIA_MODEL,
+      model: AI_MODEL,
       name: 'nvidia',
     });
   }
