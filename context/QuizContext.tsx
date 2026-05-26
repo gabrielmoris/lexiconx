@@ -45,7 +45,6 @@ const QuizContext = createContext<QuizContextType>({
 /**
  * Splits an array of words into roughly equal chunks for per-quiz generation.
  * Each quiz receives its own word subset so the AI uses ALL provided words
- * instead of choosing a subset from the full list.
  */
 function splitWordsForQuizzes(words: Word[], quizCount: number): Word[][] {
   const chunks: Word[][] = [];
