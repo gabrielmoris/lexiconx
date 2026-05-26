@@ -19,7 +19,7 @@ export const QUIZ_PROMPTS = {
 
       CRITICAL STRUCTURAL REQUIREMENTS - THESE ARE NON-NEGOTIABLE:
       1. Generate EXACTLY ${quizCount} quiz item(s) (no more, no less)
-      2. Each quiz item uses at least 2-4 words from the provided vocabulary list
+      2. You MUST use ALL the provided words in this quiz. Every word from the input list must appear in at least one question
       3. Each quiz item has EXACTLY 3-5 questions (vary the count: one might have 3, another 4, another 5, etc.)
       4. Each question has 4-5 answer choices with EXACTLY ONE correct answer
       5. Include phonetic notation for ALL ${learningLanguage} content
@@ -127,7 +127,7 @@ ${words
 
       VALIDATION CHECKLIST - VERIFY BEFORE RESPONDING:
       ✓ Exactly ${quizCount} quiz item(s) generated
-      ✓ Each quiz uses 2-4 different vocabulary words
+      ✓ ALL provided words are used across the quiz questions (every word must appear in at least one question)
       ✓ Each quiz has 3-5 questions (counts vary between quizzes)
       ✓ Each question has a usedWords array with valid _id values of the words it tests
 ✓ Each question's usedWords only contains words that question specifically tests
@@ -147,7 +147,7 @@ ${words
 
       REQUISITOS ESTRUCTURALES CRÍTICOS - ESTOS NO SON NEGOCIABLES:
       1. Genera EXACTAMENTE ${quizCount} elemento(s) de cuestionario (ni más, ni menos)
-      2. Cada elemento del cuestionario utiliza al menos 2-4 palabras de la lista de vocabulario proporcionada
+      2. Debes usar TODAS las palabras proporcionadas en este cuestionario. Cada palabra de la lista de entrada debe aparecer en al menos una pregunta
       3. Cada elemento del cuestionario tiene EXACTAMENTE 3-5 preguntas (varía el número: uno puede tener 3, otro 4, otro 5, etc.)
       4. Cada pregunta tiene 4-5 opciones de respuesta con EXACTAMENTE UNA respuesta correcta
       5. Incluye notación fonética para TODO el contenido en ${learningLanguage}
@@ -256,7 +256,7 @@ ${words
 
       LISTA DE VERIFICACIÓN DE VALIDACIÓN - VERIFICAR ANTES DE RESPONDER:
       ✓ Exactamente ${quizCount} elemento(s) de cuestionario generados
-      ✓ Cada cuestionario utiliza 2-4 palabras de vocabulario diferentes
+      ✓ TODAS las palabras proporcionadas se usan en las preguntas del cuestionario (cada palabra debe aparecer en al menos una pregunta)
       ✓ Cada cuestionario tiene 3-5 preguntas (los recuentos varían entre cuestionarios)
       ✓ Cada pregunta tiene un array usedWords con valores _id válidos de las palabras que evalúa
 ✓ El usedWords de cada pregunta solo contiene palabras que esa pregunta evalúa específicamente
@@ -275,7 +275,7 @@ ${words
 
       KRITISCHE STRUKTURELLE ANFORDERUNGEN - DIESE SIND NICHT VERHANDELBAR:
       1. Generiere EXAKT ${quizCount} Quiz-Item(s) (nicht mehr, nicht weniger)
-      2. Jedes Quiz-Item verwendet mindestens 2-4 Wörter aus der bereitgestellten Vokabelliste
+      2. Du MUSST ALLE bereitgestellten Wörter in diesem Quiz verwenden. Jedes Wort aus der Eingabeliste muss in mindestens einer Frage erscheinen
       3. Jedes Quiz-Item hat EXAKT 3-5 Fragen (variiere die Anzahl: eines könnte 3, ein anderes 4, ein anderes 5 haben usw.)
       4. Jede Frage hat 4-5 Antwortmöglichkeiten mit EXAKT EINER richtigen Antwort
       5. Füge die phonetische Notation für ALLE ${learningLanguage}-Inhalte hinzu
@@ -384,7 +384,7 @@ ${words
 
       VALIDIERUNGS-CHECKLISTE - VOR DER ANTWORT ÜBERPRÜFEN:
       ✓ Genau ${quizCount} Quiz-Item(s) generiert
-      ✓ Jedes Quiz verwendet 2-4 verschiedene Vokabeln
+      ✓ ALLE bereitgestellten Wörter werden in den Quiz-Fragen verwendet (jedes Wort muss in mindestens einer Frage erscheinen)
       ✓ Jedes Quiz hat 3-5 Fragen (Anzahl variiert zwischen den Quizzen)
       ✓ Jede Frage hat ein usedWords-Array mit gültigen _id-Werten der von ihr getesteten Wörter
 ✓ Das usedWords jeder Frage enthält nur Wörter, die diese Frage speziell testet
@@ -403,7 +403,7 @@ ${words
 
       关键结构要求 - 这些是不可协商的：
       1. 生成 EXACTLY ${quizCount} 个测验项目（不多不少）
-      2. 每个测验项目使用所提供词汇列表中至少 2-4 个单词
+      2. 你必须使用本测验中提供的所有单词。输入列表中的每个单词必须至少出现在一个问题中
       3. 每个测验项目 EXACTLY 有 3-5 个问题（数量可以变化：一个可能有 3 个，另一个 4 个，另一个 5 个等）
       4. 每个问题有 4-5 个答案选项，其中 EXACTLY ONE 是正确答案
       5. 为所有 ${learningLanguage} 内容包含拼音标记
@@ -512,7 +512,7 @@ ${words
 
       验证清单 - 回复前验证:
       ✓ 生成了 EXACTLY ${quizCount} 个测验项目
-      ✓ 每个测验使用 2-4 个不同的词汇单词
+      ✓ 所有提供的单词都用于测验问题中（每个单词必须至少出现在一个问题中）
       ✓ 每个测验有 3-5 个问题 (测验之间数量不同)
       ✓ 每个问题都有一个 usedWords 数组，包含其测试单词的有效 _id 值
 ✓ 每个问题的 usedWords 仅包含该问题专门测试的单词
@@ -530,7 +530,7 @@ ${words
 
       КРИТИЧЕСКИЕ СТРУКТУРНЫЕ ТРЕБОВАНИЯ - ЭТИ ТРЕБОВАНИЯ НЕ ПОДЛЕЖАТ ОБСУЖДЕНИЮ:
       1. Создайте РОВНО ${quizCount} элемент(а) викторины (не больше, не меньше)
-      2. Каждый элемент викторины использует минимум 2-4 слова из предоставленного словарного списка
+      2. Вы ДОЛЖНЫ использовать ВСЕ предоставленные слова в этой викторине. Каждое слово из списка ввода должно появиться хотя бы в одном вопросе
       3. Каждый элемент викторины имеет РОВНО 3-5 вопросов (варьируйте количество: один может иметь 3, другой 4, другой 5 и т.д.)
       4. У каждого вопроса есть 4-5 вариантов ответа с ТОЧНО ОДНИМ правильным ответом
       5. Включите фонетическую нотацию для ВСЕГО контента на ${learningLanguage}
@@ -639,7 +639,7 @@ ${words
 
       КОНТРОЛЬНЫЙ СПИСОК ПРОВЕРКИ - ПРОВЕРЬТЕ ПЕРЕД ОТВЕТОМ:
       ✓ Создано ровно ${quizCount} элемент(а) викторины
-      ✓ Каждая викторина использует 2-4 разных словарных слова
+      ✓ ВСЕ предоставленные слова используются в вопросах викторины (каждое слово должно появиться хотя бы в одном вопросе)
       ✓ У каждой викторины есть 3-5 вопросов (количество варьируется между викторинами)
       ✓ Каждый вопрос имеет массив usedWords с допустимыми значениями _id проверяемых им слов
 ✓ Массив usedWords каждого вопроса содержит только слова, которые этот вопрос специально проверяет

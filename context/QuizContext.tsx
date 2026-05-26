@@ -43,6 +43,23 @@ const QuizContext = createContext<QuizContextType>({
 });
 
 /**
+ * Splits an array of words into roughly equal chunks for per-quiz generation.
+ * Each quiz receives its own word subset so the AI uses ALL provided words
+ */
+function splitWordsForQuizzes(words: Word[], quizCount: number): Word[][] {
+  const chunks: Word[][] = [];
+  const base = Math.floor(words.length / quizCount);
+  const remainder = words.length % quizCount;
+  let offset = 0;
+  for (let i = 0; i < quizCount; i++) {
+    const size = base + (i < remainder ? 1 : 0);
+    chunks.push(words.slice(offset, offset + size));
+    offset += size;
+  }
+  return chunks;
+}
+
+/**
  * Determines the number of quizzes based on word count.
  */
 function determineQuizCount(wordCount: number): number {
@@ -75,6 +92,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const currentLocaleRef = useRef<string>('en');
   const levelRef = useRef<number>(1);
   const fetchedWordsRef = useRef<Word[]>([]);
+  const wordChunksRef = useRef<Word[][]>([]);
   const totalExpectedRef = useRef<number>(0);
 
   const { status } = useSession();
@@ -110,7 +128,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
    * finish screen triggers correctly with partial quiz sets.
    */
   const generateRemainingQuizzes = useCallback(
-    async (quiz1: Quiz, quizCount: number) => {
+    async (quiz1: Quiz, quizCount: number, wordChunks: Word[][]) => {
       const backgroundQuizzes: Quiz[] = [quiz1];
       let failedCount = 0;
 
@@ -123,7 +141,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
             selectedLanguageRef.current!,
             currentLocaleRef.current as Language,
             levelRef.current,
-            fetchedWordsRef.current,
+            wordChunks[i],
             1
           );
 
@@ -207,16 +225,20 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         setTotalExpectedQuizzes(quizCount);
         totalExpectedRef.current = quizCount;
 
+        // Split words into per-quiz chunks so each quiz uses a dedicated word set
+        const wordChunks = splitWordsForQuizzes(fetchedWords, quizCount);
+
         // Store values in refs for background generation
         levelRef.current = learningProgress!.level;
         fetchedWordsRef.current = fetchedWords;
+        wordChunksRef.current = wordChunks;
 
-        // Generate quiz 1 immediately
+        // Generate quiz 1 immediately with its dedicated word chunk
         const data = await quizGeneration(
           selectedLanguage.language,
           currentLocale as Language,
           learningProgress!.level,
-          fetchedWords,
+          wordChunks[0],
           1
         );
 
@@ -229,7 +251,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           setIsGeneratingMore(true);
           isGeneratingRef.current = true;
 
-          generateRemainingQuizzes(quiz1, quizCount);
+          generateRemainingQuizzes(quiz1, quizCount, wordChunks);
         } else {
           setIsAllQuizzesReady(true);
           setStoredQuizzes({ quizzes: [quiz1] });
