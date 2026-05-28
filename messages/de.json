@@ -187,7 +187,8 @@
     "stats": "Statistiken",
     "settings": "Einstellungen",
     "cards": "Karten",
-    "home": "Home"
+    "home": "Home",
+    "memory-hooks": "Gedachtnishaken"
   },
   "stats": {
     "title": "Deine Statistiken",
@@ -297,5 +298,21 @@
   },
   "word-context": {
     "unknown-error": "Es ist ein unbekannter Fehler aufgetreten."
+  },
+  "memory-hooks": {
+    "title": "Gedachtnishaken",
+    "subtitle": "Karteikarten um deine schwachsten Worter mit der Schlusselwort-Methode zu lernen. Die Vorderseite zeigt einen Gedachtnishaken; drehe um, um das Wort zu sehen.",
+    "hook-side": "Gedachtnishaken",
+    "word-side": "Wort",
+    "tap-to-flip": "Tippen zum Umdrehen",
+    "tap-to-flip-back": "Tippen zuruck",
+    "card-of": "Karte {current} von {total}",
+    "loading": "Lade deine schwachen Worter...",
+    "generating": "Erstelle Gedachtnishaken mit KI...",
+    "no-weak-words": "Keine schwachen Worter gefunden. Weiterlernen und sie werden erscheinen!",
+    "error-speech": "Sprachfunktion nicht verfugbar",
+    "loading-voices": "Bitte warten, Sprachstimmen werden geladen...",
+    "error-generating": "Fehler beim Erstellen der Gedachtnishaken",
+    "error-fetching": "Fehler beim Laden der Gedachtnishaken"
   }
 }

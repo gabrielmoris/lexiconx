@@ -188,7 +188,8 @@
     "stats": "统计",
     "settings": "设置",
     "cards": "牌",
-    "home": "家"
+    "home": "家",
+    "memory-hooks": "记忆钩"
   },
   "stats": {
     "title": "你的统计",
@@ -298,5 +299,21 @@
   },
   "word-context": {
     "unknown-error": "发生未知错误。"
+  },
+  "memory-hooks": {
+    "title": "记忆钩",
+    "subtitle": "翻转卡片使用关键词法学习你最薄弱的词汇。正面显示记忆钩；翻转查看单词。",
+    "hook-side": "记忆钩",
+    "word-side": "单词",
+    "tap-to-flip": "点击翻转",
+    "tap-to-flip-back": "点击翻回",
+    "card-of": "第 {current} 张，共 {total} 张",
+    "loading": "加载你的薄弱词汇...",
+    "generating": "AI正在生成记忆钩...",
+    "no-weak-words": "没有找到薄弱词汇。继续学习，它们会出现的！",
+    "error-speech": "语音功能不可用",
+    "loading-voices": "请稍候，正在加载语音...",
+    "error-generating": "生成记忆钩出错",
+    "error-fetching": "加载记忆钩出错"
   }
 }
