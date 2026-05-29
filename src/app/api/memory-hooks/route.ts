@@ -32,7 +32,6 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Fetch weakest words (lowest easeFactor)
     const weakWords = await Word.aggregate([
       { $match: { userId: user._id, language, easeFactor: { $exists: true } } },
       { $sort: { easeFactor: 1 } },
@@ -45,7 +44,6 @@ export async function GET(req: Request) {
 
     const weakWordIds = weakWords.map((w: WordType) => w._id);
 
-    // Fetch existing hooks for these words
     const existingHooks = await MemoryHook.find({
       userId: user._id,
       wordId: { $in: weakWordIds },
@@ -53,7 +51,6 @@ export async function GET(req: Request) {
 
     const existingHookMap = new Map(existingHooks.map(hook => [hook.wordId.toString(), hook]));
 
-    // Build card data: merge word + hook info
     const cards: MemoryHookCardData[] = weakWords.map((w: WordType) => {
       const hook = existingHookMap.get(w._id!.toString());
       return {
@@ -101,7 +98,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Fetch the words that need hooks (only the user's own words)
     const words = await Word.find({
       _id: { $in: wordIds },
       userId: user._id,
@@ -111,7 +107,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No words found' }, { status: 404 });
     }
 
-    // Check which words already have hooks (skip them)
     const existingHooks = await MemoryHook.find({
       userId: user._id,
       wordId: { $in: wordIds },
@@ -124,14 +119,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: null, data: existingHooks });
     }
 
-    // Generate hooks via AI
     const generated = await generateMemoryHooks(
       wordsNeedingHooks as unknown as WordType[],
       learningLanguage,
       userLanguage
     );
 
-    // Save generated hooks to DB
     const hookDocs = generated.hooks.map(hook => ({
       userId: user._id,
       wordId: hook.wordId,

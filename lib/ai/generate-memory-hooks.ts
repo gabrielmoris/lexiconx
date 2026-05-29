@@ -31,7 +31,7 @@ export async function generateMemoryHooks(
 
     const client = createAIClient();
 
-    // Always use English prompt - it handles all languages via interpolation
+    // Testing if english prompt works fine (so far is ok)
     const promptConfig = MEMORY_HOOKS_PROMPTS.English;
     if (!promptConfig) {
       throw new Error('Memory hooks prompt configuration not found');
