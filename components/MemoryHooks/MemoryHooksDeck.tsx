@@ -5,22 +5,14 @@ import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageToLearnContext';
 import { useToastContext } from '@/context/ToastContext';
-import { Language, Locale } from '@/types/Words';
 import { MemoryHookCardData } from '@/types/MemoryHook';
 import { getMemoryHooks, generateMemoryHooksApi } from '@/lib/apis';
 import MemoryHookCard from './MemoryHookCard';
 import LoadingComponent from '@/components/Layout/LoadingComponent';
-
-const localeToLanguage = (locale: Locale): Language => {
-  const map: Record<Locale, Language> = {
-    en: 'English',
-    de: 'Deutsch',
-    zh: '中文',
-    es: 'Español',
-    ru: 'русский',
-  };
-  return map[locale];
-};
+import { localeToLanguage } from '@/lib/helpers';
+import { Locale } from '@/types/Words';
+import ArrowLeft from '../Icons/ArrowLeft';
+import ArrowRight from '../Icons/ArrowRight';
 
 const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
   const [cards, setCards] = useState<MemoryHookCardData[]>([]);
@@ -115,16 +107,9 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
         <button
           onClick={goPrev}
           disabled={currentIndex === 0}
-          className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors  cursor-pointer"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ArrowLeft className="w-6 h-6" />
         </button>
 
         <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -134,11 +119,9 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
         <button
           onClick={goNext}
           disabled={currentIndex === cards.length - 1}
-          className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
+          <ArrowRight className="w-6 h-6" />
         </button>
       </div>
 

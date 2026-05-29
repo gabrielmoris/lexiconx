@@ -94,7 +94,6 @@ const MemoryHookCard: React.FC<MemoryHookCardProps> = ({ card }) => {
               <h3 className="text-3xl font-extrabold text-emerald-800 dark:text-theme-text-dark">
                 {card.word}
               </h3>
-              <SoundIcon className="w-5 h-5 cursor-pointer" onClick={handleSpeak} />
             </div>
             {card.phoneticNotation && (
               <p className="text-md text-emerald-800/80 dark:text-theme-text-dark">
@@ -104,6 +103,10 @@ const MemoryHookCard: React.FC<MemoryHookCardProps> = ({ card }) => {
             <p className="text-lg text-emerald-800/50 dark:text-theme-text-dark/50 text-center">
               {card.definition}
             </p>
+            <SoundIcon
+              className="w-12 h-12 cursor-pointer hover:opacity-50"
+              onClick={handleSpeak}
+            />
             <div className="flex items-center gap-2 mt-auto">
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-600/80 dark:bg-emerald-900 dark:text-theme-text-dark/40">
                 EF: {card.easeFactor}
