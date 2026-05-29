@@ -41,18 +41,18 @@ export interface WordsGeneratorResponse {
   words: Word[];
 }
 
-export type Language = "中文" | "English" | "Deutsch" | "Español" | "русский";
-export type Locale = "en" | "de" | "zh" | "es" | "ru";
+export type Language = '中文' | 'English' | 'Deutsch' | 'Español' | 'русский';
+export type Locale = 'en' | 'de' | 'zh' | 'es' | 'ru';
 
 export interface QuizSessionData {
-	_id?: string;
-	userId: string;
-	language: string;
-	date: Date;
-	totalQuestions: number;
-	correctAnswers: number;
-	wordsMastered: number;
-	duration: number;
-	createdAt?: string;
-	updatedAt?: string;
+  _id?: string;
+  userId: string;
+  language: string;
+  date: Date;
+  totalQuestions: number;
+  correctAnswers: number;
+  wordsMastered: number;
+  duration: number;
+  createdAt?: string;
+  updatedAt?: string;
 }

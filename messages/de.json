@@ -187,7 +187,8 @@
     "stats": "Statistiken",
     "settings": "Einstellungen",
     "cards": "Karten",
-    "home": "Home"
+    "home": "Home",
+    "memory-hooks": "Gedachtnishaken"
   },
   "stats": {
     "title": "Deine Statistiken",
@@ -297,5 +298,21 @@
   },
   "word-context": {
     "unknown-error": "Es ist ein unbekannter Fehler aufgetreten."
+  },
+  "memory-hooks": {
+    "title": "Gedächtnishaken",
+    "subtitle": "Karteikarten, um deine schwächsten Wörter mit der Schlüsselwort-Methode zu lernen. Die Vorderseite zeigt einen Gedächtnishaken; drehe um, um das Wort zu sehen.",
+    "hook-side": "Gedächtnishaken",
+    "word-side": "Wort",
+    "tap-to-flip": "Tippen zum Umdrehen",
+    "tap-to-flip-back": "Tippen zurück",
+    "card-of": "Karte {current} von {total}",
+    "loading": "Lade deine schwächsten Wörter...",
+    "generating": "Erstelle Gedächtnishaken mit KI...",
+    "no-weak-words": "Keine schwächsten Wörter gefunden. Weiterlernen und sie werden erscheinen!",
+    "error-speech": "Sprachfunktion nicht verfügbar",
+    "loading-voices": "Bitte warten, Sprachstimmen werden geladen...",
+    "error-generating": "Fehler beim Erstellen der Gedächtnishaken",
+    "error-fetching": "Fehler beim Laden der Gedächtnishaken"
   }
 }

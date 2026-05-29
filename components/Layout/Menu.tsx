@@ -1,24 +1,25 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "@/src/i18n/navigation";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import Image from "next/image";
-import AnonIcon from "../Icons/AnonICon";
-import HomeIcon from "../Icons/Homeicon";
-import CardsIcon from "../Icons/CardsIcon";
-import UserIcon from "../Icons/UserIcon";
-import LogoutIcon from "../Icons/LogoutIcon";
-import LoadingComponent from "./LoadingComponent";
-import SettingsIcon from "../Icons/SettingsIcon";
-import StatsIcon from "@/components/Icons/StatsIcon";
-import { useTranslations } from "next-intl";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from '@/src/i18n/navigation';
+import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+import Image from 'next/image';
+import AnonIcon from '../Icons/AnonICon';
+import HomeIcon from '../Icons/Homeicon';
+import CardsIcon from '../Icons/CardsIcon';
+import UserIcon from '../Icons/UserIcon';
+import LogoutIcon from '../Icons/LogoutIcon';
+import LoadingComponent from './LoadingComponent';
+import SettingsIcon from '../Icons/SettingsIcon';
+import StatsIcon from '@/components/Icons/StatsIcon';
+import MemoryHookIcon from '@/components/Icons/MemoryHookIcon';
+import { useTranslations } from 'next-intl';
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data: session, status } = useSession();
   const menuRef = useRef<HTMLDivElement>(null);
-  const t = useTranslations("menu");
+  const t = useTranslations('menu');
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,13 +27,13 @@ const Menu: React.FC = () => {
         setOpenMenu(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <LoadingComponent />;
   }
 
@@ -46,7 +47,7 @@ const Menu: React.FC = () => {
                shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
                text-theme-text-light dark:text-theme-text-dark
                transition-all duration-300 ease-in-out
-               ${openMenu ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1/2 pointer-events-none"}
+               ${openMenu ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-1/2 pointer-events-none'}
                `}
       >
         <Link
@@ -55,7 +56,7 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/"
         >
-          <HomeIcon className="w-4 h-4" /> {t("home")}
+          <HomeIcon className="w-4 h-4" /> {t('home')}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -63,7 +64,7 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/cards"
         >
-          <CardsIcon className="w-4 h-4" /> {t("cards")}
+          <CardsIcon className="w-4 h-4" /> {t('cards')}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -71,7 +72,7 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/settings"
         >
-          <SettingsIcon className="w-4 h-4" /> {t("settings")}
+          <SettingsIcon className="w-4 h-4" /> {t('settings')}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
@@ -79,7 +80,15 @@ const Menu: React.FC = () => {
           px-5 py-2"
           href="/stats"
         >
-          <StatsIcon className="w-4 h-4" /> {t("stats")}
+          <StatsIcon className="w-4 h-4" /> {t('stats')}
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
+			dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+			px-5 py-2"
+          href="/memory-hooks"
+        >
+          <MemoryHookIcon className="w-4 h-4 min-w-4" /> {t('memory-hooks')}
         </Link>
         {session?.user?.image ? (
           <p
@@ -88,7 +97,7 @@ const Menu: React.FC = () => {
             dark:hover:text-theme-text-dark px-5 py-2"
             onClick={() => signOut()}
           >
-            <LogoutIcon className="w-4 h-4" /> {t("logout")}
+            <LogoutIcon className="w-4 h-4" /> {t('logout')}
           </p>
         ) : (
           <Link
@@ -97,7 +106,7 @@ const Menu: React.FC = () => {
             dark:hover:text-theme-text-dark px-5 py-2"
             href="/login"
           >
-            <UserIcon className="w-4 h-4" /> {t("login")}
+            <UserIcon className="w-4 h-4" /> {t('login')}
           </Link>
         )}
       </nav>
@@ -107,7 +116,7 @@ const Menu: React.FC = () => {
           height={50}
           onClick={() => setOpenMenu(!openMenu)}
           src={session?.user?.image}
-          alt={session?.user?.name || "user-icn"}
+          alt={session?.user?.name || 'user-icn'}
           className="w-[50px] h-[50px] rounded-full cursor-pointer"
           priority
         />

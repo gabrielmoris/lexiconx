@@ -1,36 +1,41 @@
-"use client";
+'use client';
 
-import { useLocale } from "next-intl";
-import { Link, usePathname } from "@/src/i18n/navigation";
-import { locales } from "@/src/i18n/routing";
-import ChinaFlag from "@/components/Icons/ChinaFlag";
-import EnglishFlag from "@/components/Icons/EnglishFlag";
-import GermanFlag from "@/components/Icons/GermanFlag";
-import SpanishFlag from "@/components/Icons/SpanishFlag";
-import RussianFlag from "@/components/Icons/RussianFlag";
-import { Language, Locale } from "@/types/Words";
-import { createElement, useState, useEffect, useMemo } from "react";
-import { updateUserData } from "@/lib/apis";
-import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
-import LoadingComponent from "../Layout/LoadingComponent";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useLocale } from 'next-intl';
+import { Link, usePathname } from '@/src/i18n/navigation';
+import { locales } from '@/src/i18n/routing';
+import ChinaFlag from '@/components/Icons/ChinaFlag';
+import EnglishFlag from '@/components/Icons/EnglishFlag';
+import GermanFlag from '@/components/Icons/GermanFlag';
+import SpanishFlag from '@/components/Icons/SpanishFlag';
+import RussianFlag from '@/components/Icons/RussianFlag';
+import { Language, Locale } from '@/types/Words';
+import { createElement, useState, useEffect, useMemo } from 'react';
+import { updateUserData } from '@/lib/apis';
+import { AnimatePresence, motion, easeOut, easeIn } from 'framer-motion';
+import LoadingComponent from '../Layout/LoadingComponent';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 
 export const languages = {
-  en: { name: "English", icon: EnglishFlag },
-  de: { name: "Deutsch", icon: GermanFlag },
-  zh: { name: "中文", icon: ChinaFlag },
-  es: { name: "Español", icon: SpanishFlag },
-  ru: { name: "русский", icon: RussianFlag },
+  en: { name: 'English', icon: EnglishFlag },
+  de: { name: 'Deutsch', icon: GermanFlag },
+  zh: { name: '中文', icon: ChinaFlag },
+  es: { name: 'Español', icon: SpanishFlag },
+  ru: { name: 'русский', icon: RussianFlag },
 };
 
-const titles = ["Select your native language!", "Wähle deine Muttersprache!", "Selecciona tu idioma nativo!", "选择你的母语！"];
+const titles = [
+  'Select your native language!',
+  'Wähle deine Muttersprache!',
+  'Selecciona tu idioma nativo!',
+  '选择你的母语！',
+];
 
 export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => void }) {
   const [isUserChoosing, setIsUserChoosing] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentLocale: Locale = useLocale() as Locale;
   const pathname = usePathname();
-	const { status } = useAuthGuard();
+  const { status } = useAuthGuard();
 
   const flagPositions = useMemo(() => {
     const positions: { [key: string]: { x: number; y: number; rotation: number } } = {};
@@ -58,22 +63,22 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
   }, []);
 
   const handleUserChoice = async (language: Locale) => {
-	try {
-		if (status !== "authenticated") {
-			console.warn("Not authenticated. Cannot update user data.");
-			return;
-		}
+    try {
+      if (status !== 'authenticated') {
+        console.warn('Not authenticated. Cannot update user data.');
+        return;
+      }
 
-		await updateUserData({ nativeLanguage: languages[language].name as Language });
+      await updateUserData({ nativeLanguage: languages[language].name as Language });
       setNextStep();
     } catch (error) {
-      console.error("Failed to select language:", error);
+      console.error('Failed to select language:', error);
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
+      setCurrentIndex(prevIndex => (prevIndex + 1) % titles.length);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -106,7 +111,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
     },
   };
 
-  if (!isFlagPositionsReady || status === "loading") return <LoadingComponent />;
+  if (!isFlagPositionsReady || status === 'loading') return <LoadingComponent />;
 
   return (
     <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96 w-72 lg:w-96 overflow-hidden">
@@ -126,7 +131,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
       {isUserChoosing ? (
         <>
           {/* Floating flags with waving animation */}
-          {locales.map((locale) => (
+          {locales.map(locale => (
             <motion.div
               key={`floating-${locale}`}
               className="absolute z-20"
@@ -137,10 +142,14 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
                 animation: `wave-${locale} 3s ease-in-out infinite`,
               }}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.1 * locales.indexOf(locale) } }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: { duration: 0.5, delay: 0.1 * locales.indexOf(locale) },
+              }}
             >
               <Link
-                href={`/${pathname.split("/")[1]}`}
+                href={`/${pathname.split('/')[1]}`}
                 locale={locale}
                 className="block hover:scale-110 transition-transform duration-200"
                 onClick={() => handleUserChoice(locale as Locale)}
@@ -148,7 +157,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
               >
                 <div className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
                   {createElement(languages[locale as Locale].icon, {
-                    className: "w-full h-full object-contain",
+                    className: 'w-full h-full object-contain',
                   })}
                 </div>
               </Link>
@@ -160,14 +169,19 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
             onClick={() => setIsUserChoosing(false)}
             className="absolute cursor-pointer z-30 p-2 rounded-full bg-secondary text-white dark:bg-theme-fg-dark hover:bg-gray-700 transition-colors backdrop-blur-sm"
             style={{
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
             aria-label="Close language selector"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </>
@@ -179,7 +193,7 @@ export default function LocaleSwitcher({ setNextStep }: { setNextStep: () => voi
         >
           <div className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
             {createElement(languages[currentLocale].icon, {
-              className: "w-full h-full object-contain",
+              className: 'w-full h-full object-contain',
             })}
           </div>
         </button>

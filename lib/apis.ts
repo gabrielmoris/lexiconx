@@ -195,6 +195,23 @@ export const quizGeneration = async (
   });
 };
 
+// MEMORY HOOKS RELATED APIS
+export const getMemoryHooks = async (language: Language) => {
+  const endpoint = `/api/memory-hooks?language=${language}`;
+  return _apiHandler(endpoint, { method: 'GET' });
+};
+
+export const generateMemoryHooksApi = async (
+  wordIds: string[],
+  learningLanguage: Language,
+  userLanguage: Language
+) => {
+  return _apiHandler('/api/memory-hooks', {
+    method: 'POST',
+    body: { wordIds, learningLanguage, userLanguage },
+  });
+};
+
 // STATS RELATED APIS
 export const saveQuizSession = async (
   session: Omit<QuizSessionData, '_id' | 'userId' | 'date' | 'createdAt' | 'updatedAt'>
