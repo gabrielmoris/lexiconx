@@ -300,19 +300,19 @@
     "unknown-error": "Es ist ein unbekannter Fehler aufgetreten."
   },
   "memory-hooks": {
-    "title": "Gedachtnishaken",
-    "subtitle": "Karteikarten um deine schwachsten Worter mit der Schlusselwort-Methode zu lernen. Die Vorderseite zeigt einen Gedachtnishaken; drehe um, um das Wort zu sehen.",
-    "hook-side": "Gedachtnishaken",
+    "title": "Gedächtnishaken",
+    "subtitle": "Karteikarten, um deine schwächsten Wörter mit der Schlüsselwort-Methode zu lernen. Die Vorderseite zeigt einen Gedächtnishaken; drehe um, um das Wort zu sehen.",
+    "hook-side": "Gedächtnishaken",
     "word-side": "Wort",
     "tap-to-flip": "Tippen zum Umdrehen",
-    "tap-to-flip-back": "Tippen zuruck",
+    "tap-to-flip-back": "Tippen zurück",
     "card-of": "Karte {current} von {total}",
-    "loading": "Lade deine schwachen Worter...",
-    "generating": "Erstelle Gedachtnishaken mit KI...",
-    "no-weak-words": "Keine schwachen Worter gefunden. Weiterlernen und sie werden erscheinen!",
-    "error-speech": "Sprachfunktion nicht verfugbar",
+    "loading": "Lade deine schwächsten Wörter...",
+    "generating": "Erstelle Gedächtnishaken mit KI...",
+    "no-weak-words": "Keine schwächsten Wörter gefunden. Weiterlernen und sie werden erscheinen!",
+    "error-speech": "Sprachfunktion nicht verfügbar",
     "loading-voices": "Bitte warten, Sprachstimmen werden geladen...",
-    "error-generating": "Fehler beim Erstellen der Gedachtnishaken",
-    "error-fetching": "Fehler beim Laden der Gedachtnishaken"
+    "error-generating": "Fehler beim Erstellen der Gedächtnishaken",
+    "error-fetching": "Fehler beim Laden der Gedächtnishaken"
   }
 }

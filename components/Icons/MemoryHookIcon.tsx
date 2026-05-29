@@ -5,40 +5,16 @@ type MemoryHookIconProps = React.SVGProps<SVGSVGElement> & {
 const MemoryHookIcon: React.FC<MemoryHookIconProps> = ({ className, ...props }) => (
   <svg
     width="80"
-    height="81"
-    viewBox="0 0 24 25"
+    height="80"
+    viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
     {...props}
   >
     <path
-      d="M12 2.5C10.3431 2.5 9 3.84315 9 5.5V13.5C9 15.1569 10.3431 16.5 12 16.5C13.6569 16.5 15 15.1569 15 13.5V5.5C15 3.84315 13.6569 2.5 12 2.5Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M7 13.5C7 16.2614 9.23858 18.5 12 18.5C14.7614 18.5 17 16.2614 17 13.5"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 18.5V22.5"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M8 22.5H16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M40 18.1818C45.7865 18.1818 51.3361 20.4805 55.4278 24.5722C59.5195 28.6639 61.8182 34.2135 61.8182 40C61.8182 48.0727 57.4182 55.1273 50.9091 58.9091V65.4545C50.9091 66.419 50.526 67.3439 49.844 68.0258C49.1621 68.7078 48.2372 69.0909 47.2727 69.0909H32.7273C31.7629 69.0909 30.8379 68.7078 30.156 68.0258C29.474 67.3439 29.0909 66.419 29.0909 65.4545V58.9091C22.5818 55.1273 18.1818 48.0727 18.1818 40C18.1818 34.2135 20.4805 28.6639 24.5722 24.5722C28.6639 20.4805 34.2135 18.1818 40 18.1818ZM47.2727 72.7273V76.3636C47.2727 77.3281 46.8896 78.253 46.2077 78.9349C45.5257 79.6169 44.6008 80 43.6364 80H36.3636C35.3992 80 34.4743 79.6169 33.7923 78.9349C33.1104 78.253 32.7273 77.3281 32.7273 76.3636V72.7273H47.2727ZM69.0909 36.3636H80V43.6364H69.0909V36.3636ZM0 36.3636H10.9091V43.6364H0V36.3636ZM43.6364 0V10.9091H36.3636V0H43.6364ZM14.2545 9.09091L22 16.8727L16.8364 22L9.09091 14.2909L14.2545 9.09091ZM58 16.8364L65.7091 9.09091L70.9091 14.2909L63.1636 22L58 16.8364Z"
+      fill="currentColor"
     />
   </svg>
 );

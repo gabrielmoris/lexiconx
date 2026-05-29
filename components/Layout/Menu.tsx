@@ -88,7 +88,7 @@ const Menu: React.FC = () => {
 			px-5 py-2"
           href="/memory-hooks"
         >
-          <MemoryHookIcon className="w-4 h-4" /> {t('memory-hooks')}
+          <MemoryHookIcon className="w-4 h-4 min-w-4" /> {t('memory-hooks')}
         </Link>
         {session?.user?.image ? (
           <p

@@ -189,7 +189,7 @@
     "settings": "Ajustes",
     "cards": "Tarjetas",
     "home": "Inicio",
-    "memory-hooks": "Ganchos de Memoria"
+    "memory-hooks": "Anclaje Memoria"
   },
   "stats": {
     "title": "Tus Estadisticas",
@@ -301,19 +301,19 @@
     "unknown-error": "Se produjo un error desconocido."
   },
   "memory-hooks": {
-    "title": "Ganchos de Memoria",
-    "subtitle": "Tarjetas para estudiar tus palabras mas debiles usando el Metodo de Palabra Clave. El frente muestra un gancho de memoria; voltea para ver la palabra.",
-    "hook-side": "Gancho de Memoria",
+    "title": "Anclajes de Memoria",
+    "subtitle": "Tarjetas para estudiar tus palabras mas debiles usando el Metodo de Palabra Clave. El frente muestra un anclaje de memoria; voltea para ver la palabra.",
+    "hook-side": "Anclajes de Memoria",
     "word-side": "Palabra",
     "tap-to-flip": "Toca para voltear",
     "tap-to-flip-back": "Toca para volver",
     "card-of": "Tarjeta {current} de {total}",
     "loading": "Cargando tus palabras debiles...",
-    "generating": "Generando ganchos de memoria con IA...",
+    "generating": "Generando anclajes de memoria con IA...",
     "no-weak-words": "No se encontraron palabras debiles. Sigue estudiando y apareceran!",
     "error-speech": "La funcion de voz no esta disponible",
     "loading-voices": "Por favor espera, cargando voces...",
-    "error-generating": "Error al generar ganchos de memoria",
-    "error-fetching": "Error al cargar ganchos de memoria"
+    "error-generating": "Error al generar anclajes de memoria",
+    "error-fetching": "Error al cargar anclajes de memoria"
   }
 }
