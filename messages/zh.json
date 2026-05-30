@@ -315,5 +315,26 @@
     "loading-voices": "请稍候，正在加载语音...",
     "error-generating": "生成记忆钩子出错",
     "error-fetching": "加载记忆钩子出错"
+  },
+  "quiz-start": {
+    "ready-to-study": "准备好学习了吗？",
+    "new": "新词",
+    "learning": "学习中",
+    "mastered": "已掌握",
+    "selected-words": "已选单词",
+    "clear-all": "清除全部",
+    "no-words-selected": "没有选择单词。请在下方搜索并添加。",
+    "add-words": "添加单词",
+    "show-overdue-only": "仅显示待复习",
+    "show-all-words": "显示全部单词",
+    "search-placeholder": "搜索单词...",
+    "no-results": "未找到单词",
+    "no-words-available": "没有可添加的单词",
+    "min-words-hint": "至少选择3个单词才能开始测验",
+    "max-words-hint": "超过10个单词可能导致较长的学习时间",
+    "start-quiz": "开始测验",
+    "generating": "正在生成测验...",
+    "loading-words": "正在加载单词...",
+    "error-fetching-words": "加载单词时出错"
   }
 }

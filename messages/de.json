@@ -314,5 +314,26 @@
     "loading-voices": "Bitte warten, Sprachstimmen werden geladen...",
     "error-generating": "Fehler beim Erstellen der Gedächtnishaken",
     "error-fetching": "Fehler beim Laden der Gedächtnishaken"
+  },
+  "quiz-start": {
+    "ready-to-study": "Bereit zum Lernen?",
+    "new": "Neu",
+    "learning": "Lernend",
+    "mastered": "Beherrscht",
+    "selected-words": "Ausgewaehlte Woerter",
+    "clear-all": "Alle entfernen",
+    "no-words-selected": "Keine Woerter ausgewaehlt. Suche und fuege Woerter hinzu.",
+    "add-words": "Woerter hinzufuegen",
+    "show-overdue-only": "Nur faellige anzeigen",
+    "show-all-words": "Alle Woerter anzeigen",
+    "search-placeholder": "Woerter suchen...",
+    "no-results": "Keine Woerter gefunden",
+    "no-words-available": "Keine Woerter verfuegbar",
+    "min-words-hint": "Waehle mindestens 3 Woerter aus",
+    "max-words-hint": "Mehr als 10 Woerter koennen zu einer laengeren Session fuehren",
+    "start-quiz": "Quiz starten",
+    "generating": "Quiz wird erstellt...",
+    "loading-words": "Woerter werden geladen...",
+    "error-fetching-words": "Fehler beim Laden der Woerter"
   }
 }
