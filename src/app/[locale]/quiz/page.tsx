@@ -23,12 +23,10 @@ const QuizPage = () => {
   const { data: session, status } = useSession();
   const { showToast } = useToastContext();
   const t = useTranslations('quiz');
-  const tStart = useTranslations('quiz-start');
   const [userData, setUserData] = useState<User>();
   const { selectedLanguage } = useLanguage();
   const { generateQuiz } = useQuiz();
 
-  // Idle state: word selection
   const [mode, setMode] = useState<QuizMode>('idle');
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
   const [composition, setComposition] = useState<QuizComposition>({
@@ -38,7 +36,6 @@ const QuizPage = () => {
   });
   const [isFetchingWords, setIsFetchingWords] = useState(true);
 
-  // Fetch word pool on mount (cheap DB query, no AI)
   useEffect(() => {
     const fetchWordPool = async () => {
       if (status !== 'authenticated' || !selectedLanguage.language) return;
@@ -55,7 +52,7 @@ const QuizPage = () => {
       } catch (error) {
         console.error('Error fetching word pool:', error);
         showToast({
-          message: tStart('error-fetching-words'),
+          message: t('error-fetching-words'),
           variant: 'error',
           duration: 3000,
         });
@@ -65,9 +62,8 @@ const QuizPage = () => {
     };
 
     fetchWordPool();
-  }, [status, selectedLanguage.language, showToast, tStart]);
+  }, [status, selectedLanguage.language, showToast, t]);
 
-  // Fetch user data
   useEffect(() => {
     const fetchUser = async () => {
       if (status === 'authenticated') {
@@ -86,7 +82,6 @@ const QuizPage = () => {
     fetchUser();
   }, [session, status, showToast, t]);
 
-  // Handle start quiz from idle state
   const handleStartQuiz = useCallback(async () => {
     setMode('generating');
     const result = await generateQuiz(selectedWords);
@@ -97,7 +92,6 @@ const QuizPage = () => {
     }
   }, [generateQuiz, selectedWords]);
 
-  // Recalculate composition when selected words change
   useEffect(() => {
     if (mode === 'idle' && selectedWords.length > 0) {
       setComposition({
@@ -198,7 +192,7 @@ const QuizPage = () => {
   // Idle state: show QuizStartCard
   if (mode === 'idle') {
     if (isFetchingWords) {
-      return <LoadingComponent message={tStart('loading-words')} />;
+      return <LoadingComponent message={t('loading-words')} />;
     }
 
     return (
@@ -213,13 +207,10 @@ const QuizPage = () => {
       </main>
     );
   }
-
-  // Generating state
   if (mode === 'generating') {
-    return <LoadingComponent message={tStart('generating')} />;
+    return <LoadingComponent message={t('generating')} />;
   }
 
-  // Active state: quiz gameplay
   if (isQuizLoading) {
     return <LoadingComponent />;
   }

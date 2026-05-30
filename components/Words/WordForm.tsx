@@ -1,38 +1,38 @@
-"use client";
-import { useLanguage } from "@/context/LanguageToLearnContext";
-import { useToastContext } from "@/context/ToastContext";
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import Button from "../UI/Button";
-import LoadingComponent from "../Layout/LoadingComponent";
-import { addWordToDatabase } from "@/lib/apis";
-import { useRouter } from "@/src/i18n/navigation";
-import { useWords } from "@/context/WordsContext";
+'use client';
+import { useLanguage } from '@/context/LanguageToLearnContext';
+import { useToastContext } from '@/context/ToastContext';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import Button from '../UI/Button';
+import LoadingComponent from '../Layout/LoadingComponent';
+import { addWordToDatabase } from '@/lib/apis';
+import { useRouter } from '@/src/i18n/navigation';
+import { useWords } from '@/context/WordsContext';
 
 const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: boolean }) => {
   const { showToast } = useToastContext();
   const { setWords, words } = useWords();
   const { selectedLanguage } = useLanguage();
-	const { status } = useSession();
-  const t = useTranslations("word-form");
+  const { status } = useSession();
+  const t = useTranslations('word-form');
   const route = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [isAddingWord, setIsAddingWord] = useState(false);
-	const [formData, setFormData] = useState({
-		word: "",
-		definition: "",
-		phoneticNotation: "",
-		language: selectedLanguage.language,
-	});
+  const [formData, setFormData] = useState({
+    word: '',
+    definition: '',
+    phoneticNotation: '',
+    language: selectedLanguage.language,
+  });
 
-	useEffect(() => {
-		setFormData((prevData) => ({
-			...prevData,
-			language: selectedLanguage.language,
-		}));
-	}, [selectedLanguage]);
+  useEffect(() => {
+    setFormData(prevData => ({
+      ...prevData,
+      language: selectedLanguage.language,
+    }));
+  }, [selectedLanguage]);
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,8 +41,8 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
     if (Object.keys(formData).length === 0) {
       setLoading(false);
       showToast({
-        message: t("error-form-empty"),
-        variant: "error",
+        message: t('error-form-empty'),
+        variant: 'error',
         duration: 3000,
       });
       return;
@@ -52,27 +52,27 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         throw new Error();
       }
 
-		const {data: addedWord} = await addWordToDatabase(formData);
+      const { data: addedWord } = await addWordToDatabase(formData);
       setWords([...words, addedWord]);
 
       showToast({
-        message: t("success-word-added"),
-        variant: "success",
+        message: t('success-word-added'),
+        variant: 'success',
         duration: 3000,
       });
       // Clear the form
-		setFormData({
-			word: "",
-			definition: "",
-			phoneticNotation: "",
-			language: selectedLanguage.language,
-		});
+      setFormData({
+        word: '',
+        definition: '',
+        phoneticNotation: '',
+        language: selectedLanguage.language,
+      });
       setIsAddingWord(false);
     } catch (error: unknown) {
-      console.error("Failed to add word:", error);
+      console.error('Failed to add word:', error);
       showToast({
-        message: t("error-adding-word"),
-        variant: "error",
+        message: t('error-adding-word'),
+        variant: 'error',
         duration: 3000,
       });
     } finally {
@@ -82,13 +82,13 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
 
   useEffect(() => {
     if (isAddingWord) {
-      document.body.style.overflowY = "hidden";
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflowY = "auto";
+      document.body.style.overflowY = 'auto';
     }
   }, [isAddingWord]);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <LoadingComponent />;
   }
 
@@ -97,58 +97,68 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
       <section
         className={`shadow-sm dark:shadow-theme-fg-dark
         backdrop-blur-2xl z-29
-        ${isOpen ? "relative overflow-y-auto" : "fixed top-0 left-0 w-screen h-screen overflow-y-hidden"}`}
+        ${isOpen ? 'relative overflow-y-auto' : 'fixed top-0 left-0 w-screen h-screen overflow-y-hidden'}`}
       >
         <form
           onSubmit={handlesubmit}
           className={` ${
-            isOpen ? "relative" : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            isOpen ? 'relative' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
           } w-5/6 max-w-xl transform  bg-theme-bg-light dark:bg-theme-bg-dark md:border rounded-lg 
-            md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ""}`}
+            md:shadow-sm border-gray-300 dark:border-gray-700 p-5 ${className || ''}`}
         >
-          <p className="py-5 font-bold text-xl text-center">{t("cards-form")}</p>
+          <p className="py-5 font-bold text-xl text-center">{t('cards-form')}</p>
 
           <input
             type="text"
             name="word"
             required
-            placeholder={t("placeholder-word")}
+            placeholder={t('placeholder-word')}
             className="w-full p-2 border rounded mb-4"
             value={formData.word}
-            onChange={(e) => setFormData({ ...formData, word: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, word: e.target.value.trim() })}
           />
 
           <input
             type="text"
             name="phoneticNotation"
-            placeholder={t("placeholder-phonetic notation")}
+            placeholder={t('placeholder-phonetic notation')}
             className="w-full p-2 border rounded mb-4"
             value={formData.phoneticNotation}
-            onChange={(e) => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
           />
 
           <input
             type="text"
             name="translation"
-            placeholder={t("placeholder-translation")}
+            placeholder={t('placeholder-translation')}
             required
             className="w-full p-2 border rounded mb-4"
             value={formData.definition}
-            onChange={(e) => setFormData({ ...formData, definition: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, definition: e.target.value.trim() })}
           />
 
           {!isOpen ? (
-            <Button type="button" onClick={() => setIsAddingWord(false)} variant="secondary" className="mb-5">
-              {t("close-btn")}
+            <Button
+              type="button"
+              onClick={() => setIsAddingWord(false)}
+              variant="secondary"
+              className="mb-5"
+            >
+              {t('close-btn')}
             </Button>
           ) : (
-            <Button type="button" onClick={() => route.push("/cards")} variant="secondary" className="mb-5">
-              {t("finish-btn")}
+            <Button
+              type="button"
+              onClick={() => route.push('/cards')}
+              variant="secondary"
+              className="mb-5"
+            >
+              {t('finish-btn')}
             </Button>
           )}
 
           <Button type="submit" disabled={loading} variant="primary" className="mb-5">
-            {loading ? t("adding") : t("add")}
+            {loading ? t('adding') : t('add')}
           </Button>
         </form>
       </section>
@@ -156,8 +166,11 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   }
 
   return (
-    <Button onClick={() => setIsAddingWord(true)} className="flex items-center justify-between px-5 w-full">
-      {t("add-word")} <span className="text-2xl font-extrabold">+</span>
+    <Button
+      onClick={() => setIsAddingWord(true)}
+      className="flex items-center justify-between px-5 w-full max-w-[25.5rem]"
+    >
+      {t('add-word')} <span className="text-2xl font-extrabold">+</span>
     </Button>
   );
 };

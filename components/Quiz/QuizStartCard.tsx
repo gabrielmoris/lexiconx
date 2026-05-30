@@ -9,6 +9,7 @@ import { useLanguage } from '@/context/LanguageToLearnContext';
 import WordChip from './WordChip';
 import Button from '../UI/Button';
 import QuestionAiIcon from '../Icons/QuestionAiIcon';
+import { Toggler } from '../UI/Toggler';
 
 interface QuizStartCardProps {
   selectedWords: Word[];
@@ -54,7 +55,6 @@ const QuizStartCard = ({
     [selectedWords, selectedIds, setSelectedWords]
   );
 
-  // Filter available words for the search dropdown
   const availableWords = useMemo(() => {
     const languageWords = allWords.filter(w => w.language === selectedLanguage.language);
     const unselected = languageWords.filter(w => !selectedIds.has(w._id!));
@@ -63,15 +63,14 @@ const QuizStartCard = ({
       return unselected;
     }
 
-    // Show only overdue words (due for review or new)
+    // Show only overdue words
     const now = new Date();
     return unselected.filter(w => {
-      if (w.repetitions === 0) return true; // new words
-      return new Date(w.nextReview) <= now; // overdue words
+      if (w.repetitions === 0) return true;
+      return new Date(w.nextReview) <= now;
     });
   }, [allWords, selectedLanguage.language, selectedIds, showAllWords]);
 
-  // Search results filtered by query
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
@@ -90,12 +89,10 @@ const QuizStartCard = ({
 
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col gap-5">
-      {/* Title */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('ready-to-study')}</h2>
       </div>
 
-      {/* Composition badges */}
       <div className="flex justify-center gap-3">
         {composition.new > 0 && (
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200">
@@ -150,13 +147,11 @@ const QuizStartCard = ({
           <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {t('add-words')}
           </h3>
-          <button
-            type="button"
-            onClick={() => setShowAllWords(!showAllWords)}
-            className="text-xs text-secondary dark:text-gray-400 hover:underline transition-colors"
-          >
-            {showAllWords ? t('show-overdue-only') : t('show-all-words')}
-          </button>
+          <Toggler
+            checked={showAllWords}
+            onChange={() => setShowAllWords(!showAllWords)}
+            label={showAllWords ? t('show-overdue-only') : t('show-all-words')}
+          />
         </div>
 
         <div className="relative">
@@ -169,7 +164,6 @@ const QuizStartCard = ({
           />
         </div>
 
-        {/* Search results */}
         {searchResults.length > 0 && (
           <div className="mt-2 max-h-48 overflow-y-auto rounded-lg border border-gray-200 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-700">
             {searchResults.map(word => (

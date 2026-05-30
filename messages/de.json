@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Fehler beim Erstellen des Quiz",
     "error-getting-user": "Fehler beim Abrufen der Benutzerdaten",
-    "generate-quiz": "Quiz erstellen",
     "quiz-generation-partial-failure": "1 Quiz konnte nicht erstellt werden, Fortsetzung mit verfuegbaren Quizzes",
     "quiz-generation-partial-failure-plural": "{count} Quizzes konnten nicht erstellt werden, Fortsetzung mit verfuegbaren Quizzes"
   },
@@ -115,7 +114,10 @@
     "continue": "Weiter",
     "composition-new": "neu",
     "composition-learning": "lernen",
-    "composition-mastered": "beherrscht"
+    "composition-mastered": "beherrscht",
+    "error-fetching-words": "Fehler beim Abrufen der Benutzerwörter",
+    "loading-words": "Fehler beim Laden der Wörter",
+    "generating": "Generieren"
   },
   "quiz-finished": {
     "better-luck-next-time": "Viel Glück beim nächsten Mal",
@@ -188,7 +190,8 @@
     "settings": "Einstellungen",
     "cards": "Karten",
     "home": "Home",
-    "memory-hooks": "Gedachtnishaken"
+    "memory-hooks": "Gedachtnishaken",
+    "generate-quiz": "Quiz erstellen"
   },
   "stats": {
     "title": "Deine Statistiken",

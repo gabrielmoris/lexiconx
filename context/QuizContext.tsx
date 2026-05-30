@@ -206,7 +206,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           let fetchedComposition: QuizComposition | undefined;
 
           if (preselectedWords && preselectedWords.length >= 3) {
-            // Use the user's custom word selection
             fetchedWords = preselectedWords;
             fetchedComposition = {
               new: preselectedWords.filter(w => w.repetitions === 0).length,
@@ -214,7 +213,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
               mastered: preselectedWords.filter(w => w.interval > 21).length,
             };
           } else {
-            // Fetch words for quiz using the default interleaved algorithm
             const result = await getWordsForQuiz(
               selectedLanguage.language,
               currentLocale as Language

@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "生成测验时出错",
     "error-getting-user": "获取用户数据时出错",
-    "generate-quiz": "生成测验",
     "quiz-generation-partial-failure": "1个测验无法生成，继续使用可用测验",
     "quiz-generation-partial-failure-plural": "{count}个测验无法生成，继续使用可用测验"
   },
@@ -116,7 +115,10 @@
     "continue": "继续",
     "composition-new": "新词",
     "composition-learning": "学习中",
-    "composition-mastered": "已掌握"
+    "composition-mastered": "已掌握",
+    "error-fetching-words": "获取用户单词时出错",
+    "loading-words": "加载单词时出错",
+    "generating": "生成"
   },
   "quiz-finished": {
     "better-luck-next-time": "下次好运",
@@ -189,7 +191,8 @@
     "settings": "设置",
     "cards": "牌",
     "home": "家",
-    "memory-hooks": "记忆钩"
+    "memory-hooks": "记忆钩",
+    "generate-quiz": "生成测验"
   },
   "stats": {
     "title": "你的统计",

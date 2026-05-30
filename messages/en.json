@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Error Generating Quiz",
     "error-getting-user": "Error getting user data",
-    "generate-quiz": "Generate Quiz",
     "quiz-generation-partial-failure": "1 quiz couldn't be generated, continuing with available quizzes",
     "quiz-generation-partial-failure-plural": "{count} quizzes couldn't be generated, continuing with available quizzes"
   },
@@ -181,7 +180,10 @@
     "continue": "Continue",
     "composition-new": "new",
     "composition-learning": "learning",
-    "composition-mastered": "mastered"
+    "composition-mastered": "mastered",
+    "error-fetching-words": "Error getting the user words",
+    "loading-words": "Error loading words",
+    "generating": "Generating"
   },
   "quiz-finished": {
     "better-luck-next-time": "Better luck next time",
@@ -254,7 +256,8 @@
     "settings": "Settings",
     "cards": "Cards",
     "home": "Home",
-    "memory-hooks": "Memory Hooks"
+    "memory-hooks": "Memory Hooks",
+    "generate-quiz": "Generate Quiz"
   },
   "stats": {
     "title": "Your Stats",

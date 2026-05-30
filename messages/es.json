@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Error al generar el cuestionario",
     "error-getting-user": "Error al obtener los datos de usuario",
-    "generate-quiz": "Generar cuestionario",
     "quiz-generation-partial-failure": "1 cuestionario no pudo generarse, continuando con los disponibles",
     "quiz-generation-partial-failure-plural": "{count} cuestionarios no pudieron generarse, continuando con los disponibles"
   },
@@ -116,7 +115,10 @@
     "continue": "Continuar",
     "composition-new": "nuevas",
     "composition-learning": "aprendiendo",
-    "composition-mastered": "dominadas"
+    "composition-mastered": "dominadas",
+    "error-fetching-words": "Error al obtener las palabras del usuario",
+    "loading-words": "Error al cargar palabras",
+    "generating": "generando"
   },
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",
@@ -189,7 +191,8 @@
     "settings": "Ajustes",
     "cards": "Tarjetas",
     "home": "Inicio",
-    "memory-hooks": "Anclaje Memoria"
+    "memory-hooks": "Anclaje Memoria",
+    "generate-quiz": "Generar cuestionario"
   },
   "stats": {
     "title": "Tus Estadisticas",

@@ -16,7 +16,7 @@ export const AiGenerateVocabulary = () => {
     <Button
       onClick={generateWords}
       disabled={isLoading}
-      className="flex items-center justify-between px-5 w-full"
+      className="flex items-center justify-between px-5 w-full max-w-[25.5rem]"
     >
       {t('generate-words')}
       <span className="text-2xl font-extrabold">
