@@ -27,60 +27,6 @@
 
 ---
 
-## 🧠 Scientific Basis
-
-Every learning feature in Lexiconx is grounded in peer-reviewed research from cognitive science and second-language acquisition (SLA). This section documents the theoretical foundations and how they map to the app's implementation.
-
-### 1. Spaced Repetition — Modified SM-2 Algorithm
-
-|                    |                                                                                                                                                                                                                                                                                                     |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | Hermann Ebbinghaus's Forgetting Curve (1885) demonstrated that memory decays exponentially unless reinforced at increasing intervals. Piotr Woźniak's SM-2 algorithm (1985) operationalized this into a practical scheduling system                                                                 |
-| **Evidence**       | Spaced repetition produces **200–400% better long-term retention** compared to massed practice (Cepeda et al., 2006, _Psychological Bulletin_). Meta-analyses confirm robust effects across ages, domains, and retention intervals                                                                  |
-| **Implementation** | Each `Word` document tracks `easeFactor` (minimum 1.3), `interval` (days), and `repetitions`. Correct answers increase the interval exponentially; incorrect answers reset repetitions to 0 and contract the interval. Words transition through three stages: **New** → **Learning** → **Mastered** |
-
-### 2. Interleaved Practice — Smart Quiz Composition
-
-|                    |                                                                                                                                                                                                                                                                      |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | Interleaving different categories of items during practice forces discriminative contrast, strengthening category-level distinctions that blocked practice obscures (Rohrer et al., 2015, _Journal of Educational Psychology_)                                       |
-| **Evidence**       | Interleaved practice yields **43% better long-term retention** compared to blocked practice for related items (Rohrer, 2012). The effect is strongest when categories share superficial similarities but differ in underlying rules                                  |
-| **Implementation** | `/api/words-for-quiz` allocates ~30% new, ~40% learning, and ~30% mastered words per quiz. Words from each category are interleaved in round-robin rotation rather than presented in blocked groups, maximizing discriminative contrast between word maturity levels |
-
-### 3. Elaborative Interrogation — Quiz Explanation Fields
-
-|                    |                                                                                                                                                                                                                                                                                                                                                                             |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | Prompting learners to explain _why_ a fact is true forces deep semantic processing and integrates new information with existing knowledge, producing richer memory traces (Pressley et al., 1987; Dunlosky et al., 2013)                                                                                                                                                    |
-| **Evidence**       | Rated as **high utility** by Dunlosky et al.'s (2013) comprehensive review of learning techniques. Produces **2–3× better retention** compared to re-reading, with effects replicated across age groups and knowledge domains                                                                                                                                               |
-| **Implementation** | Every quiz question includes two required explanation fields: `elaboration` explains why the correct answer carries its meaning in context (etymology, word roots, cultural usage); `errorExplanation` explains why distractors are wrong (false cognates, wrong register, wrong collocation). These are generated by the AI and shown after each answer to deepen encoding |
-
-### 4. Contextual Learning — i+1 Comprehensible Input
-
-|                    |                                                                                                                                                                                                                                                                                                                               |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | Krashen's Input Hypothesis (1982) posits that language acquisition occurs when learners receive comprehensible input at **i+1** — one step above their current competence. Context-embedded words are acquired faster than isolated lists because the surrounding sentence provides retrieval cues                            |
-| **Evidence**       | Context-based vocabulary learning produces significantly better retention than decontextualized memorization (Webb, 2008, _Language Teaching Research_). The level-based complexity guidelines align with i+1: at each proficiency band, sentence length, grammar complexity, and question difficulty increase incrementally  |
-| **Implementation** | Each quiz item embeds target words in a full sentence calibrated to the user's level (1–100). Sentence complexity progresses from 8–12 words at beginner levels to 30+ words at mastery. Question types evolve from factual ("What/Where") to inferential ("Why/How") to abstract analysis, keeping input consistently at i+1 |
-
-### 5. Memory Hooks — Keyword Method Mnemonics
-
-|                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | The Keyword Method (Atkinson, 1975; Levin, 1992) creates a dual-link chain: an acoustic link connects the unfamiliar L2 word to a phonetically similar L1 keyword, and a bridge sentence connects the keyword to the target meaning. This exploits both the phonological loop and visual-imagery encoding                                                                                                                                                                                             |
-| **Evidence**       | Large effect sizes (**d = 0.80–1.20**) for L2 vocabulary acquisition across experimental studies. The method is **especially effective for non-cognate languages** like Chinese, where no systematic sound-meaning overlap exists between L1 and L2 (Beaton et al., 1995)                                                                                                                                                                                                                             |
-| **Implementation** | The `/memory-hooks` page selects the user's weakest words (lowest `easeFactor`). For each word, the LLM generates a `phoneticKeyword` (a native-language word that sounds like the target word) and a `bridgeSentence` (a vivid sentence linking the keyword to the meaning). These are stored as `MemoryHook` documents and presented as Anki-style flip cards: **front** shows the memory hook (keyword + bridge sentence), **back** reveals the word, definition, phonetic notation, and TTS audio |
-
-### 6. Active Recall — Quiz Retrieval Practice
-
-|                    |                                                                                                                                                                                                                                                                                                                     |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Theory**         | Retrieving information from memory strengthens the retrieval path itself, making future access more reliable. The testing effect shows that active recall is more effective than passive re-study even when the same content is reviewed (Roediger & Karpicke, 2006, _Psychological Science_)                       |
-| **Evidence**       | Testing produces **50–100% better long-term retention** compared to re-study. The effect holds even when retrieval fails — incorrect guesses with corrective feedback still enhance subsequent learning (Kornell et al., 2009)                                                                                      |
-| **Implementation** | The entire quiz system is built around forced-choice retrieval. Multiple-choice format ensures active engagement — the learner must evaluate each option against the sentence context. After answering, both `elaboration` and `errorExplanation` provide corrective feedback whether the answer was correct or not |
-
----
-
 ## 🛠 Tech Stack
 
 | Technology        | Version | Purpose                                                  | Docs                                                                 |
@@ -426,6 +372,48 @@ Husky runs `pnpm lint` and `pnpm test` on every commit. Tests must pass for the 
 - Every task gets its own branch
 - Never push directly to `master`
 - Always add/update tests for new features
+
+---
+
+## 🎓 Scientific Basis
+
+Every learning feature in Lexiconx is grounded in peer-reviewed research from cognitive science and second-language acquisition (SLA). This section documents the theoretical foundations and how they map to the app's implementation.
+
+### 1. Spaced Repetition — Modified SM-2 Algorithm
+
+Hermann Ebbinghaus's Forgetting Curve (1885) demonstrated that memory decays exponentially unless reinforced at increasing intervals. Piotr Woźniak's SM-2 algorithm (1985) operationalized this into a practical scheduling system. Spaced repetition produces <u>200–400% better long-term retention</u> compared to massed practice (Cepeda et al., 2006, _Psychological Bulletin_).
+
+**Implementation**: Each `Word` document tracks `easeFactor` (minimum 1.3 <small>[nextInterval = lastInterval × easeFactor]</small>), `interval` (days), and `repetitions`. Correct answers increase the interval exponentially; incorrect answers reset repetitions to 0 and contract the interval. Words transition through three stages: `New → Learning → Mastered`.
+
+### 2. Interleaved Practice — Smart Quiz Composition
+
+Interleaving different categories of items during practice forces discriminative contrast, strengthening category-level distinctions. (Rohrer et al., 2015, _Journal of Educational Psychology_). Interleaved practice yields <u>43% better long-term retention</u> compared to blocked practice for related items (Rohrer, 2012).
+
+**Implementation**: `/api/words-for-quiz` allocates ~30% new, ~40% learning, and ~30% mastered words per quiz. Words from each category are interleaved in round-robin rotation.
+
+### 3. Elaborative Interrogation — Quiz Explanation Fields
+
+Prompting learners to explain _why_ a fact is true forces deep semantic processing and integrates new information with existing knowledge, producing richer memory traces (Pressley et al., 1987; Dunlosky et al., 2013). Produces <u>2–3× better retention</u> compared to re-reading, with effects replicated across age groups and knowledge domains.
+
+**Implementation**: Every quiz question includes two required explanation fields: `elaboration` explains why the correct answer carries its meaning in context (etymology, word roots, cultural usage); `errorExplanation` explains why distractors are wrong (false cognates, wrong register, wrong collocation). These are generated by the AI and shown after each answer to deepen encoding.
+
+### 4. Contextual Learning — i+1 Comprehensible Input
+
+Krashen's Input Hypothesis (1982) posits that language acquisition occurs when learners receive comprehensible input at **i+1** — one step above their current competence. Context-embedded words are acquired faster than isolated lists because the surrounding sentence provides retrieval cues. The level-based complexity guidelines align with i+1: at grammar complexity, and question difficulty increase incrementally.
+
+**Implementation**: Each quiz item embeds target words in a full sentence calibrated to the user's level (1–100). Sentence complexity progresses from 8–12 words at beginner levels to 30+ words at mastery. Question types evolve from factual ("What/Where") to inferential ("Why/How") to abstract analysis, keeping input consistently at i+1 .
+
+### 5. Memory Hooks — Keyword Method Mnemonics
+
+The Keyword Method (Atkinson, 1975; Levin, 1992) creates a dual-link chain: an acoustic link connects the unfamiliar L2 word to a phonetically similar L1 keyword, and a bridge sentence connects the keyword to the target meaning. This exploits both the phonological loop and visual-imager encoding. The method is especially effective for non-cognate languages like Chinese, where no systematic sound-meaning overlap exists between L1 and L2 (Beaton et al., 1995)
+
+**Implementation**: The `/memory-hooks` page selects the user's weakest words (lowest `easeFactor`). For each word, the LLM generates a `phoneticKeyword` (a native-language word that sounds like the target word) and a `bridgeSentence` (a vivid sentence linking the keyword to the meaning). These are stored as `MemoryHook` documents and presented as Anki-style flip cards: **front** shows the memory hook (keyword + bridge sentence), **back** reveals the word, definition, phonetic notation, and TTS audio.
+
+### 6. Active Recall — Quiz Retrieval Practice
+
+Retrieving information from memory strengthens the retrieval path itself, making future access more reliable. The testing effect shows that active recall is more effective than passive re-study even when the same content is reviewed (Roediger & Karpicke, 2006, _Psychological Science_). Testing produces <u>50–100% better long-term retention</u> compared to re-study.
+
+**Implementation**: The entire quiz system is built around forced-choice retrieval. Multiple-choice format ensures active engagement — the learner must evaluate each option against the sentence context. After answering, both `elaboration` and `errorExplanation` provide corrective feedback whether the answer was correct or not.
 
 ---
 
