@@ -42,7 +42,7 @@ const Menu: React.FC = () => {
     <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
         onClick={() => setOpenMenu(!openMenu)}
-        className={`absolute h-max flex flex-col min-w-[12rem] py-5 bottom-10 md:top-10
+        className={`absolute h-max flex flex-col min-w-48 py-5 bottom-10 md:top-10
                border border-gray-300 dark:border-gray-600 -right-5
                bg-white dark:bg-theme-fg-dark rounded-md
                shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50

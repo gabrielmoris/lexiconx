@@ -117,7 +117,7 @@
     "composition-learning": "学习中",
     "composition-mastered": "已掌握",
     "error-fetching-words": "获取用户单词时出错",
-    "loading-words": "加载单词时出错",
+    "loading-words": "加载单词",
     "generating": "生成"
   },
   "quiz-finished": {

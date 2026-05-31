@@ -182,7 +182,7 @@
     "composition-learning": "изучаю",
     "composition-mastered": "освоены",
     "error-fetching-words": "Ошибка получения слов пользователя",
-    "loading-words": "Ошибка загрузки слов",
+    "loading-words": "Загрузка слов",
     "generating": "Создание"
   },
   "quiz-finished": {

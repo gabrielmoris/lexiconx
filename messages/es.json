@@ -117,7 +117,7 @@
     "composition-learning": "aprendiendo",
     "composition-mastered": "dominadas",
     "error-fetching-words": "Error al obtener las palabras del usuario",
-    "loading-words": "Error al cargar palabras",
+    "loading-words": "Cargando palabras",
     "generating": "generando"
   },
   "quiz-finished": {

@@ -182,7 +182,7 @@
     "composition-learning": "learning",
     "composition-mastered": "mastered",
     "error-fetching-words": "Error getting the user words",
-    "loading-words": "Error loading words",
+    "loading-words": "Loading words",
     "generating": "Generating"
   },
   "quiz-finished": {

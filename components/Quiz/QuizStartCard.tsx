@@ -183,7 +183,7 @@ const QuizStartCard = ({
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                <div className="flex items-center gap-2 shrink-0 ml-2">
                   <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[150px]">
                     {word.definition}
                   </span>

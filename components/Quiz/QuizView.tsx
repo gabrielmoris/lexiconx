@@ -76,7 +76,7 @@ const QuizView = ({
       )}
       <div className="flex items-center gap-4">
         {showText ? (
-          <div className="flex-grow">
+          <div className="grow">
             <p className="text-2xl font-bold">{quizItem.sentence}</p>
             <p className="text-md font-extralight italic">{quizItem.phoneticNotation}</p>
           </div>

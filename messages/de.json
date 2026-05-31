@@ -116,7 +116,7 @@
     "composition-learning": "lernen",
     "composition-mastered": "beherrscht",
     "error-fetching-words": "Fehler beim Abrufen der Benutzerwörter",
-    "loading-words": "Fehler beim Laden der Wörter",
+    "loading-words": "Wörter werden geladen",
     "generating": "Generieren"
   },
   "quiz-finished": {

@@ -26,7 +26,7 @@ const WordChip = ({ word, onRemove }: WordChipProps) => {
         {word.word}
       </span>
       {word.phoneticNotation && (
-        <span className="text-xs opacity-70 truncate max-w-[80px]" title={word.phoneticNotation}>
+        <span className="text-xs opacity-70 truncate max-w-20" title={word.phoneticNotation}>
           {word.phoneticNotation}
         </span>
       )}
