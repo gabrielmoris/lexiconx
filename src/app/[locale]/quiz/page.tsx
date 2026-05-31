@@ -24,7 +24,7 @@ const QuizPage = () => {
   const { showToast } = useToastContext();
   const t = useTranslations('quiz');
   const [userData, setUserData] = useState<User>();
-  const { selectedLanguage } = useLanguage();
+  const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
   const { generateQuiz } = useQuiz();
 
   const [mode, setMode] = useState<QuizMode>('idle');
@@ -37,6 +37,8 @@ const QuizPage = () => {
   const [isFetchingWords, setIsFetchingWords] = useState(true);
 
   useEffect(() => {
+    if (isSelectedLanguageLoading) return;
+
     const fetchWordPool = async () => {
       if (status !== 'authenticated' || !selectedLanguage.language) return;
 
@@ -45,6 +47,9 @@ const QuizPage = () => {
           selectedLanguage.language,
           selectedLanguage.language as Language
         );
+
+        if (wordsForQuiz.length === 0) return;
+
         setSelectedWords(wordsForQuiz);
         if (fetchedComposition) {
           setComposition(fetchedComposition);
@@ -56,13 +61,17 @@ const QuizPage = () => {
           variant: 'error',
           duration: 3000,
         });
+
+        setTimeout(() => {
+          redirect('/cards');
+        }, 3500);
       } finally {
         setIsFetchingWords(false);
       }
     };
 
     fetchWordPool();
-  }, [status, selectedLanguage.language, showToast, t]);
+  }, [status, selectedLanguage.language, isSelectedLanguageLoading]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -80,7 +89,7 @@ const QuizPage = () => {
       }
     };
     fetchUser();
-  }, [session, status, showToast, t]);
+  }, [session, status]);
 
   const handleStartQuiz = useCallback(async () => {
     setMode('generating');
@@ -163,7 +172,6 @@ const QuizPage = () => {
     speak,
   ]);
 
-  // Handle restart: go back to idle state
   const handleRestartQuiz = useCallback(() => {
     restartQuiz();
     setMode('idle');
@@ -184,12 +192,10 @@ const QuizPage = () => {
       });
   }, [restartQuiz, selectedLanguage.language]);
 
-  // Auth/loading states
   if (status === 'loading' || !userData) {
     return <LoadingComponent />;
   }
 
-  // Idle state: show QuizStartCard
   if (mode === 'idle') {
     if (isFetchingWords) {
       return <LoadingComponent message={t('loading-words')} />;

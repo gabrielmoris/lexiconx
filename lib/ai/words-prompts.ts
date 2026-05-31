@@ -1,4 +1,4 @@
-import { Language, Word } from "@/types/Words";
+import { Language, Word } from '@/types/Words';
 
 // The word must have this structure
 // word: string;
@@ -33,12 +33,17 @@ export const WORDS_PROMPTS = {
         - Follow the exact structure provided in the user prompt.
         - Ensure all required fields are present and correctly formatted.`,
 
-    userPrompt: (knownWords: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (
+      knownWords: Word[],
+      level: number,
+      learningLanguage: Language,
+      userLanguage: Language
+    ) => `
         VOCABULARY GENERATION PARAMETERS:
         - User Level: ${level}/100
         - Target Language: ${learningLanguage}
         - Instructions Language: ${userLanguage}
-        - Known Words (words to avoid generating): ${knownWords.join(", ") || "None"}
+        - Known Words (words to avoid generating): ${knownWords.join(', ') || 'None'}
 
         MANDATORY JSON STRUCTURE - FOLLOW EXACTLY:
         {
@@ -86,12 +91,17 @@ export const WORDS_PROMPTS = {
         - Sigue la estructura exacta proporcionada en el prompt del usuario.
         - Asegúrate de que todos los campos requeridos estén presentes y formateados correctamente.`,
 
-    userPrompt: (knownWords: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (
+      knownWords: Word[],
+      level: number,
+      learningLanguage: Language,
+      userLanguage: Language
+    ) => `
         PARÁMETROS DE GENERACIÓN DE VOCABULARIO:
         - Nivel del Usuario: ${level}/100
         - Idioma Objetivo: ${learningLanguage}
         - Idioma de las Instrucciones: ${userLanguage}
-        - Palabras Conocidas (palabras a evitar generar): ${knownWords.map((w) => `"${w.word}"`).join(", ") || "Ninguna"}
+        - Palabras Conocidas (palabras a evitar generar): ${knownWords.join(', ') || 'Ninguna'}
 
         ESTRUCTURA JSON OBLIGATORIA - SIGUE EXACTAMENTE:
         {
@@ -139,12 +149,17 @@ export const WORDS_PROMPTS = {
         - Befolgen Sie die genaue Struktur, die im Benutzer-Prompt angegeben ist.
         - Stellen Sie sicher, dass alle erforderlichen Felder vorhanden und korrekt formatiert sind.`,
 
-    userPrompt: (knownWords: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (
+      knownWords: Word[],
+      level: number,
+      learningLanguage: Language,
+      userLanguage: Language
+    ) => `
         PARAMETER FÜR DIE VOKABELGENERIERUNG:
         - Benutzerlevel: ${level}/100
         - Zielsprache: ${learningLanguage}
         - Anweisungssprache: ${userLanguage}
-        - Bekannte Wörter (zu vermeidende Wörter): ${knownWords.map((w) => `"${w.word}"`).join(", ") || "Keine"}
+        - Bekannte Wörter (zu vermeidende Wörter): ${knownWords.join(', ') || 'Keine'}
 
         OBLIGATORISCHE JSON-STRUKTUR - GENAU BEFOLGEN:
         {
@@ -192,12 +207,17 @@ export const WORDS_PROMPTS = {
         - 遵循用户提示中提供的确切结构。
         - 确保所有必填字段都存在并格式正确。`,
 
-    userPrompt: (knownWords: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (
+      knownWords: Word[],
+      level: number,
+      learningLanguage: Language,
+      userLanguage: Language
+    ) => `
         词汇生成参数：
         - 用户级别：${level}/100
         - 目标语言：${learningLanguage}
         - 指令语言：${userLanguage}
-        - 已知词汇（要避免生成的词汇）：${knownWords.map((w) => `"${w.word}"`).join(", ") || "无"}
+        - 已知词汇（要避免生成的词汇）：${knownWords.join(', ') || '无'}
 
         强制性 JSON 结构 - 严格遵守：
         {
@@ -245,12 +265,17 @@ export const WORDS_PROMPTS = {
         - Следуйте точной структуре, указанной в запросе пользователя.
         - Убедитесь, что все обязательные поля присутствуют и правильно отформатированы.`,
 
-    userPrompt: (knownWords: Word[], level: number, learningLanguage: Language, userLanguage: Language) => `
+    userPrompt: (
+      knownWords: Word[],
+      level: number,
+      learningLanguage: Language,
+      userLanguage: Language
+    ) => `
         ПАРАМЕТРЫ ГЕНЕРАЦИИ СЛОВАРЯ:
         - Уровень пользователя: ${level}/100
         - Целевой язык: ${learningLanguage}
         - Язык инструкций: ${userLanguage}
-        - Известные слова (слова, которые следует избегать генерировать): ${knownWords.map((w) => `"${w.word}"`).join(", ") || "Нет"}
+        - Известные слова (слова, которые следует избегать генерировать): ${knownWords.join(', ') || 'Нет'}
 
         ОБЯЗАТЕЛЬНАЯ СТРУКТУРА JSON - СТРОГО СЛЕДОВАТЬ:
         {
