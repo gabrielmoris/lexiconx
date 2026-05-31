@@ -70,7 +70,7 @@ function determineQuizCount(wordCount: number): number {
 }
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
-  const { setValue: setStoredQuizzes, storedValue: storedQuizzesData } = useLocalStorage<{
+  const { setValue: setStoredQuizzes } = useLocalStorage<{
     quizzes: Quiz[];
   }>('quizes', { quizzes: [] });
 
@@ -241,7 +241,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
           setTotalExpectedQuizzes(quizCount);
           totalExpectedRef.current = quizCount;
 
-          // Split words into per-quiz chunks so each quiz uses a dedicated word set
+          // Split words
           const wordChunks = splitWordsForQuizzes(fetchedWords, quizCount);
 
           // Store values in refs for background generation

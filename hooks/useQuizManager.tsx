@@ -282,6 +282,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   return {
     isLoading: isLoading || isGeneratingQuiz,
     isQuizFinished,
+    displayQuiz,
     isFinishing,
     isWaitingForNextQuiz,
     score,

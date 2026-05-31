@@ -126,8 +126,15 @@ const QuizPage = () => {
     handleAnswerClick,
     handleContinue,
     restartQuiz,
+    displayQuiz,
     composition: quizComposition,
   } = useQuizManager(userData!, { active: mode === 'active' });
+
+  useEffect(() => {
+    if (displayQuiz.length > 0) {
+      setMode('active');
+    }
+  }, [displayQuiz.length]);
 
   const { speak, isReady, isSupported } = useTextToSpeech({
     onError: error => {
