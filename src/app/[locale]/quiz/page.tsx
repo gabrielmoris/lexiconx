@@ -128,6 +128,7 @@ const QuizPage = () => {
     restartQuiz,
     displayQuiz,
     composition: quizComposition,
+    handleDeleteQuiz,
   } = useQuizManager(userData!, { active: mode === 'active' });
 
   useEffect(() => {
@@ -237,7 +238,7 @@ const QuizPage = () => {
   }
 
   return (
-    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-15 px-4 w-full">
+    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-20 px-4 w-full">
       {isQuizFinished ? (
         <QuizFinished
           isSuccess={score.success / 2 > score.errors}
@@ -256,6 +257,7 @@ const QuizPage = () => {
           questionProgress={questionProgress}
           composition={quizComposition}
           onReadQuiz={readQuiz}
+          handleDeleteQuiz={handleDeleteQuiz}
         />
       )}
     </main>

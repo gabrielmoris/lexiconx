@@ -118,7 +118,9 @@
     "composition-mastered": "已掌握",
     "error-fetching-words": "获取用户单词时出错",
     "loading-words": "加载单词",
-    "generating": "生成"
+    "generating": "生成",
+    "delete quiz": "删除课程",
+    "popup-delete-confirmation": "您确定要删除本课程吗？"
   },
   "quiz-finished": {
     "better-luck-next-time": "下次好运",

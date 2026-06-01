@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import SoundIcon from '@/components/Icons/SoundIcon';
 import TextIcon from '@/components/Icons/TextIcon';
 import { Quiz, QuizAnswer, QuizQuestion, QuizComposition } from '@/types/Quiz';
+import Popup from '../UI/Popup';
 
 interface Props {
   quizItem: Quiz;
@@ -16,6 +17,7 @@ interface Props {
   onReadQuiz: () => void;
   composition?: QuizComposition;
   ttsReady?: boolean;
+  handleDeleteQuiz: () => void;
 }
 
 const QuizView = ({
@@ -30,8 +32,10 @@ const QuizView = ({
   onReadQuiz,
   composition,
   ttsReady = true,
+  handleDeleteQuiz,
 }: Props) => {
-  const [showText, setShowText] = React.useState(false);
+  const [showText, setShowText] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const t = useTranslations('quiz');
 
   useEffect(() => {
@@ -58,6 +62,13 @@ const QuizView = ({
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-md" aria-live="polite">
+      {showDeleteModal && (
+        <Popup
+          message={t('popup-delete-confirmation')}
+          handleAccept={handleDeleteQuiz}
+          handleClose={() => setShowDeleteModal(false)}
+        />
+      )}
       {hasComposition && (
         <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
           <span className="inline-flex items-center gap-1">
@@ -110,11 +121,11 @@ const QuizView = ({
             role="button"
             tabIndex={hasAnswered ? -1 : 0}
             className={`cursor-pointer flex items-center list-none py-2 px-5 rounded-md transition-colors
- dark:bg-theme-fg-dark bg-theme-fg-light
- ${!hasAnswered ? 'hover:bg-secondary' : ''}
- ${feedback.correct === option.answer ? 'blink-success' : ''}
- ${feedback.wrong === option.answer ? 'blink-error' : ''}
- ${hasAnswered ? 'pointer-events-none' : ''}`}
+            dark:bg-theme-fg-dark bg-theme-fg-light
+            ${!hasAnswered ? 'hover:bg-secondary' : ''}
+            ${feedback.correct === option.answer ? 'blink-success' : ''}
+            ${feedback.wrong === option.answer ? 'blink-error' : ''}
+            ${hasAnswered ? 'pointer-events-none' : ''}`}
           >
             {option.answer}
           </li>
@@ -146,12 +157,21 @@ const QuizView = ({
         </button>
       )}
 
-      <section className="flex flex-col justify-start gap-0.5">
-        <p className="text-[0.6rem] italic font-extralight opacity-60">
-          {t('quiz', { current: quizProgress.current, total: quizProgress.total })}
-        </p>
-        <p className="text-[0.6rem] italic font-extralight opacity-60">
-          {t('question', { current: questionProgress.current, total: questionProgress.total })}
+      <section className="flex justify-between gap-0.5">
+        <div className="flex flex-col justify-start gap-0.5">
+          <p className="text-[0.6rem] italic font-extralight opacity-60">
+            {t('quiz', { current: quizProgress.current, total: quizProgress.total })}
+          </p>
+          <p className="text-[0.6rem] italic font-extralight opacity-60">
+            {t('question', { current: questionProgress.current, total: questionProgress.total })}
+          </p>
+        </div>
+
+        <p
+          onClick={() => setShowDeleteModal(true)}
+          className="text-[0.6rem] italic font-extralight opacity-60 cursor-pointer hover:opacity-90"
+        >
+          {t('delete quiz')}
         </p>
       </section>
     </div>

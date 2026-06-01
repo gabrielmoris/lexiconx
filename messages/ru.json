@@ -183,7 +183,9 @@
     "composition-mastered": "освоены",
     "error-fetching-words": "Ошибка получения слов пользователя",
     "loading-words": "Загрузка слов",
-    "generating": "Создание"
+    "generating": "Создание",
+    "delete quiz": "Удалить урок",
+    "popup-delete-confirmation": "Вы уверены, что хотите удалить этот урок?"
   },
   "quiz-finished": {
     "better-luck-next-time": "В следующий раз повезёт больше",

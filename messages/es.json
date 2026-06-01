@@ -118,7 +118,9 @@
     "composition-mastered": "dominadas",
     "error-fetching-words": "Error al obtener las palabras del usuario",
     "loading-words": "Cargando palabras",
-    "generating": "generando"
+    "generating": "generando",
+    "delete quiz": "Eliminar lección",
+    "popup-delete-confirmation": "¿Estás seguro de que deseas eliminar esta lección?"
   },
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",

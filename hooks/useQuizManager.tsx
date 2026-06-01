@@ -276,6 +276,11 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     }
   };
 
+  const handleDeleteQuiz = () => {
+    deleteValue();
+    setDisplayQuiz([]);
+  };
+
   const currentQuizItem = displayQuiz[quizStep];
   const currentQuestion = currentQuizItem?.questions[questionStep];
 
@@ -296,5 +301,6 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     handleAnswerClick,
     handleContinue,
     restartQuiz,
+    handleDeleteQuiz,
   };
 };

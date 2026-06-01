@@ -183,7 +183,9 @@
     "composition-mastered": "mastered",
     "error-fetching-words": "Error getting the user words",
     "loading-words": "Loading words",
-    "generating": "Generating"
+    "generating": "Generating",
+    "delete quiz": "Delete Lesson",
+    "popup-delete-confirmation": "Are you sure you want to delete this lesson?"
   },
   "quiz-finished": {
     "better-luck-next-time": "Better luck next time",

@@ -117,7 +117,9 @@
     "composition-mastered": "beherrscht",
     "error-fetching-words": "Fehler beim Abrufen der Benutzerwörter",
     "loading-words": "Wörter werden geladen",
-    "generating": "Generieren"
+    "generating": "Generieren",
+    "delete quiz": "Lektion löschen",
+    "popup-delete-confirmation": "Sind Sie sicher, dass Sie diese Lektion löschen möchten?"
   },
   "quiz-finished": {
     "better-luck-next-time": "Viel Glück beim nächsten Mal",
