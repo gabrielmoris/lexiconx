@@ -36,6 +36,26 @@ const QuizPage = () => {
   });
   const [isFetchingWords, setIsFetchingWords] = useState(true);
 
+  const {
+    isLoading: isQuizLoading,
+    isQuizFinished,
+    isFinishing,
+    isWaitingForNextQuiz,
+    score,
+    currentQuizItem,
+    currentQuestion,
+    feedback,
+    showingExplanation,
+    quizProgress,
+    questionProgress,
+    handleAnswerClick,
+    handleContinue,
+    restartQuiz,
+    displayQuiz,
+    composition: quizComposition,
+    handleDeleteQuiz,
+  } = useQuizManager(userData!, { active: mode === 'active' });
+
   useEffect(() => {
     if (isSelectedLanguageLoading) return;
 
@@ -56,22 +76,24 @@ const QuizPage = () => {
         }
       } catch (error) {
         console.error('Error fetching word pool:', error);
-        showToast({
-          message: t('error-fetching-words'),
-          variant: 'error',
-          duration: 3000,
-        });
+        if (displayQuiz.length === 0 && !isQuizLoading) {
+          showToast({
+            message: t('error-fetching-words'),
+            variant: 'error',
+            duration: 3000,
+          });
 
-        setTimeout(() => {
-          redirect('/cards');
-        }, 3500);
+          setTimeout(() => {
+            redirect('/cards');
+          }, 3500);
+        }
       } finally {
         setIsFetchingWords(false);
       }
     };
 
     fetchWordPool();
-  }, [status, selectedLanguage.language, isSelectedLanguageLoading]);
+  }, [status, selectedLanguage.language, isSelectedLanguageLoading, isQuizLoading]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -110,26 +132,6 @@ const QuizPage = () => {
       });
     }
   }, [selectedWords, mode]);
-
-  const {
-    isLoading: isQuizLoading,
-    isQuizFinished,
-    isFinishing,
-    isWaitingForNextQuiz,
-    score,
-    currentQuizItem,
-    currentQuestion,
-    feedback,
-    showingExplanation,
-    quizProgress,
-    questionProgress,
-    handleAnswerClick,
-    handleContinue,
-    restartQuiz,
-    displayQuiz,
-    composition: quizComposition,
-    handleDeleteQuiz,
-  } = useQuizManager(userData!, { active: mode === 'active' });
 
   useEffect(() => {
     if (displayQuiz.length > 0) {

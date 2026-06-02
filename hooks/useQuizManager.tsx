@@ -32,7 +32,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   const router = useRouter();
 
   const [displayQuiz, setDisplayQuiz] = useState<Quiz[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
   const [questionStep, setQuestionStep] = useState(0);
   const [feedback, setFeedback] = useState({ correct: '', wrong: '' });
@@ -96,7 +96,8 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
           })
           .catch(error => {
             console.error('Error prefetching quiz words:', error);
-          });
+          })
+          .finally(() => setIsLoading(false));
       }
     } else if (!isGeneratingQuiz && !isGeneratingMore && options?.active !== false) {
       router.push('/cards');
@@ -154,9 +155,8 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
         })
         .then(() => {
           setIsQuizFinished(true);
-          setClientQuizzes([]);
           if (isSucceed) {
-            deleteValue();
+            handleDeleteQuiz();
           }
         })
         .catch(error => {
@@ -279,6 +279,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   const handleDeleteQuiz = () => {
     deleteValue();
     setDisplayQuiz([]);
+    setClientQuizzes([]);
   };
 
   const currentQuizItem = displayQuiz[quizStep];
