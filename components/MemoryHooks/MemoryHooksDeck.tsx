@@ -20,7 +20,7 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const t = useTranslations('memory-hooks');
-  const { selectedLanguage } = useLanguage();
+  const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
   const { showToast } = useToastContext();
 
   const userLanguage = localeToLanguage(userLocale);
@@ -68,8 +68,9 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
   }, [learningLanguage, userLanguage, showToast, t]);
 
   useEffect(() => {
+    if (isSelectedLanguageLoading) return;
     fetchCards();
-  }, [fetchCards]);
+  }, [fetchCards, isSelectedLanguageLoading]);
 
   const goNext = () => {
     if (currentIndex < cards.length - 1) {

@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Error al generar el cuestionario",
     "error-getting-user": "Error al obtener los datos de usuario",
-    "generate-quiz": "Generar cuestionario",
     "quiz-generation-partial-failure": "1 cuestionario no pudo generarse, continuando con los disponibles",
     "quiz-generation-partial-failure-plural": "{count} cuestionarios no pudieron generarse, continuando con los disponibles"
   },
@@ -116,7 +115,12 @@
     "continue": "Continuar",
     "composition-new": "nuevas",
     "composition-learning": "aprendiendo",
-    "composition-mastered": "dominadas"
+    "composition-mastered": "dominadas",
+    "error-fetching-words": "Error al obtener las palabras del usuario",
+    "loading-words": "Cargando palabras",
+    "generating": "generando",
+    "delete quiz": "Eliminar lección",
+    "popup-delete-confirmation": "¿Estás seguro de que deseas eliminar esta lección?"
   },
   "quiz-finished": {
     "better-luck-next-time": "Mejor suerte la próxima vez",
@@ -189,7 +193,8 @@
     "settings": "Ajustes",
     "cards": "Tarjetas",
     "home": "Inicio",
-    "memory-hooks": "Anclaje Memoria"
+    "memory-hooks": "Anclaje Memoria",
+    "generate-quiz": "Generar lección"
   },
   "stats": {
     "title": "Tus Estadisticas",
@@ -315,5 +320,26 @@
     "loading-voices": "Por favor espera, cargando voces...",
     "error-generating": "Error al generar anclajes de memoria",
     "error-fetching": "Error al cargar anclajes de memoria"
+  },
+  "quiz-start": {
+    "ready-to-study": "Listo para estudiar?",
+    "new": "Nueva",
+    "learning": "Aprendiendo",
+    "mastered": "Dominada",
+    "selected-words": "Palabras seleccionadas",
+    "clear-all": "Borrar todo",
+    "no-words-selected": "No hay palabras seleccionadas. Busca y agrega abajo.",
+    "add-words": "Agregar palabras",
+    "show-overdue-only": "Solo pendientes",
+    "show-all-words": "Mostrar todas",
+    "search-placeholder": "Buscar palabras para agregar...",
+    "no-results": "No se encontraron palabras",
+    "no-words-available": "No hay palabras disponibles",
+    "min-words-hint": "Selecciona al menos 3 palabras",
+    "max-words-hint": "Mas de 10 palabras puede resultar en una sesion mas larga",
+    "start-quiz": "Iniciar lección",
+    "generating": "Generando quiz...",
+    "loading-words": "Cargando palabras...",
+    "error-fetching-words": "Error al cargar palabras"
   }
 }

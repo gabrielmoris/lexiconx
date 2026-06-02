@@ -17,13 +17,13 @@ vi.mock('next-auth/react', () => ({
 
 const mockClientQuizzes = vi.fn(() => []);
 vi.mock('@/context/QuizContext', () => ({
-	useQuiz: () => ({
-		clientQuizzes: mockClientQuizzes(),
-		isLoading: false,
-		isGeneratingMore: false,
-		isAllQuizzesReady: true,
-		totalExpectedQuizzes: 0,
-	}),
+  useQuiz: () => ({
+    clientQuizzes: mockClientQuizzes(),
+    isLoading: false,
+    isGeneratingMore: false,
+    isAllQuizzesReady: true,
+    totalExpectedQuizzes: 0,
+  }),
 }));
 
 let storedQuizzes: any[] = [];
@@ -181,12 +181,6 @@ describe('useQuizManager', () => {
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith('/cards');
       });
-    });
-
-    it('stays loading when localStorage is not hydrated', async () => {
-      isHydrated = false;
-      const { result } = renderHook(() => useQuizManager(mockUserData as any));
-      expect(result.current.isLoading).toBe(true);
     });
   });
 

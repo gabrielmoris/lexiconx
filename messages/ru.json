@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Ошибка при создании викторины",
     "error-getting-user": "Ошибка получения данных пользователя",
-    "generate-quiz": "Сгенерировать викторину",
     "quiz-generation-partial-failure": "1 тест не удалось сгенерировать, продолжаем с доступными тестами",
     "quiz-generation-partial-failure-plural": "{count} тестов не удалось сгенерировать, продолжаем с доступными тестами"
   },
@@ -181,7 +180,12 @@
     "continue": "Продолжить",
     "composition-new": "новые",
     "composition-learning": "изучаю",
-    "composition-mastered": "освоены"
+    "composition-mastered": "освоены",
+    "error-fetching-words": "Ошибка получения слов пользователя",
+    "loading-words": "Загрузка слов",
+    "generating": "Создание",
+    "delete quiz": "Удалить урок",
+    "popup-delete-confirmation": "Вы уверены, что хотите удалить этот урок?"
   },
   "quiz-finished": {
     "better-luck-next-time": "В следующий раз повезёт больше",
@@ -254,7 +258,8 @@
     "settings": "Настройки",
     "cards": "Карточки",
     "home": "Главная",
-    "memory-hooks": "Крючки памяти"
+    "memory-hooks": "Крючки памяти",
+    "generate-quiz": "Создать урок"
   },
   "stats": {
     "title": "Ваши статистики",
@@ -315,5 +320,26 @@
     "loading-voices": "Пожалуйста, подождите, загрузка голосов...",
     "error-generating": "Ошибка генерации крючков памяти",
     "error-fetching": "Ошибка загрузки крючков памяти"
+  },
+  "quiz-start": {
+    "ready-to-study": "Готовы учиться?",
+    "new": "Новые",
+    "learning": "Изучаемые",
+    "mastered": "Освоенные",
+    "selected-words": "Выбранные слова",
+    "clear-all": "Очистить всё",
+    "no-words-selected": "Слова не выбраны. Найдите и добавьте ниже.",
+    "add-words": "Добавить слова",
+    "show-overdue-only": "Только просроченные",
+    "show-all-words": "Показать все",
+    "search-placeholder": "Поиск слов...",
+    "no-results": "Слова не найдены",
+    "no-words-available": "Нет доступных слов",
+    "min-words-hint": "Выберите минимум 3 слова",
+    "max-words-hint": "Более 10 слов могут увеличить время сессии",
+    "start-quiz": "Начать урок",
+    "generating": "Создание теста...",
+    "loading-words": "Загрузка слов...",
+    "error-fetching-words": "Ошибка загрузки слов"
   }
 }

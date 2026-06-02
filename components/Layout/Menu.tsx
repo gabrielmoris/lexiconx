@@ -14,6 +14,7 @@ import SettingsIcon from '../Icons/SettingsIcon';
 import StatsIcon from '@/components/Icons/StatsIcon';
 import MemoryHookIcon from '@/components/Icons/MemoryHookIcon';
 import { useTranslations } from 'next-intl';
+import QuestionAiIcon from '../Icons/QuestionAiIcon';
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -41,7 +42,7 @@ const Menu: React.FC = () => {
     <div className="relative flex flex-col items-center justify-center" ref={menuRef}>
       <nav
         onClick={() => setOpenMenu(!openMenu)}
-        className={`absolute h-max flex flex-col min-w-[8rem] py-5 bottom-10 md:top-10
+        className={`absolute h-max flex flex-col min-w-48 py-5 bottom-10 md:top-10
                border border-gray-300 dark:border-gray-600 -right-5
                bg-white dark:bg-theme-fg-dark rounded-md
                shadow-sm shadow-gray-400 dark:shadow-gray-800 z-50
@@ -57,6 +58,22 @@ const Menu: React.FC = () => {
           href="/"
         >
           <HomeIcon className="w-4 h-4" /> {t('home')}
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+          px-5 py-2"
+          href="/quiz"
+        >
+          <QuestionAiIcon className="w-4 h-4" /> {t('generate-quiz')}
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
+			dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+			px-5 py-2"
+          href="/memory-hooks"
+        >
+          <MemoryHookIcon className="w-4 h-4 min-w-4" /> {t('memory-hooks')}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
@@ -81,14 +98,6 @@ const Menu: React.FC = () => {
           href="/stats"
         >
           <StatsIcon className="w-4 h-4" /> {t('stats')}
-        </Link>
-        <Link
-          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
-			dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
-			px-5 py-2"
-          href="/memory-hooks"
-        >
-          <MemoryHookIcon className="w-4 h-4 min-w-4" /> {t('memory-hooks')}
         </Link>
         {session?.user?.image ? (
           <p

@@ -2,7 +2,6 @@
   "ai-quiz-generator": {
     "error-generating quiz": "Error Generating Quiz",
     "error-getting-user": "Error getting user data",
-    "generate-quiz": "Generate Quiz",
     "quiz-generation-partial-failure": "1 quiz couldn't be generated, continuing with available quizzes",
     "quiz-generation-partial-failure-plural": "{count} quizzes couldn't be generated, continuing with available quizzes"
   },
@@ -181,7 +180,12 @@
     "continue": "Continue",
     "composition-new": "new",
     "composition-learning": "learning",
-    "composition-mastered": "mastered"
+    "composition-mastered": "mastered",
+    "error-fetching-words": "Error getting the user words",
+    "loading-words": "Loading words",
+    "generating": "Generating",
+    "delete quiz": "Delete Lesson",
+    "popup-delete-confirmation": "Are you sure you want to delete this lesson?"
   },
   "quiz-finished": {
     "better-luck-next-time": "Better luck next time",
@@ -253,9 +257,10 @@
     "stats": "Stats",
     "settings": "Settings",
     "cards": "Cards",
- "home": "Home",
- "memory-hooks": "Memory Hooks"
- },
+    "home": "Home",
+    "memory-hooks": "Memory Hooks",
+    "generate-quiz": "Generate Lesson"
+  },
   "stats": {
     "title": "Your Stats",
     "current-streak": "Current streak",
@@ -297,23 +302,44 @@
     "error-generating-words": "Error generating new words",
     "words-generated-success": "Words generated sucessfully!"
   },
- "word-context": {
- "unknown-error": "An unknown error occurred."
- },
- "memory-hooks": {
- "title": "Memory Hooks",
- "subtitle": "Flip cards to study your weakest words using the Keyword Method. The front shows a memory hook; flip to see the word.",
- "hook-side": "Memory Hook",
- "word-side": "Word",
- "tap-to-flip": "Tap to flip",
- "tap-to-flip-back": "Tap to flip back",
- "card-of": "Card {current} of {total}",
- "loading": "Loading your weak words...",
- "generating": "Generating memory hooks with AI...",
- "no-weak-words": "No weak words found. Keep studying and they will appear!",
- "error-speech": "Speech functionality is not available",
- "loading-voices": "Please wait, loading speech voices...",
- "error-generating": "Error generating memory hooks",
- "error-fetching": "Error fetching memory hooks"
- }
+  "word-context": {
+    "unknown-error": "An unknown error occurred."
+  },
+  "memory-hooks": {
+    "title": "Memory Hooks",
+    "subtitle": "Flip cards to study your weakest words using the Keyword Method. The front shows a memory hook; flip to see the word.",
+    "hook-side": "Memory Hook",
+    "word-side": "Word",
+    "tap-to-flip": "Tap to flip",
+    "tap-to-flip-back": "Tap to flip back",
+    "card-of": "Card {current} of {total}",
+    "loading": "Loading your weak words...",
+    "generating": "Generating memory hooks with AI...",
+    "no-weak-words": "No weak words found. Keep studying and they will appear!",
+    "error-speech": "Speech functionality is not available",
+    "loading-voices": "Please wait, loading speech voices...",
+    "error-generating": "Error generating memory hooks",
+    "error-fetching": "Error fetching memory hooks"
+  },
+  "quiz-start": {
+    "ready-to-study": "Ready to Study?",
+    "new": "New",
+    "learning": "Learning",
+    "mastered": "Mastered",
+    "selected-words": "Selected Words",
+    "clear-all": "Clear all",
+    "no-words-selected": "No words selected. Search and add words below.",
+    "add-words": "Add Words",
+    "show-overdue-only": "Show overdue only",
+    "show-all-words": "Show all words",
+    "search-placeholder": "Search words to add...",
+    "no-results": "No words found",
+    "no-words-available": "No words available to add",
+    "min-words-hint": "Select at least 3 words to start a quiz",
+    "max-words-hint": "More than 10 words may result in a longer session",
+    "start-quiz": "Start Lesson",
+    "generating": "Generating quiz...",
+    "loading-words": "Loading word pool...",
+    "error-fetching-words": "Error fetching words"
+  }
 }

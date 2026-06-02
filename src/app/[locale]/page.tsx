@@ -1,13 +1,13 @@
-"use client";
-import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
-import LexiconxLogo from "@/components/Icons/LexiconxLogo";
-import EnglishFlag from "@/components/Icons/EnglishFlag";
-import SpanishFlag from "@/components/Icons/SpanishFlag";
-import GermanFlag from "@/components/Icons/GermanFlag";
-import ChinaFlag from "@/components/Icons/ChinaFlag";
-import { Link } from "@/src/i18n/navigation";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+'use client';
+import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+import LexiconxLogo from '@/components/Icons/LexiconxLogo';
+import EnglishFlag from '@/components/Icons/EnglishFlag';
+import SpanishFlag from '@/components/Icons/SpanishFlag';
+import GermanFlag from '@/components/Icons/GermanFlag';
+import ChinaFlag from '@/components/Icons/ChinaFlag';
+import { Link } from '@/src/i18n/navigation';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -30,11 +30,11 @@ const scaleIn = {
 };
 
 export default function Home() {
-  const t = useTranslations("landing");
-  const {status} = useAuthGuard()
+  const t = useTranslations('landing');
+  const { status } = useAuthGuard();
 
   return (
-    <main className="w-screen relative md:w-xl px-5 md:px-0 flex flex-col items-center justify-start min-w-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+    <main className="w-screen relative md:w-xl px-5 md:px-0 flex flex-col items-center justify-start min-w-screen bg-linear-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -42,15 +42,20 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
               className="mb-8"
             >
               <LexiconxLogo className="mx-auto h-32 w-32 text-blue-600 dark:text-blue-400" />
             </motion.div>
 
-            <motion.h1 {...fadeInUp} className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
-              {t("hero.title")}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">LexiconX</span>
+            <motion.h1
+              {...fadeInUp}
+              className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl"
+            >
+              {t('hero.title')}
+              <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                LexiconX
+              </span>
             </motion.h1>
 
             <motion.p
@@ -58,7 +63,7 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="mx-auto mb-10 max-w-2xl text-xl text-theme-fg-light dark:text-theme-fg-dark"
             >
-              {t("hero.subtitle")} {t("hero.description")}
+              {t('hero.subtitle')} {t('hero.description')}
             </motion.p>
 
             <motion.div
@@ -67,18 +72,18 @@ export default function Home() {
               className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:items-center"
             >
               <Link
-                href={status === "authenticated" ? "/cards" : "/login"}
+                href={status === 'authenticated' ? '/cards' : '/login'}
                 className="group relative overflow-hidden rounded-full bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
-                <span className="relative z-10">{t("hero.start-learning")}</span>
-                <div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100" />
+                <span className="relative z-10">{t('hero.start-learning')}</span>
+                <div className="absolute inset-0 -z-10 bg-linear-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
 
               <Link
                 href="#features"
                 className="rounded-full border-2 border-gray-300 px-8 py-4 text-lg font-semibold text-gray-700 transition-all hover:border-blue-600 hover:text-blue-600 hover:scale-105 dark:border-gray-600 dark:text-gray-300 dark:hover:border-blue-400 dark:hover:text-blue-400"
               >
-                {t("hero.explore-features")}
+                {t('hero.explore-features')}
               </Link>
             </motion.div>
           </div>
@@ -93,7 +98,7 @@ export default function Home() {
           transition={{
             duration: 6,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
           className="absolute top-20 left-4 sm:left-10 hidden lg:block"
         >
@@ -108,7 +113,7 @@ export default function Home() {
           transition={{
             duration: 7,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
             delay: 1,
           }}
           className="absolute top-32 right-4 sm:right-16 hidden lg:block"
@@ -124,7 +129,7 @@ export default function Home() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
             delay: 2,
           }}
           className="absolute bottom-20 left-4 sm:left-20 hidden lg:block"
@@ -140,7 +145,7 @@ export default function Home() {
           transition={{
             duration: 5,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
             delay: 0.5,
           }}
           className="absolute bottom-32 right-4 sm:right-10 hidden lg:block"
@@ -159,8 +164,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t("features.title")}</h2>
-            <p className="text-xl text-theme-fg-light dark:text-theme-fg-dark max-w-2xl mx-auto">{t("features.subtitle")}</p>
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {t('features.title')}
+            </h2>
+            <p className="text-xl text-theme-fg-light dark:text-theme-fg-dark max-w-2xl mx-auto">
+              {t('features.subtitle')}
+            </p>
           </motion.div>
 
           <motion.div
@@ -175,7 +184,12 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-                <svg className="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-6 w-6 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -184,8 +198,12 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.spaced-repetition.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.spaced-repetition.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.spaced-repetition.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.spaced-repetition.description')}
+              </p>
             </motion.div>
 
             <motion.div
@@ -193,7 +211,12 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-                <svg className="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-6 w-6 text-purple-600 dark:text-purple-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -202,8 +225,12 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.ai-quizzes.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.ai-quizzes.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.ai-quizzes.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.ai-quizzes.description')}
+              </p>
             </motion.div>
 
             <motion.div
@@ -211,12 +238,26 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
-                <svg className="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg
+                  className="h-6 w-6 text-green-600 dark:text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.fast-progress.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.fast-progress.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.fast-progress.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.fast-progress.description')}
+              </p>
             </motion.div>
 
             <motion.div
@@ -224,7 +265,12 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900">
-                <svg className="h-6 w-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-6 w-6 text-orange-600 dark:text-orange-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -233,8 +279,12 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.multiple-languages.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.multiple-languages.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.multiple-languages.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.multiple-languages.description')}
+              </p>
             </motion.div>
 
             <motion.div
@@ -242,7 +292,12 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-pink-100 dark:bg-pink-900">
-                <svg className="h-6 w-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-6 w-6 text-pink-600 dark:text-pink-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -251,8 +306,12 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.progress-tracking.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.progress-tracking.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.progress-tracking.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.progress-tracking.description')}
+              </p>
             </motion.div>
 
             <motion.div
@@ -260,7 +319,12 @@ export default function Home() {
               className="group rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-2 dark:bg-gray-800"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900">
-                <svg className="h-6 w-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-6 w-6 text-indigo-600 dark:text-indigo-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -269,29 +333,43 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">{t("features.mobile-friendly.title")}</h3>
-              <p className="text-theme-fg-light dark:text-theme-fg-dark">{t("features.mobile-friendly.description")}</p>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                {t('features.mobile-friendly.title')}
+              </h3>
+              <p className="text-theme-fg-light dark:text-theme-fg-dark">
+                {t('features.mobile-friendly.description')}
+              </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl mb-10">
+      <section className="py-20 bg-linear-to-r from-blue-600 to-purple-600 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl mb-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="text-4xl font-bold text-white mb-6">{t("cta.title")}</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">{t('cta.title')}</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              {t("cta.subtitle")} {t("cta.description")}
+              {t('cta.subtitle')} {t('cta.description')}
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/login"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
               >
-                {t("cta.get-started")}
+                {t('cta.get-started')}
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
                 </svg>
               </Link>
             </motion.div>

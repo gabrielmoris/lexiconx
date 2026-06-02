@@ -63,7 +63,7 @@ const MemoryHookCard: React.FC<MemoryHookCardProps> = ({ card }) => {
             animate={{ rotateY: 0, opacity: 1 }}
             exit={{ rotateY: 90, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="w-full h-full rounded-xl border-2 text-info bg-gradient-to-br from-theme-text-dark to-theme-bg-light shadow-lg p-6 flex flex-col
+            className="w-full h-full rounded-xl border-2 text-info bg-linear-to-br from-theme-text-dark to-theme-bg-light shadow-lg p-6 flex flex-col
  justify-center items-center gap-4"
           >
             <div className="text-xs font-semibold uppercase tracking-wider text-info/50 ">
@@ -83,7 +83,7 @@ const MemoryHookCard: React.FC<MemoryHookCardProps> = ({ card }) => {
             exit={{ rotateY: -90, opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="w-full h-full rounded-xl border-2 border-emerald-400
- dark:border-emerald-500 bg-gradient-to-br from-emerald-50 to-teal-50
+ dark:border-emerald-500 bg-linear-to-br from-emerald-50 to-teal-50
  dark:from-emerald-950 dark:to-teal-950 shadow-lg p-6 flex flex-col
  justify-center items-center gap-3"
           >

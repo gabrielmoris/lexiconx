@@ -27,7 +27,7 @@ interface QuizContextType {
   isAllQuizzesReady: boolean;
   wordsForQuiz: Word[];
   composition: QuizComposition;
-  generateQuiz: () => Promise<{ success: boolean } | undefined>;
+  generateQuiz: (preselectedWords?: Word[]) => Promise<{ success: boolean } | undefined>;
 }
 
 const QuizContext = createContext<QuizContextType>({
@@ -70,7 +70,7 @@ function determineQuizCount(wordCount: number): number {
 }
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
-  const { setValue: setStoredQuizzes, storedValue: storedQuizzesData } = useLocalStorage<{
+  const { setValue: setStoredQuizzes } = useLocalStorage<{
     quizzes: Quiz[];
   }>('quizes', { quizzes: [] });
 
@@ -185,99 +185,117 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     [setStoredQuizzes]
   );
 
-  const generateQuiz = useCallback(async () => {
-    if (status === 'authenticated') {
-      setIsLoading(true);
-      setIsAllQuizzesReady(false);
-      setIsGeneratingMore(false);
-      setTotalExpectedQuizzes(0);
+  const generateQuiz = useCallback(
+    async (preselectedWords?: Word[]) => {
+      if (status === 'authenticated') {
+        setIsLoading(true);
+        setIsAllQuizzesReady(false);
+        setIsGeneratingMore(false);
+        setTotalExpectedQuizzes(0);
 
-      const learningProgress = userData?.learningProgress?.find(
-        lp => lp.language === selectedLanguage.language
-      );
-
-      try {
-        if (!learningProgress) {
-          throw new Error('Learning progress not found');
-        }
-
-        // Fetch words for quiz
-        const { wordsForQuiz: fetchedWords, composition: fetchedComposition } =
-          await getWordsForQuiz(selectedLanguage.language, currentLocale as Language);
-
-        if (fetchedWords.length === 0) {
-          setIsLoading(false);
-          return { success: false };
-        }
-
-        setWordsForQuiz(fetchedWords);
-        if (fetchedComposition) {
-          setComposition(fetchedComposition);
-        }
-
-        // Determine quiz count from word count
-        const quizCount = determineQuizCount(fetchedWords.length);
-        if (quizCount === 0) {
-          setIsLoading(false);
-          return { success: false };
-        }
-
-        setTotalExpectedQuizzes(quizCount);
-        totalExpectedRef.current = quizCount;
-
-        // Split words into per-quiz chunks so each quiz uses a dedicated word set
-        const wordChunks = splitWordsForQuizzes(fetchedWords, quizCount);
-
-        // Store values in refs for background generation
-        levelRef.current = learningProgress!.level;
-        fetchedWordsRef.current = fetchedWords;
-        wordChunksRef.current = wordChunks;
-
-        // Generate quiz 1 immediately with its dedicated word chunk
-        const data = await quizGeneration(
-          selectedLanguage.language,
-          currentLocale as Language,
-          learningProgress!.level,
-          wordChunks[0],
-          1
+        const learningProgress = userData?.learningProgress?.find(
+          lp => lp.language === selectedLanguage.language
         );
 
-        const quiz1 = data.quizzes[0];
-        setClientQuizzes([quiz1]);
-        setIsLoading(false);
+        try {
+          if (!learningProgress) {
+            throw new Error('Learning progress not found');
+          }
 
-        // If more quizzes expected, fire-and-forget background generation
-        if (quizCount > 1) {
-          setIsGeneratingMore(true);
-          isGeneratingRef.current = true;
+          let fetchedWords: Word[];
+          let fetchedComposition: QuizComposition | undefined;
 
-          generateRemainingQuizzes(quiz1, quizCount, wordChunks);
-        } else {
-          setIsAllQuizzesReady(true);
-          setStoredQuizzes({ quizzes: [quiz1] });
+          if (preselectedWords && preselectedWords.length >= 3) {
+            fetchedWords = preselectedWords;
+            fetchedComposition = {
+              new: preselectedWords.filter(w => w.repetitions === 0).length,
+              learning: preselectedWords.filter(w => w.repetitions > 0 && w.interval <= 21).length,
+              mastered: preselectedWords.filter(w => w.interval > 21).length,
+            };
+          } else {
+            const result = await getWordsForQuiz(
+              selectedLanguage.language,
+              currentLocale as Language
+            );
+            fetchedWords = result.wordsForQuiz;
+            fetchedComposition = result.composition;
+          }
+
+          if (fetchedWords.length === 0) {
+            setIsLoading(false);
+            return { success: false };
+          }
+
+          setWordsForQuiz(fetchedWords);
+          if (fetchedComposition) {
+            setComposition(fetchedComposition);
+          }
+
+          // Determine quiz count from word count
+          const quizCount = determineQuizCount(fetchedWords.length);
+          if (quizCount === 0) {
+            setIsLoading(false);
+            return { success: false };
+          }
+
+          setTotalExpectedQuizzes(quizCount);
+          totalExpectedRef.current = quizCount;
+
+          // Split words
+          const wordChunks = splitWordsForQuizzes(fetchedWords, quizCount);
+
+          // Store values in refs for background generation
+          levelRef.current = learningProgress!.level;
+          fetchedWordsRef.current = fetchedWords;
+          wordChunksRef.current = wordChunks;
+
+          // Generate quiz 1 immediately with its dedicated word chunk
+          const data = await quizGeneration(
+            selectedLanguage.language,
+            currentLocale as Language,
+            learningProgress!.level,
+            wordChunks[0],
+            1
+          );
+
+          const quiz1 = data.quizzes[0];
+          setClientQuizzes([quiz1]);
+          setIsLoading(false);
+
+          // If more quizzes expected, fire-and-forget background generation
+          if (quizCount > 1) {
+            setIsGeneratingMore(true);
+            isGeneratingRef.current = true;
+
+            generateRemainingQuizzes(quiz1, quizCount, wordChunks);
+          } else {
+            setIsAllQuizzesReady(true);
+            setStoredQuizzes({ quizzes: [quiz1] });
+          }
+
+          return { success: true };
+        } catch (error) {
+          console.error('Error generating quiz:', error);
+          showToast({
+            message: t('error-generating quiz'),
+            variant: 'error',
+            duration: 3000,
+          });
+          setIsLoading(false);
+          setIsGeneratingMore(false);
+          return { success: false };
         }
-
-        return { success: true };
-      } catch (error) {
-        console.error('Error generating quiz:', error);
+      } else {
         showToast({
           message: t('error-generating quiz'),
           variant: 'error',
           duration: 3000,
         });
-        setIsLoading(false);
-        setIsGeneratingMore(false);
         return { success: false };
       }
-    } else {
-      showToast({
-        message: t('error-generating quiz'),
-        variant: 'error',
-        duration: 3000,
-      });
-      return { success: false };
-    }
-  }, [status, selectedLanguage, userData, generateRemainingQuizzes]);
+    },
+    [status, selectedLanguage, userData, generateRemainingQuizzes]
+  );
 
   useEffect(() => {
     return () => {
