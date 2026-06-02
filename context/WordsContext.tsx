@@ -32,8 +32,13 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations('word-context');
 
   useEffect(() => {
-    if (session && !isSelectedLanguageLoading && !words.length) {
+    setWords([]);
+  }, [selectedLanguage]);
+
+  useEffect(() => {
+    if (session && !isSelectedLanguageLoading) {
       const fetchCards = async () => {
+        setLoading(true);
         try {
           const { data } = await fetchUserWords(selectedLanguage.language);
           setWords(data);
@@ -47,7 +52,6 @@ export const WordsProvider = ({ children }: { children: React.ReactNode }) => {
           setLoading(false);
         }
       };
-      setLoading(true);
       fetchCards();
     } else if (!session) {
       setLoading(false);

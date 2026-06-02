@@ -168,7 +168,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
   return (
     <Button
       onClick={() => setIsAddingWord(true)}
-      className="flex items-center justify-between px-5 w-full max-w-[25.5rem]"
+      className="flex items-center justify-between px-5 w-full md:max-w-93"
     >
       {t('add-word')} <span className="text-2xl font-extrabold">+</span>
     </Button>

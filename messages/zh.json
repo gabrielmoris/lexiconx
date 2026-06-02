@@ -194,7 +194,7 @@
     "cards": "牌",
     "home": "家",
     "memory-hooks": "记忆钩",
-    "generate-quiz": "生成测验"
+    "generate-quiz": "生成课程"
   },
   "stats": {
     "title": "你的统计",
@@ -337,7 +337,7 @@
     "no-words-available": "没有可添加的单词",
     "min-words-hint": "至少选择3个单词才能开始测验",
     "max-words-hint": "超过10个单词可能导致较长的学习时间",
-    "start-quiz": "开始测验",
+    "start-quiz": "开始上课",
     "generating": "正在生成测验...",
     "loading-words": "正在加载单词...",
     "error-fetching-words": "加载单词时出错"

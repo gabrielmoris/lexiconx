@@ -259,7 +259,7 @@
     "cards": "Cards",
     "home": "Home",
     "memory-hooks": "Memory Hooks",
-    "generate-quiz": "Generate Quiz"
+    "generate-quiz": "Generate Lesson"
   },
   "stats": {
     "title": "Your Stats",
@@ -337,7 +337,7 @@
     "no-words-available": "No words available to add",
     "min-words-hint": "Select at least 3 words to start a quiz",
     "max-words-hint": "More than 10 words may result in a longer session",
-    "start-quiz": "Start Quiz",
+    "start-quiz": "Start Lesson",
     "generating": "Generating quiz...",
     "loading-words": "Loading word pool...",
     "error-fetching-words": "Error fetching words"

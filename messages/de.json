@@ -193,7 +193,7 @@
     "cards": "Karten",
     "home": "Home",
     "memory-hooks": "Gedachtnishaken",
-    "generate-quiz": "Quiz erstellen"
+    "generate-quiz": "Lektion generieren"
   },
   "stats": {
     "title": "Deine Statistiken",
@@ -336,7 +336,7 @@
     "no-words-available": "Keine Woerter verfuegbar",
     "min-words-hint": "Waehle mindestens 3 Woerter aus",
     "max-words-hint": "Mehr als 10 Woerter koennen zu einer laengeren Session fuehren",
-    "start-quiz": "Quiz starten",
+    "start-quiz": "Lektion beginnen",
     "generating": "Quiz wird erstellt...",
     "loading-words": "Woerter werden geladen...",
     "error-fetching-words": "Fehler beim Laden der Woerter"

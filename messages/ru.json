@@ -259,7 +259,7 @@
     "cards": "Карточки",
     "home": "Главная",
     "memory-hooks": "Крючки памяти",
-    "generate-quiz": "Сгенерировать викторину"
+    "generate-quiz": "Создать урок"
   },
   "stats": {
     "title": "Ваши статистики",
@@ -337,7 +337,7 @@
     "no-words-available": "Нет доступных слов",
     "min-words-hint": "Выберите минимум 3 слова",
     "max-words-hint": "Более 10 слов могут увеличить время сессии",
-    "start-quiz": "Начать тест",
+    "start-quiz": "Начать урок",
     "generating": "Создание теста...",
     "loading-words": "Загрузка слов...",
     "error-fetching-words": "Ошибка загрузки слов"

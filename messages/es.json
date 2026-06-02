@@ -194,7 +194,7 @@
     "cards": "Tarjetas",
     "home": "Inicio",
     "memory-hooks": "Anclaje Memoria",
-    "generate-quiz": "Generar cuestionario"
+    "generate-quiz": "Generar lección"
   },
   "stats": {
     "title": "Tus Estadisticas",
@@ -337,7 +337,7 @@
     "no-words-available": "No hay palabras disponibles",
     "min-words-hint": "Selecciona al menos 3 palabras",
     "max-words-hint": "Mas de 10 palabras puede resultar en una sesion mas larga",
-    "start-quiz": "Iniciar quiz",
+    "start-quiz": "Iniciar lección",
     "generating": "Generando quiz...",
     "loading-words": "Cargando palabras...",
     "error-fetching-words": "Error al cargar palabras"

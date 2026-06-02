@@ -121,7 +121,7 @@ const QuizStartCard = ({
             <button
               type="button"
               onClick={() => setSelectedWords([])}
-              className="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+              className="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
             >
               {t('clear-all')}
             </button>
