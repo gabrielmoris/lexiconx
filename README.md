@@ -68,34 +68,62 @@ Browser <-->|Fetch / SSR| NextJS
 NextJS <-->|Auth| NextAuth
 NextAuth <-->|Persist user| MongoDB
 NextJS <-->|CRUD / Queries| MongoDB
-NextJS <-->|Generate quiz / words| Gemini
-NextJS <-->|Generate quiz / words| OpenAI
+NextJS <-->|Generate quiz / words / hooks| Gemini
+NextJS <-->|Generate quiz / words / hooks| OpenAI
 ```
 
 ### Key Flows
 
+#### Quiz Flow (Word Selection → Generation → Play)
+
 ```mermaid
 sequenceDiagram
-participant U as User
-participant Q as QuizContext
-participant AI as AI API
-participant DB as MongoDB
+	participant U as User
+	participant QP as Quiz Page
+	participant Q as QuizContext
+	participant AI as AI API
 
-U->>Q: Click "Start Quiz"
-Q->>AI: Generate quiz #1
-AI-->>Q: Quiz 1 ready
-Q->>U: Show first quiz immediately
-par Background generation
-Q->>AI: Generate quiz #2
-Q->>AI: Generate quiz #3
-AI-->>Q: Quiz 2 ready
-AI-->>Q: Quiz 3 ready
-end
-Q->>DB: Save all quizzes to localStorage
-Note over U,Q: User plays while remaining quizzes generate
+	U->>QP: Navigate to /quiz
+	QP->>QP: Fetch word pool (DB query, no AI)
+	QP->>U: Show word selection (add/remove/toggle overdue)
+	U->>QP: Click "Start Quiz"
+	QP->>Q: generateQuiz(selectedWords)
+	Q->>AI: Generate quiz #1 with selected words
+	AI-->>Q: Quiz 1 ready
+	Q->>QP: Display first quiz
+	par Background generation
+	Q->>AI: Generate quiz #2
+	Q->>AI: Generate quiz #3
+	AI-->>Q: Quiz 2 ready
+	AI-->>Q: Quiz 3 ready
+	end
+	Q->>QP: Save all quizzes to localStorage
+	Note over U,QP: User plays while remaining quizzes generate
 ```
 
-- **Progressive Quiz Generation**: On button click, 1 quiz generates immediately (user starts playing), then 2 more generate in the background. localStorage is only saved after all quizzes are ready.
+#### Memory Hooks Flow (Keyword Method)
+
+```mermaid
+sequenceDiagram
+	participant U as User
+	participant MH as /memory-hooks
+	participant AI as AI API
+	participant DB as MongoDB
+
+	U->>MH: Navigate to /memory-hooks
+	MH->>DB: Fetch weakest words (lowest easeFactor)
+	MH->>DB: Check existing MemoryHook docs
+	loop Missing hooks
+	MH->>AI: Generate phoneticKeyword + bridgeSentence
+	AI-->>MH: Hook data
+	MH->>DB: Save MemoryHook document
+	end
+	MH->>U: Show Anki-style flip cards
+```
+
+- **Quiz Word Selection**: The `/quiz` page auto-fetches a word pool on mount (cheap DB query). Users can add/remove words and toggle overdue-only before generating. This prevents accidental AI calls and gives users control over their study session.
+- **Progressive Quiz Generation**: On "Start Quiz", quiz #1 generates immediately (user starts playing), then 2 more generate in the background. localStorage is only saved after all quizzes are ready.
+- **Delete Quiz**: During a quiz, a delete button allows the user to discard the current quiz (clears localStorage + context) and return to word selection.
 - **Spaced Repetition (Modified SM-2)**: Words have `easeFactor`, `interval`, `repetitions`. Correct answers increase interval; wrong answers reset. Words transition: New → Learning → Mastered.
 - **Smart Quiz Composition (Interleaving)**: Words are allocated ~30% new, ~40% learning, ~30% mastered and interleaved in round-robin rotation for discriminative contrast.
 - **Level Progression**: 0–100 per language. Level up if `score.success / 2 > score.errors`, else level down (min 0). Streaks tracked.
@@ -103,9 +131,6 @@ Note over U,Q: User plays while remaining quizzes generate
 - **i18n**: URL-based locale routing (`/en/cards`, `/de/quiz`). 5 locale JSON files.
 - **TTS**: EasySpeech Observer singleton. Lazy initialization. Language-aware voice selection.
 - **Theming**: System-aware dark/light toggle via `next-themes`. `ThemeProvider` wraps the app in `providers.tsx`; `ThemeSwitcher` component in Settings.
-
----
-
 ## 📦 Getting Started
 
 ### Prerequisites
@@ -261,7 +286,7 @@ updatedAt: Date
 | ------------------------ | ---------------------------------------------------- |
 | `/[locale]`              | Home / landing                                       |
 | `/[locale]/cards`        | Vocabulary card management                           |
-| `/[locale]/quiz`         | Quiz gameplay                                        |
+| `/[locale]/quiz` | Word selection + quiz gameplay (idle → generating → active) |
 | `/[locale]/memory-hooks` | Flip card study mode for weak words (Keyword Method) |
 | `/[locale]/stats`        | Learning analytics                                   |
 | `/[locale]/settings`     | User settings                                        |
@@ -274,62 +299,19 @@ updatedAt: Date
 
 ## 📁 Project Structure
 
-```
-lexiconx/
-├── components/ # React components
-│ ├── AI/ # AiQuizzGenerator, AiGenerateVocabulary
-│ ├── Auth/ # AuthProvider
-│ ├── Icons/ # SVG icon components
-│ ├── Layout/ # Header, Menu, LoadingComponent
-│ │ └── Toast/ # Toast notification components
-│ ├── MemoryHooks/ # MemoryHookCard (flip card), MemoryHooksDeck (deck + navigation)
-│ ├── Onboarding/ # LocaleSwitcher, LanguageLearningOnboarding, AddFirstCards, OnboardingText
-│ ├── Quiz/ # QuizView, QuizFinished
-│ ├── Settings/ # NativeLanguage, LanguageToLearn, DeleteAccount, ThemeSwitcher
-│ ├── Stats/ # OverviewCards, ReviewForecastChart, WordHealthChart, AccuracyTrendChart, WeakestWordsTable
-│ ├── UI/ # Button, Popup
-│ └── Words/ # WordCard, WordList, WordForm, ShowLearningFlag
-├── context/ # React contexts
-│ ├── QuizContext.tsx # Quiz state, progressive generation
-│ ├── WordsContext.tsx # Vocabulary CRUD
-│ ├── LanguageToLearnContext.tsx # Active language
-│ └── ToastContext.tsx # Toast notifications
-├── hooks/ # Custom hooks
-│ ├── useQuizManager.tsx # Quiz gameplay logic & SRS
-│ ├── useTextToSpeech.tsx # TTS integration
-│ ├── useLocalStorage.tsx # Persistent state
-│ ├── useConfetti.tsx # Celebration effects
-│ ├── useGenerateWords.tsx # AI word generation
-│ └── useAuthGuard.tsx # Auth guard
-├── lib/ # Core libraries
-│ ├── ai/ # AI client, prompts, generators
-│ │ ├── generate-quiz.ts # Quiz generation with elaboration + error explanation
-│ │ ├── generate-memory-hooks.ts # Keyword Method hook generation
-│ │ ├── memory-hooks-prompts.ts # Keyword Method LLM prompt
-│ │ ├── quiz-prompts.ts # Quiz LLM prompts (all 5 languages)
-│ │ └── words-prompts.ts # Word generation LLM prompts
-│ ├── auth/ # NextAuth config, SSR auth guard
-│ ├── mongodb/ # Connection & models
-│ │ └── models/ # word.ts, user.ts, quizSession.ts, memoryHook.ts
-│ ├── tts/ # EasySpeech service
-│ ├── apis.ts # API client functions
-│ ├── correctionWords.ts # SRS algorithm
-│ ├── helpers.ts # Shared utility functions
-│ └── dateFormat.ts # Date formatting
-├── messages/ # i18n JSON (en, de, zh, es, ru)
-├── scripts/ # Utility & seed scripts
-├── src/
-│ ├── app/ # Next.js App Router
-│ │ ├── api/ # API route handlers
-│ │ └── [locale]/ # Locale-prefixed pages
-│ ├── i18n/ # next-intl (request.ts, routing.ts, navigation.ts)
-│ └── middleware.ts # Auth + locale middleware
-├── types/ # TypeScript type definitions
-│ ├── MemoryHook.ts # MemoryHook, MemoryHookCardData, MemoryHookGeneratorResponse
-│ ├── Quiz.ts # Quiz, QuizQuestion, QuizAnswer, QuizComposition
-│ └── Words.ts # Word, User, Language, Locale
-└── public/ # Static assets
-```
+| Directory | Purpose |
+| --------- | ---------------------------------------------------- |
+| `components/` | React UI components (Quiz, Words, MemoryHooks, Stats, Settings, Onboarding, Layout, Icons, UI, AI, Auth) |
+| `context/` | React contexts (QuizContext, WordsContext, LanguageToLearnContext, ToastContext) |
+| `hooks/` | Custom hooks (useQuizManager, useTextToSpeech, useLocalStorage, useGenerateWords, useAuthGuard, useConfetti) |
+| `lib/ai/` | AI generation (quiz, words, memory-hooks) + LLM prompts |
+| `lib/mongodb/models/` | Mongoose schemas (Word, User, QuizSession, MemoryHook) |
+| `lib/` | Core libraries (auth, TTS, SRS, helpers, API client) |
+| `messages/` | i18n JSON files (en, de, zh, es, ru) |
+| `src/app/api/` | API route handlers |
+| `src/app/[locale]/` | Locale-prefixed pages |
+| `src/i18n/` | next-intl config (request, routing, navigation) |
+| `types/` | TypeScript interfaces (Quiz, Words, MemoryHook, User) |
 
 ---
 
