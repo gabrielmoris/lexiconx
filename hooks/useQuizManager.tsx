@@ -6,6 +6,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { processAnswer } from '@/lib/correctionWords';
 import { getWordsByIds, updateWordsData, updateUserData } from '@/lib/apis';
 import { saveQuizSession } from '@/lib/apis';
+import { buildRequizQuestions, RequizOption } from '@/lib/requiz';
 import { Quiz, QuizAnswer } from '@/types/Quiz';
 import { User, Word } from '@/types/Words';
 
@@ -43,6 +44,19 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   const [isFinishing, setIsFinishing] = useState(false);
   const [startingTimer, setStartingTimer] = useState<number>();
 
+  // Requiz state
+  const [missedWordIds, setMissedWordIds] = useState<string[]>([]);
+  const [requizQuestions, setRequizQuestions] = useState<ReturnType<typeof buildRequizQuestions>>(
+    []
+  );
+  const [requizStep, setRequizStep] = useState(0);
+  const [requizScore, setRequizScore] = useState({ correct: 0, wrong: 0 });
+  const [isRequizPhase, setIsRequizPhase] = useState(false);
+  const [requizFeedback, setRequizFeedback] = useState<{ correct: string; wrong: string }>({
+    correct: '',
+    wrong: '',
+  });
+
   const originalEaseFactors = useRef<Map<string, number>>(new Map());
   const quizStartTime = useRef(Date.now());
   const isFinishingRef = useRef(false);
@@ -53,6 +67,10 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     totalExpectedQuizzes > 0 &&
     quizStep >= displayQuiz.length &&
     displayQuiz.length > 0;
+
+  // True when main quiz is complete (all quizzes answered)
+  const isMainQuizComplete =
+    displayQuiz.length > 0 && quizStep >= displayQuiz.length && isAllQuizzesReady && !isRequizPhase;
 
   useEffect(() => {
     const start = Date.now();
@@ -111,63 +129,83 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     isGeneratingMore,
   ]);
 
-  // Effect to handle the end of the quiz
+  // Build requiz questions when main quiz completes with missed words
+  useEffect(() => {
+    if (isQuizFinished || isRequizPhase) return;
+    if (!isMainQuizComplete) return;
+    if (missedWordIds.length === 0) return;
+    if (usedWords.length === 0) return;
+
+    const questions = buildRequizQuestions(missedWordIds, usedWords);
+    if (questions.length > 0) {
+      setRequizQuestions(questions);
+      setRequizStep(0);
+      setRequizScore({ correct: 0, wrong: 0 });
+      setRequizFeedback({ correct: '', wrong: '' });
+      setIsRequizPhase(true);
+    }
+  }, [isMainQuizComplete, missedWordIds, usedWords, isQuizFinished, isRequizPhase]);
+
+  // Effect to handle the end of the quiz (after requiz if applicable)
   // Quiz only truly finishes when ALL quizzes are ready AND the user has answered all of them
   useEffect(() => {
     if (isQuizFinished || !session) return;
     if (isFinishingRef.current) return;
 
-    if (displayQuiz.length && quizStep >= displayQuiz.length && userData && isAllQuizzesReady) {
-      isFinishingRef.current = true;
-      setIsFinishing(true);
+    // Only finish when main quiz is complete AND (requiz is done OR no missed words)
+    const requizDone = isRequizPhase ? requizStep >= requizQuestions.length : true;
+    const mainDone = displayQuiz.length && quizStep >= displayQuiz.length && isAllQuizzesReady;
+    if (!mainDone || !requizDone || !userData) return;
 
-      const actualTimeEnd = Date.now();
-      const updatedUserData: User = JSON.parse(JSON.stringify(userData));
-      const isSucceed = score.success / 2 > score.errors;
-      const learningProgress = updatedUserData?.learningProgress.find(
-        lp => lp.language === displayQuiz[0].language
-      );
+    isFinishingRef.current = true;
+    setIsFinishing(true);
 
-      updateWordsData(usedWords)
-        .then(() => {
-          if (!learningProgress) throw new Error('Learning progress not found');
-          learningProgress.level = isSucceed
-            ? learningProgress.level + 1
-            : learningProgress.level > 0
-              ? learningProgress.level - 1
-              : 0;
-          learningProgress.wordsMastered += usedWords.filter(word => word.repetitions > 0).length;
-          learningProgress.currentStreak = isSucceed ? learningProgress.currentStreak + 1 : 0;
-          learningProgress.lastSessionDate = new Date();
-          if (!startingTimer) throw new Error('Starting timer not found');
-          learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer);
+    const actualTimeEnd = Date.now();
+    const updatedUserData: User = JSON.parse(JSON.stringify(userData));
+    const isSucceed = score.success / 2 > score.errors;
+    const learningProgress = updatedUserData?.learningProgress.find(
+      lp => lp.language === displayQuiz[0].language
+    );
 
-          const wordsMasteredCount = usedWords.filter(word => word.repetitions > 0).length;
-          saveQuizSession({
-            language: displayQuiz[0].language,
-            totalQuestions: score.success + score.errors,
-            correctAnswers: score.success,
-            wordsMastered: wordsMasteredCount,
-            duration: actualTimeEnd - quizStartTime.current,
-          }).catch(err => console.error('Error saving quiz session:', err));
+    updateWordsData(usedWords)
+      .then(() => {
+        if (!learningProgress) throw new Error('Learning progress not found');
+        learningProgress.level = isSucceed
+          ? learningProgress.level + 1
+          : learningProgress.level > 0
+            ? learningProgress.level - 1
+            : 0;
+        learningProgress.wordsMastered += usedWords.filter(word => word.repetitions > 0).length;
+        learningProgress.currentStreak = isSucceed ? learningProgress.currentStreak + 1 : 0;
+        learningProgress.lastSessionDate = new Date();
+        if (!startingTimer) throw new Error('Starting timer not found');
+        learningProgress.timeSpent += Math.round(actualTimeEnd - startingTimer);
 
-          return updateUserData(updatedUserData);
-        })
-        .then(() => {
-          setIsQuizFinished(true);
-          if (isSucceed) {
-            handleDeleteQuiz();
-          }
-        })
-        .catch(error => {
-          console.error('Error finishing quiz:', error);
-          setIsQuizFinished(true);
-        })
-        .finally(() => {
-          isFinishingRef.current = false;
-          setIsFinishing(false);
-        });
-    }
+        const wordsMasteredCount = usedWords.filter(word => word.repetitions > 0).length;
+        saveQuizSession({
+          language: displayQuiz[0].language,
+          totalQuestions: score.success + score.errors,
+          correctAnswers: score.success,
+          wordsMastered: wordsMasteredCount,
+          duration: actualTimeEnd - quizStartTime.current,
+        }).catch(err => console.error('Error saving quiz session:', err));
+
+        return updateUserData(updatedUserData);
+      })
+      .then(() => {
+        setIsQuizFinished(true);
+        if (isSucceed) {
+          handleDeleteQuiz();
+        }
+      })
+      .catch(error => {
+        console.error('Error finishing quiz:', error);
+        setIsQuizFinished(true);
+      })
+      .finally(() => {
+        isFinishingRef.current = false;
+        setIsFinishing(false);
+      });
   }, [
     quizStep,
     displayQuiz,
@@ -179,6 +217,9 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     deleteValue,
     isQuizFinished,
     isAllQuizzesReady,
+    isRequizPhase,
+    requizStep,
+    requizQuestions.length,
   ]);
 
   const handleAnswerClick = useCallback(
@@ -195,6 +236,12 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
       } else {
         setScore(prev => ({ ...prev, errors: prev.errors + 1 }));
         setFeedback({ correct: '', wrong: option.answer });
+
+        // Track missed word IDs for requiz
+        setMissedWordIds(prev => {
+          const newIds = currentQuestion.usedWords.filter(id => !prev.includes(id));
+          return [...prev, ...newIds];
+        });
       }
 
       setUsedWords(prev => {
@@ -249,6 +296,43 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     }
   }, [displayQuiz, quizStep, questionStep]);
 
+  // Requiz answer handler
+  const handleRequizAnswerClick = useCallback(
+    (option: RequizOption) => {
+      if (requizStep >= requizQuestions.length) return;
+
+      const currentRequiz = requizQuestions[requizStep];
+
+      if (option.isCorrect) {
+        setRequizScore(prev => ({ ...prev, correct: prev.correct + 1 }));
+        setRequizFeedback({ correct: option.word, wrong: '' });
+      } else {
+        setRequizScore(prev => ({ ...prev, wrong: prev.wrong + 1 }));
+        setRequizFeedback({ correct: '', wrong: option.word });
+      }
+
+      // Update SRS for the requiz word
+      setUsedWords(prev => {
+        const wordMap = new Map(prev.map(w => [w._id!, w]));
+        for (const wordId of currentRequiz.usedWords) {
+          const word = wordMap.get(wordId);
+          if (!word) continue;
+          const originalEase = originalEaseFactors.current.get(wordId);
+          const updatedWord = processAnswer(word, option.isCorrect, originalEase);
+          wordMap.set(wordId, updatedWord);
+        }
+        return Array.from(wordMap.values());
+      });
+    },
+    [requizStep, requizQuestions]
+  );
+
+  // Requiz continue handler
+  const handleRequizContinue = useCallback(() => {
+    setRequizFeedback({ correct: '', wrong: '' });
+    setRequizStep(prev => prev + 1);
+  }, []);
+
   const restartQuiz = () => {
     setQuizStep(0);
     setQuestionStep(0);
@@ -256,6 +340,12 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     setIsFinishing(false);
     isFinishingRef.current = false;
     setScore({ errors: 0, success: 0 });
+    setMissedWordIds([]);
+    setRequizQuestions([]);
+    setRequizStep(0);
+    setRequizScore({ correct: 0, wrong: 0 });
+    setIsRequizPhase(false);
+    setRequizFeedback({ correct: '', wrong: '' });
 
     const allWordIds = [
       ...new Set(displayQuiz.flatMap(q => q.questions.flatMap(question => question.usedWords))),
@@ -284,6 +374,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
 
   const currentQuizItem = displayQuiz[quizStep];
   const currentQuestion = currentQuizItem?.questions[questionStep];
+  const currentRequizQuestion = isRequizPhase ? requizQuestions[requizStep] : null;
 
   return {
     isLoading: isLoading || isGeneratingQuiz,
@@ -303,5 +394,16 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     handleContinue,
     restartQuiz,
     handleDeleteQuiz,
+    // Requiz
+    isRequizPhase,
+    requizQuestions,
+    currentRequizQuestion,
+    requizStep,
+    requizScore,
+    requizFeedback,
+    requizProgress: { current: requizStep + 1, total: requizQuestions.length },
+    handleRequizAnswerClick,
+    handleRequizContinue,
+    missedWordIds,
   };
 };

@@ -1,18 +1,24 @@
-import { useConfetti } from "@/hooks/useConfetti";
-import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { motion, AnimatePresence, easeOut, easeIn } from "framer-motion";
-import { useRouter } from "@/src/i18n/navigation";
+import { useConfetti } from '@/hooks/useConfetti';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import { motion, AnimatePresence, easeOut, easeIn } from 'framer-motion';
+import { useRouter } from '@/src/i18n/navigation';
+
+interface RequizSummary {
+  total: number;
+  correct: number;
+}
 
 interface Props {
   isSuccess: boolean;
   successPoints: { errors: number; success: number };
   onRestartQuiz?: () => void;
+  requizSummary?: RequizSummary;
 }
 
-const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
+const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz, requizSummary }: Props) => {
   const { triggerFireworks, triggerSchoolPride, resetConfetti } = useConfetti();
-  const t = useTranslations("quiz-finished");
+  const t = useTranslations('quiz-finished');
   const router = useRouter();
 
   const totalQuestions = successPoints.success + successPoints.errors;
@@ -37,65 +43,89 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
   };
 
   const onGoToCards = () => {
-    router.push("/cards");
+    router.push('/cards');
   };
 
+  const hasRequiz = requizSummary && requizSummary.total > 0;
+
   return (
-    // Use theme-bg-light and theme-bg-dark for the background
     <div className="flex items-center w-full md:-my-10 justify-center bg-theme-bg-light dark:bg-theme-bg-dark relative overflow-hidden">
       <AnimatePresence mode="wait">
         {isSuccess ? (
           <motion.div
             key="success-card"
-            // Use theme-fg-light/dark for card background and theme-text-light/dark for general text
             className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
-                       bg-theme-fg-light text-theme-text-light
-                       dark:bg-theme-fg-dark dark:text-theme-text-dark"
+ bg-theme-fg-light text-theme-text-light
+ dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">{t("congratulations")}!</h1>
-            <p className="text-xl  font-semibold mb-6 leading-tight">
-              {t("you-answered-correctly", { count: successPoints.success, total: totalQuestions })}
+            <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">
+              {t('congratulations')}!
+            </h1>
+            <p className="text-xl font-semibold mb-6 leading-tight">
+              {t('you-answered-correctly', { count: successPoints.success, total: totalQuestions })}
             </p>
             <div className="w-24 h-24 mx-auto mb-6 bg-secondary/20 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-2xl font-bold text-secondary">{Math.round(percentageCorrect)}%</span>
+              <span className="text-2xl font-bold text-secondary">
+                {Math.round(percentageCorrect)}%
+              </span>
             </div>
-            <p className="text-lg mb-8">{t("fantastic-job-keep-it-up")}</p>
+            {hasRequiz && (
+              <p className="text-sm mb-4 text-amber-600 dark:text-amber-400">
+                {t('requiz-summary', {
+                  correct: requizSummary!.correct,
+                  total: requizSummary!.total,
+                })}
+              </p>
+            )}
+            <p className="text-lg mb-8">{t('fantastic-job-keep-it-up')}</p>
             <button
               onClick={onGoToCards}
               className="bg-secondary cursor-pointer hover:brightness-110 text-theme-text-dark font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-secondary/50"
             >
-              {t("go-cards")}
+              {t('go-cards')}
             </button>
           </motion.div>
         ) : (
           <motion.div
             key="failure-card"
             className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
-                       bg-theme-fg-light text-theme-text-light
-                       dark:bg-theme-fg-dark dark:text-theme-text-dark"
+ bg-theme-fg-light text-theme-text-light
+ dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <h1 className="text-3xl font-extrabold text-error mb-4 drop-shadow-lg">{t("better-luck-next-time")}</h1>
+            <h1 className="text-3xl font-extrabold text-error mb-4 drop-shadow-lg">
+              {t('better-luck-next-time')}
+            </h1>
             <p className="text-xl font-semibold mb-6 leading-tight">
-              {t("you-answered-correctly", { count: successPoints.success, total: totalQuestions })}
+              {t('you-answered-correctly', { count: successPoints.success, total: totalQuestions })}
             </p>
             <div className="w-24 h-24 mx-auto mb-6 bg-error/20 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-2xl font-bold text-error">{Math.round(percentageCorrect)}%</span>
+              <span className="text-2xl font-bold text-error">
+                {Math.round(percentageCorrect)}%
+              </span>
             </div>
-            <p className="text-lg mb-8">{t("dont-give-up-try-again")}</p>
+            {hasRequiz && (
+              <p className="text-sm mb-4 text-amber-600 dark:text-amber-400">
+                {t('requiz-summary', {
+                  correct: requizSummary!.correct,
+                  total: requizSummary!.total,
+                })}
+              </p>
+            )}
+            <p className="text-lg mb-8">{t('dont-give-up-try-again')}</p>
             {onRestartQuiz && (
               <button
                 onClick={onRestartQuiz}
                 className="bg-error cursor-pointer hover:brightness-110 text-theme-text-dark font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-error/50"
               >
-                {t("try-again")}
+                {t('try-again')}
               </button>
             )}
           </motion.div>
