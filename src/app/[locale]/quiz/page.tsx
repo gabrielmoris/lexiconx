@@ -184,22 +184,6 @@ const QuizPage = () => {
 
   const handleRestartQuiz = useCallback(() => {
     restartQuiz();
-    setMode('idle');
-    setIsFetchingWords(true);
-    // Re-fetch word pool
-    getWordsForQuiz(selectedLanguage.language, selectedLanguage.language as Language)
-      .then(({ wordsForQuiz, composition: fetchedComposition }) => {
-        setSelectedWords(wordsForQuiz);
-        if (fetchedComposition) {
-          setComposition(fetchedComposition);
-        }
-      })
-      .catch(error => {
-        console.error('Error re-fetching word pool:', error);
-      })
-      .finally(() => {
-        setIsFetchingWords(false);
-      });
   }, [restartQuiz, selectedLanguage.language]);
 
   if (status === 'loading' || !userData) {

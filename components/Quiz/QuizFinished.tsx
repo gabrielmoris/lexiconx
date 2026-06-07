@@ -1,8 +1,8 @@
-import { useConfetti } from "@/hooks/useConfetti";
-import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { motion, AnimatePresence, easeOut, easeIn } from "framer-motion";
-import { useRouter } from "@/src/i18n/navigation";
+import { useConfetti } from '@/hooks/useConfetti';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import { motion, AnimatePresence, easeOut, easeIn } from 'framer-motion';
+import { useRouter } from '@/src/i18n/navigation';
 
 interface Props {
   isSuccess: boolean;
@@ -12,7 +12,7 @@ interface Props {
 
 const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
   const { triggerFireworks, triggerSchoolPride, resetConfetti } = useConfetti();
-  const t = useTranslations("quiz-finished");
+  const t = useTranslations('quiz-finished');
   const router = useRouter();
 
   const totalQuestions = successPoints.success + successPoints.errors;
@@ -37,12 +37,12 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
   };
 
   const onGoToCards = () => {
-    router.push("/cards");
+    router.push('/cards');
   };
 
   return (
     // Use theme-bg-light and theme-bg-dark for the background
-    <div className="flex items-center w-full md:-my-10 justify-center bg-theme-bg-light dark:bg-theme-bg-dark relative overflow-hidden">
+    <div className="flex items-center w-full md:my-20 justify-center bg-theme-bg-light dark:bg-theme-bg-dark relative overflow-hidden">
       <AnimatePresence mode="wait">
         {isSuccess ? (
           <motion.div
@@ -56,19 +56,23 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
             animate="visible"
             exit="exit"
           >
-            <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">{t("congratulations")}!</h1>
+            <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">
+              {t('congratulations')}!
+            </h1>
             <p className="text-xl  font-semibold mb-6 leading-tight">
-              {t("you-answered-correctly", { count: successPoints.success, total: totalQuestions })}
+              {t('you-answered-correctly', { count: successPoints.success, total: totalQuestions })}
             </p>
             <div className="w-24 h-24 mx-auto mb-6 bg-secondary/20 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-2xl font-bold text-secondary">{Math.round(percentageCorrect)}%</span>
+              <span className="text-2xl font-bold text-secondary">
+                {Math.round(percentageCorrect)}%
+              </span>
             </div>
-            <p className="text-lg mb-8">{t("fantastic-job-keep-it-up")}</p>
+            <p className="text-lg mb-8">{t('fantastic-job-keep-it-up')}</p>
             <button
               onClick={onGoToCards}
               className="bg-secondary cursor-pointer hover:brightness-110 text-theme-text-dark font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-secondary/50"
             >
-              {t("go-cards")}
+              {t('go-cards')}
             </button>
           </motion.div>
         ) : (
@@ -82,20 +86,24 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
             animate="visible"
             exit="exit"
           >
-            <h1 className="text-3xl font-extrabold text-error mb-4 drop-shadow-lg">{t("better-luck-next-time")}</h1>
+            <h1 className="text-3xl font-extrabold text-error mb-4 drop-shadow-lg">
+              {t('better-luck-next-time')}
+            </h1>
             <p className="text-xl font-semibold mb-6 leading-tight">
-              {t("you-answered-correctly", { count: successPoints.success, total: totalQuestions })}
+              {t('you-answered-correctly', { count: successPoints.success, total: totalQuestions })}
             </p>
             <div className="w-24 h-24 mx-auto mb-6 bg-error/20 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-2xl font-bold text-error">{Math.round(percentageCorrect)}%</span>
+              <span className="text-2xl font-bold text-error">
+                {Math.round(percentageCorrect)}%
+              </span>
             </div>
-            <p className="text-lg mb-8">{t("dont-give-up-try-again")}</p>
+            <p className="text-lg mb-8">{t('dont-give-up-try-again')}</p>
             {onRestartQuiz && (
               <button
                 onClick={onRestartQuiz}
                 className="bg-error cursor-pointer hover:brightness-110 text-theme-text-dark font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-error/50"
               >
-                {t("try-again")}
+                {t('try-again')}
               </button>
             )}
           </motion.div>
