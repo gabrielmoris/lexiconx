@@ -8,6 +8,7 @@ import { getWordsByIds, updateWordsData, updateUserData } from '@/lib/apis';
 import { saveQuizSession } from '@/lib/apis';
 import { Quiz, QuizAnswer } from '@/types/Quiz';
 import { User, Word } from '@/types/Words';
+import { shuffleArray } from '@/lib/helpers';
 
 interface UseQuizManagerOptions {
   active?: boolean;
@@ -49,10 +50,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
 
   // True when user has finished all currently available quizzes but more are still being generated
   const isWaitingForNextQuiz =
-    !isAllQuizzesReady &&
-    totalExpectedQuizzes > 0 &&
-    quizStep >= displayQuiz.length &&
-    displayQuiz.length > 0;
+    totalExpectedQuizzes > 0 && quizStep >= displayQuiz.length && displayQuiz.length > 0;
 
   useEffect(() => {
     const start = Date.now();
@@ -68,6 +66,13 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     if (!isLocalStorageHydrated) return;
 
     const quizSource = contextQuiz?.length > 0 ? contextQuiz : storedQuizzesData.quizzes;
+
+    quizSource.map(quiz =>
+      quiz.questions.map(question => (question.options = shuffleArray(question.options)))
+    );
+
+    quizSource.map(quiz => (quiz.questions = shuffleArray(quiz.questions)));
+
     if (quizSource?.length > 0) {
       setDisplayQuiz(quizSource);
       setIsLoading(false);
@@ -117,7 +122,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     if (isQuizFinished || !session) return;
     if (isFinishingRef.current) return;
 
-    if (displayQuiz.length && quizStep >= displayQuiz.length && userData && isAllQuizzesReady) {
+    if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
       isFinishingRef.current = true;
       setIsFinishing(true);
 

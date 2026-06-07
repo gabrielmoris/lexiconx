@@ -53,6 +53,10 @@ vi.mock('@/lib/correctionWords', () => ({
   processAnswer: (...args: any[]) => mockProcessAnswer(...args),
 }));
 
+vi.mock('@/lib/helpers', () => ({
+  shuffleArray: (arr: any[]): any[] => [...arr],
+}));
+
 // --- Mock Data ---
 
 const mockWord1 = {
