@@ -52,7 +52,14 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
         throw new Error();
       }
 
-      const { data: addedWord } = await addWordToDatabase(formData);
+      const wordToAdd = {
+        word: formData.word.trim(),
+        definition: formData.definition.trim(),
+        phoneticNotation: formData.phoneticNotation.trim(),
+        language: formData.language,
+      };
+
+      const { data: addedWord } = await addWordToDatabase(wordToAdd);
       setWords([...words, addedWord]);
 
       showToast({
@@ -115,7 +122,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             placeholder={t('placeholder-word')}
             className="w-full p-2 border rounded mb-4"
             value={formData.word}
-            onChange={e => setFormData({ ...formData, word: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, word: e.target.value })}
           />
 
           <input
@@ -124,7 +131,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             placeholder={t('placeholder-phonetic notation')}
             className="w-full p-2 border rounded mb-4"
             value={formData.phoneticNotation}
-            onChange={e => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, phoneticNotation: e.target.value })}
           />
 
           <input
@@ -134,7 +141,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             required
             className="w-full p-2 border rounded mb-4"
             value={formData.definition}
-            onChange={e => setFormData({ ...formData, definition: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, definition: e.target.value })}
           />
 
           {!isOpen ? (
