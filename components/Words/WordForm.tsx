@@ -32,27 +32,26 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
       ...prevData,
       language: selectedLanguage.language,
     }));
-  }, [selectedLanguage]);
+  }, [selectedLanguage.language]);
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
-    if (Object.keys(formData).length === 0) {
-      setLoading(false);
-      showToast({
-        message: t('error-form-empty'),
-        variant: 'error',
-        duration: 3000,
-      });
-      return;
-    }
+
+    const normalizedFormData = {
+      ...formData,
+      word: formData.word.trim(),
+      definition: formData.definition.trim(),
+      phoneticNotation: formData.phoneticNotation.trim(),
+    };
+
     try {
-      if (!formData.word || !formData.definition) {
+      if (!normalizedFormData.word || !normalizedFormData.definition) {
         throw new Error();
       }
 
-      const { data: addedWord } = await addWordToDatabase(formData);
+      const { data: addedWord } = await addWordToDatabase(normalizedFormData);
       setWords([...words, addedWord]);
 
       showToast({
@@ -115,7 +114,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             placeholder={t('placeholder-word')}
             className="w-full p-2 border rounded mb-4"
             value={formData.word}
-            onChange={e => setFormData({ ...formData, word: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, word: e.target.value })}
           />
 
           <input
@@ -124,7 +123,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             placeholder={t('placeholder-phonetic notation')}
             className="w-full p-2 border rounded mb-4"
             value={formData.phoneticNotation}
-            onChange={e => setFormData({ ...formData, phoneticNotation: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, phoneticNotation: e.target.value })}
           />
 
           <input
@@ -134,7 +133,7 @@ const WordForm = ({ className, isOpen = false }: { className?: string; isOpen?: 
             required
             className="w-full p-2 border rounded mb-4"
             value={formData.definition}
-            onChange={e => setFormData({ ...formData, definition: e.target.value.trim() })}
+            onChange={e => setFormData({ ...formData, definition: e.target.value })}
           />
 
           {!isOpen ? (
