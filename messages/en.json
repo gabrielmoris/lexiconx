@@ -194,7 +194,8 @@
     "fantastic-job-keep-it-up": "Fantastic job, keep it up!!",
     "try-again": "Try again",
     "you-answered-correctly": "You answered correctly {count} of {total} questions",
-    "go-cards": "Go to Cards"
+    "go-cards": "Go to Cards",
+    "requiz-summary": "Reviewed {correct} of {total} missed words correctly"
   },
   "word-card": {
     "definition": "Definition",
@@ -341,5 +342,12 @@
     "generating": "Generating quiz...",
     "loading-words": "Loading word pool...",
     "error-fetching-words": "Error fetching words"
+  },
+  "requiz": {
+    "review-missed-words": "Review missed words",
+    "you-got-it": "You got it!",
+    "correct-answer-was": "The correct answer was:",
+    "continue": "Continue",
+    "progress": "Question {current}/{total}"
   }
 }

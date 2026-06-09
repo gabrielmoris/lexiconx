@@ -8,9 +8,10 @@ interface Props {
   isSuccess: boolean;
   successPoints: { errors: number; success: number };
   onRestartQuiz?: () => void;
+  requizSummary?: { correct: number; total: number };
 }
 
-const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
+const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz, requizSummary }: Props) => {
   const { triggerFireworks, triggerSchoolPride, resetConfetti } = useConfetti();
   const t = useTranslations('quiz-finished');
   const router = useRouter();
@@ -41,16 +42,14 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
   };
 
   return (
-    // Use theme-bg-light and theme-bg-dark for the background
     <div className="flex items-center w-full md:my-20 justify-center bg-theme-bg-light dark:bg-theme-bg-dark relative overflow-hidden">
       <AnimatePresence mode="wait">
         {isSuccess ? (
           <motion.div
             key="success-card"
-            // Use theme-fg-light/dark for card background and theme-text-light/dark for general text
             className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
-                       bg-theme-fg-light text-theme-text-light
-                       dark:bg-theme-fg-dark dark:text-theme-text-dark"
+ bg-theme-fg-light text-theme-text-light
+ dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
@@ -59,7 +58,7 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
             <h1 className="text-3xl font-extrabold text-secondary mb-4 drop-shadow-lg animate-bounce-short">
               {t('congratulations')}!
             </h1>
-            <p className="text-xl  font-semibold mb-6 leading-tight">
+            <p className="text-xl font-semibold mb-6 leading-tight">
               {t('you-answered-correctly', { count: successPoints.success, total: totalQuestions })}
             </p>
             <div className="w-24 h-24 mx-auto mb-6 bg-secondary/20 rounded-full flex items-center justify-center shadow-inner">
@@ -67,6 +66,14 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
                 {Math.round(percentageCorrect)}%
               </span>
             </div>
+            {requizSummary && requizSummary.total > 0 && (
+              <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
+                {t('requiz-summary', {
+                  correct: requizSummary.correct,
+                  total: requizSummary.total,
+                })}
+              </p>
+            )}
             <p className="text-lg mb-8">{t('fantastic-job-keep-it-up')}</p>
             <button
               onClick={onGoToCards}
@@ -79,8 +86,8 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
           <motion.div
             key="failure-card"
             className="rounded-3xl p-6 md:p-8 text-center max-w-md w-full relative transform transition-all duration-500 hover:scale-101
-                       bg-theme-fg-light text-theme-text-light
-                       dark:bg-theme-fg-dark dark:text-theme-text-dark"
+ bg-theme-fg-light text-theme-text-light
+ dark:bg-theme-fg-dark dark:text-theme-text-dark"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
@@ -97,6 +104,14 @@ const QuizFinished = ({ isSuccess, successPoints, onRestartQuiz }: Props) => {
                 {Math.round(percentageCorrect)}%
               </span>
             </div>
+            {requizSummary && requizSummary.total > 0 && (
+              <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
+                {t('requiz-summary', {
+                  correct: requizSummary.correct,
+                  total: requizSummary.total,
+                })}
+              </p>
+            )}
             <p className="text-lg mb-8">{t('dont-give-up-try-again')}</p>
             {onRestartQuiz && (
               <button

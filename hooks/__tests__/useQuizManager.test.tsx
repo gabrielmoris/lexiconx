@@ -57,6 +57,10 @@ vi.mock('@/lib/helpers', () => ({
   shuffleArray: (arr: any[]): any[] => [...arr],
 }));
 
+vi.mock('@/lib/requiz', () => ({
+  buildRequizQuestions: () => [],
+}));
+
 // --- Mock Data ---
 
 const mockWord1 = {

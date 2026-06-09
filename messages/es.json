@@ -129,7 +129,8 @@
     "fantastic-job-keep-it-up": "¡Fantástico trabajo, sigue así!",
     "try-again": "Intentar de nuevo",
     "you-answered-correctly": "Respondiste correctamente a {count} de {total} preguntas",
-    "go-cards": "Ir a cartas"
+    "go-cards": "Ir a cartas",
+    "requiz-summary": "Repasadas {correct} de {total} palabras falladas correctamente"
   },
   "word-card": {
     "definition": "Definición",
@@ -341,5 +342,12 @@
     "generating": "Generando quiz...",
     "loading-words": "Cargando palabras...",
     "error-fetching-words": "Error al cargar palabras"
+  },
+  "requiz": {
+    "review-missed-words": "Repasar palabras falladas",
+    "you-got-it": "Lo tienes!",
+    "correct-answer-was": "La respuesta correcta era:",
+    "continue": "Continuar",
+    "progress": "Pregunta {current}/{total}"
   }
 }

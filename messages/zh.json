@@ -129,7 +129,8 @@
     "fantastic-job-keep-it-up": "太棒了，继续保持！",
     "try-again": "再试一次",
     "you-answered-correctly": "你答对了 {total} 道题中的 {count} 道",
-    "go-cards": "去卡"
+    "go-cards": "去卡",
+    "requiz-summary": "正确复习了 {total} 个错词中的 {correct} 个"
   },
   "word-card": {
     "definition": "定义",
@@ -341,5 +342,12 @@
     "generating": "正在生成测验...",
     "loading-words": "正在加载单词...",
     "error-fetching-words": "加载单词时出错"
+  },
+  "requiz": {
+    "review-missed-words": "复习错题",
+    "you-got-it": "答对了！",
+    "correct-answer-was": "正确答案是：",
+    "continue": "继续",
+    "progress": "第 {current}/{total} 题"
   }
 }

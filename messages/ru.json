@@ -194,7 +194,8 @@
     "fantastic-job-keep-it-up": "Отличная работа, продолжайте в том же духе!",
     "try-again": "Попробовать снова",
     "you-answered-correctly": "Вы правильно ответили на {count} из {total} вопросов",
-    "go-cards": "Перейти к карточкам"
+    "go-cards": "Перейти к карточкам",
+    "requiz-summary": "Правильно повторено {correct} из {total} пропущенных слов"
   },
   "word-card": {
     "definition": "Определение",
@@ -341,5 +342,12 @@
     "generating": "Создание теста...",
     "loading-words": "Загрузка слов...",
     "error-fetching-words": "Ошибка загрузки слов"
+  },
+  "requiz": {
+    "review-missed-words": "Повторить пропущенные слова",
+    "you-got-it": "Правильно!",
+    "correct-answer-was": "Правильный ответ:",
+    "continue": "Далее",
+    "progress": "Вопрос {current}/{total}"
   }
 }

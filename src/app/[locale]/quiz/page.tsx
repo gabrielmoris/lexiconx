@@ -12,6 +12,7 @@ import LoadingComponent from '@/components/Layout/LoadingComponent';
 import QuizFinished from '@/components/Quiz/QuizFinished';
 import QuizStartCard from '@/components/Quiz/QuizStartCard';
 import QuizView from '@/components/Quiz/QuizView';
+import RequizView from '@/components/Quiz/RequizView';
 import type { User, Word, Language } from '@/types/Words';
 import { QuizComposition } from '@/types/Quiz';
 import { getUserData, getWordsForQuiz } from '@/lib/apis';
@@ -54,6 +55,15 @@ const QuizPage = () => {
     displayQuiz,
     composition: quizComposition,
     handleDeleteQuiz,
+    // Requiz
+    isRequizPhase,
+    currentRequizQuestion,
+    requizStep,
+    requizQuestions,
+    requizScore,
+    requizFeedback,
+    handleRequizAnswerClick,
+    handleRequizContinue,
   } = useQuizManager(userData!, { active: mode === 'active' });
 
   useEffect(() => {
@@ -226,12 +236,25 @@ const QuizPage = () => {
   // TODO: Check why in the onboarding the language selectrion is buggy
 
   return (
-    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start  py-20 px-4 w-full">
+    <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start py-20 px-4 w-full">
       {isQuizFinished ? (
         <QuizFinished
           isSuccess={score.success / 2 > score.errors}
           successPoints={score}
           onRestartQuiz={handleRestartQuiz}
+          requizSummary={
+            requizScore.total > 0
+              ? { correct: requizScore.correct, total: requizScore.total }
+              : undefined
+          }
+        />
+      ) : isRequizPhase && currentRequizQuestion ? (
+        <RequizView
+          question={currentRequizQuestion}
+          onAnswerClick={handleRequizAnswerClick}
+          feedback={requizFeedback}
+          onContinue={handleRequizContinue}
+          progress={{ current: requizStep + 1, total: requizQuestions.length }}
         />
       ) : (
         <QuizView

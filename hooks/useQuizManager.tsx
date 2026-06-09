@@ -9,6 +9,7 @@ import { saveQuizSession } from '@/lib/apis';
 import { Quiz, QuizAnswer } from '@/types/Quiz';
 import { User, Word } from '@/types/Words';
 import { shuffleArray } from '@/lib/helpers';
+import { buildRequizQuestions, RequizOption, RequizQuestion } from '@/lib/requiz';
 
 interface UseQuizManagerOptions {
   active?: boolean;
@@ -43,6 +44,14 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   const [showingExplanation, setShowingExplanation] = useState(false);
   const [isFinishing, setIsFinishing] = useState(false);
   const [startingTimer, setStartingTimer] = useState<number>();
+
+  // Requiz state
+  const [missedWordIds, setMissedWordIds] = useState<string[]>([]);
+  const [isRequizPhase, setIsRequizPhase] = useState(false);
+  const [requizQuestions, setRequizQuestions] = useState<RequizQuestion[]>([]);
+  const [requizStep, setRequizStep] = useState(0);
+  const [requizScore, setRequizScore] = useState({ correct: 0, total: 0 });
+  const [requizFeedback, setRequizFeedback] = useState<'correct' | 'wrong' | null>(null);
 
   const originalEaseFactors = useRef<Map<string, number>>(new Map());
   const quizStartTime = useRef(Date.now());
@@ -117,12 +126,30 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
   ]);
 
   // Effect to handle the end of the quiz
-  // Quiz only truly finishes when ALL quizzes are ready AND the user has answered all of them
+  // Quiz finishes after the main quiz AND any requiz phase is complete
   useEffect(() => {
     if (isQuizFinished || !session) return;
     if (isFinishingRef.current) return;
+    // Don't finish while requiz is active
+    if (isRequizPhase) return;
+    // Only finish when user has answered all main quiz questions
+    // AND either requiz is done or there were no errors
+    const mainQuizDone = displayQuiz.length && quizStep >= displayQuiz.length && userData;
+    const requizDone = !isRequizPhase;
+    if (mainQuizDone && requizDone) {
+      // If there are missed words and requiz hasn't started yet, start it
+      if (missedWordIds.length > 0 && requizQuestions.length === 0) {
+        const questions = buildRequizQuestions(missedWordIds, usedWords);
+        if (questions.length > 0) {
+          setRequizQuestions(questions);
+          setIsRequizPhase(true);
+          setRequizStep(0);
+          setRequizScore({ correct: 0, total: 0 });
+          setRequizFeedback(null);
+          return; // Don't finish yet — requiz will run
+        }
+      }
 
-    if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
       isFinishingRef.current = true;
       setIsFinishing(true);
 
@@ -184,6 +211,9 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     deleteValue,
     isQuizFinished,
     isAllQuizzesReady,
+    isRequizPhase,
+    missedWordIds,
+    requizQuestions,
   ]);
 
   const handleAnswerClick = useCallback(
@@ -200,6 +230,10 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
       } else {
         setScore(prev => ({ ...prev, errors: prev.errors + 1 }));
         setFeedback({ correct: '', wrong: option.answer });
+        // Track missed words for requiz
+        for (const wordId of currentQuestion.usedWords) {
+          setMissedWordIds(prev => (prev.includes(wordId) ? prev : [...prev, wordId]));
+        }
       }
 
       setUsedWords(prev => {
@@ -254,6 +288,49 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     }
   }, [displayQuiz, quizStep, questionStep]);
 
+  const handleRequizAnswerClick = useCallback(
+    (option: RequizOption) => {
+      const currentRequizQ = requizQuestions[requizStep];
+      if (!currentRequizQ) return;
+
+      if (option.isCorrect) {
+        setRequizScore(prev => ({ ...prev, correct: prev.correct + 1, total: prev.total + 1 }));
+        setRequizFeedback('correct');
+      } else {
+        setRequizScore(prev => ({ ...prev, total: prev.total + 1 }));
+        setRequizFeedback('wrong');
+      }
+
+      // Update SRS for the requiz word
+      setUsedWords(prev => {
+        const wordMap = new Map(prev.map(w => [w._id!, w]));
+        for (const wordId of currentRequizQ.usedWords) {
+          const word = wordMap.get(wordId);
+          if (!word) continue;
+          const originalEase = originalEaseFactors.current.get(wordId);
+          const updatedWord = processAnswer(word, option.isCorrect, originalEase);
+          wordMap.set(wordId, updatedWord);
+        }
+        return Array.from(wordMap.values());
+      });
+    },
+    [requizQuestions, requizStep]
+  );
+
+  const handleRequizContinue = useCallback(() => {
+    setRequizFeedback(null);
+
+    if (requizStep < requizQuestions.length - 1) {
+      setRequizStep(prev => prev + 1);
+    } else {
+      // Requiz complete — clear state so the finish effect fires
+      setIsRequizPhase(false);
+      setMissedWordIds([]);
+      setRequizQuestions([]);
+      setRequizStep(0);
+    }
+  }, [requizStep, requizQuestions.length]);
+
   const restartQuiz = () => {
     setQuizStep(0);
     setQuestionStep(0);
@@ -261,6 +338,13 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     setIsFinishing(false);
     isFinishingRef.current = false;
     setScore({ errors: 0, success: 0 });
+    // Reset requiz state
+    setMissedWordIds([]);
+    setIsRequizPhase(false);
+    setRequizQuestions([]);
+    setRequizStep(0);
+    setRequizScore({ correct: 0, total: 0 });
+    setRequizFeedback(null);
 
     const allWordIds = [
       ...new Set(displayQuiz.flatMap(q => q.questions.flatMap(question => question.usedWords))),
@@ -289,6 +373,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
 
   const currentQuizItem = displayQuiz[quizStep];
   const currentQuestion = currentQuizItem?.questions[questionStep];
+  const currentRequizQuestion = isRequizPhase ? requizQuestions[requizStep] : null;
 
   return {
     isLoading: isLoading || isGeneratingQuiz,
@@ -308,5 +393,14 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     handleContinue,
     restartQuiz,
     handleDeleteQuiz,
+    // Requiz
+    isRequizPhase,
+    requizQuestions,
+    currentRequizQuestion,
+    requizStep,
+    requizScore,
+    requizFeedback,
+    handleRequizAnswerClick,
+    handleRequizContinue,
   };
 };

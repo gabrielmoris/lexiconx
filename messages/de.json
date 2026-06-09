@@ -128,7 +128,8 @@
     "fantastic-job-keep-it-up": "Fantastische Arbeit, mach weiter so!",
     "try-again": "Erneut versuchen",
     "you-answered-correctly": "Du hast {count} von {total} Fragen richtig beantwortet",
-    "go-cards": "Gehen Sie zu Karten"
+    "go-cards": "Gehen Sie zu Karten",
+    "requiz-summary": "{correct} von {total} falschen Woertern richtig wiederholt"
   },
   "word-card": {
     "definition": "Definition",
@@ -340,5 +341,12 @@
     "generating": "Quiz wird erstellt...",
     "loading-words": "Woerter werden geladen...",
     "error-fetching-words": "Fehler beim Laden der Woerter"
+  },
+  "requiz": {
+    "review-missed-words": "Falsche Woerter wiederholen",
+    "you-got-it": "Richtig!",
+    "correct-answer-was": "Die richtige Antwort war:",
+    "continue": "Weiter",
+    "progress": "Frage {current}/{total}"
   }
 }
