@@ -16,13 +16,16 @@ vi.mock('next-auth/react', () => ({
 }));
 
 const mockClientQuizzes = vi.fn(() => []);
+let mockIsAllQuizzesReady = true;
+let mockTotalExpectedQuizzes = 0;
 vi.mock('@/context/QuizContext', () => ({
   useQuiz: () => ({
     clientQuizzes: mockClientQuizzes(),
+    setClientQuizzes: vi.fn(),
     isLoading: false,
     isGeneratingMore: false,
-    isAllQuizzesReady: true,
-    totalExpectedQuizzes: 0,
+    isAllQuizzesReady: mockIsAllQuizzesReady,
+    totalExpectedQuizzes: mockTotalExpectedQuizzes,
   }),
 }));
 
@@ -152,6 +155,8 @@ describe('useQuizManager', () => {
     vi.clearAllMocks();
     storedQuizzes = [mockQuiz];
     isHydrated = true;
+    mockIsAllQuizzesReady = true;
+    mockTotalExpectedQuizzes = 0;
     mockGetWordsByIds.mockResolvedValue({ data: [mockWord1, mockWord2] });
     mockUpdateWordsData.mockResolvedValue({});
     mockUpdateUserData.mockResolvedValue({});
@@ -438,6 +443,85 @@ describe('useQuizManager', () => {
     it('returns correct questionProgress', async () => {
       const { result } = await setupHook();
       expect(result.current.questionProgress).toEqual({ current: 1, total: 2 });
+    });
+  });
+
+  describe('progressive quiz generation flow', () => {
+    it('does not finish quiz when isAllQuizzesReady is false', async () => {
+      mockIsAllQuizzesReady = false;
+      mockTotalExpectedQuizzes = 2;
+
+      const { result } = await setupHook();
+      vi.useFakeTimers();
+
+      // Answer all questions in the first quiz
+      act(() => {
+        result.current.handleAnswerClick(correctOption);
+      });
+      act(() => {
+        vi.advanceTimersByTime(600);
+      });
+      act(() => {
+        result.current.handleAnswerClick({ answer: 'dog', isCorrect: true });
+      });
+      act(() => {
+        vi.advanceTimersByTime(600);
+      });
+
+      vi.useRealTimers();
+
+      // Give React time to process effects
+      await waitFor(
+        () => {
+          // The finishing effect should NOT have fired
+          expect(mockUpdateWordsData).not.toHaveBeenCalled();
+          expect(result.current.isQuizFinished).toBe(false);
+        },
+        { timeout: 2000 }
+      );
+    });
+
+    it('shows isWaitingForNextQuiz when quizzes are still generating', async () => {
+      mockIsAllQuizzesReady = false;
+      mockTotalExpectedQuizzes = 3;
+
+      const { result } = await setupHook();
+      vi.useFakeTimers();
+
+      // Complete the first quiz
+      act(() => {
+        result.current.handleAnswerClick(correctOption);
+      });
+      act(() => {
+        vi.advanceTimersByTime(600);
+      });
+      act(() => {
+        result.current.handleAnswerClick({ answer: 'dog', isCorrect: true });
+      });
+      act(() => {
+        vi.advanceTimersByTime(600);
+      });
+
+      // Should be waiting for next quiz
+      expect(result.current.isWaitingForNextQuiz).toBe(true);
+
+      vi.useRealTimers();
+    });
+
+    it('isWaitingForNextQuiz is false when all quizzes are ready', async () => {
+      mockIsAllQuizzesReady = true;
+      mockTotalExpectedQuizzes = 1;
+
+      const { result } = await setupHook();
+      expect(result.current.isWaitingForNextQuiz).toBe(false);
+    });
+
+    it('uses totalExpectedQuizzes for quizProgress total', async () => {
+      mockIsAllQuizzesReady = false;
+      mockTotalExpectedQuizzes = 3;
+
+      const { result } = await setupHook();
+      expect(result.current.quizProgress).toEqual({ current: 1, total: 3 });
     });
   });
 });

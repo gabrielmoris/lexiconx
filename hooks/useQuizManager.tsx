@@ -50,7 +50,10 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
 
   // True when user has finished all currently available quizzes but more are still being generated
   const isWaitingForNextQuiz =
-    totalExpectedQuizzes > 0 && quizStep >= displayQuiz.length && displayQuiz.length > 0;
+    totalExpectedQuizzes > 0 &&
+    !isAllQuizzesReady &&
+    quizStep >= displayQuiz.length &&
+    displayQuiz.length > 0;
 
   useEffect(() => {
     const start = Date.now();
@@ -122,7 +125,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     if (isQuizFinished || !session) return;
     if (isFinishingRef.current) return;
 
-    if (displayQuiz.length && quizStep >= displayQuiz.length && userData) {
+    if (isAllQuizzesReady && displayQuiz.length && quizStep >= displayQuiz.length && userData) {
       isFinishingRef.current = true;
       setIsFinishing(true);
 
@@ -301,7 +304,7 @@ export const useQuizManager = (userData: User, options?: UseQuizManagerOptions) 
     currentQuestion,
     feedback,
     showingExplanation,
-    quizProgress: { current: quizStep + 1, total: displayQuiz.length },
+    quizProgress: { current: quizStep + 1, total: totalExpectedQuizzes || displayQuiz.length },
     composition,
     questionProgress: { current: questionStep + 1, total: currentQuizItem?.questions.length || 0 },
     handleAnswerClick,
