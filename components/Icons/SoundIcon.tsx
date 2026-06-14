@@ -4,7 +4,15 @@ type SoundIconProps = React.SVGProps<SVGSVGElement> & {
 
 const SoundIcon: React.FC<SoundIconProps> = ({ className, ...props }) => {
   return (
-    <svg width="92" height="81" viewBox="0 0 92 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+    <svg
+      width="92"
+      height="81"
+      viewBox="0 0 92 81"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

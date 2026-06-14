@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const wordSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true, // Index for quick lookup of a user's words
     },
@@ -29,6 +29,6 @@ const wordSchema = new mongoose.Schema(
 
 wordSchema.index({ userId: 1, language: 1, nextReview: 1 });
 
-const Word = mongoose.models.Word || mongoose.model("Word", wordSchema);
+const Word = mongoose.models.Word || mongoose.model('Word', wordSchema);
 
 export default Word;

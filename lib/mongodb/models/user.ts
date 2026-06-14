@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export const languageProgressSchema = new Schema({
   language: { type: String, required: true },
@@ -17,7 +17,7 @@ export interface IUser extends Document {
   name?: string;
   image?: string;
   nativeLanguage?: string;
-  activeLanguage: { type: string; default: "Chinese" };
+  activeLanguage: { type: string; default: 'Chinese' };
   learningProgress: [typeof languageProgressSchema];
   createdAt: Date;
   updatedAt: Date;
@@ -30,7 +30,7 @@ const userSchema: Schema = new mongoose.Schema(
     name: { type: String, trim: true },
     image: { type: String, trim: true },
     nativeLanguage: { type: String, trim: true },
-    activeLanguage: { type: String, default: "Chinese" },
+    activeLanguage: { type: String, default: 'Chinese' },
     learningProgress: { type: [languageProgressSchema], default: [] },
   },
   {
@@ -38,6 +38,7 @@ const userSchema: Schema = new mongoose.Schema(
   }
 );
 
-const User = (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>("User", userSchema);
+const User =
+  (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>('User', userSchema);
 
 export default User;

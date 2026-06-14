@@ -1,4 +1,4 @@
-import EasySpeech from "easy-speech";
+import EasySpeech from 'easy-speech';
 
 // NOTE: I am using singleton with observer pattern here. I think it is the best approach
 // because I am subscribing from each word card to render the tts.
@@ -59,7 +59,7 @@ export const initEasySpeech = async () => {
       const status = EasySpeech.status() as { status?: string };
       snapshot = {
         ...snapshot,
-        isReady: status.status === "init: complete",
+        isReady: status.status === 'init: complete',
         voices: EasySpeech.voices(),
       };
       notify();
@@ -71,7 +71,7 @@ export const initEasySpeech = async () => {
         },
       } as Parameters<typeof EasySpeech.on>[0]);
     } catch (e) {
-      console.warn("EasySpeech init failed:", e);
+      console.warn('EasySpeech init failed:', e);
     }
 
     initialized = true;

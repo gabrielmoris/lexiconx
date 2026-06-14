@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage --run && npx http-server coverage -p 8080 -o",
@@ -43,6 +46,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "husky": "^9.1.7",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.8.4",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.1.4"

@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import EasySpeech from "easy-speech";
-import { Language } from "@/types/Words";
-import { EasySpeechSnapshot, initEasySpeech, subscribe } from "@/lib/tts/easySpeechService";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import EasySpeech from 'easy-speech';
+import { Language } from '@/types/Words';
+import { EasySpeechSnapshot, initEasySpeech, subscribe } from '@/lib/tts/easySpeechService';
 
 interface UseTextToSpeechOptions {
   onStart?: () => void;
@@ -26,11 +26,11 @@ interface UseTextToSpeechReturn {
 }
 
 const LANGUAGE_CODES: Record<Language, string> = {
-  中文: "zh-CN",
-  English: "en-US",
-  Deutsch: "de-DE",
-  Español: "es-ES",
-  русский: "ru-RU",
+  中文: 'zh-CN',
+  English: 'en-US',
+  Deutsch: 'de-DE',
+  Español: 'es-ES',
+  русский: 'ru-RU',
 };
 
 const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechReturn => {
@@ -59,11 +59,11 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
     (language: Language) => {
       const voices = snapshot.voices;
       if (!language) {
-        return voices.filter((v) => v.lang.startsWith("en"));
+        return voices.filter(v => v.lang.startsWith('en'));
       }
       const langCode = LANGUAGE_CODES[language];
-      const base = langCode.split("-")[0];
-      return voices.filter((v) => v.lang.startsWith(base));
+      const base = langCode.split('-')[0];
+      return voices.filter(v => v.lang.startsWith(base));
     },
     [snapshot.voices]
   );
@@ -71,15 +71,15 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
   const speak = useCallback(
     (text: string, language: Language) => {
       if (!snapshot.isSupported) {
-        options.onError?.(new Error("Text-to-speech is not supported in this browser"));
+        options.onError?.(new Error('Text-to-speech is not supported in this browser'));
         return;
       }
       if (!text.trim()) {
-        options.onError?.(new Error("No text provided"));
+        options.onError?.(new Error('No text provided'));
         return;
       }
       if (!snapshot.isReady) {
-        console.log("EasySpeech not ready yet, skipping speech request...");
+        console.log('EasySpeech not ready yet, skipping speech request...');
         return;
       }
 
@@ -89,8 +89,10 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
 
       if (!voice) {
         voice =
-          snapshot.voices.find((v) => v.lang === langCode) ||
-          snapshot.voices.find((v) => v.lang.startsWith(langCode.split("-")[0])) as SpeechSynthesisVoice;
+          snapshot.voices.find(v => v.lang === langCode) ||
+          (snapshot.voices.find(v =>
+            v.lang.startsWith(langCode.split('-')[0])
+          ) as SpeechSynthesisVoice);
       }
 
       if (!voice) {
@@ -121,24 +123,22 @@ const useTextToSpeech = (options: UseTextToSpeechOptions = {}): UseTextToSpeechR
           speakingRef.current = false;
           setIsSpeaking(false);
           setIsPaused(false);
-          if (e.error === "interrupted" || e.error === "canceled") {
-           return;
+          if (e.error === 'interrupted' || e.error === 'canceled') {
+            return;
           }
-           options.onError?.(new Error(`Speech synthesis error: ${e.error}`));
+          options.onError?.(new Error(`Speech synthesis error: ${e.error}`));
         },
         pause: () => setIsPaused(true),
         resume: () => setIsPaused(false),
-      }).catch((err) => {
-          const code = err?.error;
-          if (code === "interrupted" || code === "canceled") {
-            return;
-          }
+      }).catch(err => {
+        const code = err?.error;
+        if (code === 'interrupted' || code === 'canceled') {
+          return;
+        }
 
-          options.onError?.(
-            new Error(
-              `Speech synthesis error (promise): ${
-                typeof code === "string" ? code : String(err)
-              }`
+        options.onError?.(
+          new Error(
+            `Speech synthesis error (promise): ${typeof code === 'string' ? code : String(err)}`
           )
         );
       });

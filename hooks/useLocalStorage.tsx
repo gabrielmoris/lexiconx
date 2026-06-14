@@ -1,5 +1,5 @@
-"use client";
-import { useState, useEffect, useCallback } from "react";
+'use client';
+import { useState, useEffect, useCallback } from 'react';
 
 /**
  * Custom hook to store and retrieve data from localStorage, ensuring
@@ -57,7 +57,7 @@ function useLocalStorage<T>(
     } catch (error) {
       console.error(`Error deleting from localStorage key "${key}":`, error);
     }
-  }
+  };
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
@@ -65,9 +65,9 @@ function useLocalStorage<T>(
         setStoredValue(JSON.parse(event.newValue));
       }
     };
-    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener('storage', handleStorageChange);
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
     };
   }, [key]);
 

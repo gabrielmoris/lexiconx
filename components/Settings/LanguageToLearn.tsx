@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
-import { useToastContext } from "@/context/ToastContext";
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import LoadingComponent from "../Layout/LoadingComponent";
-import { selectUserLearningLanguage } from "@/lib/apis";
+import { LanguageOption, useLanguage } from '@/context/LanguageToLearnContext';
+import { useToastContext } from '@/context/ToastContext';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import LoadingComponent from '../Layout/LoadingComponent';
+import { selectUserLearningLanguage } from '@/lib/apis';
 
 const LanguageToLearn = ({ className }: { className?: string }) => {
-  const t = useTranslations("languageToLearn");
+  const t = useTranslations('languageToLearn');
   const { showToast } = useToastContext();
   const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
 
@@ -24,9 +24,9 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -34,13 +34,13 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
     async (language: LanguageOption) => {
       setSelectedLanguage(language);
 
-	try {
-		await selectUserLearningLanguage(language.language);
-	} catch (error) {
-        console.error("Failed to select language:", error);
+      try {
+        await selectUserLearningLanguage(language.language);
+      } catch (error) {
+        console.error('Failed to select language:', error);
         showToast({
-          message: t("error-changing-language"),
-          variant: "error",
+          message: t('error-changing-language'),
+          variant: 'error',
           duration: 3000,
         });
         return;
@@ -54,12 +54,15 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
 
   const SelectedLanguageIcon = selectedLanguage?.icon;
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <LoadingComponent />;
   }
 
   return (
-    <div className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ""}`} ref={dropdownRef}>
+    <div
+      className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ''}`}
+      ref={dropdownRef}
+    >
       {/* Custom Button that acts as the visible dropdown because dropdown doesn't accept img as an option */}
       <div
         className="cursor-pointer text-theme-text-light gap-2  dark:text-white rounded flex items-center justify-between"
@@ -68,16 +71,18 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
         role="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           // Keyboard navigation for accessibility
-          if (e.key === "Enter" || e.key === " ") {
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setIsOpen(!isOpen);
           }
         }}
       >
-        <div className="flex items-center">{SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}</div>
-        {isOpen ? "▲" : "▼"}
+        <div className="flex items-center">
+          {SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}
+        </div>
+        {isOpen ? '▲' : '▼'}
       </div>
 
       {isOpen && (
@@ -87,21 +92,21 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
           tabIndex={-1} // Make it programmatically focusable
           aria-labelledby="selected-language-button"
         >
-          {languages.map((lang) => (
+          {languages.map(lang => (
             <li
               key={lang.language}
               className={`px-4 py-2 flex items-center gap-2 cursor-pointer ${
                 selectedLanguage?.language === lang.language
-                  ? "bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                  ? 'bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
               onClick={() => handleSelect(lang)}
               role="option"
               aria-selected={selectedLanguage?.language === lang.language}
               tabIndex={0} // Make each option focusable
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 // Keyboard navigation for options
-                if (e.key === "Enter" || e.key === " ") {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   handleSelect(lang);
                 }

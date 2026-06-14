@@ -1,0 +1,16 @@
+# Build output & deps
+node_modules
+.next
+out
+coverage
+
+# Lockfiles & generated
+pnpm-lock.yaml
+package-lock.json
+next-env.d.ts
+
+# Assets
+public
+
+# Editor config (contains non-JSON embedded strings)
+.vscode

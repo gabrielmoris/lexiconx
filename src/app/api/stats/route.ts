@@ -1,31 +1,31 @@
-import QuizSession from "@/lib/mongodb/models/quizSession";
-import User from "@/lib/mongodb/models/user";
-import Word from "@/lib/mongodb/models/word";
-import { connectDB } from "@/lib/mongodb/mongodb";
-import { LearningProgress } from "@/types/Words";
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth/nextAuthOptions";
+import QuizSession from '@/lib/mongodb/models/quizSession';
+import User from '@/lib/mongodb/models/user';
+import Word from '@/lib/mongodb/models/word';
+import { connectDB } from '@/lib/mongodb/mongodb';
+import { LearningProgress } from '@/types/Words';
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth/nextAuthOptions';
 
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await req.json();
     const { language, totalQuestions, correctAnswers, wordsMastered, duration } = body;
 
     if (!language || totalQuestions === undefined || correctAnswers === undefined) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     await connectDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const quizSession = await QuizSession.create({
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ error: null, data: quizSession });
   } catch {
-    return NextResponse.json({ error: "Error saving quiz session" }, { status: 500 });
+    return NextResponse.json({ error: 'Error saving quiz session' }, { status: 500 });
   }
 }
 
@@ -47,21 +47,21 @@ export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { searchParams } = new URL(req.url);
-    const language = searchParams.get("language");
+    const language = searchParams.get('language');
 
     if (!language) {
-      return NextResponse.json({ error: "Language parameter is required" }, { status: 400 });
+      return NextResponse.json({ error: 'Language parameter is required' }, { status: 400 });
     }
 
     await connectDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const userId = user._id;
@@ -71,10 +71,13 @@ export async function GET(req: Request) {
       { $match: { userId, language } },
       {
         $facet: {
-          totalCount: [{ $count: "count" }],
-          mastered: [{ $match: { interval: { $gt: 21 } } }, { $count: "count" }],
-          learning: [{ $match: { repetitions: { $gt: 0 }, interval: { $lte: 21 } } }, { $count: "count" }],
-          newWords: [{ $match: { repetitions: 0 } }, { $count: "count" }],
+          totalCount: [{ $count: 'count' }],
+          mastered: [{ $match: { interval: { $gt: 21 } } }, { $count: 'count' }],
+          learning: [
+            { $match: { repetitions: { $gt: 0 }, interval: { $lte: 21 } } },
+            { $count: 'count' },
+          ],
+          newWords: [{ $match: { repetitions: 0 } }, { $count: 'count' }],
         },
       },
     ]);
@@ -83,9 +86,17 @@ export async function GET(req: Request) {
       { $match: { userId, language } },
       {
         $facet: {
-          totalSessions: [{ $count: "count" }],
-          totalTime: [{ $group: { _id: null, time: { $sum: "$duration" } } }],
-          totalCorrect: [{ $group: { _id: null, correct: { $sum: "$correctAnswers" }, total: { $sum: "$totalQuestions" } } }],
+          totalSessions: [{ $count: 'count' }],
+          totalTime: [{ $group: { _id: null, time: { $sum: '$duration' } } }],
+          totalCorrect: [
+            {
+              $group: {
+                _id: null,
+                correct: { $sum: '$correctAnswers' },
+                total: { $sum: '$totalQuestions' },
+              },
+            },
+          ],
         },
       },
     ]);
@@ -97,7 +108,7 @@ export async function GET(req: Request) {
       {
         $group: {
           _id: null,
-          sessions: { $push: "$date" },
+          sessions: { $push: '$date' },
         },
       },
     ]);
@@ -123,9 +134,9 @@ export async function GET(req: Request) {
       }
     }
 
-    const learningProgress = user.learningProgress.find((lp) => (lp as unknown as LearningProgress).language === language) as unknown as
-      | LearningProgress
-      | undefined;
+    const learningProgress = user.learningProgress.find(
+      lp => (lp as unknown as LearningProgress).language === language
+    ) as unknown as LearningProgress | undefined;
     const currentStreak = streak || learningProgress?.currentStreak || 0;
 
     const totalWords = wordStats[0]?.totalCount[0]?.count || 0;
@@ -136,7 +147,8 @@ export async function GET(req: Request) {
     const timeSpent = sessionStats[0]?.totalTime[0]?.time || learningProgress?.timeSpent || 0;
     const totalCorrect = sessionStats[0]?.totalCorrect[0]?.correct || 0;
     const totalQuestions = sessionStats[0]?.totalCorrect[0]?.total || 0;
-    const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 1000) / 10 : 0;
+    const accuracy =
+      totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 1000) / 10 : 0;
 
     // Accuracy trend - last 30 sessions
     const accuracyTrend = await QuizSession.aggregate([
@@ -146,9 +158,18 @@ export async function GET(req: Request) {
       { $sort: { date: 1 } },
       {
         $project: {
-          date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
           accuracy: {
-            $cond: [{ $eq: ["$totalQuestions", 0] }, 0, { $round: [{ $multiply: [{ $divide: ["$correctAnswers", "$totalQuestions"] }, 100] }, 1] }],
+            $cond: [
+              { $eq: ['$totalQuestions', 0] },
+              0,
+              {
+                $round: [
+                  { $multiply: [{ $divide: ['$correctAnswers', '$totalQuestions'] }, 100] },
+                  1,
+                ],
+              },
+            ],
           },
         },
       },
@@ -176,10 +197,13 @@ export async function GET(req: Request) {
       { $match: { userId, language, nextReview: { $ne: null } } },
       {
         $facet: {
-          overdue: [{ $match: { nextReview: { $lt: now } } }, { $count: "count" }],
-          today: [{ $match: { nextReview: { $gte: now, $lt: tomorrow } } }, { $count: "count" }],
-          thisWeek: [{ $match: { nextReview: { $gte: tomorrow, $lt: endOfWeek } } }, { $count: "count" }],
-          later: [{ $match: { nextReview: { $gte: endOfWeek } } }, { $count: "count" }],
+          overdue: [{ $match: { nextReview: { $lt: now } } }, { $count: 'count' }],
+          today: [{ $match: { nextReview: { $gte: now, $lt: tomorrow } } }, { $count: 'count' }],
+          thisWeek: [
+            { $match: { nextReview: { $gte: tomorrow, $lt: endOfWeek } } },
+            { $count: 'count' },
+          ],
+          later: [{ $match: { nextReview: { $gte: endOfWeek } } }, { $count: 'count' }],
         },
       },
     ]);
@@ -202,7 +226,7 @@ export async function GET(req: Request) {
           word: 1,
           definition: 1,
           easeFactor: 1,
-          lastReviewed: { $dateToString: { format: "%Y-%m-%d", date: "$lastReviewed" } },
+          lastReviewed: { $dateToString: { format: '%Y-%m-%d', date: '$lastReviewed' } },
         },
       },
     ]);
@@ -227,6 +251,6 @@ export async function GET(req: Request) {
       },
     });
   } catch {
-    return NextResponse.json({ error: "Error getting stats" }, { status: 500 });
+    return NextResponse.json({ error: 'Error getting stats' }, { status: 500 });
   }
 }

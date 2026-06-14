@@ -3,7 +3,15 @@ type RussianFlagProps = React.SVGProps<SVGSVGElement> & {
 };
 
 const RussianFlag: React.FC<RussianFlagProps> = ({ className, ...props }) => (
-  <svg width="111" height="81" viewBox="0 0 111 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+  <svg
+    width="111"
+    height="81"
+    viewBox="0 0 111 81"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
     <g clipPath="url(#clip0_25_2)">
       <path
         d="M98.6667 0.5H12.3333C9.06233 0.5 5.9253 1.79062 3.61235 4.08794C1.2994 6.38526 0 9.5011 0 12.75L0 25H111V12.75C111 9.5011 109.701 6.38526 107.388 4.08794C105.075 1.79062 101.938 0.5 98.6667 0.5Z"

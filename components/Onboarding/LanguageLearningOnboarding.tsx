@@ -1,20 +1,22 @@
-"use client";
-import { useTranslations } from "next-intl";
-import { createElement, useState, useEffect } from "react";
-import { LanguageOption, useLanguage } from "@/context/LanguageToLearnContext";
-import LoadingComponent from "../Layout/LoadingComponent";
-import { selectUserLearningLanguage } from "@/lib/apis";
-import { useSession } from "next-auth/react";
+'use client';
+import { useTranslations } from 'next-intl';
+import { createElement, useState, useEffect } from 'react';
+import { LanguageOption, useLanguage } from '@/context/LanguageToLearnContext';
+import LoadingComponent from '../Layout/LoadingComponent';
+import { selectUserLearningLanguage } from '@/lib/apis';
+import { useSession } from 'next-auth/react';
 
 export default function LanguageLearningOnboarding({ setNextStep }: { setNextStep: () => void }) {
   const [isUserChoosing, setIsUserChoosing] = useState(true);
-  const [flagPositions, setFlagPositions] = useState<{ [key: string]: { x: number; y: number; rotation: number } }>({});
+  const [flagPositions, setFlagPositions] = useState<{
+    [key: string]: { x: number; y: number; rotation: number };
+  }>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const t = useTranslations("languageToLearn");
+  const t = useTranslations('languageToLearn');
   const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
 
-	const { status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (isUserChoosing) {
@@ -42,8 +44,8 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
   const handleUserChoice = async (language: LanguageOption) => {
     setIsUserChoosing(false);
     setSelectedLanguage(language);
-	if (status !== "authenticated") throw new Error("Not authenticated");
-	await selectUserLearningLanguage(language.language);
+    if (status !== 'authenticated') throw new Error('Not authenticated');
+    await selectUserLearningLanguage(language.language);
     setNextStep();
   };
 
@@ -51,12 +53,12 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
 
   return (
     <section className="relative flex flex-col items-center justify-start gap-10 h-72 lg:h-96  w-72 lg:w-96 overflow-hidden">
-      <p className="lg:text-2xl text-xl font-bold text-center z-10">{t("title")}</p>
+      <p className="lg:text-2xl text-xl font-bold text-center z-10">{t('title')}</p>
 
       {isUserChoosing ? (
         <>
           {/* Floating flags with waving animation  IS ALSO IN LocaleSwitcher !!!! FOLLOW DRY!!*/}
-          {languages.map((lang) => (
+          {languages.map(lang => (
             <div
               key={`floating-tolearn-${lang.language}`}
               className="absolute z-20 animate-pulse"
@@ -69,8 +71,11 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
               }}
             >
               <div className="block hover:scale-110 transition-transform duration-200">
-                <div onClick={() => handleUserChoice(lang)} className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
-                  {createElement(lang.icon, { className: "w-full h-full object-contain" })}
+                <div
+                  onClick={() => handleUserChoice(lang)}
+                  className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20"
+                >
+                  {createElement(lang.icon, { className: 'w-full h-full object-contain' })}
                 </div>
               </div>
             </div>
@@ -81,22 +86,30 @@ export default function LanguageLearningOnboarding({ setNextStep }: { setNextSte
             onClick={() => setIsUserChoosing(false)}
             className="absolute cursor-pointer z-30 p-2 rounded-full bg-secondary text-white dark:bg-theme-fg-dark hover:bg-gray-700 transition-colors backdrop-blur-sm"
             style={{
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
             aria-label="Close language selector"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </>
       ) : (
-        <button onClick={() => setIsUserChoosing(true)} className="hover:scale-120 transition-transform">
+        <button
+          onClick={() => setIsUserChoosing(true)}
+          className="hover:scale-120 transition-transform"
+        >
           <div className="flex items-center justify-center cursor-pointer w-16 h-16 md:w-20 md:h-20">
             {createElement(selectedLanguage.icon, {
-              className: "w-full h-full object-contain",
+              className: 'w-full h-full object-contain',
             })}
           </div>
         </button>

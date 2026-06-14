@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useMemo } from "react";
-import confetti from "canvas-confetti";
-import type { Options } from "canvas-confetti";
+import { useCallback, useMemo } from 'react';
+import confetti from 'canvas-confetti';
+import type { Options } from 'canvas-confetti';
 
 /**
  * A custom hook that provides confetti animation functions,
@@ -9,9 +9,9 @@ import type { Options } from "canvas-confetti";
  */
 export function useConfetti(shape?: string) {
   const customConfettiShape = useMemo(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       return confetti.shapeFromText({
-        text: shape || "🔶",
+        text: shape || '🔶',
         scalar: 2,
       });
     }
@@ -30,47 +30,50 @@ export function useConfetti(shape?: string) {
   /**
    * Trigger a school pride style confetti animation with diamond shapes.
    */
-  const triggerSchoolPride = useCallback((duration = 3000, colors = ["#5D3FD3", "#FFFFFF"], options?: Partial<Options>) => {
-    if (typeof window === "undefined") return;
-    const animationEnd = Date.now() + duration;
-    const defaults = {
-      particleCount: 20,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 },
-      colors,
-    };
-
-    const interval = setInterval(() => {
-      if (Date.now() > animationEnd) {
-        return clearInterval(interval);
-      }
-
-      confetti({
-        ...defaults,
-        ...shapeOptions,
+  const triggerSchoolPride = useCallback(
+    (duration = 3000, colors = ['#5D3FD3', '#FFFFFF'], options?: Partial<Options>) => {
+      if (typeof window === 'undefined') return;
+      const animationEnd = Date.now() + duration;
+      const defaults = {
+        particleCount: 20,
         angle: 60,
+        spread: 55,
         origin: { x: 0 },
-        ...options,
-      });
+        colors,
+      };
 
-      confetti({
-        ...defaults,
-        ...shapeOptions,
-        angle: 120,
-        origin: { x: 1 },
-        ...options,
-      });
-    }, 150);
+      const interval = setInterval(() => {
+        if (Date.now() > animationEnd) {
+          return clearInterval(interval);
+        }
 
-    return () => clearInterval(interval);
-  }, []);
+        confetti({
+          ...defaults,
+          ...shapeOptions,
+          angle: 60,
+          origin: { x: 0 },
+          ...options,
+        });
+
+        confetti({
+          ...defaults,
+          ...shapeOptions,
+          angle: 120,
+          origin: { x: 1 },
+          ...options,
+        });
+      }, 150);
+
+      return () => clearInterval(interval);
+    },
+    []
+  );
 
   /**
    * Trigger a celebratory fireworks-style confetti animation with diamond shapes.
    */
   const triggerFireworks = useCallback((duration = 3000, options?: Partial<Options>) => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     const animationEnd = Date.now() + duration;
 
     const interval = setInterval(() => {

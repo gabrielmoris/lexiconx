@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion, type Variants } from "framer-motion";
+import React from 'react';
+import { motion, type Variants } from 'framer-motion';
 
-import EnglishFlag from "@/components/Icons/EnglishFlag";
-import SpanishFlag from "@/components/Icons/SpanishFlag";
-import GermanFlag from "@/components/Icons/GermanFlag";
-import ChineseFlag from "@/components/Icons/ChinaFlag";
+import EnglishFlag from '@/components/Icons/EnglishFlag';
+import SpanishFlag from '@/components/Icons/SpanishFlag';
+import GermanFlag from '@/components/Icons/GermanFlag';
+import ChineseFlag from '@/components/Icons/ChinaFlag';
 
 const containerVariants: Variants = {
   initial: {},
@@ -28,7 +28,7 @@ const fadeInUpVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       duration: 0.8,
       bounce: 0.3,
     },
@@ -46,7 +46,7 @@ const flagVariants: Variants = {
     scale: 1,
     rotate: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       duration: 1.2,
       bounce: 0.4,
       delay: 0.6,
@@ -71,11 +71,17 @@ const OnboardingText = ({ text, title, setNextStep }: OnboardingTextProps) => {
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
     >
-      <motion.h1 variants={fadeInUpVariants} className="mb-6 text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+      <motion.h1
+        variants={fadeInUpVariants}
+        className="mb-6 text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl"
+      >
         {title}
       </motion.h1>
 
-      <motion.p variants={fadeInUpVariants} className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
+      <motion.p
+        variants={fadeInUpVariants}
+        className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl"
+      >
         {text}
       </motion.p>
 
@@ -95,7 +101,7 @@ const OnboardingText = ({ text, title, setNextStep }: OnboardingTextProps) => {
             transition: {
               duration: 4,
               repeat: Infinity,
-              ease: "easeInOut" as const,
+              ease: 'easeInOut' as const,
               delay: 0.2,
             },
           }}
@@ -120,7 +126,7 @@ const OnboardingText = ({ text, title, setNextStep }: OnboardingTextProps) => {
             transition: {
               duration: 4,
               repeat: Infinity,
-              ease: "easeInOut" as const,
+              ease: 'easeInOut' as const,
               delay: 0.8,
             },
           }}
@@ -145,7 +151,7 @@ const OnboardingText = ({ text, title, setNextStep }: OnboardingTextProps) => {
             transition: {
               duration: 4,
               repeat: Infinity,
-              ease: "easeInOut" as const,
+              ease: 'easeInOut' as const,
               delay: 0.8,
             },
           }}
@@ -170,7 +176,7 @@ const OnboardingText = ({ text, title, setNextStep }: OnboardingTextProps) => {
             transition: {
               duration: 4,
               repeat: Infinity,
-              ease: "easeInOut" as const,
+              ease: 'easeInOut' as const,
               delay: 1.2,
             },
           }}

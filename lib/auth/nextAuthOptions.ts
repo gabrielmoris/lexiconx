@@ -1,11 +1,11 @@
-import { NextAuthOptions, DefaultUser } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import { connectDB } from "@/lib/mongodb/mongodb";
-import User, { IUser } from "@/lib/mongodb/models/user";
+import { NextAuthOptions, DefaultUser } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import { connectDB } from '@/lib/mongodb/mongodb';
+import User, { IUser } from '@/lib/mongodb/models/user';
 
 // Extend the NextAuth User type with your custom 'dbId'
 // This ensures 'user.dbId' is recognized in callbacks
-declare module "next-auth" {
+declare module 'next-auth' {
   interface User extends DefaultUser {
     dbId?: string; // Make it optional as it might not be present initially
   }
@@ -15,7 +15,7 @@ declare module "next-auth" {
 }
 
 // Extend NextAuth's JWT type
-declare module "next-auth/jwt" {
+declare module 'next-auth/jwt' {
   interface JWT {
     dbId?: string;
   }
@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   // debug: true,
   callbacks: {
@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
 
       try {
         if (!user.email) {
-          console.error("Sign-in attempt without email.");
+          console.error('Sign-in attempt without email.');
           return false;
         }
 
@@ -59,7 +59,7 @@ export const authOptions: NextAuthOptions = {
 
         return true;
       } catch (error) {
-        console.error("Error during NextAuth signIn callback:", error);
+        console.error('Error during NextAuth signIn callback:', error);
         return false;
       }
     },

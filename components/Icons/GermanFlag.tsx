@@ -3,7 +3,15 @@ type GermanFlagProps = React.SVGProps<SVGSVGElement> & {
 };
 
 const GermanFlag: React.FC<GermanFlagProps> = ({ className, ...props }) => (
-  <svg width="111" height="81" viewBox="0 0 111 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+  <svg
+    width="111"
+    height="81"
+    viewBox="0 0 111 81"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
     <g clipPath="url(#clip0_12_18)">
       <path
         d="M98.6667 0.110897H12.3333C9.06233 0.110897 5.9253 1.35957 3.61235 3.58222C1.2994 5.80488 0 8.81944 0 11.9627L0 26.7776H111V11.9627C111 8.81944 109.701 5.80488 107.388 3.58222C105.075 1.35957 101.938 0.110897 98.6667 0.110897Z"

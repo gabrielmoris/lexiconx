@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useToastContext } from "@/context/ToastContext";
-import { useSession } from "next-auth/react";
-import { Locale, useLocale, useTranslations } from "next-intl";
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useToastContext } from '@/context/ToastContext';
+import { useSession } from 'next-auth/react';
+import { Locale, useLocale, useTranslations } from 'next-intl';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 // Import all necessary assets from your files
-import { languages } from "../Onboarding/LocaleSwitcher";
-import LoadingComponent from "../Layout/LoadingComponent";
-import { locales } from "@/src/i18n/routing";
-import { Locale as ILocale, Language } from "@/types/Words";
-import { updateUserData } from "@/lib/apis";
-import { Link, usePathname } from "@/src/i18n/navigation";
+import { languages } from '../Onboarding/LocaleSwitcher';
+import LoadingComponent from '../Layout/LoadingComponent';
+import { locales } from '@/src/i18n/routing';
+import { Locale as ILocale, Language } from '@/types/Words';
+import { updateUserData } from '@/lib/apis';
+import { Link, usePathname } from '@/src/i18n/navigation';
 
 type ILanguage = (typeof languages)[keyof typeof languages];
 
 const NativeLanguage = ({ className }: { className?: string }) => {
   const currentLocale = useLocale() as ILocale;
   const [selectedLanguage, setSelectedLanguage] = useState<ILanguage>(languages[currentLocale]);
-  const t = useTranslations("NativeLanguage");
+  const t = useTranslations('NativeLanguage');
   const { showToast } = useToastContext();
-	const { status } = useSession();
+  const { status } = useSession();
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +31,9 @@ const NativeLanguage = ({ className }: { className?: string }) => {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -49,28 +49,31 @@ const NativeLanguage = ({ className }: { className?: string }) => {
       setSelectedLanguage(language);
       setIsOpen(false);
 
-	try {
-		await updateUserData({ nativeLanguage: language.name as Language });
-	} catch (error) {
-        console.error("Failed to select language:", error);
+      try {
+        await updateUserData({ nativeLanguage: language.name as Language });
+      } catch (error) {
+        console.error('Failed to select language:', error);
         showToast({
-          message: t("error-changing-language"),
-          variant: "error",
+          message: t('error-changing-language'),
+          variant: 'error',
           duration: 3000,
         });
       }
     },
-	[showToast, t]
+    [showToast, t]
   );
 
   const SelectedLanguageIcon = selectedLanguage?.icon;
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <LoadingComponent />;
   }
 
   return (
-    <div className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ""}`} ref={dropdownRef}>
+    <div
+      className={`p-2 relative hover:dark:bg-theme-fg-dark hover:bg-theme-fg-light rounded-md ${className || ''}`}
+      ref={dropdownRef}
+    >
       <div
         className="cursor-pointer gap-2 rounded flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
@@ -79,15 +82,17 @@ const NativeLanguage = ({ className }: { className?: string }) => {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby="selected-language-button" // Add a unique ID for ARIA
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setIsOpen(!isOpen);
           }
         }}
       >
-        <div className="flex items-center">{SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}</div>
-        {isOpen ? "▲" : "▼"}
+        <div className="flex items-center">
+          {SelectedLanguageIcon ? <SelectedLanguageIcon className="w-6 h-6" /> : null}
+        </div>
+        {isOpen ? '▲' : '▼'}
       </div>
 
       {isOpen && (
@@ -97,25 +102,25 @@ const NativeLanguage = ({ className }: { className?: string }) => {
           tabIndex={-1}
         >
           {locales.map((langKey: Locale) => {
-            const lang = languages[langKey as "en" | "es" | "de" | "zh"];
+            const lang = languages[langKey as 'en' | 'es' | 'de' | 'zh'];
             if (!lang) return null;
             const LanguageIcon = lang.icon;
             return (
               <Link
-                href={`/${pathname.split("/")[1]}`}
+                href={`/${pathname.split('/')[1]}`}
                 locale={langKey}
                 key={langKey}
                 className={`px-4 py-2 flex items-center gap-2 cursor-pointer ${
                   selectedLanguage?.name === lang.name
-                    ? "bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                    ? 'bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
                 onClick={() => handleSelect(lang)}
                 role="option"
                 aria-selected={selectedLanguage?.name === lang.name}
                 tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleSelect(lang);
                   }

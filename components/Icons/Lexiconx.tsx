@@ -1,11 +1,17 @@
-import React from "react";
+import React from 'react';
 
 type LexiconxIconProps = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };
 
 const LexiconxIcon: React.FC<LexiconxIconProps> = ({ className, ...props }) => (
-  <svg width="290.56880101958365" height="323.02374572753905" viewBox="0 -20 328.80401002060864 365.52961830177316" className={className} {...props}>
+  <svg
+    width="290.56880101958365"
+    height="323.02374572753905"
+    viewBox="0 -20 328.80401002060864 365.52961830177316"
+    className={className}
+    {...props}
+  >
     <defs id="SvgjsDefs1013"></defs>
     <g
       id="SvgjsG1014"

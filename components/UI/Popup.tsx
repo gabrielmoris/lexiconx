@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
-import React from "react";
-import Button from "./Button";
+import { useTranslations } from 'next-intl';
+import React from 'react';
+import Button from './Button';
 
 interface Props {
   handleClose: () => void;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Popup = ({ handleClose, handleAccept, message }: Props) => {
-  const t = useTranslations("popup");
+  const t = useTranslations('popup');
   return (
     <main
       className="shadow-sm dark:shadow-theme-fg-dark
@@ -24,11 +24,11 @@ const Popup = ({ handleClose, handleAccept, message }: Props) => {
 
         <div className="flex flex-row gap-5">
           <Button type="button" onClick={handleClose} variant="secondary" className="mb-5">
-            {t("close-popup")}
+            {t('close-popup')}
           </Button>
 
           <Button type="button" onClick={handleAccept} variant="primary" className="mb-5">
-            {t("accept-popup")}
+            {t('accept-popup')}
           </Button>
         </div>
       </section>
