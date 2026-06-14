@@ -1,10 +1,9 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "./nextAuthOptions";
-import { getUserData } from "@/lib/apis";
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from './nextAuthOptions';
+import { getUserData } from '@/lib/apis';
 import { getLocale } from 'next-intl/server';
-import { cookies } from "next/headers";
-
+import { cookies } from 'next/headers';
 
 /**
  * Ensures that the current user is authenticated on the server side.
@@ -17,27 +16,27 @@ import { cookies } from "next/headers";
  * @returns The session object if the user is authenticated.
  */
 
-export async function requireAuthSSR(redirectSuccess?:string) {
-	const session = await getServerSession(authOptions);
-	const locale = await getLocale();
+export async function requireAuthSSR(redirectSuccess?: string) {
+  const session = await getServerSession(authOptions);
+  const locale = await getLocale();
 
-	if (!session) {
-		redirect(`/${locale}/login`); // Server-side redirect
-	}
+  if (!session) {
+    redirect(`/${locale}/login`); // Server-side redirect
+  }
 
-	// Forward cookies to the API route for server-side session validation
-	const cookieStore = await cookies();
-	const ssrHeaders = { Cookie: cookieStore.toString() };
+  // Forward cookies to the API route for server-side session validation
+  const cookieStore = await cookies();
+  const ssrHeaders = { Cookie: cookieStore.toString() };
 
-	const {data: userData}= await getUserData(true, ssrHeaders)
+  const { data: userData } = await getUserData(true, ssrHeaders);
 
-	if(userData.learningProgress.length === 0 && redirectSuccess) {
-		redirect(redirectSuccess);
-	}
+  if (userData.learningProgress.length === 0 && redirectSuccess) {
+    redirect(redirectSuccess);
+  }
 
-	return {session, userData};
+  return { session, userData };
 }
 
 export async function getAuthSessionSSR() {
-	return await getServerSession(authOptions);
+  return await getServerSession(authOptions);
 }

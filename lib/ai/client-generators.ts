@@ -1,6 +1,6 @@
-import OpenAI from "openai";
-import { GoogleGenAI } from "@google/genai";
-import { AIClient, AIGenerateContentParams } from "./client";
+import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
+import { AIClient, AIGenerateContentParams } from './client';
 
 export function createNvidiaClient(options: { apiKey: string; baseURL: string }): AIClient {
   const client = new OpenAI({
@@ -14,17 +14,17 @@ export function createNvidiaClient(options: { apiKey: string; baseURL: string })
 
       if (params.config?.systemInstruction) {
         messages.push({
-          role: "system",
+          role: 'system',
           content: params.config.systemInstruction,
         });
       }
 
       messages.push({
-        role: "user",
+        role: 'user',
         content: params.contents,
       });
 
-      const isJsonResponse = params.config?.responseMimeType?.includes("json");
+      const isJsonResponse = params.config?.responseMimeType?.includes('json');
 
       const completionOptions: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming = {
         model: params.model,
@@ -34,12 +34,14 @@ export function createNvidiaClient(options: { apiKey: string; baseURL: string })
       };
 
       if (isJsonResponse) {
-        (completionOptions as { response_format?: { type: string } }).response_format = { type: "json_object" };
+        (completionOptions as { response_format?: { type: string } }).response_format = {
+          type: 'json_object',
+        };
       }
 
       const response = await client.chat.completions.create(completionOptions);
 
-      return { text: response.choices[0]?.message?.content || "" };
+      return { text: response.choices[0]?.message?.content || '' };
     },
   };
 }
@@ -56,11 +58,11 @@ export function createGoogleClient(apiKey: string): AIClient {
           temperature: params.config?.temperature ?? 0.7,
           topK: params.config?.topK ?? 40,
           topP: params.config?.topP ?? 0.9,
-          responseMimeType: params.config?.responseMimeType ?? "application/json",
+          responseMimeType: params.config?.responseMimeType ?? 'application/json',
           systemInstruction: params.config?.systemInstruction,
         },
       });
-      return { text: result.text || "" };
+      return { text: result.text || '' };
     },
   };
 }

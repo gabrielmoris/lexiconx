@@ -10,17 +10,21 @@ echo "
 ----------------------------------------------------------
 "
 
-pnpm lint
-
-pnpm test || {
+abort() {
   echo ""
   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!! TESTS FAILED! COMMIT ABORTED.       !!!"
-  echo "!!! Please fix the tests and try again. !!!"
+  echo "!!! $1"
+  echo "!!! COMMIT ABORTED.                      !!!"
   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   echo ""
   exit 1
 }
 
-echo "[36m Tests passed! Proceeding with commit. [0m"
+pnpm format || abort "Couldn't format."
+pnpm format:check || abort "FORMATTING ISSUES! Run 'pnpm format'."
+pnpm lint        || abort "LINT FAILED! Fix the lint errors."
+pnpm typecheck   || abort "TYPECHECK FAILED! Fix the type errors."
+pnpm test        || abort "TESTS FAILED! Fix the tests and try again."
+
+echo "[36m All checks passed! Proceeding with commit.[0m"
 exit 0

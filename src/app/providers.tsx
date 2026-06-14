@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ThemeProvider, ThemeProviderProps } from "next-themes";
+import { ThemeProvider, ThemeProviderProps } from 'next-themes';
 
 interface Props extends ThemeProviderProps {
   locale?: string;

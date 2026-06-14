@@ -1,30 +1,32 @@
-"use client";
-import { useToastContext } from "@/context/ToastContext";
-import DeleteAccountIcon from "../Icons/DeleteAccountIcon";
-import { useTranslations } from "next-intl";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
-import { deleteUserData } from "@/lib/apis";
-import { signOut } from "next-auth/react";
-import { useState } from "react";
-import Popup from "../UI/Popup";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import { Quiz } from "@/types/Quiz";
+'use client';
+import { useToastContext } from '@/context/ToastContext';
+import DeleteAccountIcon from '../Icons/DeleteAccountIcon';
+import { useTranslations } from 'next-intl';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
+import { deleteUserData } from '@/lib/apis';
+import { signOut } from 'next-auth/react';
+import { useState } from 'react';
+import Popup from '../UI/Popup';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { Quiz } from '@/types/Quiz';
 
 const DeleteAccount = () => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const { showToast } = useToastContext();
   const { session, status } = useAuthGuard();
-  const t = useTranslations("delete-account");
-  const { deleteValue: deleteStep } = useLocalStorage("onboardingStep", 1);
-  const { deleteValue: deleteQuiz } = useLocalStorage<{ quizzes: Quiz[] }>("quizes", { quizzes: [] });
+  const t = useTranslations('delete-account');
+  const { deleteValue: deleteStep } = useLocalStorage('onboardingStep', 1);
+  const { deleteValue: deleteQuiz } = useLocalStorage<{ quizzes: Quiz[] }>('quizes', {
+    quizzes: [],
+  });
 
   const handleDelete = async () => {
     try {
-      if (status !== "authenticated" || !session) {
+      if (status !== 'authenticated' || !session) {
         throw new Error();
       }
 
-		const { data } = await deleteUserData();
+      const { data } = await deleteUserData();
 
       if (data.deletedCount !== 1) {
         throw new Error();
@@ -35,8 +37,8 @@ const DeleteAccount = () => {
       signOut();
     } catch {
       showToast({
-        message: t("error-deleting-account"),
-        variant: "error",
+        message: t('error-deleting-account'),
+        variant: 'error',
         duration: 3000,
       });
     }
@@ -44,7 +46,13 @@ const DeleteAccount = () => {
 
   return (
     <>
-      {isOpenPopup && <Popup handleAccept={handleDelete} handleClose={() => setIsOpenPopup(false)} message={t("delete message")} />}
+      {isOpenPopup && (
+        <Popup
+          handleAccept={handleDelete}
+          handleClose={() => setIsOpenPopup(false)}
+          message={t('delete message')}
+        />
+      )}
       <button
         aria-label="Toggle Dark Mode"
         type="button"

@@ -1,10 +1,10 @@
 // lib/mongodb.ts
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI not defined in .env");
+  throw new Error('MONGODB_URI not defined in .env');
 }
 
 interface MongooseCache {
@@ -23,7 +23,7 @@ export async function connectDB() {
       .connect(MONGODB_URI, {
         bufferCommands: false,
       })
-      .then((m) => {
+      .then(m => {
         return m;
       });
   }

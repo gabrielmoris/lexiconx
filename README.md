@@ -131,6 +131,7 @@ sequenceDiagram
 - **i18n**: URL-based locale routing (`/en/cards`, `/de/quiz`). 5 locale JSON files.
 - **TTS**: EasySpeech Observer singleton. Lazy initialization. Language-aware voice selection.
 - **Theming**: System-aware dark/light toggle via `next-themes`. `ThemeProvider` wraps the app in `providers.tsx`; `ThemeSwitcher` component in Settings.
+
 ## 📦 Getting Started
 
 ### Prerequisites
@@ -282,36 +283,36 @@ updatedAt: Date
 
 ## 📄 Pages
 
-| Route                    | Purpose                                              |
-| ------------------------ | ---------------------------------------------------- |
-| `/[locale]`              | Home / landing                                       |
-| `/[locale]/cards`        | Vocabulary card management                           |
-| `/[locale]/quiz` | Word selection + quiz gameplay (idle → generating → active) |
-| `/[locale]/memory-hooks` | Flip card study mode for weak words (Keyword Method) |
-| `/[locale]/stats`        | Learning analytics                                   |
-| `/[locale]/settings`     | User settings                                        |
-| `/[locale]/onboarding`   | New user setup                                       |
-| `/[locale]/login`        | Authentication                                       |
-| `/[locale]/terms`        | Terms of service                                     |
-| `/[locale]/privacy`      | Privacy policy                                       |
+| Route                    | Purpose                                                     |
+| ------------------------ | ----------------------------------------------------------- |
+| `/[locale]`              | Home / landing                                              |
+| `/[locale]/cards`        | Vocabulary card management                                  |
+| `/[locale]/quiz`         | Word selection + quiz gameplay (idle → generating → active) |
+| `/[locale]/memory-hooks` | Flip card study mode for weak words (Keyword Method)        |
+| `/[locale]/stats`        | Learning analytics                                          |
+| `/[locale]/settings`     | User settings                                               |
+| `/[locale]/onboarding`   | New user setup                                              |
+| `/[locale]/login`        | Authentication                                              |
+| `/[locale]/terms`        | Terms of service                                            |
+| `/[locale]/privacy`      | Privacy policy                                              |
 
 ---
 
 ## 📁 Project Structure
 
-| Directory | Purpose |
-| --------- | ---------------------------------------------------- |
-| `components/` | React UI components (Quiz, Words, MemoryHooks, Stats, Settings, Onboarding, Layout, Icons, UI, AI, Auth) |
-| `context/` | React contexts (QuizContext, WordsContext, LanguageToLearnContext, ToastContext) |
-| `hooks/` | Custom hooks (useQuizManager, useTextToSpeech, useLocalStorage, useGenerateWords, useAuthGuard, useConfetti) |
-| `lib/ai/` | AI generation (quiz, words, memory-hooks) + LLM prompts |
-| `lib/mongodb/models/` | Mongoose schemas (Word, User, QuizSession, MemoryHook) |
-| `lib/` | Core libraries (auth, TTS, SRS, helpers, API client) |
-| `messages/` | i18n JSON files (en, de, zh, es, ru) |
-| `src/app/api/` | API route handlers |
-| `src/app/[locale]/` | Locale-prefixed pages |
-| `src/i18n/` | next-intl config (request, routing, navigation) |
-| `types/` | TypeScript interfaces (Quiz, Words, MemoryHook, User) |
+| Directory             | Purpose                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `components/`         | React UI components (Quiz, Words, MemoryHooks, Stats, Settings, Onboarding, Layout, Icons, UI, AI, Auth)     |
+| `context/`            | React contexts (QuizContext, WordsContext, LanguageToLearnContext, ToastContext)                             |
+| `hooks/`              | Custom hooks (useQuizManager, useTextToSpeech, useLocalStorage, useGenerateWords, useAuthGuard, useConfetti) |
+| `lib/ai/`             | AI generation (quiz, words, memory-hooks) + LLM prompts                                                      |
+| `lib/mongodb/models/` | Mongoose schemas (Word, User, QuizSession, MemoryHook)                                                       |
+| `lib/`                | Core libraries (auth, TTS, SRS, helpers, API client)                                                         |
+| `messages/`           | i18n JSON files (en, de, zh, es, ru)                                                                         |
+| `src/app/api/`        | API route handlers                                                                                           |
+| `src/app/[locale]/`   | Locale-prefixed pages                                                                                        |
+| `src/i18n/`           | next-intl config (request, routing, navigation)                                                              |
+| `types/`              | TypeScript interfaces (Quiz, Words, MemoryHook, User)                                                        |
 
 ---
 

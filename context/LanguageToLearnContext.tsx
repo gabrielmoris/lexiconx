@@ -1,13 +1,13 @@
-"use client";
-import React, { createContext, useContext, ReactNode, useMemo, useState, useEffect } from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import ChinaFlag from "@/components/Icons/ChinaFlag";
-import EnglishFlag from "@/components/Icons/EnglishFlag";
-import GermanFlag from "@/components/Icons/GermanFlag";
-import { useTranslations } from "next-intl";
-import SpanishFlag from "@/components/Icons/SpanishFlag";
-import { Language } from "@/types/Words";
-import RussianFlag from "@/components/Icons/RussianFlag";
+'use client';
+import React, { createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import ChinaFlag from '@/components/Icons/ChinaFlag';
+import EnglishFlag from '@/components/Icons/EnglishFlag';
+import GermanFlag from '@/components/Icons/GermanFlag';
+import { useTranslations } from 'next-intl';
+import SpanishFlag from '@/components/Icons/SpanishFlag';
+import { Language } from '@/types/Words';
+import RussianFlag from '@/components/Icons/RussianFlag';
 
 export interface LanguageOption {
   language: Language;
@@ -31,24 +31,26 @@ const LanguageToLearnContext = createContext<LanguageContextType | undefined>(un
  */
 
 export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
-  const t = useTranslations("languageToLearn");
+  const t = useTranslations('languageToLearn');
 
   const languages: LanguageOption[] = useMemo(
     () => [
-      { language: "中文", icon: ChinaFlag, name: t("chinese"), tts: "zh-CN" },
-      { language: "Deutsch", icon: GermanFlag, name: t("german"), tts: "de-DE" },
-      { language: "English", icon: EnglishFlag, name: t("english"), tts: "en-US" },
-      { language: "Español", icon: SpanishFlag, name: t("spanish"), tts: "es-ES" },
-      { language: "русский", icon: RussianFlag, name: t("russian"), tts: "ru-RU" },
+      { language: '中文', icon: ChinaFlag, name: t('chinese'), tts: 'zh-CN' },
+      { language: 'Deutsch', icon: GermanFlag, name: t('german'), tts: 'de-DE' },
+      { language: 'English', icon: EnglishFlag, name: t('english'), tts: 'en-US' },
+      { language: 'Español', icon: SpanishFlag, name: t('spanish'), tts: 'es-ES' },
+      { language: 'русский', icon: RussianFlag, name: t('russian'), tts: 'ru-RU' },
     ],
     [t]
   );
 
-  const { storedValue: storedLangCode, setValue: setStoredLangCode } = useLocalStorage<LanguageOption["language"]>("language", languages[0].language);
+  const { storedValue: storedLangCode, setValue: setStoredLangCode } = useLocalStorage<
+    LanguageOption['language']
+  >('language', languages[0].language);
   const [isSelectedLanguageLoading, setIsSelectedLanguageLoading] = useState(true);
 
   const selectedLanguage = useMemo(() => {
-    return languages.find((lang) => lang.language === storedLangCode) || languages[0];
+    return languages.find(lang => lang.language === storedLangCode) || languages[0];
   }, [storedLangCode, languages]);
 
   useEffect(() => {
@@ -72,7 +74,11 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
     [selectedLanguage, languages, isSelectedLanguageLoading]
   );
 
-  return <LanguageToLearnContext.Provider value={contextValue}>{children}</LanguageToLearnContext.Provider>;
+  return (
+    <LanguageToLearnContext.Provider value={contextValue}>
+      {children}
+    </LanguageToLearnContext.Provider>
+  );
 }
 
 /**
@@ -83,7 +89,7 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageToLearnContext);
   if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider");
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
 }

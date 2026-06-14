@@ -1,28 +1,28 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
-import LanguageLearningOnboarding from "../LanguageLearningOnboarding";
-import { LanguageToLearnProvider } from "@/context/LanguageToLearnContext";
-import { selectUserLearningLanguage } from "@/lib/apis";
-import { vi } from "vitest";
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import LanguageLearningOnboarding from '../LanguageLearningOnboarding';
+import { LanguageToLearnProvider } from '@/context/LanguageToLearnContext';
+import { selectUserLearningLanguage } from '@/lib/apis';
+import { vi } from 'vitest';
 
 // Mock next-intl and next/navigation
-vi.mock("next-intl", () => ({
-  useLocale: () => "en",
+vi.mock('next-intl', () => ({
+  useLocale: () => 'en',
   useTranslations: () => (key: string) => key,
 }));
 
 // mock apis
-vi.mock("@/lib/apis");
+vi.mock('@/lib/apis');
 
-vi.mock("next-auth/react", () => ({
+vi.mock('next-auth/react', () => ({
   useSession: () => ({
-    data: { user: { name: "Test User" } },
-    status: "authenticated",
+    data: { user: { name: 'Test User' } },
+    status: 'authenticated',
   }),
 }));
 
-describe("Language Learning Options", () => {
+describe('Language Learning Options', () => {
   const mockSelectUserLearningLanguage = vi.mocked(selectUserLearningLanguage);
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe("Language Learning Options", () => {
     // mockSelectUserLearningLanguage.mockResolvedValue({});
   });
 
-  it("renders the LanguageLearningOnBoarding and its main components", async () => {
+  it('renders the LanguageLearningOnBoarding and its main components', async () => {
     render(
       <LanguageToLearnProvider>
         <LanguageLearningOnboarding setNextStep={vi.fn()} />
@@ -54,7 +54,7 @@ describe("Language Learning Options", () => {
     expect(spanishFlag).toBeInTheDocument();
   });
 
-  it("Calls the API when a flag is clicked", async () => {
+  it('Calls the API when a flag is clicked', async () => {
     const user = userEvent.setup();
     const mockSetNextStep = vi.fn();
 
@@ -66,7 +66,7 @@ describe("Language Learning Options", () => {
 
     // Find the clickable div inside the Chinese flag container
     const chineseFlagContainer = screen.getByLabelText(/flag 中文/i);
-    const clickableDiv = chineseFlagContainer.querySelector("div.cursor-pointer");
+    const clickableDiv = chineseFlagContainer.querySelector('div.cursor-pointer');
 
     expect(clickableDiv).toBeInTheDocument();
 

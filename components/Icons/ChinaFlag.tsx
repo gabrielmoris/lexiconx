@@ -3,7 +3,15 @@ type ChinaFlagProps = React.SVGProps<SVGSVGElement> & {
 };
 
 const ChinaFlag: React.FC<ChinaFlagProps> = ({ className, ...props }) => (
-  <svg width="111" height="81" viewBox="0 0 111 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+  <svg
+    width="111"
+    height="81"
+    viewBox="0 0 111 81"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
     <path
       d="M111 67.8032C111 71.0674 109.701 74.1979 107.388 76.5061C105.075 78.8142 101.938 80.1109 98.6667 80.1109H12.3333C9.06233 80.1109 5.9253 78.8142 3.61235 76.5061C1.2994 74.1979 0 71.0674 0 67.8032V12.4186C0 9.15439 1.2994 6.02388 3.61235 3.71574C5.9253 1.4076 9.06233 0.110897 12.3333 0.110897H98.6667C101.938 0.110897 105.075 1.4076 107.388 3.71574C109.701 6.02388 111 9.15439 111 12.4186V67.8032Z"
       fill="#DE2910"

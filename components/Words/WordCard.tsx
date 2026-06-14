@@ -1,26 +1,26 @@
-import useTextToSpeech from "@/hooks/useTextToSpeech";
-import formatMongoDate from "@/lib/dateFormat";
-import { Language, Word } from "@/types/Words";
-import { useTranslations } from "next-intl";
-import SoundIcon from "../Icons/SoundIcon";
-import { useToastContext } from "@/context/ToastContext";
-import { useCallback, useEffect, useState } from "react";
-import RemoveIcon from "../Icons/RemoveIcon";
-import Popup from "../UI/Popup";
-import { useWords } from "@/context/WordsContext";
+import useTextToSpeech from '@/hooks/useTextToSpeech';
+import formatMongoDate from '@/lib/dateFormat';
+import { Language, Word } from '@/types/Words';
+import { useTranslations } from 'next-intl';
+import SoundIcon from '../Icons/SoundIcon';
+import { useToastContext } from '@/context/ToastContext';
+import { useCallback, useEffect, useState } from 'react';
+import RemoveIcon from '../Icons/RemoveIcon';
+import Popup from '../UI/Popup';
+import { useWords } from '@/context/WordsContext';
 
 const WordCard = ({ word }: { word: Word }) => {
-  const t = useTranslations("word-card");
+  const t = useTranslations('word-card');
   const { showToast } = useToastContext();
   const [deletePopup, setDeletePopup] = useState(false);
   const { deleteWord } = useWords();
 
   const { speak, isReady, isSupported } = useTextToSpeech({
-    onError: (error) => {
-      console.error("Speech error:", error);
+    onError: error => {
+      console.error('Speech error:', error);
       showToast({
-        message: t("error-speech"),
-        variant: "error",
+        message: t('error-speech'),
+        variant: 'error',
         duration: 3000,
       });
     },
@@ -30,8 +30,8 @@ const WordCard = ({ word }: { word: Word }) => {
     (text: string, language: Language) => {
       if (!isSupported) {
         showToast({
-          message: t("error-speech"),
-          variant: "error",
+          message: t('error-speech'),
+          variant: 'error',
           duration: 3000,
         });
         return;
@@ -39,8 +39,8 @@ const WordCard = ({ word }: { word: Word }) => {
 
       if (!isReady) {
         showToast({
-          message: t("loading-voices"),
-          variant: "info",
+          message: t('loading-voices'),
+          variant: 'info',
           duration: 2000,
         });
         return;
@@ -54,19 +54,19 @@ const WordCard = ({ word }: { word: Word }) => {
   );
 
   useEffect(() => {
-    const htmlElement = document.documentElement; 
+    const htmlElement = document.documentElement;
 
     if (deletePopup) {
-      htmlElement.style.overflow = "hidden";
-      htmlElement.style.height = "100%";
+      htmlElement.style.overflow = 'hidden';
+      htmlElement.style.height = '100%';
     } else {
-      htmlElement.style.overflow = "";
-      htmlElement.style.height = "";
+      htmlElement.style.overflow = '';
+      htmlElement.style.height = '';
     }
 
     return () => {
-      htmlElement.style.overflow = "";
-      htmlElement.style.height = "";
+      htmlElement.style.overflow = '';
+      htmlElement.style.height = '';
     };
   }, [deletePopup]);
 
@@ -76,29 +76,49 @@ const WordCard = ({ word }: { word: Word }) => {
                  rounded-lg shadow-sm p-4 mb-4 flex flex-col space-y-2
                  hover:shadow-md transition-shadow duration-200"
     >
-      {deletePopup && <Popup handleAccept={() => deleteWord(word)} handleClose={() => setDeletePopup(false)} message={t("delete-message")} />}
+      {deletePopup && (
+        <Popup
+          handleAccept={() => deleteWord(word)}
+          handleClose={() => setDeletePopup(false)}
+          message={t('delete-message')}
+        />
+      )}
 
       <div className="flex flex-row sm:flex-row justify-between mb-2">
         <div title={word.word} className="flex flex-row gap-5 overflow-x-hidden max-w-[90%]">
-          <h3 className="text-xl font-extrabold text-gray-900 dark:text-white overflow-hidden text-clip whitespace-nowrap">{word.word}</h3>
-          {word.phoneticNotation && <p className="text-md text-gray-600 dark:text-gray-400 whitespace-nowrap flex-shrink-0">{word.phoneticNotation}</p>}
+          <h3 className="text-xl font-extrabold text-gray-900 dark:text-white overflow-hidden text-clip whitespace-nowrap">
+            {word.word}
+          </h3>
+          {word.phoneticNotation && (
+            <p className="text-md text-gray-600 dark:text-gray-400 whitespace-nowrap flex-shrink-0">
+              {word.phoneticNotation}
+            </p>
+          )}
         </div>
-        <SoundIcon className="w-5 h-5 cursor-pointer shrink-0" onClick={() => readWord(word.word, word.language)} />
+        <SoundIcon
+          className="w-5 h-5 cursor-pointer shrink-0"
+          onClick={() => readWord(word.word, word.language)}
+        />
       </div>
 
       <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-        <span className="font-semibold text-gray-500 dark:text-gray-400 mr-1">{t("definition")}:</span> {word.definition}
+        <span className="font-semibold text-gray-500 dark:text-gray-400 mr-1">
+          {t('definition')}:
+        </span>{' '}
+        {word.definition}
       </p>
 
       <div className="pt-2 flex flex-row justify-between items-end border-t border-gray-100 dark:border-gray-700 mt-2">
         <div className="flex flex-col gap-1">
           {word.lastReviewed && (
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              <span className="font-medium">{t("last-reviewed")}:</span> {formatMongoDate(word.lastReviewed)}
+              <span className="font-medium">{t('last-reviewed')}:</span>{' '}
+              {formatMongoDate(word.lastReviewed)}
             </p>
           )}
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            <span className="font-medium">{t("next-review")}:</span> {formatMongoDate(word.nextReview)}
+            <span className="font-medium">{t('next-review')}:</span>{' '}
+            {formatMongoDate(word.nextReview)}
           </p>
         </div>
         <RemoveIcon className="w-5 h-5 cursor-pointer" onClick={() => setDeletePopup(true)} />

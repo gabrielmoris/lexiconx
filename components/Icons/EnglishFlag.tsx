@@ -3,18 +3,47 @@ type EnglishFlagProps = React.SVGProps<SVGSVGElement> & {
 };
 
 const EnglishFlag: React.FC<EnglishFlagProps> = ({ className, ...props }) => (
-  <svg width="107" height="81" viewBox="0 0 107 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+  <svg
+    width="107"
+    height="81"
+    viewBox="0 0 107 81"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
     <g clipPath="url(#clip0_12_2)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0.110897V80.1109H107V0.110897H0Z" fill="#2E42A5" />
-      <mask id="mask0_12_2" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="0" y="0" width="107" height="81">
-        <path fillRule="evenodd" clipRule="evenodd" d="M0 0.110897V80.1109H107V0.110897H0Z" fill="white" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0.110897V80.1109H107V0.110897H0Z"
+        fill="#2E42A5"
+      />
+      <mask
+        id="mask0_12_2"
+        style={{ maskType: 'luminance' }}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="107"
+        height="81"
+      >
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M0 0.110897V80.1109H107V0.110897H0Z"
+          fill="white"
+        />
       </mask>
       <g mask="url(#mask0_12_2)">
         <path
           d="M-11.9138 74.3942L11.6329 84.3242L107.532 10.9042L119.954 -3.8491L94.7752 -7.16577L55.66 24.4709L24.1753 45.7909L-11.9138 74.3942Z"
           fill="white"
         />
-        <path d="M-8.69379 81.3509L3.30693 87.1109L115.493 -5.2191H98.6506L-8.69379 81.3509Z" fill="#F50100" />
+        <path
+          d="M-8.69379 81.3509L3.30693 87.1109L115.493 -5.2191H98.6506L-8.69379 81.3509Z"
+          fill="#F50100"
+        />
         <path
           d="M118.914 74.3942L95.3671 84.3242L-0.531643 10.9042L-12.9537 -3.8491L12.2248 -7.16577L51.3399 24.4709L82.8247 45.7909L118.914 74.3942Z"
           fill="white"
@@ -29,7 +58,15 @@ const EnglishFlag: React.FC<EnglishFlagProps> = ({ className, ...props }) => (
           d="M66.1327 -6.55577H40.8673V26.7776H-6.59387V53.4442H40.8673V86.7776H66.1327V53.4442H113.781V26.7776H66.1327V-6.55577Z"
           fill="#F50100"
         />
-        <mask id="mask1_12_2" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="-7" y="-7" width="121" height="94">
+        <mask
+          id="mask1_12_2"
+          style={{ maskType: 'luminance' }}
+          maskUnits="userSpaceOnUse"
+          x="-7"
+          y="-7"
+          width="121"
+          height="94"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"

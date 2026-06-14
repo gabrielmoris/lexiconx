@@ -1,4 +1,4 @@
-import { LearningProgress } from "./Words";
+import { LearningProgress } from './Words';
 
 export interface UserProfile {
   _id: string;

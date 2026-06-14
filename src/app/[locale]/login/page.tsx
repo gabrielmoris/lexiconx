@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import Image from "next/image";
-import { Link } from "@/src/i18n/navigation";
-import { useLocale } from "next-intl";
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import Image from 'next/image';
+import { Link } from '@/src/i18n/navigation';
+import { useLocale } from 'next-intl';
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -13,10 +13,10 @@ export default function Login() {
   const handleLogin = () => {
     setLoading(true);
     try {
-      signIn("google", { callbackUrl: `/${locale}/cards` });
+      signIn('google', { callbackUrl: `/${locale}/cards` });
     } catch {
       setLoading(false);
-      alert("Sign in failed. Please try again.");
+      alert('Sign in failed. Please try again.');
     }
     setLoading(false);
   };
@@ -31,15 +31,21 @@ export default function Login() {
           className="flex cursor-pointer items-center gap-2 px-6 py-3 dark:bg-theme-bg-dark hover:opacity-60 bg-secondary rounded shadow transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           aria-busy={loading}
         >
-          <Image src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width={24} height={24} className="rounded" />
-          {loading ? "Signing in..." : "Sign in with Google"}
+          <Image
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            width={24}
+            height={24}
+            className="rounded"
+          />
+          {loading ? 'Signing in...' : 'Sign in with Google'}
         </button>
         <p className="text-gray-500 text-sm mt-6">
-          By signing in, you agree to our{" "}
+          By signing in, you agree to our{' '}
           <Link href="/terms" className="underline">
             Terms
-          </Link>{" "}
-          and{" "}
+          </Link>{' '}
+          and{' '}
           <Link href="/privacy" className="underline">
             Privacy Policy
           </Link>

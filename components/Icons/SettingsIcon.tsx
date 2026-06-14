@@ -3,7 +3,15 @@ type SettingsIconProps = React.SVGProps<SVGSVGElement> & {
 };
 
 const SettingsIcon: React.FC<SettingsIconProps> = ({ className, ...props }) => (
-  <svg width="76" height="81" viewBox="0 0 76 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+  <svg
+    width="76"
+    height="81"
+    viewBox="0 0 76 81"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"

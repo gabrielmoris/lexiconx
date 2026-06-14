@@ -4,7 +4,15 @@ type WordAiIconProps = React.SVGProps<SVGSVGElement> & {
 
 const WordAiIcon: React.FC<WordAiIconProps> = ({ className, ...props }) => {
   return (
-    <svg width="80" height="81" viewBox="0 0 80 81" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+    <svg
+      width="80"
+      height="81"
+      viewBox="0 0 80 81"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
