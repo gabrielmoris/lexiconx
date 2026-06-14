@@ -18,6 +18,8 @@ vi.mock('next-auth/react', () => ({
 const mockClientQuizzes = vi.fn(() => []);
 let mockIsAllQuizzesReady = true;
 let mockTotalExpectedQuizzes = 0;
+const mockMarkAllReady = vi.fn();
+
 vi.mock('@/context/QuizContext', () => ({
   useQuiz: () => ({
     clientQuizzes: mockClientQuizzes(),
@@ -26,6 +28,8 @@ vi.mock('@/context/QuizContext', () => ({
     isGeneratingMore: false,
     isAllQuizzesReady: mockIsAllQuizzesReady,
     totalExpectedQuizzes: mockTotalExpectedQuizzes,
+    markAllReady: mockMarkAllReady,
+    composition: { new: 0, learning: 0, mastered: 0 },
   }),
 }));
 

@@ -28,6 +28,7 @@ interface QuizContextType {
   wordsForQuiz: Word[];
   composition: QuizComposition;
   generateQuiz: (preselectedWords?: Word[]) => Promise<{ success: boolean } | undefined>;
+  markAllReady: () => void;
 }
 
 const QuizContext = createContext<QuizContextType>({
@@ -40,6 +41,7 @@ const QuizContext = createContext<QuizContextType>({
   wordsForQuiz: [],
   composition: { new: 0, learning: 0, mastered: 0 },
   generateQuiz: async () => ({ success: false }),
+  markAllReady: () => {},
 });
 
 /**
@@ -87,6 +89,10 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const isGeneratingRef = useRef(false);
+
+  const markAllReady = useCallback(() => {
+    setIsAllQuizzesReady(true);
+  }, []);
 
   const selectedLanguageRef = useRef<Language | null>(null);
   const currentLocaleRef = useRef<string>('en');
@@ -315,6 +321,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         wordsForQuiz,
         composition,
         generateQuiz,
+        markAllReady,
       }}
     >
       {children}

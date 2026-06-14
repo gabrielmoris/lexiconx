@@ -223,8 +223,6 @@ const QuizPage = () => {
     return <LoadingComponent message={t('finishing-quiz')} />;
   }
 
-  // TODO: Check why in the onboarding the language selectrion is buggy
-
   return (
     <main className="min-h-[80vh] flex flex-col items-center justify-center md:justify-start  py-20 px-4 w-full">
       {isQuizFinished ? (

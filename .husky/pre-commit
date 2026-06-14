@@ -20,6 +20,7 @@ abort() {
   exit 1
 }
 
+pnpm format || abort "Couldn't format."
 pnpm format:check || abort "FORMATTING ISSUES! Run 'pnpm format'."
 pnpm lint        || abort "LINT FAILED! Fix the lint errors."
 pnpm typecheck   || abort "TYPECHECK FAILED! Fix the type errors."
