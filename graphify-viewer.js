@@ -7,8 +7,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const server = createServer((req, res) => {
-  const urlPath = req.url === '/' ? 'graph.html' : req.url;
+const server = createServer((_req, res) => {
+  const urlPath = 'graph.html';
   const filePath = join(__dirname, 'graphify-out', urlPath);
 
   readFile(filePath, (err, content) => {
