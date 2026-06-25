@@ -13,7 +13,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage --run && npx http-server coverage -p 8080 -o",
-    "prepare": "husky"
+    "prepare": "husky",
+    "graph:update": "graphify update .",
+    "graph:watch": "node graphify-viewer.js"
   },
   "dependencies": {
     "@google/genai": "^0.12.0",
