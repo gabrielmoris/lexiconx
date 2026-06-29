@@ -194,7 +194,8 @@
     "cards": "牌",
     "home": "家",
     "memory-hooks": "记忆钩",
-    "generate-quiz": "生成课程"
+    "generate-quiz": "生成课程",
+    "decks": "卡组"
   },
   "stats": {
     "title": "你的统计",
@@ -341,5 +342,47 @@
     "generating": "正在生成测验...",
     "loading-words": "正在加载单词...",
     "error-fetching-words": "加载单词时出错"
+  },
+  "decks": {
+    "title": "我的卡组",
+    "subtitle": "把你自己的单词组成卡组，然后复习、使用记忆联想或进行测验。",
+    "new-deck": "新建卡组",
+    "edit-deck": "编辑卡组",
+    "deck-name": "卡组名称",
+    "deck-name-placeholder": "例如：旅行必备",
+    "selected-words": "已选单词",
+    "clear-all": "清除全部",
+    "no-words-selected": "尚未选择单词。请在下方搜索并添加单词。",
+    "add-words": "添加单词",
+    "search-placeholder": "搜索要添加的单词...",
+    "no-results": "未找到单词",
+    "no-words-available": "没有可用的单词。请先添加一些卡片。",
+    "cancel": "取消",
+    "save-deck": "保存卡组",
+    "saving": "保存中...",
+    "deck-created": "卡组已创建",
+    "no-decks": "你还没有卡组。创建第一个吧！",
+    "word-count": "{count} 个单词",
+    "edit": "编辑",
+    "review": "复习",
+    "memory-hooks": "记忆联想",
+    "quiz": "测验",
+    "delete-message": "确定要删除此卡组吗？",
+    "error-fetching": "获取卡组时出错",
+    "error-saving": "保存卡组时出错",
+    "error-deleting": "删除卡组时出错"
+  },
+  "deck-review": {
+    "loading": "正在加载卡组...",
+    "empty-deck": "此卡组没有单词。",
+    "back-to-decks": "返回卡组",
+    "card-of": "第 {current} / {total} 张",
+    "word-side": "单词",
+    "definition-side": "释义",
+    "tap-to-flip": "点击翻转",
+    "tap-to-flip-back": "点击翻回",
+    "error-speech": "语音功能不可用",
+    "loading-voices": "请稍候，正在加载语音...",
+    "error-fetching": "获取卡组时出错"
   }
 }

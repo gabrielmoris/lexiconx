@@ -15,6 +15,7 @@ import StatsIcon from '@/components/Icons/StatsIcon';
 import MemoryHookIcon from '@/components/Icons/MemoryHookIcon';
 import { useTranslations } from 'next-intl';
 import QuestionAiIcon from '../Icons/QuestionAiIcon';
+import DeckIcon from '../Icons/DeckIcon';
 
 const Menu: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -76,12 +77,20 @@ const Menu: React.FC = () => {
           <MemoryHookIcon className="w-4 h-4 min-w-4" /> {t('memory-hooks')}
         </Link>
         <Link
-          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 
-          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark 
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark
           px-5 py-2"
           href="/cards"
         >
           <CardsIcon className="w-4 h-4" /> {t('cards')}
+        </Link>
+        <Link
+          className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100
+          dark:hover:bg-gray-700 hover:text-theme-text-light dark:hover:text-theme-text-dark
+          px-5 py-2"
+          href="/decks"
+        >
+          <DeckIcon className="w-4 h-4" /> {t('decks')}
         </Link>
         <Link
           className="flex flex-row justify-start items-center w-full gap-5 hover:bg-gray-100 

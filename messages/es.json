@@ -194,7 +194,8 @@
     "cards": "Tarjetas",
     "home": "Inicio",
     "memory-hooks": "Anclaje Memoria",
-    "generate-quiz": "Generar lección"
+    "generate-quiz": "Generar lección",
+    "decks": "Mazos"
   },
   "stats": {
     "title": "Tus Estadisticas",
@@ -341,5 +342,47 @@
     "generating": "Generando quiz...",
     "loading-words": "Cargando palabras...",
     "error-fetching-words": "Error al cargar palabras"
+  },
+  "decks": {
+    "title": "Mis mazos",
+    "subtitle": "Agrupa tus propias palabras en mazos y repásalas, usa ganchos de memoria o haz un cuestionario.",
+    "new-deck": "Nuevo mazo",
+    "edit-deck": "Editar mazo",
+    "deck-name": "Nombre del mazo",
+    "deck-name-placeholder": "p. ej. Esenciales de viaje",
+    "selected-words": "Palabras seleccionadas",
+    "clear-all": "Borrar todo",
+    "no-words-selected": "No hay palabras seleccionadas. Busca y añade palabras abajo.",
+    "add-words": "Añadir palabras",
+    "search-placeholder": "Buscar palabras para añadir...",
+    "no-results": "No se encontraron palabras",
+    "no-words-available": "No hay palabras disponibles. Añade algunas tarjetas primero.",
+    "cancel": "Cancelar",
+    "save-deck": "Guardar mazo",
+    "saving": "Guardando...",
+    "deck-created": "Mazo creado",
+    "no-decks": "Aún no tienes mazos. ¡Crea el primero!",
+    "word-count": "{count} palabras",
+    "edit": "Editar",
+    "review": "Repasar",
+    "memory-hooks": "Ganchos de memoria",
+    "quiz": "Cuestionario",
+    "delete-message": "¿Seguro que quieres eliminar este mazo?",
+    "error-fetching": "Error al obtener los mazos",
+    "error-saving": "Error al guardar el mazo",
+    "error-deleting": "Error al eliminar el mazo"
+  },
+  "deck-review": {
+    "loading": "Cargando mazo...",
+    "empty-deck": "Este mazo no tiene palabras.",
+    "back-to-decks": "Volver a los mazos",
+    "card-of": "Tarjeta {current} de {total}",
+    "word-side": "Palabra",
+    "definition-side": "Definición",
+    "tap-to-flip": "Toca para girar",
+    "tap-to-flip-back": "Toca para volver",
+    "error-speech": "La función de voz no está disponible",
+    "loading-voices": "Espera, cargando voces...",
+    "error-fetching": "Error al obtener el mazo"
   }
 }

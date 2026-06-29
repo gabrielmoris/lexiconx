@@ -259,7 +259,8 @@
     "cards": "Cards",
     "home": "Home",
     "memory-hooks": "Memory Hooks",
-    "generate-quiz": "Generate Lesson"
+    "generate-quiz": "Generate Lesson",
+    "decks": "Decks"
   },
   "stats": {
     "title": "Your Stats",
@@ -341,5 +342,47 @@
     "generating": "Generating quiz...",
     "loading-words": "Loading word pool...",
     "error-fetching-words": "Error fetching words"
+  },
+  "decks": {
+    "title": "My Decks",
+    "subtitle": "Group your own words into decks, then review them, run memory hooks or take a quiz.",
+    "new-deck": "New Deck",
+    "edit-deck": "Edit Deck",
+    "deck-name": "Deck name",
+    "deck-name-placeholder": "e.g. Travel essentials",
+    "selected-words": "Selected words",
+    "clear-all": "Clear all",
+    "no-words-selected": "No words selected. Search and add words below.",
+    "add-words": "Add words",
+    "search-placeholder": "Search words to add...",
+    "no-results": "No words found",
+    "no-words-available": "No words available. Add some cards first.",
+    "cancel": "Cancel",
+    "save-deck": "Save deck",
+    "saving": "Saving...",
+    "deck-created": "Deck created",
+    "no-decks": "You have no decks yet. Create your first one!",
+    "word-count": "{count} words",
+    "edit": "Edit",
+    "review": "Review",
+    "memory-hooks": "Memory Hooks",
+    "quiz": "Quiz",
+    "delete-message": "Are you sure you want to delete this deck?",
+    "error-fetching": "Error fetching decks",
+    "error-saving": "Error saving deck",
+    "error-deleting": "Error deleting deck"
+  },
+  "deck-review": {
+    "loading": "Loading deck...",
+    "empty-deck": "This deck has no words.",
+    "back-to-decks": "Back to decks",
+    "card-of": "Card {current} of {total}",
+    "word-side": "Word",
+    "definition-side": "Definition",
+    "tap-to-flip": "Tap to flip",
+    "tap-to-flip-back": "Tap to flip back",
+    "error-speech": "Speech functionality is not available",
+    "loading-voices": "Please wait, loading speech voices...",
+    "error-fetching": "Error fetching deck"
   }
 }

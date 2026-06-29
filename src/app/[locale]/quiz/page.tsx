@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { Suspense, useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useToastContext } from '@/context/ToastContext';
@@ -14,18 +14,20 @@ import QuizStartCard from '@/components/Quiz/QuizStartCard';
 import QuizView from '@/components/Quiz/QuizView';
 import type { User, Word, Language } from '@/types/Words';
 import { QuizComposition } from '@/types/Quiz';
-import { getUserData, getWordsForQuiz } from '@/lib/apis';
-import { redirect } from 'next/navigation';
+import { getDeckWithWords, getUserData, getWordsForQuiz } from '@/lib/apis';
+import { redirect, useSearchParams } from 'next/navigation';
 
 type QuizMode = 'idle' | 'generating' | 'active';
 
-const QuizPage = () => {
+const QuizPageInner = () => {
   const { data: session, status } = useSession();
   const { showToast } = useToastContext();
   const t = useTranslations('quiz');
   const [userData, setUserData] = useState<User>();
   const { selectedLanguage, isSelectedLanguageLoading } = useLanguage();
   const { generateQuiz } = useQuiz();
+  const searchParams = useSearchParams();
+  const deckId = searchParams.get('deckId');
 
   const [mode, setMode] = useState<QuizMode>('idle');
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
@@ -63,6 +65,15 @@ const QuizPage = () => {
       if (status !== 'authenticated' || !selectedLanguage.language) return;
 
       try {
+        // When launched from a deck, seed the selection with the deck's words
+        // instead of the SRS-balanced auto-selection.
+        if (deckId) {
+          const { data } = await getDeckWithWords(deckId);
+          if (!data?.words?.length) return;
+          setSelectedWords(data.words);
+          return;
+        }
+
         const { wordsForQuiz, composition: fetchedComposition } = await getWordsForQuiz(
           selectedLanguage.language,
           selectedLanguage.language as Language
@@ -93,7 +104,7 @@ const QuizPage = () => {
     };
 
     fetchWordPool();
-  }, [status, selectedLanguage.language, isSelectedLanguageLoading, isQuizLoading]);
+  }, [status, selectedLanguage.language, isSelectedLanguageLoading, isQuizLoading, deckId]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -249,5 +260,11 @@ const QuizPage = () => {
     </main>
   );
 };
+
+const QuizPage = () => (
+  <Suspense fallback={<LoadingComponent />}>
+    <QuizPageInner />
+  </Suspense>
+);
 
 export default QuizPage;
