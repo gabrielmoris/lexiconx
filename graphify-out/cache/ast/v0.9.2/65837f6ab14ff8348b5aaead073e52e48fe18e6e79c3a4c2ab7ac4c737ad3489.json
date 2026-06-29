@@ -1,1 +1,536 @@
-{"nodes": [{"id": "home_user_lexiconx_readme_md", "label": "README.md", "file_type": "document", "source_file": "README.md", "source_location": "L1"}, {"id": "home_user_lexiconx_readme_lexiconx", "label": "\ud83c\udf0d Lexiconx", "file_type": "document", "source_file": "README.md", "source_location": "L1"}, {"id": "home_user_lexiconx_readme_supported_languages", "label": "\ud83c\udf10 Supported Languages", "file_type": "document", "source_file": "README.md", "source_location": "L5"}, {"id": "home_user_lexiconx_readme_features", "label": "\u2728 Features", "file_type": "document", "source_file": "README.md", "source_location": "L13"}, {"id": "home_user_lexiconx_readme_tech_stack", "label": "\ud83d\udee0 Tech Stack", "file_type": "document", "source_file": "README.md", "source_location": "L30"}, {"id": "home_user_lexiconx_readme_architecture", "label": "\ud83c\udfd7 Architecture", "file_type": "document", "source_file": "README.md", "source_location": "L56"}, {"id": "home_user_lexiconx_readme_key_flows", "label": "Key Flows", "file_type": "document", "source_file": "README.md", "source_location": "L75"}, {"id": "home_user_lexiconx_readme_quiz_flow_word_selection_generation_play", "label": "Quiz Flow (Word Selection \u2192 Generation \u2192 Play)", "file_type": "document", "source_file": "README.md", "source_location": "L77"}, {"id": "home_user_lexiconx_readme_memory_hooks_flow_keyword_method", "label": "Memory Hooks Flow (Keyword Method)", "file_type": "document", "source_file": "README.md", "source_location": "L104"}, {"id": "home_user_lexiconx_readme_getting_started", "label": "\ud83d\udce6 Getting Started", "file_type": "document", "source_file": "README.md", "source_location": "L135"}, {"id": "home_user_lexiconx_readme_prerequisites", "label": "Prerequisites", "file_type": "document", "source_file": "README.md", "source_location": "L137"}, {"id": "home_user_lexiconx_readme_environment_variables", "label": "Environment Variables", "file_type": "document", "source_file": "README.md", "source_location": "L145"}, {"id": "home_user_lexiconx_readme_installation", "label": "Installation", "file_type": "document", "source_file": "README.md", "source_location": "L165"}, {"id": "home_user_lexiconx_readme_database_structure", "label": "\ud83d\uddc4 Database Structure", "file_type": "document", "source_file": "README.md", "source_location": "L187"}, {"id": "home_user_lexiconx_readme_users_collection", "label": "Users Collection", "file_type": "document", "source_file": "README.md", "source_location": "L189"}, {"id": "home_user_lexiconx_readme_words_collection", "label": "Words Collection", "file_type": "document", "source_file": "README.md", "source_location": "L213"}, {"id": "home_user_lexiconx_readme_quizsessions_collection", "label": "QuizSessions Collection", "file_type": "document", "source_file": "README.md", "source_location": "L235"}, {"id": "home_user_lexiconx_readme_memoryhooks_collection", "label": "MemoryHooks Collection", "file_type": "document", "source_file": "README.md", "source_location": "L252"}, {"id": "home_user_lexiconx_readme_api_routes", "label": "\ud83d\udd0c API Routes", "file_type": "document", "source_file": "README.md", "source_location": "L269"}, {"id": "home_user_lexiconx_readme_pages", "label": "\ud83d\udcc4 Pages", "file_type": "document", "source_file": "README.md", "source_location": "L284"}, {"id": "home_user_lexiconx_readme_project_structure", "label": "\ud83d\udcc1 Project Structure", "file_type": "document", "source_file": "README.md", "source_location": "L301"}, {"id": "home_user_lexiconx_readme_scripts", "label": "\ud83d\udd27 Scripts", "file_type": "document", "source_file": "README.md", "source_location": "L319"}, {"id": "home_user_lexiconx_readme_pre_commit_hook", "label": "Pre-commit Hook", "file_type": "document", "source_file": "README.md", "source_location": "L331"}, {"id": "home_user_lexiconx_readme_contributing", "label": "\ud83e\udd1d Contributing", "file_type": "document", "source_file": "README.md", "source_location": "L337"}, {"id": "home_user_lexiconx_readme_code_style", "label": "Code Style", "file_type": "document", "source_file": "README.md", "source_location": "L347"}, {"id": "home_user_lexiconx_readme_scientific_basis", "label": "\ud83c\udf93 Scientific Basis", "file_type": "document", "source_file": "README.md", "source_location": "L361"}, {"id": "home_user_lexiconx_readme_1_spaced_repetition_modified_sm_2_algorithm", "label": "1. Spaced Repetition \u2014 Modified SM-2 Algorithm", "file_type": "document", "source_file": "README.md", "source_location": "L365"}, {"id": "home_user_lexiconx_readme_2_interleaved_practice_smart_quiz_composition", "label": "2. Interleaved Practice \u2014 Smart Quiz Composition", "file_type": "document", "source_file": "README.md", "source_location": "L371"}, {"id": "home_user_lexiconx_readme_3_elaborative_interrogation_quiz_explanation_fields", "label": "3. Elaborative Interrogation \u2014 Quiz Explanation Fields", "file_type": "document", "source_file": "README.md", "source_location": "L377"}, {"id": "home_user_lexiconx_readme_4_contextual_learning_i_1_comprehensible_input", "label": "4. Contextual Learning \u2014 i+1 Comprehensible Input", "file_type": "document", "source_file": "README.md", "source_location": "L383"}, {"id": "home_user_lexiconx_readme_5_memory_hooks_keyword_method_mnemonics", "label": "5. Memory Hooks \u2014 Keyword Method Mnemonics", "file_type": "document", "source_file": "README.md", "source_location": "L389"}, {"id": "home_user_lexiconx_readme_6_active_recall_quiz_retrieval_practice", "label": "6. Active Recall \u2014 Quiz Retrieval Practice", "file_type": "document", "source_file": "README.md", "source_location": "L395"}, {"id": "home_user_lexiconx_readme_license", "label": "\ud83d\udcc4 License", "file_type": "document", "source_file": "README.md", "source_location": "L403"}], "edges": [{"source": "home_user_lexiconx_readme_md", "target": "home_user_lexiconx_readme_lexiconx", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L1", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_supported_languages", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L5", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_features", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L13", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_tech_stack", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L30", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L56", "weight": 1.0}, {"source": "home_user_lexiconx_readme_architecture", "target": "home_user_lexiconx_readme_key_flows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L75", "weight": 1.0}, {"source": "home_user_lexiconx_readme_key_flows", "target": "home_user_lexiconx_readme_quiz_flow_word_selection_generation_play", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L77", "weight": 1.0}, {"source": "home_user_lexiconx_readme_key_flows", "target": "home_user_lexiconx_readme_memory_hooks_flow_keyword_method", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L104", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_getting_started", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L135", "weight": 1.0}, {"source": "home_user_lexiconx_readme_getting_started", "target": "home_user_lexiconx_readme_prerequisites", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L137", "weight": 1.0}, {"source": "home_user_lexiconx_readme_getting_started", "target": "home_user_lexiconx_readme_environment_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L145", "weight": 1.0}, {"source": "home_user_lexiconx_readme_getting_started", "target": "home_user_lexiconx_readme_installation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L165", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_database_structure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L187", "weight": 1.0}, {"source": "home_user_lexiconx_readme_database_structure", "target": "home_user_lexiconx_readme_users_collection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L189", "weight": 1.0}, {"source": "home_user_lexiconx_readme_database_structure", "target": "home_user_lexiconx_readme_words_collection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L213", "weight": 1.0}, {"source": "home_user_lexiconx_readme_database_structure", "target": "home_user_lexiconx_readme_quizsessions_collection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L235", "weight": 1.0}, {"source": "home_user_lexiconx_readme_database_structure", "target": "home_user_lexiconx_readme_memoryhooks_collection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L252", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_api_routes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L269", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_pages", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L284", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_project_structure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L301", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_scripts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L319", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scripts", "target": "home_user_lexiconx_readme_pre_commit_hook", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L331", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_contributing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L337", "weight": 1.0}, {"source": "home_user_lexiconx_readme_contributing", "target": "home_user_lexiconx_readme_code_style", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L347", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_scientific_basis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L361", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_1_spaced_repetition_modified_sm_2_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L365", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_2_interleaved_practice_smart_quiz_composition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L371", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_3_elaborative_interrogation_quiz_explanation_fields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L377", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_4_contextual_learning_i_1_comprehensible_input", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L383", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_5_memory_hooks_keyword_method_mnemonics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L389", "weight": 1.0}, {"source": "home_user_lexiconx_readme_scientific_basis", "target": "home_user_lexiconx_readme_6_active_recall_quiz_retrieval_practice", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L395", "weight": 1.0}, {"source": "home_user_lexiconx_readme_lexiconx", "target": "home_user_lexiconx_readme_license", "relation": "contains", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L403", "weight": 1.0}, {"source": "home_user_lexiconx_readme_md", "target": "home_user_lexiconx_license_md", "relation": "references", "confidence": "EXTRACTED", "source_file": "README.md", "source_location": "L409", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "home_user_lexiconx_readme_md",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "home_user_lexiconx_readme_lexiconx",
+      "label": "\ud83c\udf0d Lexiconx",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "home_user_lexiconx_readme_supported_languages",
+      "label": "\ud83c\udf10 Supported Languages",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "home_user_lexiconx_readme_features",
+      "label": "\u2728 Features",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "home_user_lexiconx_readme_tech_stack",
+      "label": "\ud83d\udee0 Tech Stack",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "home_user_lexiconx_readme_architecture",
+      "label": "\ud83c\udfd7 Architecture",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "home_user_lexiconx_readme_key_flows",
+      "label": "Key Flows",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L75"
+    },
+    {
+      "id": "home_user_lexiconx_readme_quiz_flow_word_selection_generation_play",
+      "label": "Quiz Flow (Word Selection \u2192 Generation \u2192 Play)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "home_user_lexiconx_readme_memory_hooks_flow_keyword_method",
+      "label": "Memory Hooks Flow (Keyword Method)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L104"
+    },
+    {
+      "id": "home_user_lexiconx_readme_getting_started",
+      "label": "\ud83d\udce6 Getting Started",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L135"
+    },
+    {
+      "id": "home_user_lexiconx_readme_prerequisites",
+      "label": "Prerequisites",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L137"
+    },
+    {
+      "id": "home_user_lexiconx_readme_environment_variables",
+      "label": "Environment Variables",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "home_user_lexiconx_readme_installation",
+      "label": "Installation",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L165"
+    },
+    {
+      "id": "home_user_lexiconx_readme_database_structure",
+      "label": "\ud83d\uddc4 Database Structure",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "home_user_lexiconx_readme_users_collection",
+      "label": "Users Collection",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L189"
+    },
+    {
+      "id": "home_user_lexiconx_readme_words_collection",
+      "label": "Words Collection",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L213"
+    },
+    {
+      "id": "home_user_lexiconx_readme_quizsessions_collection",
+      "label": "QuizSessions Collection",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L235"
+    },
+    {
+      "id": "home_user_lexiconx_readme_memoryhooks_collection",
+      "label": "MemoryHooks Collection",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L252"
+    },
+    {
+      "id": "home_user_lexiconx_readme_api_routes",
+      "label": "\ud83d\udd0c API Routes",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L269"
+    },
+    {
+      "id": "home_user_lexiconx_readme_pages",
+      "label": "\ud83d\udcc4 Pages",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "home_user_lexiconx_readme_project_structure",
+      "label": "\ud83d\udcc1 Project Structure",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "home_user_lexiconx_readme_scripts",
+      "label": "\ud83d\udd27 Scripts",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L319"
+    },
+    {
+      "id": "home_user_lexiconx_readme_pre_commit_hook",
+      "label": "Pre-commit Hook",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L331"
+    },
+    {
+      "id": "home_user_lexiconx_readme_contributing",
+      "label": "\ud83e\udd1d Contributing",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L337"
+    },
+    {
+      "id": "home_user_lexiconx_readme_code_style",
+      "label": "Code Style",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L347"
+    },
+    {
+      "id": "home_user_lexiconx_readme_scientific_basis",
+      "label": "\ud83c\udf93 Scientific Basis",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L361"
+    },
+    {
+      "id": "home_user_lexiconx_readme_1_spaced_repetition_modified_sm_2_algorithm",
+      "label": "1. Spaced Repetition \u2014 Modified SM-2 Algorithm",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L365"
+    },
+    {
+      "id": "home_user_lexiconx_readme_2_interleaved_practice_smart_quiz_composition",
+      "label": "2. Interleaved Practice \u2014 Smart Quiz Composition",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L371"
+    },
+    {
+      "id": "home_user_lexiconx_readme_3_elaborative_interrogation_quiz_explanation_fields",
+      "label": "3. Elaborative Interrogation \u2014 Quiz Explanation Fields",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L377"
+    },
+    {
+      "id": "home_user_lexiconx_readme_4_contextual_learning_i_1_comprehensible_input",
+      "label": "4. Contextual Learning \u2014 i+1 Comprehensible Input",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L383"
+    },
+    {
+      "id": "home_user_lexiconx_readme_5_memory_hooks_keyword_method_mnemonics",
+      "label": "5. Memory Hooks \u2014 Keyword Method Mnemonics",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L389"
+    },
+    {
+      "id": "home_user_lexiconx_readme_6_active_recall_quiz_retrieval_practice",
+      "label": "6. Active Recall \u2014 Quiz Retrieval Practice",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L395"
+    },
+    {
+      "id": "home_user_lexiconx_readme_license",
+      "label": "\ud83d\udcc4 License",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L403"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_user_lexiconx_readme_md",
+      "target": "home_user_lexiconx_readme_lexiconx",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_supported_languages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_features",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_tech_stack",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_architecture",
+      "target": "home_user_lexiconx_readme_key_flows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_key_flows",
+      "target": "home_user_lexiconx_readme_quiz_flow_word_selection_generation_play",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_key_flows",
+      "target": "home_user_lexiconx_readme_memory_hooks_flow_keyword_method",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_getting_started",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_getting_started",
+      "target": "home_user_lexiconx_readme_prerequisites",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_getting_started",
+      "target": "home_user_lexiconx_readme_environment_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_getting_started",
+      "target": "home_user_lexiconx_readme_installation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_database_structure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_database_structure",
+      "target": "home_user_lexiconx_readme_users_collection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_database_structure",
+      "target": "home_user_lexiconx_readme_words_collection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_database_structure",
+      "target": "home_user_lexiconx_readme_quizsessions_collection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_database_structure",
+      "target": "home_user_lexiconx_readme_memoryhooks_collection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_api_routes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_pages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_project_structure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_scripts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scripts",
+      "target": "home_user_lexiconx_readme_pre_commit_hook",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L331",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_contributing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_contributing",
+      "target": "home_user_lexiconx_readme_code_style",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_scientific_basis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L361",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_1_spaced_repetition_modified_sm_2_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L365",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_2_interleaved_practice_smart_quiz_composition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L371",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_3_elaborative_interrogation_quiz_explanation_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_4_contextual_learning_i_1_comprehensible_input",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_5_memory_hooks_keyword_method_mnemonics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L389",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_scientific_basis",
+      "target": "home_user_lexiconx_readme_6_active_recall_quiz_retrieval_practice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L395",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_lexiconx",
+      "target": "home_user_lexiconx_readme_license",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "home_user_lexiconx_readme_md",
+      "target": "home_user_lexiconx_license_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L409",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
