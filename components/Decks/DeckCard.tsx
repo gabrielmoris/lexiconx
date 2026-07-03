@@ -10,6 +10,7 @@ import QuestionAiIcon from '../Icons/QuestionAiIcon';
 import MemoryHookIcon from '../Icons/MemoryHookIcon';
 import CardsIcon from '../Icons/CardsIcon';
 import RemoveIcon from '../Icons/RemoveIcon';
+import EditIcon from '../Icons/EditIcon';
 
 interface DeckCardProps {
   deck: Deck;
@@ -35,7 +36,6 @@ const DeckCard = ({ deck, onEdit }: DeckCardProps) => {
           message={t('delete-message')}
         />
       )}
-
       <div className="flex flex-row justify-between items-start gap-2">
         <div className="min-w-0">
           <h3
@@ -49,18 +49,12 @@ const DeckCard = ({ deck, onEdit }: DeckCardProps) => {
           </p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={() => onEdit(deck)}
-            className="text-xs text-gray-500 dark:text-gray-400 hover:text-secondary transition-colors cursor-pointer"
-          >
-            {t('edit')}
-          </button>
+          <EditIcon className="w-5 h-5 cursor-pointer" onClick={() => onEdit(deck)} />
           <RemoveIcon className="w-5 h-5 cursor-pointer" onClick={() => setDeletePopup(true)} />
         </div>
       </div>
-
-      <div className="flex flex-col sm:flex-row gap-2">
+      {/* //TODO: Memory hooks is broken! check what happens */}
+      <div className="flex flex-col gap-2">
         <Link href={`/decks/${deck._id}/review`} className={actionClass}>
           <CardsIcon className="w-4 h-4" /> {t('review')}
         </Link>

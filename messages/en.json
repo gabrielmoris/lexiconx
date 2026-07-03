@@ -363,7 +363,7 @@
     "deck-created": "Deck created",
     "no-decks": "You have no decks yet. Create your first one!",
     "word-count": "{count} words",
-    "edit": "Edit",
+    "edit": "",
     "review": "Review",
     "memory-hooks": "Memory Hooks",
     "quiz": "Quiz",

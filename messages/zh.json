@@ -363,7 +363,7 @@
     "deck-created": "卡组已创建",
     "no-decks": "你还没有卡组。创建第一个吧！",
     "word-count": "{count} 个单词",
-    "edit": "编辑",
+    "edit": "",
     "review": "复习",
     "memory-hooks": "记忆联想",
     "quiz": "测验",
