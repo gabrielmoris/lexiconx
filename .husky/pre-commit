@@ -20,6 +20,8 @@ abort() {
   exit 1
 }
 
+pnpm graph:update || abort "Sorry, coulldn't generate graph."
+git add .
 pnpm format || abort "Couldn't format."
 pnpm format:check || abort "FORMATTING ISSUES! Run 'pnpm format'."
 pnpm lint        || abort "LINT FAILED! Fix the lint errors."

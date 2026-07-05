@@ -193,7 +193,8 @@
     "cards": "Karten",
     "home": "Home",
     "memory-hooks": "Gedachtnishaken",
-    "generate-quiz": "Lektion generieren"
+    "generate-quiz": "Lektion generieren",
+    "decks": "Stapel"
   },
   "stats": {
     "title": "Deine Statistiken",
@@ -340,5 +341,47 @@
     "generating": "Quiz wird erstellt...",
     "loading-words": "Woerter werden geladen...",
     "error-fetching-words": "Fehler beim Laden der Woerter"
+  },
+  "decks": {
+    "title": "Meine Stapel",
+    "subtitle": "Fasse deine eigenen Wörter zu Stapeln zusammen und übe sie, nutze Eselsbrücken oder mach ein Quiz.",
+    "new-deck": "Neuer Stapel",
+    "edit-deck": "Stapel bearbeiten",
+    "deck-name": "Stapelname",
+    "deck-name-placeholder": "z. B. Reise-Grundlagen",
+    "selected-words": "Ausgewählte Wörter",
+    "clear-all": "Alle entfernen",
+    "no-words-selected": "Keine Wörter ausgewählt. Suche und füge unten Wörter hinzu.",
+    "add-words": "Wörter hinzufügen",
+    "search-placeholder": "Wörter zum Hinzufügen suchen...",
+    "no-results": "Keine Wörter gefunden",
+    "no-words-available": "Keine Wörter verfügbar. Füge zuerst einige Karten hinzu.",
+    "cancel": "Abbrechen",
+    "save-deck": "Stapel speichern",
+    "saving": "Speichern...",
+    "deck-created": "Stapel erstellt",
+    "no-decks": "Du hast noch keine Stapel. Erstelle deinen ersten!",
+    "word-count": "{count} Wörter",
+    "edit": "",
+    "review": "Wiederholen",
+    "memory-hooks": "Eselsbrücken",
+    "quiz": "Quiz",
+    "delete-message": "Möchtest du diesen Stapel wirklich löschen?",
+    "error-fetching": "Fehler beim Laden der Stapel",
+    "error-saving": "Fehler beim Speichern des Stapels",
+    "error-deleting": "Fehler beim Löschen des Stapels"
+  },
+  "deck-review": {
+    "loading": "Stapel wird geladen...",
+    "empty-deck": "Dieser Stapel hat keine Wörter.",
+    "back-to-decks": "Zurück zu den Stapeln",
+    "card-of": "Karte {current} von {total}",
+    "word-side": "Wort",
+    "definition-side": "Definition",
+    "tap-to-flip": "Zum Umdrehen tippen",
+    "tap-to-flip-back": "Zum Zurückdrehen tippen",
+    "error-speech": "Sprachfunktion ist nicht verfügbar",
+    "loading-voices": "Bitte warten, Sprachstimmen werden geladen...",
+    "error-fetching": "Fehler beim Laden des Stapels"
   }
 }

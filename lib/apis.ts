@@ -195,9 +195,41 @@ export const quizGeneration = async (
   });
 };
 
+// DECK RELATED APIS
+export const getDecks = async (language: Language) => {
+  const endpoint = `/api/decks?language=${language}`;
+  return _apiHandler(endpoint, { method: 'GET' });
+};
+
+export const getDeckWithWords = async (deckId: string) => {
+  return _apiHandler(`/api/decks/${deckId}`, { method: 'GET' });
+};
+
+export const createDeck = async (name: string, language: Language, wordIds: string[]) => {
+  return _apiHandler('/api/decks', {
+    method: 'POST',
+    body: { name, language, wordIds },
+  });
+};
+
+export const updateDeck = async (
+  deckId: string,
+  updates: { name?: string; wordIds?: string[] }
+) => {
+  return _apiHandler(`/api/decks/${deckId}`, {
+    method: 'PUT',
+    body: updates,
+  });
+};
+
+export const deleteDeck = async (deckId: string) => {
+  return _apiHandler(`/api/decks/${deckId}`, { method: 'DELETE' });
+};
+
 // MEMORY HOOKS RELATED APIS
-export const getMemoryHooks = async (language: Language) => {
-  const endpoint = `/api/memory-hooks?language=${language}`;
+export const getMemoryHooks = async (language: Language, wordIds?: string[]) => {
+  const idsQuery = wordIds && wordIds.length ? `&ids=${wordIds.join(',')}` : '';
+  const endpoint = `/api/memory-hooks?language=${language}${idsQuery}`;
   return _apiHandler(endpoint, { method: 'GET' });
 };
 

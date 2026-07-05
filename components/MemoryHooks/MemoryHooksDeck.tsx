@@ -6,15 +6,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageToLearnContext';
 import { useToastContext } from '@/context/ToastContext';
 import { MemoryHookCardData } from '@/types/MemoryHook';
-import { getMemoryHooks, generateMemoryHooksApi } from '@/lib/apis';
+import { getDeckWithWords, getMemoryHooks, generateMemoryHooksApi } from '@/lib/apis';
 import MemoryHookCard from './MemoryHookCard';
 import LoadingComponent from '@/components/Layout/LoadingComponent';
 import { localeToLanguage } from '@/lib/helpers';
-import { Locale } from '@/types/Words';
+import { Locale, Word } from '@/types/Words';
 import ArrowLeft from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
 
-const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
+const MemoryHooksDeck: React.FC<{ userLocale: Locale; deckId?: string }> = ({
+  userLocale,
+  deckId,
+}) => {
   const [cards, setCards] = useState<MemoryHookCardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +32,15 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
   const fetchCards = useCallback(async () => {
     setIsLoading(true);
     try {
-      const { data } = await getMemoryHooks(learningLanguage);
+      // When scoped to a deck, build hooks for exactly the deck's words;
+      // otherwise the API falls back to the user's weakest words.
+      let deckWordIds: string[] | undefined;
+      if (deckId) {
+        const { data: deck } = await getDeckWithWords(deckId);
+        deckWordIds = (deck?.words || []).map((w: Word) => w._id!).filter(Boolean);
+      }
+
+      const { data } = await getMemoryHooks(learningLanguage, deckWordIds);
       setCards(data || []);
 
       // Find cards without hooks and generate them
@@ -44,7 +55,7 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
           await generateMemoryHooksApi(wordIds, learningLanguage, userLanguage);
 
           // Re-fetch to get updated cards with hooks
-          const { data: updatedCards } = await getMemoryHooks(learningLanguage);
+          const { data: updatedCards } = await getMemoryHooks(learningLanguage, deckWordIds);
           setCards(updatedCards || []);
         } catch (error) {
           console.error('Error generating hooks:', error);
@@ -65,7 +76,7 @@ const MemoryHooksDeck: React.FC<{ userLocale: Locale }> = ({ userLocale }) => {
       });
     }
     setIsLoading(false);
-  }, [learningLanguage, userLanguage, showToast, t]);
+  }, [learningLanguage, userLanguage, deckId, showToast, t]);
 
   useEffect(() => {
     if (isSelectedLanguageLoading) return;

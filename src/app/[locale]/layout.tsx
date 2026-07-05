@@ -9,6 +9,7 @@ import Header from '@/components/Layout/Header';
 import { ToastProvider } from '@/context/ToastContext';
 import { LanguageToLearnProvider } from '@/context/LanguageToLearnContext';
 import { WordsProvider } from '@/context/WordsContext';
+import { DecksProvider } from '@/context/DecksContext';
 import { QuizProvider } from '@/context/QuizContext';
 
 export default async function LocaleLayout({
@@ -40,10 +41,12 @@ export default async function LocaleLayout({
               <ToastProvider>
                 <LanguageToLearnProvider>
                   <WordsProvider>
-                    <QuizProvider>
-                      <Header />
-                      {children}
-                    </QuizProvider>
+                    <DecksProvider>
+                      <QuizProvider>
+                        <Header />
+                        {children}
+                      </QuizProvider>
+                    </DecksProvider>
                   </WordsProvider>
                 </LanguageToLearnProvider>
               </ToastProvider>

@@ -20,6 +20,8 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const language = searchParams.get('language');
+    const idsParam = searchParams.get('ids');
+    const ids = idsParam ? idsParam.split(',').filter(Boolean) : [];
 
     if (!language) {
       return NextResponse.json({ error: 'Language parameter is required' }, { status: 400 });
@@ -32,11 +34,15 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const weakWords = await Word.aggregate([
-      { $match: { userId: user._id, language, easeFactor: { $exists: true } } },
-      { $sort: { easeFactor: 1 } },
-      { $limit: MAX_WEAK_WORDS },
-    ]);
+    // When explicit ids are provided (e.g. a deck), build cards for exactly
+    // those words; otherwise fall back to the user's weakest words.
+    const weakWords: WordType[] = ids.length
+      ? await Word.find({ _id: { $in: ids }, userId: user._id, language })
+      : await Word.aggregate([
+          { $match: { userId: user._id, language, easeFactor: { $exists: true } } },
+          { $sort: { easeFactor: 1 } },
+          { $limit: MAX_WEAK_WORDS },
+        ]);
 
     if (weakWords.length === 0) {
       return NextResponse.json({ error: null, data: [] });

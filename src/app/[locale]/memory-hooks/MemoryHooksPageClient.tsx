@@ -1,12 +1,15 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import MemoryHooksDeck from '@/components/MemoryHooks/MemoryHooksDeck';
 import { Locale } from '@/types/Words';
 
 const MemoryHooksPageClient = () => {
   const locale = useLocale() as Locale;
   const t = useTranslations('memory-hooks');
+  const searchParams = useSearchParams();
+  const deckId = searchParams.get('deckId') ?? undefined;
 
   return (
     <main className="min-h-screen w-full md:w-5/6 px-5 md:px-0 flex flex-col items-center justify-start pt-10 pb-20 md:py-15">
@@ -16,7 +19,7 @@ const MemoryHooksPageClient = () => {
       <p className="text-sm text-gray-500 dark:text-gray-400 mb-8 max-w-md text-center">
         {t('subtitle')}
       </p>
-      <MemoryHooksDeck userLocale={locale} />
+      <MemoryHooksDeck userLocale={locale} deckId={deckId} />
     </main>
   );
 };
