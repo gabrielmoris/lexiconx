@@ -53,10 +53,8 @@ next-env.d.ts
 package-lock.json
 /docs
 
-# Agent Zero documentation (belongs in .a0proj/)
-/docs/
-/documents/
-AGENTS.md
+# Graphify
+/graphify-out/cache/*
 
 # npm lock file (project uses pnpm)
 package-lock.json
