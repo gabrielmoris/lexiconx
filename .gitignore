@@ -54,7 +54,7 @@ package-lock.json
 /docs
 
 # Graphify
-/graphify-out/cache/*
+# /graphify-out/cache/*
 
 # npm lock file (project uses pnpm)
 package-lock.json

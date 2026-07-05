@@ -11,16 +11,16 @@ Lexiconx is an AI-powered vocabulary quiz app for language learning (Next.js 15 
 
 ### Commands
 
-| Task         | Command              | Notes                          |
-| ------------ | -------------------- | ------------------------------ |
-| Dev          | `pnpm dev`           | Next.js with `--turbopack`     |
-| Build        | `pnpm build`         |                                |
-| Lint         | `pnpm lint`          | `next lint`                    |
-| Typecheck    | `pnpm typecheck`     | `tsc --noEmit`                 |
-| Format       | `pnpm format`        | Prettier, writes in place      |
-| Format check | `pnpm format:check`  | Prettier, no writes (CI/hook)  |
-| Test         | `pnpm test`          | `vitest run` (one-shot)        |
-| Test (TDD)   | `pnpm test:watch`    | `vitest`                       |
+| Task         | Command             | Notes                         |
+| ------------ | ------------------- | ----------------------------- |
+| Dev          | `pnpm dev`          | Next.js with `--turbopack`    |
+| Build        | `pnpm build`        |                               |
+| Lint         | `pnpm lint`         | `next lint`                   |
+| Typecheck    | `pnpm typecheck`    | `tsc --noEmit`                |
+| Format       | `pnpm format`       | Prettier, writes in place     |
+| Format check | `pnpm format:check` | Prettier, no writes (CI/hook) |
+| Test         | `pnpm test`         | `vitest run` (one-shot)       |
+| Test (TDD)   | `pnpm test:watch`   | `vitest`                      |
 
 ## Detailed guides
 
