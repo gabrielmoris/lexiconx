@@ -1426,7 +1426,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_quiz_wordchip",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchip.tsx"
     },
     {
@@ -1436,7 +1436,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_quiz_wordchip_wordchipprops",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchipprops"
     },
     {
@@ -1446,7 +1446,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_quiz_wordchip_wordchip",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchip()"
     },
     {
@@ -3226,7 +3226,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "lib_apis_getwordsforquiz",
-      "community": 10,
+      "community": 1,
       "norm_label": "getwordsforquiz()"
     },
     {
@@ -7328,6 +7328,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Decks/DeckCard.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "components_decks_deckcard",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7696,17 +7707,6 @@
       "weight": 1.0,
       "source": "components_decks_decksmanager",
       "target": "components_icons_deckicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Decks/DecksManager.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "components_decks_decksmanager",
-      "target": "components_icons_deckicon_deckicon",
       "confidence_score": 1.0
     },
     {
@@ -8182,17 +8182,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Layout/Menu.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "components_layout_menu",
-      "target": "components_icons_deckicon_deckicon",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/Icons/DeleteAccountIcon.tsx",
@@ -8402,6 +8391,61 @@
       "weight": 1.0,
       "source": "src_app_locale_page",
       "target": "components_icons_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/LocaleSwitcher.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_onboarding_localeswitcher",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/OnboardingText.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_onboarding_onboardingtext",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/ShowLearningFlag.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_words_showlearningflag",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_locale_page",
+      "target": "components_icons_germanflag_germanflag",
       "confidence_score": 1.0
     },
     {
@@ -8763,6 +8807,28 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Quiz/WordChip.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_quiz_wordchip",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/WordCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_words_wordcard",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/Icons/RussianFlag.tsx",
@@ -8813,6 +8879,39 @@
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "components_icons_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/LocaleSwitcher.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "components_onboarding_localeswitcher",
+      "target": "components_icons_russianflag_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/ShowLearningFlag.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_words_showlearningflag",
+      "target": "components_icons_russianflag_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "components_icons_russianflag_russianflag",
       "confidence_score": 1.0
     },
     {
@@ -12927,12 +13026,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L27",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_languagetolearncontext_uselanguage"
+      "target": "context_languagetolearncontext_uselanguage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13317,12 +13416,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L28",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_quizcontext_usequiz"
+      "target": "context_quizcontext_usequiz",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13488,12 +13587,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L24",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_toastcontext_usetoastcontext"
+      "target": "context_toastcontext_usetoastcontext",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14520,12 +14619,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L59",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "hooks_usequizmanager_usequizmanager"
+      "target": "hooks_usequizmanager_usequizmanager",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14692,12 +14791,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L153",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "hooks_usetexttospeech_usetexttospeech"
+      "target": "hooks_usetexttospeech_usetexttospeech",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -16332,6 +16431,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
+      "target": "lib_apis_getuserdata",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -16343,6 +16453,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
+      "target": "lib_apis_getwordsforquiz",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -16350,6 +16471,17 @@
       "source_location": "L17",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page",
+      "target": "lib_apis_getdeckwithwords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
       "target": "lib_apis_getdeckwithwords",
       "confidence_score": 1.0
     },
@@ -20965,5 +21097,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "279a90e086282efbd4a7aee52ddf4759ea8c4a0e"
+  "built_at_commit": "4c6c5cc45ce3f592088883cf65a3becd018b6b2f"
 }

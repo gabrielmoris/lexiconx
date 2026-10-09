@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 671 nodes · 1340 edges · 39 communities (26 shown, 13 thin omitted)
+- 671 nodes · 1352 edges · 39 communities (26 shown, 13 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `279a90e0`
+- Built from commit: `4c6c5cc4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -71,10 +71,10 @@
   components/MemoryHooks/MemoryHookCard.tsx → types/MemoryHook.ts
 - `LanguageLearningOnboarding()` --calls--> `useLanguage()`  [EXTRACTED]
   components/Onboarding/LanguageLearningOnboarding.tsx → context/LanguageToLearnContext.tsx
+- `WordChipProps` --references--> `Word`  [EXTRACTED]
+  components/Quiz/WordChip.tsx → types/Words.ts
 - `StatsPage()` --calls--> `useAuthGuard()`  [EXTRACTED]
   src/app/[locale]/stats/page.tsx → hooks/useAuthGuard.tsx
-- `UseTextToSpeechReturn` --references--> `Language`  [EXTRACTED]
-  hooks/useTextToSpeech.tsx → types/Words.ts
 
 ## Import Cycles
 - 1-file cycle: `src/i18n/navigation.ts -> src/i18n/navigation.ts`
@@ -89,15 +89,15 @@ Nodes (38): AiGenerateVocabulary(), AuthProvider(), AuthProviderProps, DeckBuild
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
-Nodes (36): TextIcon(), TextIconProps, Props, QuizContext, QuizContextType, useQuiz(), correctOption, mockClientQuizzes (+28 more)
+Nodes (37): TextIcon(), TextIconProps, Props, QuizContext, QuizContextType, useQuiz(), correctOption, mockClientQuizzes (+29 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
-Nodes (38): QuizStartCardProps, WordChipProps, WordsContextType, AIClient, AIGenerateContentParams, AIProvider, AIUsage, createAIClient() (+30 more)
+Nodes (37): QuizStartCardProps, WordsContextType, AIClient, AIGenerateContentParams, AIProvider, AIUsage, createAIClient(), FallbackAIClient (+29 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.06
-Nodes (38): ChinaFlag(), ChinaFlagProps, DeleteAccountIcon(), DeleteAccountIconProps, EnglishFlagProps, GermanFlagProps, LexiconxLogo(), LexiconxLogoProps (+30 more)
+Cohesion: 0.07
+Nodes (40): ChinaFlag(), ChinaFlagProps, DeleteAccountIcon(), DeleteAccountIconProps, EnglishFlagProps, GermanFlag(), GermanFlagProps, LexiconxLogo() (+32 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.08
@@ -117,7 +117,7 @@ Nodes (23): DeckReview(), ArrowLeft(), ArrowLeftProps, ArrowRight(), ArrowRightP
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
-Nodes (25): DeckCard(), AnonIcon(), AnonIconProps, CardsIcon(), CardsIconProps, DeckIcon(), DeckIconProps, EditIcon() (+17 more)
+Nodes (26): DeckCard(), AnonIcon(), AnonIconProps, CardsIcon(), CardsIconProps, DeckIconProps, EditIcon(), EditIconProps (+18 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.09
@@ -125,7 +125,7 @@ Nodes (22): husky.sh script, devDependencies, autoprefixer, eslint, eslint-confi
 
 ### Community 10 - "Community 10"
 Cohesion: 0.10
-Nodes (28): mockDeleteQuiz, mockDeleteStep, addWordToDatabase(), _apiHandler(), createDeck(), deleteDeck(), deleteUserData(), deleteWordApi() (+20 more)
+Nodes (27): mockDeleteQuiz, mockDeleteStep, addWordToDatabase(), _apiHandler(), createDeck(), deleteDeck(), deleteUserData(), deleteWordApi() (+19 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.10
@@ -185,7 +185,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Language` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 7`, `Community 10`, `Community 13`, `Community 16`?**
   _High betweenness centrality (0.052) - this node is a cross-community bridge._
-- **Why does `Word` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 10`?**
+- **Why does `Word` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 8`, `Community 10`?**
   _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **Why does `connectDB()` connect `Community 4` to `Community 2`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
@@ -194,6 +194,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.07853107344632769 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06887755102040816 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06857142857142857 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.0574400723654455 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.060515873015873016 - nodes in this community are weakly interconnected._
