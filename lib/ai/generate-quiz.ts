@@ -47,6 +47,8 @@ export async function generateQuizWithWords(
     );
     const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
 
+    const timeBefore = Date.now();
+
     const result = await client.generateContent({
       model: MODEL_NAME,
       contents: fullPrompt,
@@ -58,7 +60,15 @@ export async function generateQuizWithWords(
       },
     });
 
+    const timeAfter = Date.now();
+
     const responseText = result.text;
+
+    const usage = result.usage;
+
+    console.log(
+      `[tokens] ${learningLanguage} words=${words.length} chars=${fullPrompt.length} in=${usage?.inputTokens} out=${usage?.outputTokens} think=${usage?.thinkingTokens} ms=${timeAfter - timeBefore}`
+    );
 
     try {
       const parsedResponse = JSON.parse(responseText) as QuizGeneratorResponse;

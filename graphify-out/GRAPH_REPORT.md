@@ -1,16 +1,16 @@
-# Graph Report - lexiconx  (2026-08-01)
+# Graph Report - lexiconx  (2026-10-09)
 
 ## Corpus Check
-- 186 files · ~68,996 words
+- 186 files · ~69,098 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 670 nodes · 1335 edges · 39 communities (26 shown, 13 thin omitted)
+- 671 nodes · 1340 edges · 39 communities (26 shown, 13 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fe8ec069`
+- Built from commit: `279a90e0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -31,7 +31,7 @@
 - [[_COMMUNITY_Community 13|Community 13]]
 - [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
-- [[_COMMUNITY_Community 17|Community 17]]
+- [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 19|Community 19]]
 - [[_COMMUNITY_Community 20|Community 20]]
@@ -67,14 +67,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `DeckCard()` --calls--> `useDecks()`  [EXTRACTED]
   components/Decks/DeckCard.tsx → context/DecksContext.tsx
+- `MemoryHookCardProps` --references--> `MemoryHookCardData`  [EXTRACTED]
+  components/MemoryHooks/MemoryHookCard.tsx → types/MemoryHook.ts
+- `LanguageLearningOnboarding()` --calls--> `useLanguage()`  [EXTRACTED]
+  components/Onboarding/LanguageLearningOnboarding.tsx → context/LanguageToLearnContext.tsx
 - `StatsPage()` --calls--> `useAuthGuard()`  [EXTRACTED]
   src/app/[locale]/stats/page.tsx → hooks/useAuthGuard.tsx
-- `DeckBuilderProps` --references--> `Deck`  [EXTRACTED]
-  components/Decks/DeckBuilder.tsx → types/Deck.ts
-- `DeckCardProps` --references--> `Deck`  [EXTRACTED]
-  components/Decks/DeckCard.tsx → types/Deck.ts
-- `DeckReview()` --calls--> `useToastContext()`  [EXTRACTED]
-  components/Decks/DeckReview.tsx → context/ToastContext.tsx
+- `UseTextToSpeechReturn` --references--> `Language`  [EXTRACTED]
+  hooks/useTextToSpeech.tsx → types/Words.ts
 
 ## Import Cycles
 - 1-file cycle: `src/i18n/navigation.ts -> src/i18n/navigation.ts`
@@ -84,24 +84,24 @@
 ## Communities (39 total, 13 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.07
-Nodes (46): AiGenerateVocabulary(), AuthProvider(), AuthProviderProps, DeckBuilder(), DecksManager(), View, LexiconxLogo(), LexiconxLogoProps (+38 more)
+Cohesion: 0.08
+Nodes (38): AiGenerateVocabulary(), AuthProvider(), AuthProviderProps, DeckBuilder(), DeckBuilderProps, DeckCardProps, DecksManager(), View (+30 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
-Nodes (35): TextIcon(), TextIconProps, Props, QuizContext, QuizContextType, useQuiz(), correctOption, mockClientQuizzes (+27 more)
+Nodes (36): TextIcon(), TextIconProps, Props, QuizContext, QuizContextType, useQuiz(), correctOption, mockClientQuizzes (+28 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
-Nodes (28): QuizStartCardProps, WordChipProps, WordsContextType, AIClient, AIGenerateContentParams, AIProvider, createAIClient(), FallbackAIClient (+20 more)
+Nodes (38): QuizStartCardProps, WordChipProps, WordsContextType, AIClient, AIGenerateContentParams, AIProvider, AIUsage, createAIClient() (+30 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.05
-Nodes (39): ChinaFlag(), ChinaFlagProps, DeleteAccountIcon(), DeleteAccountIconProps, EnglishFlagProps, GermanFlagProps, RussianFlagProps, SpanishFlag() (+31 more)
+Cohesion: 0.06
+Nodes (38): ChinaFlag(), ChinaFlagProps, DeleteAccountIcon(), DeleteAccountIconProps, EnglishFlagProps, GermanFlagProps, LexiconxLogo(), LexiconxLogoProps (+30 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.07
-Nodes (44): generateMemoryHooks(), generateQuizWithWords(), generateWords(), authOptions, JWT, Session, User, getWordCategory() (+36 more)
+Cohesion: 0.08
+Nodes (41): generateMemoryHooks(), generateWords(), authOptions, JWT, Session, User, getWordCategory(), deckSchema (+33 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.06
@@ -112,20 +112,20 @@ Cohesion: 0.06
 Nodes (32): dependencies, canvas-confetti, easy-speech, framer-motion, @google/genai, mongoose, next, next-auth (+24 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.08
-Nodes (29): DeckReview(), ArrowLeft(), ArrowLeftProps, ArrowRight(), ArrowRightProps, SoundIcon(), SoundIconProps, MemoryHookCard() (+21 more)
+Cohesion: 0.10
+Nodes (23): DeckReview(), ArrowLeft(), ArrowLeftProps, ArrowRight(), ArrowRightProps, SoundIcon(), SoundIconProps, MemoryHookCard() (+15 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
-Nodes (29): DeckBuilderProps, DeckCard(), DeckCardProps, AnonIcon(), AnonIconProps, CardsIcon(), CardsIconProps, DeckIcon() (+21 more)
+Nodes (25): DeckCard(), AnonIcon(), AnonIconProps, CardsIcon(), CardsIconProps, DeckIcon(), DeckIconProps, EditIcon() (+17 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.09
 Nodes (22): husky.sh script, devDependencies, autoprefixer, eslint, eslint-config-next, @eslint/eslintrc, husky, jsdom (+14 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.16
-Nodes (22): mockDeleteQuiz, mockDeleteStep, DecksContext, addWordToDatabase(), _apiHandler(), createDeck(), deleteDeck(), deleteUserData() (+14 more)
+Cohesion: 0.10
+Nodes (28): mockDeleteQuiz, mockDeleteStep, addWordToDatabase(), _apiHandler(), createDeck(), deleteDeck(), deleteUserData(), deleteWordApi() (+20 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.10
@@ -147,9 +147,9 @@ Nodes (3): Commands, Detailed guides, Essentials
 Cohesion: 0.40
 Nodes (4): compat, __dirname, eslintConfig, __filename
 
-### Community 17 - "Community 17"
-Cohesion: 0.30
-Nodes (6): getUserData(), requireAuthSSR(), CardsPage(), DeckReviewPage(), DecksPage(), MemoryHooksPage()
+### Community 16 - "Community 16"
+Cohesion: 0.13
+Nodes (12): languages, Props, QuizFinished(), ILanguage, NativeLanguage(), ThemeSwitcher(), useConfetti(), updateUserData() (+4 more)
 
 ### Community 18 - "Community 18"
 Cohesion: 0.22
@@ -183,17 +183,17 @@ Nodes (3): __dirname, __filename, server
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Language` connect `Community 7` to `Community 0`, `Community 1`, `Community 2`, `Community 3`, `Community 4`, `Community 8`, `Community 10`, `Community 13`?**
+- **Why does `Language` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 7`, `Community 10`, `Community 13`, `Community 16`?**
   _High betweenness centrality (0.052) - this node is a cross-community bridge._
 - **Why does `Word` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 10`?**
   _High betweenness centrality (0.035) - this node is a cross-community bridge._
+- **Why does `connectDB()` connect `Community 4` to `Community 2`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **What connects `session-start.sh script`, `husky.sh script`, `AuthProviderProps` to the rest of the system?**
   _264 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06774774774774775 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07853107344632769 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07092198581560284 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06887755102040816 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.06485671191553545 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.051251956181533644 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0574400723654455 - nodes in this community are weakly interconnected._

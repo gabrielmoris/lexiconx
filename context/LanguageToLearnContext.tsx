@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 import SpanishFlag from '@/components/Icons/SpanishFlag';
 import { Language } from '@/types/Words';
 import RussianFlag from '@/components/Icons/RussianFlag';
+import { Quiz } from '@/types/Quiz';
+import { useQuiz } from './QuizContext';
 
 export interface LanguageOption {
   language: Language;
@@ -32,6 +34,9 @@ const LanguageToLearnContext = createContext<LanguageContextType | undefined>(un
 
 export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
   const t = useTranslations('languageToLearn');
+  const { deleteValue: deleteQuiz } = useLocalStorage<{ quizzes: Quiz[] }>('quizes', {
+    quizzes: [],
+  });
 
   const languages: LanguageOption[] = useMemo(
     () => [
@@ -61,6 +66,7 @@ export function LanguageToLearnProvider({ children }: { children: ReactNode }) {
 
   const setSelectedLanguage = (language: LanguageOption) => {
     setStoredLangCode(language.language);
+    deleteQuiz();
   };
 
   const contextValue = useMemo(
