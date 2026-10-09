@@ -20,8 +20,14 @@ export interface AIGenerateContentParams {
   };
 }
 
+export interface AIUsage {
+  inputTokens: number;
+  outputTokens: number;
+  thinkingTokens?: number;
+}
+
 export interface AIClient {
-  generateContent(params: AIGenerateContentParams): Promise<{ text: string }>;
+  generateContent(params: AIGenerateContentParams): Promise<{ text: string; usage?: AIUsage }>;
 }
 
 interface ProviderConfig {
@@ -39,7 +45,9 @@ export class FallbackAIClient implements AIClient {
     this.fallback = fallback;
   }
 
-  async generateContent(params: AIGenerateContentParams): Promise<{ text: string }> {
+  async generateContent(
+    params: AIGenerateContentParams
+  ): Promise<{ text: string; usage?: AIUsage }> {
     try {
       const result = await this.primary.client.generateContent({
         ...params,

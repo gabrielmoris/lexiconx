@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import { GoogleGenAI } from '@google/genai';
-import { AIClient, AIGenerateContentParams } from './client';
+import { AIClient, AIGenerateContentParams, AIUsage } from './client';
 
 export function createNvidiaClient(options: { apiKey: string; baseURL: string }): AIClient {
   const client = new OpenAI({
@@ -9,7 +9,9 @@ export function createNvidiaClient(options: { apiKey: string; baseURL: string })
   });
 
   return {
-    generateContent: async (params: AIGenerateContentParams): Promise<{ text: string }> => {
+    generateContent: async (
+      params: AIGenerateContentParams
+    ): Promise<{ text: string; usage?: AIUsage }> => {
       const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [];
 
       if (params.config?.systemInstruction) {
@@ -41,7 +43,13 @@ export function createNvidiaClient(options: { apiKey: string; baseURL: string })
 
       const response = await client.chat.completions.create(completionOptions);
 
-      return { text: response.choices[0]?.message?.content || '' };
+      return {
+        text: response.choices[0]?.message?.content || '',
+        usage: {
+          inputTokens: response.usage?.prompt_tokens || 0,
+          outputTokens: response.usage?.completion_tokens || 0,
+        },
+      };
     },
   };
 }
@@ -50,7 +58,9 @@ export function createGoogleClient(apiKey: string): AIClient {
   const genAI = new GoogleGenAI({ apiKey });
 
   return {
-    generateContent: async (params: AIGenerateContentParams): Promise<{ text: string }> => {
+    generateContent: async (
+      params: AIGenerateContentParams
+    ): Promise<{ text: string; usage?: AIUsage }> => {
       const result = await genAI.models.generateContent({
         model: params.model,
         contents: params.contents,
@@ -62,7 +72,14 @@ export function createGoogleClient(apiKey: string): AIClient {
           systemInstruction: params.config?.systemInstruction,
         },
       });
-      return { text: result.text || '' };
+      return {
+        text: result.text || '',
+        usage: {
+          inputTokens: result.usageMetadata?.promptTokenCount || 0,
+          outputTokens: result.usageMetadata?.candidatesTokenCount || 0,
+          thinkingTokens: result.usageMetadata?.thoughtsTokenCount,
+        },
+      };
     },
   };
 }

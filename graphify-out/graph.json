@@ -126,7 +126,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "components_decks_deckbuilder_deckbuilderprops",
-      "community": 8,
+      "community": 0,
       "norm_label": "deckbuilderprops"
     },
     {
@@ -156,7 +156,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_decks_deckcard_deckcardprops",
-      "community": 8,
+      "community": 0,
       "norm_label": "deckcardprops"
     },
     {
@@ -586,7 +586,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_icons_lexiconxlogo",
-      "community": 0,
+      "community": 3,
       "norm_label": "lexiconxlogo.tsx"
     },
     {
@@ -596,7 +596,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_icons_lexiconxlogo_lexiconxlogoprops",
-      "community": 0,
+      "community": 3,
       "norm_label": "lexiconxlogoprops"
     },
     {
@@ -606,7 +606,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_icons_lexiconxlogo_lexiconxlogo",
-      "community": 0,
+      "community": 3,
       "norm_label": "lexiconxlogo()"
     },
     {
@@ -1006,7 +1006,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_layout_header",
-      "community": 0,
+      "community": 3,
       "norm_label": "header.tsx"
     },
     {
@@ -1016,7 +1016,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_layout_header_header",
-      "community": 0,
+      "community": 3,
       "norm_label": "header()"
     },
     {
@@ -1026,7 +1026,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_layout_loadingcomponent",
-      "community": 0,
+      "community": 3,
       "norm_label": "loadingcomponent.tsx"
     },
     {
@@ -1036,7 +1036,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "components_layout_loadingcomponent_loadingcomponentprops",
-      "community": 0,
+      "community": 3,
       "norm_label": "loadingcomponentprops"
     },
     {
@@ -1046,7 +1046,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_layout_loadingcomponent_loadingcomponent",
-      "community": 0,
+      "community": 3,
       "norm_label": "loadingcomponent()"
     },
     {
@@ -1136,7 +1136,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_memoryhooks_memoryhooksdeck",
-      "community": 0,
+      "community": 10,
       "norm_label": "memoryhooksdeck.tsx"
     },
     {
@@ -1176,7 +1176,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_onboarding_languagelearningonboarding",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagelearningonboarding.tsx"
     },
     {
@@ -1186,7 +1186,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_onboarding_languagelearningonboarding_languagelearningonboarding",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagelearningonboarding()"
     },
     {
@@ -1206,7 +1206,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_onboarding_localeswitcher_languages",
-      "community": 3,
+      "community": 16,
       "norm_label": "languages"
     },
     {
@@ -1306,7 +1306,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_onboarding_tests_languagelearningonboarding_test",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagelearningonboarding.test.tsx"
     },
     {
@@ -1336,7 +1336,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_quiz_quizfinished",
-      "community": 3,
+      "community": 16,
       "norm_label": "quizfinished.tsx"
     },
     {
@@ -1346,7 +1346,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_quiz_quizfinished_props",
-      "community": 3,
+      "community": 16,
       "norm_label": "props"
     },
     {
@@ -1356,7 +1356,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_quiz_quizfinished_quizfinished",
-      "community": 3,
+      "community": 16,
       "norm_label": "quizfinished()"
     },
     {
@@ -1426,7 +1426,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_quiz_wordchip",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchip.tsx"
     },
     {
@@ -1436,7 +1436,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_quiz_wordchip_wordchipprops",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchipprops"
     },
     {
@@ -1446,7 +1446,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_quiz_wordchip_wordchip",
-      "community": 2,
+      "community": 8,
       "norm_label": "wordchip()"
     },
     {
@@ -1476,7 +1476,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_settings_languagetolearn",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearn.tsx"
     },
     {
@@ -1486,7 +1486,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_settings_languagetolearn_languagetolearn",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearn()"
     },
     {
@@ -1496,7 +1496,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_settings_nativelanguage",
-      "community": 3,
+      "community": 16,
       "norm_label": "nativelanguage.tsx"
     },
     {
@@ -1506,7 +1506,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_settings_nativelanguage_ilanguage",
-      "community": 3,
+      "community": 16,
       "norm_label": "ilanguage"
     },
     {
@@ -1516,7 +1516,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "components_settings_nativelanguage_nativelanguage",
-      "community": 3,
+      "community": 16,
       "norm_label": "nativelanguage()"
     },
     {
@@ -1526,7 +1526,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_settings_themeswitcher",
-      "community": 3,
+      "community": 16,
       "norm_label": "themeswitcher.tsx"
     },
     {
@@ -1536,7 +1536,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_settings_themeswitcher_themeswitcher",
-      "community": 3,
+      "community": 16,
       "norm_label": "themeswitcher()"
     },
     {
@@ -1576,7 +1576,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_settings_tests_languagetolearn_test",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearn.test.tsx"
     },
     {
@@ -1956,7 +1956,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "context_deckscontext",
-      "community": 10,
+      "community": 0,
       "norm_label": "deckscontext.tsx"
     },
     {
@@ -1966,7 +1966,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "context_deckscontext_deckscontexttype",
-      "community": 8,
+      "community": 0,
       "norm_label": "deckscontexttype"
     },
     {
@@ -1976,7 +1976,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "context_deckscontext_deckscontext",
-      "community": 10,
+      "community": 0,
       "norm_label": "deckscontext"
     },
     {
@@ -2006,54 +2006,54 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "context_languagetolearncontext",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearncontext.tsx"
     },
     {
       "label": "LanguageOption",
       "file_type": "code",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "context_languagetolearncontext_languageoption",
-      "community": 0,
+      "community": 3,
       "norm_label": "languageoption"
     },
     {
       "label": "LanguageContextType",
       "file_type": "code",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "context_languagetolearncontext_languagecontexttype",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagecontexttype"
     },
     {
       "label": "LanguageToLearnContext",
       "file_type": "code",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L25",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "context_languagetolearncontext_languagetolearncontext",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearncontext"
     },
     {
       "label": "LanguageToLearnProvider()",
       "file_type": "code",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L33",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "context_languagetolearncontext_languagetolearnprovider",
-      "community": 0,
+      "community": 3,
       "norm_label": "languagetolearnprovider()"
     },
     {
       "label": "useLanguage()",
       "file_type": "code",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L89",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "context_languagetolearncontext_uselanguage",
       "community": 0,
@@ -2546,7 +2546,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "hooks_useconfetti",
-      "community": 3,
+      "community": 16,
       "norm_label": "useconfetti.tsx"
     },
     {
@@ -2556,7 +2556,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "hooks_useconfetti_useconfetti",
-      "community": 3,
+      "community": 16,
       "norm_label": "useconfetti()"
     },
     {
@@ -2833,7 +2833,7 @@
       "label": "createGoogleClient()",
       "file_type": "code",
       "source_file": "lib/ai/client-generators.ts",
-      "source_location": "L49",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "lib_ai_client_generators_creategoogleclient",
       "community": 2,
@@ -2870,10 +2870,20 @@
       "norm_label": "aigeneratecontentparams"
     },
     {
-      "label": "AIClient",
+      "label": "AIUsage",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
       "source_location": "L23",
+      "_origin": "ast",
+      "id": "lib_ai_client_aiusage",
+      "community": 2,
+      "norm_label": "aiusage"
+    },
+    {
+      "label": "AIClient",
+      "file_type": "code",
+      "source_file": "lib/ai/client.ts",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "lib_ai_client_aiclient",
       "community": 2,
@@ -2883,7 +2893,7 @@
       "label": "ProviderConfig",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L27",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "lib_ai_client_providerconfig",
       "community": 2,
@@ -2893,7 +2903,7 @@
       "label": "FallbackAIClient",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L33",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "lib_ai_client_fallbackaiclient",
       "community": 2,
@@ -2903,7 +2913,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L37",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "lib_ai_client_fallbackaiclient_constructor",
       "community": 2,
@@ -2913,7 +2923,7 @@
       "label": ".generateContent()",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L42",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "lib_ai_client_fallbackaiclient_generatecontent",
       "community": 2,
@@ -2923,7 +2933,7 @@
       "label": "createAIClient()",
       "file_type": "code",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L77",
+      "source_location": "L85",
       "_origin": "ast",
       "id": "lib_ai_client_createaiclient",
       "community": 2,
@@ -2936,7 +2946,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_ai_generate_memory_hooks",
-      "community": 7,
+      "community": 2,
       "norm_label": "generate-memory-hooks.ts"
     },
     {
@@ -2946,7 +2956,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "lib_ai_generate_memory_hooks_stripwordforprompt",
-      "community": 7,
+      "community": 2,
       "norm_label": "stripwordforprompt()"
     },
     {
@@ -2986,7 +2996,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "lib_ai_generate_quiz_generatequizwithwords",
-      "community": 4,
+      "community": 2,
       "norm_label": "generatequizwithwords()"
     },
     {
@@ -3016,7 +3026,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_ai_memory_hooks_prompts",
-      "community": 7,
+      "community": 2,
       "norm_label": "memory-hooks-prompts.ts"
     },
     {
@@ -3026,7 +3036,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "lib_ai_memory_hooks_prompts_promptword",
-      "community": 7,
+      "community": 2,
       "norm_label": "promptword"
     },
     {
@@ -3036,7 +3046,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_ai_memory_hooks_prompts_memory_hooks_prompts",
-      "community": 7,
+      "community": 2,
       "norm_label": "memory_hooks_prompts"
     },
     {
@@ -3116,7 +3126,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "lib_apis_getuserdata",
-      "community": 17,
+      "community": 10,
       "norm_label": "getuserdata()"
     },
     {
@@ -3126,7 +3136,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "lib_apis_selectuserlearninglanguage",
-      "community": 0,
+      "community": 3,
       "norm_label": "selectuserlearninglanguage()"
     },
     {
@@ -3136,7 +3146,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "lib_apis_updateuserdata",
-      "community": 3,
+      "community": 16,
       "norm_label": "updateuserdata()"
     },
     {
@@ -3216,7 +3226,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "lib_apis_getwordsforquiz",
-      "community": 10,
+      "community": 1,
       "norm_label": "getwordsforquiz()"
     },
     {
@@ -3326,7 +3336,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_auth_authguardssr",
-      "community": 17,
+      "community": 10,
       "norm_label": "authguardssr.tsx"
     },
     {
@@ -3336,7 +3346,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "lib_auth_authguardssr_requireauthssr",
-      "community": 17,
+      "community": 10,
       "norm_label": "requireauthssr()"
     },
     {
@@ -3346,7 +3356,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "lib_auth_authguardssr_getauthsessionssr",
-      "community": 17,
+      "community": 10,
       "norm_label": "getauthsessionssr()"
     },
     {
@@ -3496,7 +3506,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_helpers_localetolanguage",
-      "community": 0,
+      "community": 1,
       "norm_label": "localetolanguage()"
     },
     {
@@ -4366,7 +4376,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_cards_page",
-      "community": 17,
+      "community": 0,
       "norm_label": "page.tsx"
     },
     {
@@ -4376,7 +4386,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_locale_cards_page_cardspage",
-      "community": 17,
+      "community": 10,
       "norm_label": "cardspage()"
     },
     {
@@ -4386,7 +4396,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_decks_id_review_page",
-      "community": 17,
+      "community": 10,
       "norm_label": "page.tsx"
     },
     {
@@ -4396,7 +4406,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_locale_decks_id_review_page_deckreviewpage",
-      "community": 17,
+      "community": 10,
       "norm_label": "deckreviewpage()"
     },
     {
@@ -4406,7 +4416,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_decks_page",
-      "community": 17,
+      "community": 10,
       "norm_label": "page.tsx"
     },
     {
@@ -4416,7 +4426,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_locale_decks_page_deckspage",
-      "community": 17,
+      "community": 10,
       "norm_label": "deckspage()"
     },
     {
@@ -4446,7 +4456,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_login_page",
-      "community": 3,
+      "community": 16,
       "norm_label": "page.tsx"
     },
     {
@@ -4456,7 +4466,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_locale_login_page_login",
-      "community": 3,
+      "community": 16,
       "norm_label": "login()"
     },
     {
@@ -4466,7 +4476,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_memory_hooks_memoryhookspageclient",
-      "community": 3,
+      "community": 10,
       "norm_label": "memoryhookspageclient.tsx"
     },
     {
@@ -4476,7 +4486,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_locale_memory_hooks_memoryhookspageclient_memoryhookspageclient",
-      "community": 3,
+      "community": 10,
       "norm_label": "memoryhookspageclient()"
     },
     {
@@ -4486,7 +4496,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_memory_hooks_page",
-      "community": 17,
+      "community": 10,
       "norm_label": "page.tsx"
     },
     {
@@ -4496,7 +4506,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_app_locale_memory_hooks_page_memoryhookspage",
-      "community": 17,
+      "community": 10,
       "norm_label": "memoryhookspage()"
     },
     {
@@ -4646,7 +4656,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_locale_settings_page",
-      "community": 3,
+      "community": 16,
       "norm_label": "page.tsx"
     },
     {
@@ -4656,7 +4666,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_locale_settings_page_settingspage",
-      "community": 3,
+      "community": 16,
       "norm_label": "settingspage()"
     },
     {
@@ -4726,7 +4736,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_ai_quiz_route",
-      "community": 4,
+      "community": 2,
       "norm_label": "route.ts"
     },
     {
@@ -4736,7 +4746,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_app_api_ai_quiz_route_languages",
-      "community": 4,
+      "community": 2,
       "norm_label": "languages"
     },
     {
@@ -4746,7 +4756,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_app_api_ai_quiz_route_post",
-      "community": 4,
+      "community": 2,
       "norm_label": "post()"
     },
     {
@@ -5106,7 +5116,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_navigation",
-      "community": 3,
+      "community": 16,
       "norm_label": "navigation.ts"
     },
     {
@@ -5116,7 +5126,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_i18n_navigation_link_redirect_usepathname_userouter_getpathname",
-      "community": 3,
+      "community": 16,
       "norm_label": "{ link, redirect, usepathname, userouter, getpathname }"
     },
     {
@@ -5126,7 +5136,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_request",
-      "community": 3,
+      "community": 16,
       "norm_label": "request.ts"
     },
     {
@@ -5136,7 +5146,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_routing",
-      "community": 3,
+      "community": 16,
       "norm_label": "routing.ts"
     },
     {
@@ -5146,7 +5156,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "src_i18n_routing_locales",
-      "community": 3,
+      "community": 16,
       "norm_label": "locales"
     },
     {
@@ -5156,7 +5166,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_i18n_routing_routing",
-      "community": 3,
+      "community": 16,
       "norm_label": "routing"
     },
     {
@@ -5166,7 +5176,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_middleware",
-      "community": 3,
+      "community": 16,
       "norm_label": "middleware.ts"
     },
     {
@@ -5176,7 +5186,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_middleware_config",
-      "community": 3,
+      "community": 16,
       "norm_label": "config"
     },
     {
@@ -5426,7 +5436,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "types_deck_deck",
-      "community": 8,
+      "community": 0,
       "norm_label": "deck"
     },
     {
@@ -5476,7 +5486,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "types_memoryhook",
-      "community": 7,
+      "community": 2,
       "norm_label": "memoryhook.ts"
     },
     {
@@ -5486,7 +5496,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "types_memoryhook_memoryhook",
-      "community": 7,
+      "community": 2,
       "norm_label": "memoryhook"
     },
     {
@@ -5496,7 +5506,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "types_memoryhook_memoryhookgeneratorresponse",
-      "community": 7,
+      "community": 2,
       "norm_label": "memoryhookgeneratorresponse"
     },
     {
@@ -5506,7 +5516,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "types_memoryhook_memoryhookcarddata",
-      "community": 7,
+      "community": 2,
       "norm_label": "memoryhookcarddata"
     },
     {
@@ -5656,7 +5666,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "types_words_language",
-      "community": 7,
+      "community": 2,
       "norm_label": "language"
     },
     {
@@ -5666,7 +5676,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "types_words_locale",
-      "community": 3,
+      "community": 10,
       "norm_label": "locale"
     },
     {
@@ -7318,6 +7328,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Decks/DeckCard.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "components_decks_deckcard",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7686,17 +7707,6 @@
       "weight": 1.0,
       "source": "components_decks_decksmanager",
       "target": "components_icons_deckicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Decks/DecksManager.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "components_decks_decksmanager",
-      "target": "components_icons_deckicon_deckicon",
       "confidence_score": 1.0
     },
     {
@@ -8172,17 +8182,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Layout/Menu.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "components_layout_menu",
-      "target": "components_icons_deckicon_deckicon",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/Icons/DeleteAccountIcon.tsx",
@@ -8392,6 +8391,61 @@
       "weight": 1.0,
       "source": "src_app_locale_page",
       "target": "components_icons_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/LocaleSwitcher.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_onboarding_localeswitcher",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/OnboardingText.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_onboarding_onboardingtext",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/ShowLearningFlag.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_words_showlearningflag",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "components_icons_germanflag_germanflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_locale_page",
+      "target": "components_icons_germanflag_germanflag",
       "confidence_score": 1.0
     },
     {
@@ -8753,6 +8807,28 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Quiz/WordChip.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_quiz_wordchip",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/WordCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_words_wordcard",
+      "target": "components_icons_removeicon_removeicon",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/Icons/RussianFlag.tsx",
@@ -8803,6 +8879,39 @@
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "components_icons_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Onboarding/LocaleSwitcher.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "components_onboarding_localeswitcher",
+      "target": "components_icons_russianflag_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Words/ShowLearningFlag.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_words_showlearningflag",
+      "target": "components_icons_russianflag_russianflag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "components_icons_russianflag_russianflag",
       "confidence_score": 1.0
     },
     {
@@ -12625,7 +12734,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "context_languagetolearncontext_languagecontexttype",
@@ -12635,7 +12744,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "context_languagetolearncontext_languageoption",
@@ -12645,7 +12754,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "context_languagetolearncontext_languagetolearncontext",
@@ -12655,7 +12764,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L33",
+      "source_location": "L35",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "context_languagetolearncontext_languagetolearnprovider",
@@ -12665,10 +12774,32 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L89",
+      "source_location": "L95",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "context_languagetolearncontext_uselanguage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "context_quizcontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "context_quizcontext_usequiz",
       "confidence_score": 1.0
     },
     {
@@ -12698,6 +12829,28 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "types_quiz",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "context_languagetolearncontext",
+      "target": "types_quiz_quiz",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "context/LanguageToLearnContext.tsx",
       "source_location": "L9",
       "weight": 1.0,
       "source": "context_languagetolearncontext",
@@ -12713,17 +12866,6 @@
       "weight": 1.0,
       "source": "context_languagetolearncontext",
       "target": "types_words_language",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "context/QuizContext.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "context_quizcontext",
-      "target": "context_languagetolearncontext",
       "confidence_score": 1.0
     },
     {
@@ -12775,7 +12917,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L13",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "context_languagetolearncontext_languageoption",
       "target": "types_words_language",
@@ -12787,7 +12929,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "context/LanguageToLearnContext.tsx",
-      "source_location": "L47",
+      "source_location": "L37",
       "weight": 1.0,
       "source": "context_languagetolearncontext_languagetolearnprovider",
       "target": "hooks_uselocalstorage_uselocalstorage"
@@ -12884,12 +13026,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L27",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_languagetolearncontext_uselanguage"
+      "target": "context_languagetolearncontext_uselanguage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13274,12 +13416,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L28",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_quizcontext_usequiz"
+      "target": "context_quizcontext_usequiz",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13445,12 +13587,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L24",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "context_toastcontext_usetoastcontext"
+      "target": "context_toastcontext_usetoastcontext",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14477,12 +14619,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L59",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "hooks_usequizmanager_usequizmanager"
+      "target": "hooks_usequizmanager_usequizmanager",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14649,12 +14791,12 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/app/[locale]/quiz/page.tsx",
       "source_location": "L153",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page_quizpageinner",
-      "target": "hooks_usetexttospeech_usetexttospeech"
+      "target": "hooks_usetexttospeech_usetexttospeech",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14935,10 +15077,21 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/ai/client-generators.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_ai_client_generators",
+      "target": "lib_ai_client_aiusage",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client-generators.ts",
-      "source_location": "L49",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "lib_ai_client_generators",
       "target": "lib_ai_client_generators_creategoogleclient",
@@ -14971,7 +15124,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/ai/client.ts",
-      "source_location": "L89",
+      "source_location": "L97",
       "weight": 1.0,
       "source": "lib_ai_client_createaiclient",
       "target": "lib_ai_client_generators_createnvidiaclient"
@@ -14993,7 +15146,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/ai/client.ts",
-      "source_location": "L84",
+      "source_location": "L92",
       "weight": 1.0,
       "source": "lib_ai_client_createaiclient",
       "target": "lib_ai_client_generators_creategoogleclient"
@@ -15002,7 +15155,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L23",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "lib_ai_client",
       "target": "lib_ai_client_aiclient",
@@ -15032,7 +15185,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L77",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "lib_ai_client",
+      "target": "lib_ai_client_aiusage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/ai/client.ts",
+      "source_location": "L85",
       "weight": 1.0,
       "source": "lib_ai_client",
       "target": "lib_ai_client_createaiclient",
@@ -15042,7 +15205,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L33",
+      "source_location": "L39",
       "weight": 1.0,
       "source": "lib_ai_client",
       "target": "lib_ai_client_fallbackaiclient",
@@ -15052,7 +15215,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L27",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "lib_ai_client",
       "target": "lib_ai_client_providerconfig",
@@ -15096,7 +15259,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L33",
+      "source_location": "L39",
       "weight": 1.0,
       "source": "lib_ai_client_fallbackaiclient",
       "target": "lib_ai_client_aiclient",
@@ -15106,7 +15269,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L37",
+      "source_location": "L43",
       "weight": 1.0,
       "source": "lib_ai_client_fallbackaiclient",
       "target": "lib_ai_client_fallbackaiclient_constructor",
@@ -15116,7 +15279,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "lib/ai/client.ts",
-      "source_location": "L42",
+      "source_location": "L48",
       "weight": 1.0,
       "source": "lib_ai_client_fallbackaiclient",
       "target": "lib_ai_client_fallbackaiclient_generatecontent",
@@ -16268,6 +16431,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
+      "target": "lib_apis_getuserdata",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -16279,6 +16453,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
+      "target": "lib_apis_getwordsforquiz",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -16286,6 +16471,17 @@
       "source_location": "L17",
       "weight": 1.0,
       "source": "src_app_locale_quiz_page",
+      "target": "lib_apis_getdeckwithwords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/[locale]/quiz/page.tsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "src_app_locale_quiz_page_quizpageinner",
       "target": "lib_apis_getdeckwithwords",
       "confidence_score": 1.0
     },
@@ -20901,5 +21097,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fe8ec069b30dfea87ba06f6daa22947f6b0db408"
+  "built_at_commit": "4c6c5cc45ce3f592088883cf65a3becd018b6b2f"
 }

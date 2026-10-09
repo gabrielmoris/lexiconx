@@ -36,6 +36,7 @@ const LanguageToLearn = ({ className }: { className?: string }) => {
 
       try {
         await selectUserLearningLanguage(language.language);
+        window.location.reload();
       } catch (error) {
         console.error('Failed to select language:', error);
         showToast({
