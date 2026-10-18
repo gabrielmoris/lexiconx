@@ -46,7 +46,7 @@ export async function generateMemoryHooks(
       model: MODEL_NAME,
       contents: fullPrompt,
       config: {
-        temperature: 0.7,
+        temperature: 1,
         topK: 40,
         topP: 0.9,
         responseMimeType: 'application/json',
